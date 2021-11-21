@@ -1,0 +1,114 @@
+﻿@model Agency.ViewModel.ReservationViewModel
+@{
+    Layout = null;
+    ViewBag.Title = "Itinirary";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+    <title>ITINERARY</title>
+    <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="https://fonts.googleapis.com/css?family=Quicksand:400,500,600,700&display=swap" rel="stylesheet">
+    <link href="~/Content/AdminPanelAssets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+   
+    <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
+
+</head>
+<body class="alt-menu sidebar-noneoverflow">
+
+
+    <h2 style="text-align:center;">ITINERARY</h2>
+    <hr /> <br />
+    <div class="container">
+        <div class="row">
+            <span style="float:left;" class="col-6">
+                <span style="font-weight:bold;">Client Booking as of:</span>     @Model.created_at.ToString().Split(' ')[0]
+            </span>
+            <span style="float:right;" class="col-6">
+                <span style="font-weight:bold;">Company:</span> @Model.company_name
+            </span>
+        </div>
+        <br /><br />
+        <h4>
+            Guest Information
+        </h4>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Last Name</th>
+                    <th>First Name</th>
+                    <th>Check-in</th>
+                    <th>Check-out</th>
+                    <th>Room Pref.</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var det in Model.ReservationDetailVM)
+                {
+                    <tr>
+                        <td>@det.client_last_name</td>
+                        <td>@det.client_first_name</td>
+                        <td>@det.reservation_from.ToString().Split(' ')[0]</td>
+                        <td>@det.reservation_to.ToString().Split(' ')[0]</td>
+                        <td>
+                            @if (det.room_type == 1)
+                            {
+                                <span>Single</span>
+                            }
+                            else
+                            {
+                                <span>Double</span>
+                            } -
+                        @foreach (var fac in Model.hotelFacilities)
+                        {
+                            <span>@fac ,</span>
+                        }
+                    </td>
+                </tr>
+            }
+
+            </tbody>
+        </table>
+        <div class="row">
+            <span style="float:left;">
+                <span style="font-weight:bold;">Hotel:</span> @Model.hotel_name <br />
+                @Model.hotel_address
+            </span>
+            <span style="float:right;">
+                <span style="font-weight:bold;">Number of Rooms:</span> @Model.total_rooms <br />
+                <span style="font-weight:bold;">Number of Nights:</span> @Model.total_nights
+            </span>
+           
+        </div>
+    </div>
+    <script src="~/Content/AdminPanelAssets/assets/js/libs/jquery-3.1.1.min.js"></script>
+    <script src="~/Content/AdminPanelAssets/bootstrap/js/popper.min.js"></script>
+    <script src="~/Content/AdminPanelAssets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/Content/AdminPanelAssets/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="~/Content/AdminPanelAssets/assets/js/app.js"></script>
+    <script>
+        $(document).ready(function () {
+            App.init();
+        });
+    </script>
+    <script src="~/Content/AdminPanelAssets/assets/js/custom.js"></script>
+    <!-- END GLOBAL MANDATORY SCRIPTS -->
+    <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
+    <script src="~/Content/AdminPanelAssets/plugins/apex/apexcharts.min.js"></script>
+    <script src="~/Content/AdminPanelAssets/assets/js/dashboard/dash_1.js"></script>
+    <script src="~/Content/AdminPanelAssets/plugins/table/datatable/datatables.js"></script>
+    <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
+    <script src="~/Content/selectize.js"></script>
+    <script src="~/Content/sweetalert2@10.js"></script>
+    <script src="~/Scripts/factory.js"></script>
+    <script src="~/Content/fontawesome/js/all.js"></script>
+    <script src="~/Content/AdminPanelAssets/plugins/font-icons/feather/feather.min.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,235 @@
+﻿@model Agency.ViewModel.ReservationViewModel
+@{
+    Layout = null;
+    ViewBag.Title = "Invoice";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+    <title>INVOICE</title>
+    <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="https://fonts.googleapis.com/css?family=Quicksand:400,500,600,700&display=swap" rel="stylesheet">
+    <link href="~/Content/AdminPanelAssets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <!-- END GLOBAL MANDATORY STYLES -->
+    <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM STYLES -->
+    <style class="dark-theme">
+        #chart-2 path {
+            stroke: #0e1726;
+        }
+    </style>
+
+    <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
+
+</head>
+<body class="alt-menu sidebar-noneoverflow">
+
+
+    <h2 style="text-align:center;">Invoice</h2>
+    <hr /> <br />
+    <div class="container">
+        <div class="row">
+            <span style="float:left;" class="col-4">
+              
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Bill To:</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>@Model.company_name</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </span>
+            <span style="float:left;" class="col-4">
+                PLEASE REMIT PAYMENT BY THE DUE DATE. ANY OPEN BALANCE NOT PAID BY THE DUE DATE WILL BE CHARGED TO THE CREDIT CARD ON FILE.
+            </span>
+            <span style="float:right;" class="col-4">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            @*<th>Invoice #</th>*@
+                            <th>Booking Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                           @* <td></td>*@
+                            <td>@Model.created_at.ToString().Split(' ')[0]</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </span>
+        </div>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th>Booking ID#</th>
+                    <th>Due Date</th>
+                    <th>Arrival Date</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td>@Model.id</td>
+                    <td>@Model.string_check_in.Split(' ')[0]</td>
+                    <td>@Model.string_check_out.Split(' ')[0]</td>
+                </tr>
+                <tr>
+                    <th>No. of Guests</th>
+                    <th>Description</th>
+                    <th>Price/Night</th>
+                    <th>No. of Nights</th>
+                    <th>Amount</th>
+                </tr>
+                <tr>
+                    <td>@Model.total_rooms</td>
+                    <td>@Model.hotel_name <br/>
+                    @Model.hotel_address</td>
+                    <td>
+                        
+                        @if (Model.single_rooms > 0)
+                        {
+                            <span>S: </span>
+                            <span>@Model.single_price</span>
+                           
+                        }
+                        @if (Model.double_rooms > 0)
+                        {
+                            <span>D: </span>
+                            <span>@Model.double_price</span>
+                           
+                        }
+                        @if (Model.triple_rooms > 0)
+                        {
+                            <span>T: </span>
+                            <span>@Model.triple_price</span>
+                            
+                        }
+                        @if (Model.quad_rooms > 0)
+                        {
+                            <span>Q: </span>
+                            <span>@Model.quad_price</span>
+                           
+                        }
+                    </td>
+                    <td>@Model.total_nights</td>
+                    <td>@Math.Round((double)Model.total_amount)</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>Taxes/Fees</td>
+                    <td>@Math.Round((double)(Model.tax_amount / Model.total_nights),2)</td>
+                    <td>@Model.total_nights</td>
+                    <td>@Math.Round((double)Model.tax_amount)</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        @if (Model.single_rooms > 0)
+                        {
+                            <span>Single: </span>
+                            <span>@Model.single_rooms Room(s) /</span>
+                            if (Model.single_nights > 0)
+                            {
+                                <span>@Model.single_nights Night(s) ,</span>
+
+                            }
+                        }
+                        @if (Model.double_rooms > 0)
+                        {
+                            <span>Double: </span>
+                            <span>@Model.double_rooms Room(s) /</span>
+                            if (Model.double_nights > 0)
+                            {
+                                <span>@Model.double_nights Night(s) ,</span>
+
+                            }
+                        }
+                        @if (Model.triple_rooms > 0)
+                        {
+                            <span>Triple: </span>
+                            <span>@Model.triple_rooms Room(s) /</span>
+                            if (Model.triple_nights > 0)
+                            {
+                                <span>@Model.triple_nights Night(s) ,</span>
+
+                            }
+                        }
+                        @if (Model.quad_rooms > 0)
+                        {
+                            <span>Quad: </span>
+                            <span>@Model.quad_rooms Room(s) /</span>
+                            if (Model.quad_nights > 0)
+                            {
+                                <span>@Model.quad_nights Night(s) </span>
+
+                            }
+                        }
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td colspan="3">Best Pal Travel</td>
+                    <th>Total</th>
+                    <td>@Math.Round((double)Model.total_amount_after_tax,2 )</td>
+                </tr>
+                @*<tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>*@
+            </tbody>
+        </table>
+
+    </div>
+    <script src="~/Content/AdminPanelAssets/assets/js/libs/jquery-3.1.1.min.js"></script>
+    <script src="~/Content/AdminPanelAssets/bootstrap/js/popper.min.js"></script>
+    <script src="~/Content/AdminPanelAssets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/Content/AdminPanelAssets/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="~/Content/AdminPanelAssets/assets/js/app.js"></script>
+    <script>
+        $(document).ready(function () {
+            App.init();
+        });
+    </script>
+    <script src="~/Content/AdminPanelAssets/assets/js/custom.js"></script>
+    <!-- END GLOBAL MANDATORY SCRIPTS -->
+    <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
+    <script src="~/Content/AdminPanelAssets/plugins/apex/apexcharts.min.js"></script>
+    <script src="~/Content/AdminPanelAssets/assets/js/dashboard/dash_1.js"></script>
+    <script src="~/Content/AdminPanelAssets/plugins/table/datatable/datatables.js"></script>
+    <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
+    <script src="~/Content/selectize.js"></script>
+    <script src="~/Content/sweetalert2@10.js"></script>
+    <script src="~/Scripts/factory.js"></script>
+    <script src="~/Content/fontawesome/js/all.js"></script>
+    <script src="~/Content/AdminPanelAssets/plugins/font-icons/feather/feather.min.js"></script>
+
+</body>
+</html>

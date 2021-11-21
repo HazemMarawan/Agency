@@ -1,0 +1,560 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="modal fade" id="manage_event_modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <form action="" method="post" enctype='multipart/form-data'>
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal_title"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-body">
+                        <div class="form-row">
+                            <input type="hidden" name="id" id="id" value="0" />
+                            <div class="form-group col-md-6">
+                                <label>Name</label>
+                                <input required autocomplete="off" name="title" id="title" type="text" class="form-control radius-30" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Description <small id="user_name_error" style="display:none;" class="badge badge-danger"> <i class="lni lni-close"></i> username already taken</small><small id="user_name_valid" class="badge badge-success" style="display:none;"><i class="lni lni-checkmark"></i> valid username</small></label>
+                                <input required autocomplete="off" name="description" id="description" type="text" class="form-control radius-30" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Event From</label>
+                                <input required name="event_from" id="event_from" type="date" class="form-control radius-30" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Event To</label>
+                                <input required name="to" id="to" type="date" class="form-control radius-30" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Due Date</label>
+                                <input required name="due_date" id="due_date" type="date" class="form-control radius-30" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Advance Reservation Percentage %</label>
+                                <input required name="advance_reservation_percentage" id="advance_reservation_percentage" type="number" step="0.1" min="0" class="form-control radius-30" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Tax</label>
+                                <input required name="tax" id="tax" type="number" step="0.1" min="0" class="form-control radius-30" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Location</label>
+                                @Html.DropDownList("location_id", new SelectList(ViewBag.Locations, "id", "name"), "Select Locations", new { @class = "form-control", @name = "location_id", @style = "width:100%", @id = "location_id" })
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label>Status</label>
+                                <select class="form-control" name="active" id="active">
+                                    <option value="1">Active</option>
+                                    <option value="2">Inactive</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="modal fade" id="manage_hotels" tabindex="-1" role="dialog" aria-hidden="true">
+    <form action="" method="post" enctype='multipart/form-data'>
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal_title"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-body">
+                        <div class="form-row">
+                            <input type="hidden" name="id" id="id" value="0" />
+                            <input type="hidden" name="event_id" id="event_id" value="0" />
+                            <div class="form-group col-md-6" id="hotel_div">
+                                <label>Hotel</label>
+                                <select id="hotel_id" name="hotel_id" class="form-control"></select>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Vendor</label>
+                                @Html.DropDownList("vendor_id", new SelectList(ViewBag.Vendors, "id", "NamePlusCode"), "Select Vendor", new { @class = "form-control", @name = "vendor_id", @id = "vendor_id" })
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Single Price</label>
+                                <input name="single_price" id="single_price" type="number" min="0" step="0.1" class="form-control radius-30" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Vendor Single Price</label>
+                                <input name="vendor_single_price" id="vendor_single_price" type="number" min="0" step="0.1" class="form-control radius-30" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Double Price</label>
+                                <input name="double_price" id="double_price" type="number" min="0" step="0.1" class="form-control radius-30" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Vendor Double Price</label>
+                                <input name="vendor_douple_price" id="vendor_douple_price" type="number" min="0" step="0.1" class="form-control radius-30" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Triple Price</label>
+                                <input name="triple_price" id="triple_price" type="number" min="0" step="0.1" class="form-control radius-30" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Vendor Triple Price</label>
+                                <input name="vendor_triple_price" id="vendor_triple_price" type="number" min="0" step="0.1" class="form-control radius-30" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Quad Price</label>
+                                <input name="quad_price" id="quad_price" type="number" min="0" step="0.1" class="form-control radius-30" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Vendor Quad Price</label>
+                                <input name="vendor_quad_price" id="vendor_quad_price" type="number" min="0" step="0.1" class="form-control radius-30" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Currency</label>
+                                @Html.DropDownList("currency", new SelectList(ViewBag.currency, "id", "name"), "Select Currency", new { @class = "form-control", @name = "currency", @id = "currency" })
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>benefits</label>
+                                @Html.DropDownList("benefits[]", new SelectList(ViewBag.benefits, "id", "name"), "Select benefits", new { @class = "selectize", @multiple = "multiple", @name = "benefits", @id = "benefits" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="page-header">
+    <nav class="breadcrumb-one" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="javascript:void(0);">Event</a></li>
+        </ol>
+    </nav>
+    <div class="dropdown filter custom-dropdown-icon">
+        <a class="dropdown-toggle btn" href="#" role="button" id="filterDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="text">More</span> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
+
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="filterDropdown">
+            <a class="dropdown-item" id="add_event" data-value="<span>Show</span> : Add User" href="javascript:void(0);">Add Event</a>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="form-group col-4">
+        <input class="form-control" type="text" id="text_search" name="text_search" placeholder="Search">
+    </div>
+    <div class="form-group col-2">
+        <button id="search" class="btn btn-primary px-3 radius-30">Search</button>
+    </div>
+    <div class="form-group col-2">
+        <button id="reset" class="btn btn-danger px-3 radius-30">Reset</button>
+    </div>
+
+</div>
+
+<div class="card">
+    <div class="card-body">
+
+        <div class="table-responsive">
+            <table id="eventTable" class="table table-striped table-bordered" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Location</th>
+                        <th>Hotels</th>
+                        <th>Active</th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+            </table>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script>
+       $(document).ready(function () {
+
+
+           var datatable = $('#eventTable')
+                .DataTable({
+                    "processing": true,
+                    "serverSide": true,
+                    "scrollX": true,
+                    "stateSave": false,
+                    "lengthChange": false,
+                    "dom": 'Bfrtip',
+
+                    "buttons": ['copy', 'excel', 'pdf', 'print'],
+                    "pageLength":10,
+                    "rowId": 'id',
+                    "ajax": {
+                        "url": "@Url.Action("Index", "Event")",
+                        "type": "POST",
+                        "datatype": "json",
+                        "dataSrc": "data"
+                    },
+                    "columns": [
+                        {
+                            "data": "id",
+                            "searchable": true
+                        },
+                        {
+                            "data": "title",
+                            "searchable": true
+                        },
+                        {
+                            "data": "description",
+                            "searchable": true
+                        },
+                        {
+                            "data": "location_name",
+                            "searchable": true
+                        },
+                        {
+                            "data": "hotels", "searchable": true,
+                            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                                var html = "";
+                                if (oData.hotels) {
+                                    console.log(oData.hotels)
+                                    html += "<ul>";
+                                    oData.hotels.forEach(function (value) {
+                                        console.log(value);
+                                        html += "<li>";
+                                        html += `${value.name}  <a class='editHotel' href='javascript:void(0)' data-id='${value.id}'
+                                        data-hotel_id='${value.hotel_id}' data-single_price='${value.single_price}' data-double_price='${value.double_price}'
+                                        data-triple_price='${value.triple_price}' data-quad_price='${value.quad_price}'
+                                        data-vendor_single_price='${value.vendor_single_price}'  data-vendor_douple_price='${value.vendor_douple_price}'
+                                        data-vendor_triple_price='${value.vendor_triple_price}'  data-vendor_quad_price='${value.vendor_quad_price}'
+                                        data-eventHotelBenefit='${JSON.stringify(value.eventHotelBenefit)}' data-currency='${value.currency}' data-vendor_id='${value.vendor_id}'
+                                        title='Edit Hotel'><i class='fa fa-edit'></i></a>&nbsp;`;
+                                        html += "<a class='deleteHotel' href='javascript:void(0)' data-id='" + value.id + "' data-name='" + value.name + "' title='Delete Child'><i class='fa fa-trash'></i></a><br/>";
+                                        html += "</li>";
+                                    });
+                                    html += "</ul>";
+                                }
+
+                                $(nTd).html("<span class='action-column'>" + html + "</span>");
+                            }
+                        },
+                        {
+                            "data": "active", "searchable": true,
+                            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                                var html = "";
+                                if (oData.active == 1)
+                                    html += "<span class='badge badge-primary'>Yes</span>";
+                                else
+                                    html += "<span class='badge badge-danger'>No</span>";
+                                $(nTd).html("<span class='action-column'>" + html + "</span>");
+                            }
+                        },
+                        {
+                            "data": "id", "searchable": true,
+                            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                                var html = "";
+                                html += "<a class='addHotel' href='javascript:void(0)' id='" + oData.id + "' title='Add Hotels'><i class='fa fa-plus'></i></a>&nbsp; | &nbsp;";
+
+                                html += "<a class='edit' href='javascript:void(0)' title='Edit'><i class='far fa-edit'></i></a>&nbsp;";
+                                html += "<a class='delete' href='javascript:void(0)' title='Delete'><i class='fas fa-trash'></i></a>";
+                                $(nTd).html("<span class='action-column'>" + html + "</span>");
+                            }
+                        },
+                    ]
+                 });
+
+            $('#search').on('click', function () {
+                datatable.search($("#text_search").val());
+                datatable.draw();
+            });
+
+            $('#text_search').on('keyup', function (e) {
+                if (e.keyCode == 13)
+                    $('#search_button').trigger('click');
+            });
+
+            $('#reset').on('click', function () {
+                $("#text_search").val("");
+
+                $('#search').trigger('click');
+
+            });
+
+
+           function getHotels(dialog, location_id, hotel_id = 0) {
+
+               $.ajax({
+                    type: "GET",
+                    url: '@Url.Action("getHotels", "Event")',
+                    contentType: "application/json; charset=utf-8",
+                    data: { "location_id": location_id },
+                    datatype: "json",
+                    success: function (hotels) {
+                        console.log(hotels.hotels)
+                        dialog.find('#hotel_id').remove();
+                        var html = '<select id="hotel_id" name="hotel_id" class="form-control">';
+                        hotels.hotels.forEach(function (value) {
+                            if (value.id == hotel_id) {
+                                html += '<option value="' + value.id + '" selected>' + value.name + '</option>';
+
+                            } else {
+                                html += '<option value="' + value.id + '">' + value.name + '</option>';
+
+                            }
+                        })
+                        html += '</select>';
+                        dialog.find('#hotel_div').append(html);
+                    },
+                    error: function (request, status, error) {
+                        //alert("Dynamic content load failed.");
+                    }
+              });
+           }
+
+
+           $(document).on("click", ".editHotel", function () {
+                var data = datatable.row($(this).closest('tr')).data();
+                var id = $(this).attr('data-id');
+                var hotel_id = $(this).attr('data-hotel_id');
+                var single_price = $(this).attr('data-single_price');
+                var double_price = $(this).attr('data-double_price');
+                var triple_price = $(this).attr('data-triple_price');
+                var quad_price = $(this).attr('data-quad_price');
+                var vendor_single_price = $(this).attr('data-vendor_single_price');
+                var vendor_douple_price = $(this).attr('data-vendor_douple_price');
+                var vendor_triple_price = $(this).attr('data-vendor_triple_price');
+               var vendor_quad_price = $(this).attr('data-vendor_quad_price');
+               var vendor_id = $(this).attr('data-vendor_id');
+                var currency = $(this).attr('data-currency');
+                var eventHotelBenefit = JSON.parse($(this).attr('data-eventHotelBenefit'));
+               console.log(id);
+                var modal = $('#manage_hotels').clone();
+                var action = '@Url.Action("saveEventHotel", "Event")';
+                modal.find('form').attr('action', action);
+                modal.find('#modal_title').text('Edit Event Hotel');
+                modal.execModal({
+                    progressBar: 'progress_bar',
+                    progressText: 'progress_text',
+                }, function (response) {
+                        datatable.draw();
+
+                }, function (response) {
+
+                }, function (dialog) {
+                        dialog.find('#id').val(id);
+                        dialog.find('#event_id').val(data.id);
+                        dialog.find('#hotel_id').val(hotel_id);
+                        dialog.find('.rate').find('.four-star').addClass('fas rate-active');
+                        dialog.find('#single_price').val(single_price);
+                        dialog.find('#double_price').val(double_price);
+                        dialog.find('#triple_price').val(triple_price);
+                        dialog.find('#quad_price').val(quad_price);
+                        dialog.find('#vendor_single_price').val(vendor_single_price);
+                        dialog.find('#vendor_douple_price').val(vendor_douple_price);
+                        dialog.find('#vendor_triple_price').val(vendor_triple_price);
+                        dialog.find('#vendor_quad_price').val(vendor_quad_price);
+                        dialog.find('#currency option[value=' + currency + ']').attr('selected', 'selected');
+
+                        eventHotelBenefit.forEach(function (value) {
+                            dialog.find("#benefits").prepend("<option value=" + value.benefit_id + " selected>" + value.name + "</option>");
+                        });
+                        dialog.find('#benefits').initializeSelectize();
+
+                        if (data.location_id)
+                            getHotels(dialog, data.location_id, hotel_id)
+
+                        if (vendor_id)
+                            dialog.find('#vendor_id option[value=' + vendor_id + ']').attr('selected', 'selected');
+
+
+                });
+
+            });
+
+
+           $(document).on("click", ".addHotel", function () {
+               var data = datatable.row($(this).closest('tr')).data();
+                var modal = $('#manage_hotels').clone();
+                var action = '@Url.Action("saveEventHotel", "Event")';
+                modal.find('form').attr('action', action);
+                modal.find('#modal_title').text('Add Event Hotel');
+                modal.execModal({
+                    progressBar: 'progress_bar',
+                    progressText: 'progress_text',
+                }, function (response) {
+
+                        datatable.draw();
+
+                }, function (response) {
+
+                }, function (dialog) {
+                    dialog.find('#event_id').val(data.id);
+                    dialog.find('#benefits').initializeSelectize();
+                        //dialog.find('#event_hotels_ids').selectize({
+                        //    plugins: ['remove_button'],
+                        //});
+                    if (data.location_id)
+                        getHotels(dialog, data.location_id)
+                });
+            });
+
+           $("#add_event").click(function () {
+                var modal = $('#manage_event_modal').clone();
+                var action = '@Url.Action("saveEvent", "Event")';
+                modal.find('form').attr('action', action);
+                modal.find('#modal_title').text('Add Event');
+                modal.execModal({
+                    progressBar: 'progress_bar',
+                    progressText: 'progress_text',
+                }, function (response) {
+
+                        datatable.draw();
+
+                }, function (response) {
+
+                }, function (dialog) {
+                        //dialog.find('#event_hotels_ids').selectize({
+                        //    plugins: ['remove_button'],
+                        //});
+                });
+            });
+
+            $(document).on("click", ".edit", function () {
+                var data = datatable.row($(this).closest('tr')).data();
+                console.log(data);
+                var modal = $('#manage_event_modal').clone();
+                var action = '@Url.Action("saveEvent", "Event")';
+                modal.find('form').attr('action', action);
+                modal.find('#modal_title').text('Edit Event');
+                modal.execModal({
+                    progressBar: 'progress_bar',
+                    progressText: 'progress_text',
+                }, function (response) {
+                        datatable.draw();
+
+                }, function (response) {
+
+                }, function (dialog) {
+
+                        dialog.find('#id').val(data.id);
+                        dialog.find('#title').val(data.title);
+                        dialog.find('#description').val(data.description);
+                        dialog.find('#tax').val(data.tax);
+                        dialog.find('#advance_reservation_percentage').val(data.advance_reservation_percentage);
+                        if (data.event_from) {
+                            var value = new Date
+                                (
+                                    parseInt(data.event_from.replace(/(^.*\()|([+-].*$)/g, ''))
+                                );
+                            var date_from = value.getFullYear() +
+                                "-" +
+                                ("0" + (value.getMonth() + 1)).slice(-2) +
+                                "-" +
+                                ("0" + value.getDate()).slice(-2)
+                                ;
+                            dialog.find('#event_from').val(date_from);
+                        }
+                        if (data.to) {
+                            var value = new Date
+                                (
+                                    parseInt(data.to.replace(/(^.*\()|([+-].*$)/g, ''))
+                                );
+                            var date_to = value.getFullYear() +
+                                "-" +
+                                ("0" + (value.getMonth() + 1)).slice(-2) +
+                                "-" +
+                                ("0" + value.getDate()).slice(-2)
+                                ;
+                            dialog.find('#to').val(date_to);
+                        }
+                        if (data.due_date) {
+                            var value = new Date
+                                (
+                                    parseInt(data.due_date.replace(/(^.*\()|([+-].*$)/g, ''))
+                                );
+                            var due_date = value.getFullYear() +
+                                "-" +
+                                ("0" + (value.getMonth() + 1)).slice(-2) +
+                                "-" +
+                                ("0" + value.getDate()).slice(-2)
+                                ;
+                            dialog.find('#due_date').val(due_date);
+                        }
+
+                        dialog.find('#active option[value=' + data.active + ']').attr('selected', 'selected');
+                        dialog.find('#location_id option[value=' + data.location_id + ']').attr('selected', 'selected');
+
+
+                });
+
+            });
+           $(document).on("click", ".deleteHotel", function () {
+               var data = datatable.row($(this).closest('tr')).data();
+               debugger
+               var id = $(this).attr('data-id');
+               var name = $(this).attr('data-name');
+               warningBox("Are you sure you want to delete this Hotel (<b>" + name +"</b>) ?", function () {
+                    $.ajax({
+                        type: "GET",
+                        url: '@Url.Action("deleteEventHotel", "Event")',
+                        contentType: "application/json; charset=utf-8",
+                        data: { "id": id },
+                        datatype: "json",
+                        success: function (data) {
+                            datatable.draw();
+                        },
+                        error: function () {
+                            alert("Dynamic content load failed.");
+                        }
+                    });
+                });
+           });
+            $(document).on("click", ".delete", function () {
+                var data = datatable.row($(this).closest('tr')).data();
+                warningBox("Are you sure you want to delete this Event (<b>" + data.name +"</b>) ?", function () {
+                    $.ajax({
+                        type: "GET",
+                        url: '@Url.Action("deleteEvent", "Event")',
+                        contentType: "application/json; charset=utf-8",
+                        data: { "id": data.id },
+                        datatype: "json",
+                        success: function (data) {
+                            datatable.draw();
+                        },
+                        error: function () {
+                            alert("Dynamic content load failed.");
+                        }
+                    });
+                });
+            });
+
+        });
+
+    </script>
+}
+
