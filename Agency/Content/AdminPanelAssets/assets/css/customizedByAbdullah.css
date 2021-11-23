@@ -490,7 +490,8 @@ input[type="date"] {
 }
 
 
-                                        /* fixing arrow of select */
+
+/* fixing arrow of select */
 .form-group select { /* to remove old arrow*/
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -655,7 +656,20 @@ input[type="date"] {
     padding: 20px 0px
 }
 
-                                            /* navbar */
+
+/* pagination*/
+.paginate_button.page-item.active a {
+    border-radius: 25px;
+    margin: 0px 7px;
+}
+
+                                        /* icons */
+.action-column .addHotel {
+    color: red
+}
+                                        /* navbar */
 .topbar-nav.header nav#topbar ul.menu-categories li.menu > a > div {
     display: flex;
 }
+
+
