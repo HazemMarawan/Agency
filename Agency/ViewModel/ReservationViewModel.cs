@@ -45,6 +45,8 @@ namespace Agency.ViewModel
         public int? event_hotel_id { get; set; }
         public double? hotel_rate { get; set; }
         public string company_name { get; set; }
+        public string created_at_string { get; set; }
+        public string financial_due_date_string { get; set; }
         public string hotel_name { get; set; }
         public string email { get; set; }
         public string phone { get; set; }
