@@ -737,7 +737,7 @@
                             html += "<a class='details' href='/ReservationDetail/Index/" + oData.id + "' title='Details'><i class='far fa-eye'></i></a>&nbsp;|";
                             html += "<a class='confMail' href='javascript:void(0)' title='Send Email'><i class='far fa-envelope-open'></i></a>&nbsp;|";
                             //html += "<a target='_blank' class='Itinirary' href='/ReservationDetail/Itinirary/" + oData.id + "' title='Itinirary'><i class='far fa-eye'></i></a>&nbsp;|";
-                            //html += "<a target='_blank' class='Invoice' href='/ReservationDetail/Invoice/" + oData.id + "' title='Invoice'><i class='far fa-eye'></i></a>";
+                            html += "<a target='_blank' class='view' href='/Reservation/View/" + oData.id + "' title='View'><i class='far fa-eye'></i></a>";
                             $(nTd).html("<span class='action-column'>" + html + "</span>");
                         }
                     },
@@ -910,6 +910,7 @@
 
                                 html += "<a class='details' href='/ReservationDetail/Index/" + oData.id + "' title='Details'><i class='far fa-eye'></i></a>&nbsp;|";
                                 html += "<a class='confMail' href='javascript:void(0)' title='Send Email'><i class='far fa-envelope-open'></i></a>&nbsp;|";
+                                html += "<a target='_blank' class='view' href='/Reservation/View/" + oData.id + "' title='View'><i class='far fa-eye'></i></a>";
                                 //html += "<a target='_blank' class='Itinirary' href='/ReservationDetail/Itinirary/" + oData.id + "' title='Itinirary'><i class='far fa-eye'></i></a>&nbsp;|";
                                 //html += "<a target='_blank' class='Invoice' href='/ReservationDetail/Invoice/" + oData.id + "' title='Invoice'><i class='far fa-eye'></i></a>";
                                 $(nTd).html("<span class='action-column'>" + html + "</span>");
@@ -1082,7 +1083,7 @@
                             fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
                                 var html = "";
                                 html += "<a class='editPaid' href='javascript:void(0)' title='Edit'><i class='far fa-edit'></i></a>&nbsp;|";
-
+                                html += "<a target='_blank' class='view' href='/Reservation/View/" + oData.id + "' title='View'><i class='far fa-eye'></i></a>&nbsp;|";
                                 html += "<a class='details' href='/ReservationDetail/Index/" + oData.id + "' title='Details'><i class='far fa-eye'></i></a>&nbsp;|";
                                 html += "<a class='confMail' href='javascript:void(0)' title='Send Email'><i class='far fa-envelope-open'></i></a>&nbsp;|";
                                 html += "<a target='_blank' class='Itinirary' href='/ReservationDetail/Itinirary/" + oData.id + "' title='Itinirary'><i class='far fa-eye'></i></a>&nbsp;|";

@@ -3828,6 +3828,7 @@
     <Content Include="Views\Vendor\Index.cshtml" />
     <Content Include="Views\ReservationDetail\Invoice.cshtml" />
     <Content Include="Views\ReservationDetail\Itinirary.cshtml" />
+    <Content Include="Views\Reservation\View.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

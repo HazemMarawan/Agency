@@ -40,6 +40,11 @@ namespace Agency.Controllers
                                  select new ReservationViewModel { id = ((int)s), shift_name = s.ToString() };
             return View();
         }
+        public ActionResult View(int id)
+        {
+            Reservation reservation = db.Reservations.Find(id);
+            return View(reservation);
+        }
         public ReservationViewModel calculateTotalandVendor(int res_id)
         {
             double? total_amount = 0;
