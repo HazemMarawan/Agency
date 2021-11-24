@@ -489,7 +489,9 @@ input[type="date"] {
     color: #17a2b8;
 }
 
-
+.fa-plus {
+    color:red
+}
 
 /* fixing arrow of select */
 .form-group select { /* to remove old arrow*/
@@ -673,3 +675,50 @@ input[type="date"] {
 }
 
 
+
+                                            /* booking info page tabs */
+.widget-content-area-edit2 {
+    border: none;
+    box-shadow: none;
+}
+
+.widget-content-area-edit2 li{
+    display:flex;
+    align-items:center
+}
+
+.widget-content-area-edit2 .nav-link {
+    padding-right: 30px;
+    cursor: default;
+}
+
+.widget-content-area-edit2 .edit {
+    position: relative;
+    left: -20px;
+    cursor: pointer;
+}
+
+.widget-header .inovice-link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2px 10px 2px 5px
+}
+
+.widget-header .inovice-link svg {
+    margin-right: 10px!important;
+    color: white;
+}
+
+.item-of-detailed-table {
+    display: flex;
+    margin-top: 10px;
+    padding: 10px;
+    border:1px solid lightskyblue;
+    border-radius:25px;
+    box-shadow: inset 0px 0px 15px whitesmoke;
+}
+
+.item-of-detailed-table .part-a p {
+    border-right: 1px solid lightskyblue
+}
