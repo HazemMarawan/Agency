@@ -37,6 +37,8 @@ namespace Agency.Models
 
         public virtual DbSet<Reservation> Reservations { get; set; }
         public virtual DbSet<ReservationDetail> ReservationDetails { get; set; }
+        public virtual DbSet<ReservationComment> ReservationComments { get; set; }
+        public virtual DbSet<ReservationTask> ReservationTasks { get; set; }
 
         public virtual DbSet<Location> Locations { get; set; }
         public virtual DbSet<HotelLocation> HotelLocations { get; set; }

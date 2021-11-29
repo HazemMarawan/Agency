@@ -499,12 +499,15 @@
                                     <thead>
                                         <tr>
                                             <th width="5%">BookingID</th>
-                                            <th width="10%">Date Submitted</th>
-                                            <th width="20%">Opener/Closer</th>
-                                            <th width="20%">Status</th>
-                                            <th width="10%">Due Date</th>
-                                            <th width="10%">Collected</th>
-                                            <th width="10%">Profit</th>
+                                            <th width="9%">Date Submitted</th>
+                                            <th width="9%">Company Name</th>
+                                            <th width="9%">Status</th>
+                                            <th width="9%">Check-in/out</th>
+                                            <th width="9%">Opener/Closer</th>
+                                            <th width="9%">Balance Due Date</th>
+                                            <th width="9%">Collected</th>
+                                            <th width="9%">Balance</th>
+                                            <th width="9%">Profit</th>
                                             <th width="15%"></th>
                                         </tr>
                                     </thead>
@@ -524,13 +527,16 @@
                                     <thead>
                                         <tr>
                                             <th width="5%">BookingID</th>
-                                            <th width="10%">Date Submitted</th>
-                                            <th width="20%">Opener/Closer</th>
-                                            <th width="20%">Status</th>
-                                            <th width="10%">Due Date</th>
-                                            <th width="10%">Collected</th>
-                                            <th width="10%">Profit</th>
-                                            <th width="15%"></th>
+                                            <th width="9%">Date Submitted</th>
+                                            <th width="9%">Company Name</th>
+                                            <th width="9%">Status</th>
+                                            <th width="9%">Check-in/out</th>
+                                            <th width="9%">Opener/Closer</th>
+                                            <th width="9%">Balance Due Date</th>
+                                            <th width="9%">Collected</th>
+                                            <th width="9%">Balance</th>
+                                            <th width="9%">Profit</th>
+                                            <th width="14%"></th>
                                         </tr>
                                     </thead>
                                 </table>
@@ -549,13 +555,16 @@
                                     <thead style="width: 100%!important">
                                         <tr>
                                             <th width="5%">BookingID</th>
-                                            <th width="10%">Date Submitted</th>
-                                            <th width="20%">Opener/Closer</th>
-                                            <th width="20%">Status</th>
-                                            <th width="10%">Due Date</th>
-                                            <th width="10%">Collected</th>
-                                            <th width="10%">Profit</th>
-                                            <th width="15%"></th>
+                                            <th width="9%">Date Submitted</th>
+                                            <th width="9%">Company Name</th>
+                                            <th width="9%">Status</th>
+                                            <th width="9%">Check-in/out</th>
+                                            <th width="9%">Opener/Closer</th>
+                                            <th width="9%">Balance Due Date</th>
+                                            <th width="9%">Collected</th>
+                                            <th width="9%">Balance</th>
+                                            <th width="9%">Profit</th>
+                                            <th width="14%"></th>
                                         </tr>
                                     </thead>
                                 </table>
@@ -746,134 +755,97 @@
                 ]
             });
 
-        var unPaidReservationTable = $('#unPaidReservationTable')
-        .DataTable({/* we added this from the other system to have same search and same pagination*/
-            "dom": "<'dt--top-section '<'row'<'col-sm-12 col-md-6 d-flex justify-content-md-start justify-content-center'B><'col-sm-12 col-md-6 d-flex justify-content-md-end justify-content-center mt-md-0 mt-3'f>>>" +
-                "<'table-responsive  'tr>" +
-                "<'dt--bottom-section d-sm-flex justify-content-sm-between text-center'<'dt--pages-count  mb-sm-0 mb-3'i><'dt--pagination'p>>",
-            "buttons": {
-                buttons: [
-                    { extend: 'copy', className: 'btn btn-sm' },
-                    { extend: 'csv', className: 'btn btn-sm' },
-                    { extend: 'excel', className: 'btn btn-sm' },
-                    { extend: 'print', className: 'btn btn-sm' }
-                ]
-            },
-            "oLanguage": {
-                "oPaginate": { "sPrevious": 'Perivous', "sNext": 'Next' },
-                "sInfo": "Showing page _PAGE_ of _PAGES_",
-                "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
-                "sSearchPlaceholder": "Search...",
-                "sLengthMenu": "Results :  _MENU_",
-            },
-            "processing": true,
-            "serverSide": true,
-            "scrollX": true,
-            "stateSave": false,
-            "lengthChange": false,
-            "dom": 'Bfrtip',
-            "buttons": ['copy', 'excel', 'pdf', 'print'],
-            "pageLength":10,
-            "rowId": 'id',
-            "ajax": {
-                "url": "@Url.Action("unPaidReservations", "Reservation")",
-                "type": "POST",
-                "datatype": "json",
-                "dataSrc": "data"
-            },
-            "columns": [
-                {
-                    "data": "id",
-                    "searchable": true
+            var unPaidReservationTable = $('#unPaidReservationTable')
+            .DataTable({/* we added this from the other system to have same search and same pagination*/
+                "dom": "<'dt--top-section '<'row'<'col-sm-12 col-md-6 d-flex justify-content-md-start justify-content-center'B><'col-sm-12 col-md-6 d-flex justify-content-md-end justify-content-center mt-md-0 mt-3'f>>>" +
+                    "<'table-responsive  'tr>" +
+                    "<'dt--bottom-section d-sm-flex justify-content-sm-between text-center'<'dt--pages-count  mb-sm-0 mb-3'i><'dt--pagination'p>>",
+                "buttons": {
+                    buttons: [
+                        { extend: 'copy', className: 'btn btn-sm' },
+                        { extend: 'csv', className: 'btn btn-sm' },
+                        { extend: 'excel', className: 'btn btn-sm' },
+                        { extend: 'print', className: 'btn btn-sm' }
+                    ]
                 },
-                {
-                    "data": "created_at_string",
-                    "searchable": true
+                "oLanguage": {
+                    "oPaginate": { "sPrevious": 'Perivous', "sNext": 'Next' },
+                    "sInfo": "Showing page _PAGE_ of _PAGES_",
+                    "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                    "sSearchPlaceholder": "Search...",
+                    "sLengthMenu": "Results :  _MENU_",
                 },
-                {
-                    "data": "opener_name", "searchable": true,
-                    fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-                        var html = "";
-                        if (oData.opener_name || oData.closer_name) {
-                            if (oData.opener_name)
-                                html += "<span style='font-weight:bold;' class='fw-bold'>Opener:</span>" + oData.opener_name + "<br/>";
-                            if (oData.closer_name)
-                                html += "<span style='font-weight:bold;' class='bold'>Closer:</span>" + oData.closer_name;
-                        } else
-                            html += "<span style='font-weight:bold;text-color:red;' class='bold'>Not Assigned</span>";
-                            
-                        $(nTd).html("<span class='action-column'>" + html + "</span>");
-                    }
+                "processing": true,
+                "serverSide": true,
+                "scrollX": true,
+                "stateSave": false,
+                "lengthChange": false,
+                "dom": 'Bfrtip',
+                "buttons": ['copy', 'excel', 'pdf', 'print'],
+                "pageLength":10,
+                "rowId": 'id',
+                "ajax": {
+                    "url": "@Url.Action("unPaidReservations", "Reservation")",
+                    "type": "POST",
+                    "datatype": "json",
+                    "dataSrc": "data"
                 },
-                {
-                    "data": "status", "searchable": true,
-                    fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-                        var html = "";
-                        if (oData.status || oData.total_rooms || oData.total_nights) {
-                            if (oData.status)
-                                html += "<span style='font-weight:bold;' class='fw-bold'>" + oData.status + "</span><br/>";
-                            if (oData.total_rooms)
-                                html += oData.total_rooms + " <span style='font-weight:bold;' class='fw-bold'>Rooms</span><br/>";
-                            if (oData.total_nights)
-                                html += oData.total_nights + " <span style='font-weight:bold;' class='fw-bold'>Nights</span><br/>";
-                        } else {
-                            html += "<span style='font-weight:bold;text-color:red;' class='bold'>Not Assigned</span>";
+                "columns": [
+                    {
+                        "data": "id",
+                        "searchable": true
+                    },
+                    {
+                        "data": "id",
+                        "searchable": true
+                    },
+                    {
+                        "data": "id",
+                        "searchable": true
+                    },
+                    {
+                        "data": "id",
+                        "searchable": true
+                    },
+                    {
+                        "data": "id",
+                        "searchable": true
+                    },
+                    {
+                        "data": "id",
+                        "searchable": true
+                    },
+                    {
+                        "data": "id",
+                        "searchable": true
+                    },
+                    {
+                        "data": "id",
+                        "searchable": true
+                    },
+                    {
+                        "data": "id",
+                        "searchable": true
+                    },
+                    {
+                        "data": "id",
+                        "searchable": true
+                    },
+                    {
+                        "data": "id", "searchable": true,
+                        fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                            var html = "";
+                            html += "<a class='editUnPaid' href='javascript:void(0)' title='Edit'><i class='far fa-edit'></i></a>&nbsp;|";
 
+                            //html += "<a class='details' href='/ReservationDetail/Index/" + oData.id + "' title='Details'><i class='far fa-eye'></i></a>&nbsp;|";
+                            html += "<a class='confMail' href='javascript:void(0)' title='Send Email'><i class='far fa-envelope-open'></i></a>&nbsp;|";
+                            //html += "<a target='_blank' class='Itinirary' href='/ReservationDetail/Itinirary/" + oData.id + "' title='Itinirary'><i class='far fa-eye'></i></a>&nbsp;|";
+                            html += "<a target='_blank' class='view' href='/Reservation/View/" + oData.id + "' title='View'><i class='far fa-eye'></i></a>";
+                            $(nTd).html("<span class='action-column'>" + html + "</span>");
                         }
-                        $(nTd).html("<span class='action-column'>" + html + "</span>");
-                    }
-                },
-                {
-                    "data": "financial_due_date_string", "searchable": true,
-                    fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-                        var html = "";
-                        if (oData.financial_due_date_string)
-                            html += "<span style='font-weight:bold;' class='fw-bold'>" + oData.financial_due_date_string + "</span><br/>";
-                        else
-                            html += "<span style='font-weight:bold;text-color:red;' class='bold'>Not Assigned</span>";
-
-                        $(nTd).html("<span class='action-column'>" + html + "</span>");
-                    }
-                },
-                {
-                    "data": "paid_amount", "searchable": true,
-                    fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-                        var html = "";
-                        if (oData.paid_amount)
-                            html += "<span style='font-weight:bold;' class='fw-bold'>" + oData.paid_amount + "</span><br/>";
-                        else 
-                            html += "<span style='font-weight:bold;text-color:red;' class='bold'>Not Assigned</span>";
-
-                        $(nTd).html("<span class='action-column'>" + html + "</span>");
-                    }
-                },
-                {
-                    "data": "profit", "searchable": true,
-                    fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-                        var html = "";
-                        if (oData.profit)
-                            html += "<span style='font-weight:bold;' class='fw-bold'>" + oData.profit + "</span><br/>";
-                        else
-                            html += "<span style='font-weight:bold;text-color:red;' class='bold'>Not Assigned</span>";
-
-                        $(nTd).html("<span class='action-column'>" + html + "</span>");
-                    }
-                },
-                {
-                    "data": "id", "searchable": true,
-                    fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-                        var html = "";
-                        html += "<a class='editUnPaid' href='javascript:void(0)' title='Edit'><i class='far fa-edit'></i></a>&nbsp;|";
-
-                        html += "<a class='details' href='/ReservationDetail/Index/" + oData.id + "' title='Details'><i class='far fa-eye'></i></a>&nbsp;|";
-                        html += "<a class='confMail' href='javascript:void(0)' title='Send Email'><i class='far fa-envelope-open'></i></a>&nbsp;|";
-                        //html += "<a target='_blank' class='Itinirary' href='/ReservationDetail/Itinirary/" + oData.id + "' title='Itinirary'><i class='far fa-eye'></i></a>&nbsp;|";
-                        html += "<a target='_blank' class='view' href='/Reservation/View/" + oData.id + "' title='View'><i class='far fa-eye'></i></a>";
-                        $(nTd).html("<span class='action-column'>" + html + "</span>");
-                    }
-                },
-            ]
-        });
+                    },
+                ]
+            });
 
            var partiallyReservationTable = $('#partiallyReservationTable')
                .DataTable({/* we added this from the other system to have same search and same pagination*/
@@ -917,77 +889,40 @@
                             "searchable": true
                         },
                         {
-                            "data": "created_at_string",
+                            "data": "id",
                             "searchable": true
                         },
                         {
-                            "data": "opener_name", "searchable": true,
-                            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-                                var html = "";
-                                if (oData.opener_name || oData.closer_name) {
-                                    if (oData.opener_name)
-                                        html += "<span style='font-weight:bold;' class='fw-bold'>Opener:</span>" + oData.opener_name + "<br/>";
-                                    if (oData.closer_name)
-                                        html += "<span style='font-weight:bold;' class='bold'>Closer:</span>" + oData.closer_name;
-                                } else
-                                    html += "<span style='font-weight:bold;text-color:red;' class='bold'>Not Assigned</span>";
-
-                                $(nTd).html("<span class='action-column'>" + html + "</span>");
-                            }
+                            "data": "id",
+                            "searchable": true
                         },
                         {
-                            "data": "status", "searchable": true,
-                            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-                                var html = "";
-                                if (oData.status || oData.total_rooms || oData.total_nights) {
-                                    if (oData.status)
-                                        html += "<span style='font-weight:bold;' class='fw-bold'>" + oData.status + "</span><br/>";
-                                    if (oData.total_rooms)
-                                        html += oData.total_rooms + " <span style='font-weight:bold;' class='fw-bold'>Rooms</span><br/>";
-                                    if (oData.total_nights)
-                                        html += oData.total_nights + " <span style='font-weight:bold;' class='fw-bold'>Nights</span><br/>";
-                                } else {
-                                    html += "<span style='font-weight:bold;text-color:red;' class='bold'>Not Assigned</span>";
-
-                                }
-                                $(nTd).html("<span class='action-column'>" + html + "</span>");
-                            }
+                            "data": "id",
+                            "searchable": true
                         },
                         {
-                            "data": "financial_due_date_string", "searchable": true,
-                            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-                                var html = "";
-                                if (oData.financial_due_date_string)
-                                    html += "<span style='font-weight:bold;' class='fw-bold'>" + oData.financial_due_date_string + "</span><br/>";
-                                else
-                                    html += "<span style='font-weight:bold;text-color:red;' class='bold'>Not Assigned</span>";
-
-                                $(nTd).html("<span class='action-column'>" + html + "</span>");
-                            }
+                            "data": "id",
+                            "searchable": true
                         },
                         {
-                            "data": "paid_amount", "searchable": true,
-                            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-                                var html = "";
-                                if (oData.paid_amount)
-                                    html += "<span style='font-weight:bold;' class='fw-bold'>" + oData.paid_amount + "</span><br/>";
-                                else
-                                    html += "<span style='font-weight:bold;text-color:red;' class='bold'>Not Assigned</span>";
-
-                                $(nTd).html("<span class='action-column'>" + html + "</span>");
-                            }
+                            "data": "id",
+                            "searchable": true
                         },
                         {
-                            "data": "profit", "searchable": true,
-                            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-                                var html = "";
-                                if (oData.profit)
-                                    html += "<span style='font-weight:bold;' class='fw-bold'>" + oData.profit + "</span><br/>";
-                                else
-                                    html += "<span style='font-weight:bold;text-color:red;' class='bold'>Not Assigned</span>";
-
-                                $(nTd).html("<span class='action-column'>" + html + "</span>");
-                            }
+                            "data": "id",
+                            "searchable": true
+                        },
+                        {
+                            "data": "id",
+                            "searchable": true
+                        },
+                        {
+                            "data": "id",
+                            "searchable": true
+                        },
+                        {
+                            "data": "id",
+                            "searchable": true
                         },
                         {
                             "data": "id", "searchable": true,
@@ -995,13 +930,14 @@
                                 var html = "";
                                 html += "<a class='editUnPaid' href='javascript:void(0)' title='Edit'><i class='far fa-edit'></i></a>&nbsp;|";
 
-                                html += "<a class='details' href='/ReservationDetail/Index/" + oData.id + "' title='Details'><i class='far fa-eye'></i></a>&nbsp;|";
+                                //html += "<a class='details' href='/ReservationDetail/Index/" + oData.id + "' title='Details'><i class='far fa-eye'></i></a>&nbsp;|";
                                 html += "<a class='confMail' href='javascript:void(0)' title='Send Email'><i class='far fa-envelope-open'></i></a>&nbsp;|";
                                 //html += "<a target='_blank' class='Itinirary' href='/ReservationDetail/Itinirary/" + oData.id + "' title='Itinirary'><i class='far fa-eye'></i></a>&nbsp;|";
                                 html += "<a target='_blank' class='view' href='/Reservation/View/" + oData.id + "' title='View'><i class='far fa-eye'></i></a>";
                                 $(nTd).html("<span class='action-column'>" + html + "</span>");
                             }
                         },
+                       
                     ]
                  });
 
@@ -1051,6 +987,31 @@
                             "searchable": true
                         },
                         {
+                            "data": "company_name",
+                            "searchable": true
+                        },
+                        {
+                            "data": "id",
+                            "searchable": true
+                        },
+                        {
+                            "data": "opener_name", "searchable": true,
+                            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                                var html = "";
+                                if (oData.string_check_in || oData.string_check_out) {
+                                    if (oData.string_check_in)
+                                        html += "<span style='font-weight:bold;' class='bold'>Check in:</span>" + oData.string_check_in + "<br/>";
+                                    if (oData.string_check_out)
+                                        html += "<span style='font-weight:bold;' class='bold'>Check out:</span>" + oData.string_check_out;
+
+                                } else {
+                                    html += "<span style='font-weight:bold;' class='bold'>Not Assigned</span>";
+                                }
+
+                                $(nTd).html("<span class='action-column'>" + html + "</span>");
+                            }
+                        },
+                        {
                             "data": "opener_name", "searchable": true,
                             fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
                                 var html = "";
@@ -1062,24 +1023,6 @@
                                 } else
                                     html += "<span style='font-weight:bold;text-color:red;' class='bold'>Not Assigned</span>";
 
-                                $(nTd).html("<span class='action-column'>" + html + "</span>");
-                            }
-                        },
-                        {
-                            "data": "status", "searchable": true,
-                            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-                                var html = "";
-                                if (oData.status || oData.total_rooms || oData.total_nights) {
-                                    if (oData.status)
-                                        html += "<span style='font-weight:bold;' class='fw-bold'>" + oData.status + "</span><br/>";
-                                    if (oData.total_rooms)
-                                        html += oData.total_rooms + " <span style='font-weight:bold;' class='fw-bold'>Rooms</span><br/>";
-                                    if (oData.total_nights)
-                                        html += oData.total_nights + " <span style='font-weight:bold;' class='fw-bold'>Nights</span><br/>";
-                                } else {
-                                    html += "<span style='font-weight:bold;text-color:red;' class='bold'>Not Assigned</span>";
-
-                                }
                                 $(nTd).html("<span class='action-column'>" + html + "</span>");
                             }
                         },
@@ -1108,6 +1051,18 @@
                             }
                         },
                         {
+                            "data": "total_amount_after_tax", "searchable": true,
+                            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                                var html = "";
+                                if (oData.total_amount_after_tax)
+                                    html += "<span style='font-weight:bold;' class='fw-bold'>" + oData.profit + "</span><br/>";
+                                else
+                                    html += "<span style='font-weight:bold;text-color:red;' class='bold'>Not Assigned</span>";
+
+                                $(nTd).html("<span class='action-column'>" + html + "</span>");
+                            }
+                        },
+                        {
                             "data": "profit", "searchable": true,
                             fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
                                 var html = "";
@@ -1125,7 +1080,7 @@
                                 var html = "";
                                 html += "<a class='editUnPaid' href='javascript:void(0)' title='Edit'><i class='far fa-edit'></i></a>&nbsp;|";
 
-                                html += "<a class='details' href='/ReservationDetail/Index/" + oData.id + "' title='Details'><i class='far fa-eye'></i></a>&nbsp;|";
+                                //html += "<a class='details' href='/ReservationDetail/Index/" + oData.id + "' title='Details'><i class='far fa-eye'></i></a>&nbsp;|";
                                 html += "<a class='confMail' href='javascript:void(0)' title='Send Email'><i class='far fa-envelope-open'></i></a>&nbsp;|";
                                 //html += "<a target='_blank' class='Itinirary' href='/ReservationDetail/Itinirary/" + oData.id + "' title='Itinirary'><i class='far fa-eye'></i></a>&nbsp;|";
                                 html += "<a target='_blank' class='view' href='/Reservation/View/" + oData.id + "' title='View'><i class='far fa-eye'></i></a>";
@@ -1463,13 +1418,16 @@
             $(`.table thead `).css('width', '100%');
             $(`.table thead tr`).css('width', '100%');
             $(`.table thead tr th:nth-child(1)`).css('width', '5% ')
-            $(`.table thead tr th:nth-child(2)`).css('width', '10% ')
-            $(`.table thead tr th:nth-child(3)`).css('width', '20% ')
-            $(`.table thead tr th:nth-child(4)`).css('width', '20% ')
-            $(`.table thead tr th:nth-child(5)`).css('width', '10% ')
-            $(`.table thead tr th:nth-child(6)`).css('width', '10% ')
-            $(`.table thead tr th:nth-child(7)`).css('width', '10% ')
-            $(`.table thead tr th:nth-child(8)`).css('width', '15% ')
+            $(`.table thead tr th:nth-child(2)`).css('width', '9% ')
+            $(`.table thead tr th:nth-child(3)`).css('width', '9% ')
+            $(`.table thead tr th:nth-child(4)`).css('width', '9% ')
+            $(`.table thead tr th:nth-child(5)`).css('width', '9% ')
+            $(`.table thead tr th:nth-child(6)`).css('width', '9% ')
+            $(`.table thead tr th:nth-child(7)`).css('width', '9% ')
+            $(`.table thead tr th:nth-child(8)`).css('width', '9% ')
+            $(`.table thead tr th:nth-child(9)`).css('width', '9% ')
+            $(`.table thead tr th:nth-child(10)`).css('width', '9% ')
+            $(`.table thead tr th:nth-child(11)`).css('width', '14% ')
         })
     </script>
 }

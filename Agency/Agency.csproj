@@ -299,6 +299,14 @@
     <Compile Include="Migrations\202111191334065_hotel-address.Designer.cs">
       <DependentUpon>202111191334065_hotel-address.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202111282258073_comments.cs" />
+    <Compile Include="Migrations\202111282258073_comments.Designer.cs">
+      <DependentUpon>202111282258073_comments.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202111290102011_tasks.cs" />
+    <Compile Include="Migrations\202111290102011_tasks.Designer.cs">
+      <DependentUpon>202111290102011_tasks.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AgencyDbContext.cs" />
     <Compile Include="Models\City.cs" />
@@ -313,7 +321,9 @@
     <Compile Include="Models\HotelLocation.cs" />
     <Compile Include="Models\Location.cs" />
     <Compile Include="Models\Reservation.cs" />
+    <Compile Include="Models\ReservationComment.cs" />
     <Compile Include="Models\ReservationDetail.cs" />
+    <Compile Include="Models\ReservationTask.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\Vendor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -329,7 +339,9 @@
     <Compile Include="ViewModel\EventHotelBenefitViewModel.cs" />
     <Compile Include="ViewModel\HotelFacilitieViewModel.cs" />
     <Compile Include="ViewModel\HotelViewModel.cs" />
+    <Compile Include="ViewModel\ReservationCommentViewModel.cs" />
     <Compile Include="ViewModel\ReservationDetailViewModel.cs" />
+    <Compile Include="ViewModel\ReservationTaskViewModel.cs" />
     <Compile Include="ViewModel\ReservationViewModel.cs" />
     <Compile Include="ViewModel\UserViewModel.cs" />
     <Compile Include="ViewModel\VendorViewModel.cs" />
@@ -3942,6 +3954,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202111191334065_hotel-address.resx">
       <DependentUpon>202111191334065_hotel-address.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202111282258073_comments.resx">
+      <DependentUpon>202111282258073_comments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202111290102011_tasks.resx">
+      <DependentUpon>202111290102011_tasks.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

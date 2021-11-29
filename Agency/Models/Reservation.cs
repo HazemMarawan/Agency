@@ -62,5 +62,8 @@ namespace Agency.Models
         public int? event_hotel_id { get; set; }
         public EventHotel EventHotel { get; set; }
         public virtual ICollection<ReservationDetail> ReservationDetail { get; set; }
+        public virtual ICollection<ReservationComment> ReservationComments { get; set; }
+        public virtual ICollection<ReservationTask> ReservationTasks { get; set; }
+
     }
 }
