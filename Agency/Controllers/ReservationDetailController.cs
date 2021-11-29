@@ -419,6 +419,26 @@ namespace Agency.Controllers
             return Json(new { message = "done" }, JsonRequestBehavior.AllowGet);
 
         }
+        public JsonResult deleteComment(int id)
+        {
+            ReservationComment comment = db.ReservationComments.Find(id);
+
+            db.ReservationComments.Remove(comment);
+            db.SaveChanges();
+
+            return Json(new { message = "done" }, JsonRequestBehavior.AllowGet);
+
+        }
+        public JsonResult deleteTask(int id)
+        {
+            ReservationTask task = db.ReservationTasks.Find(id);
+
+            db.ReservationTasks.Remove(task);
+            db.SaveChanges();
+
+            return Json(new { message = "done" }, JsonRequestBehavior.AllowGet);
+
+        }
         public ActionResult Itinirary(int id)
         {
           
