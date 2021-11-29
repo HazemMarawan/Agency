@@ -796,40 +796,101 @@
                         "searchable": true
                     },
                     {
-                        "data": "id",
+                        "data": "created_at_string",
                         "searchable": true
                     },
                     {
-                        "data": "id",
+                        "data": "company_name",
                         "searchable": true
                     },
                     {
-                        "data": "id",
+                        "data": "status", "searchable": true,
+                        fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                            var html = "";
+                            if (oData.status || oData.total_rooms || oData.total_nights) {
+                                if (oData.status)
+                                    html += "<span style='font-weight:bold;' class='fw-bold'>" + oData.status + "</span><br/>";
+                                if (oData.total_rooms)
+                                    html += oData.total_rooms + " <span style='font-weight:bold;' class='fw-bold'>Rooms</span><br/>";
+                                if (oData.total_nights)
+                                    html += oData.total_nights + " <span style='font-weight:bold;' class='fw-bold'>Nights</span><br/>";
+                            } else {
+                                html += "<span style='font-weight:bold;text-color:red;' class='bold'>Not Assigned</span>";
+                            }
+                            $(nTd).html("<span class='action-column'>" + html + "</span>");
+                        }
+                    },
+                    {
+                        "data": "check_in", "searchable": true,
+                        fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                            var html = "";
+                            if (oData.string_check_in || oData.string_check_out) {
+                                if (oData.string_check_in)
+                                    html += "<span style='font-weight:bold;' class='fw-bold'>" + oData.string_check_in + "</span><br/>";
+                                if (oData.string_check_out)
+                                    html += "<span style='font-weight:bold;' class='fw-bold'" + oData.string_check_in + "</span><br/>";
+
+                            } else {
+                                html += "<span style='font-weight:bold;text-color:red;' class='bold'>Not Assigned</span>";
+                            }
+                            $(nTd).html("<span class='action-column'>" + html + "</span>");
+                        }
+                    },
+                    {
+                        "data": "opener", "searchable": true,
+                        fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                            var html = "";
+                            if (oData.opener || oData.closer) {
+                                if (oData.opener_name)
+                                    html += "<span style='font-weight:bold;' class='fw-bold'>" + oData.opener_name + "</span><br/>";
+                                if (oData.closer_name)
+                                    html += "<span style='font-weight:bold;' class='fw-bold'" + oData.closer_name + "</span><br/>";
+
+                            } else {
+                                html += "<span style='font-weight:bold;text-color:red;' class='bold'>Not Assigned</span>";
+                            }
+                            $(nTd).html("<span class='action-column'>" + html + "</span>");
+                        }
+                    },
+                    {
+                        "data": "financial_due_date",
                         "searchable": true
                     },
                     {
-                        "data": "id",
-                        "searchable": true
+                        "data": "paid_amount", "searchable": true,
+                        fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                            var html = "";
+                            if (oData.paid_amount)
+                                html += "<span style='font-weight:bold;' class='fw-bold'>" + addCommas(oData.paid_amount.toFixed(2)) + "</span><br/>";
+                            else
+                                html += "<span style='font-weight:bold;text-color:red;' class='bold'>-</span>";
+
+                            $(nTd).html("<span class='action-column'>" + html + "</span>");
+                        }
                     },
                     {
-                        "data": "id",
-                        "searchable": true
+                        "data": "total_amount_after_tax", "searchable": true,
+                        fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                            var html = "";
+                            if (oData.total_amount_after_tax)
+                                html += "<span style='font-weight:bold;' class='fw-bold'>" + addCommas((oData.total_amount_after_tax - oData.paid_amount).toFixed(2)) + "</span><br/>";
+                            else
+                                html += "<span style='font-weight:bold;text-color:red;' class='bold'>-</span>";
+
+                            $(nTd).html("<span class='action-column'>" + html + "</span>");
+                        }
                     },
                     {
-                        "data": "id",
-                        "searchable": true
-                    },
-                    {
-                        "data": "id",
-                        "searchable": true
-                    },
-                    {
-                        "data": "id",
-                        "searchable": true
-                    },
-                    {
-                        "data": "id",
-                        "searchable": true
+                        "data": "total_amount_after_tax", "searchable": true,
+                        fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                            var html = "";
+                            if (oData.total_amount_after_tax)
+                                html += "<span style='font-weight:bold;' class='fw-bold'>" + addCommas((oData.total_amount_after_tax).toFixed(2)) + "</span><br/>";
+                            else
+                                html += "<span style='font-weight:bold;text-color:red;' class='bold'>-</span>";
+
+                            $(nTd).html("<span class='action-column'>" + html + "</span>");
+                        }
                     },
                     {
                         "data": "id", "searchable": true,
@@ -889,40 +950,101 @@
                             "searchable": true
                         },
                         {
-                            "data": "id",
+                            "data": "created_at_string",
                             "searchable": true
                         },
                         {
-                            "data": "id",
+                            "data": "company_name",
                             "searchable": true
                         },
                         {
-                            "data": "id",
+                            "data": "status", "searchable": true,
+                            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                                var html = "";
+                                if (oData.status || oData.total_rooms || oData.total_nights) {
+                                    if (oData.status)
+                                        html += "<span style='font-weight:bold;' class='fw-bold'>" + oData.status + "</span><br/>";
+                                    if (oData.total_rooms)
+                                        html += oData.total_rooms + " <span style='font-weight:bold;' class='fw-bold'>Rooms</span><br/>";
+                                    if (oData.total_nights)
+                                        html += oData.total_nights + " <span style='font-weight:bold;' class='fw-bold'>Nights</span><br/>";
+                                } else {
+                                    html += "<span style='font-weight:bold;text-color:red;' class='bold'>Not Assigned</span>";
+                                }
+                                $(nTd).html("<span class='action-column'>" + html + "</span>");
+                            }
+                        },
+                        {
+                            "data": "check_in", "searchable": true,
+                            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                                var html = "";
+                                if (oData.string_check_in || oData.string_check_out) {
+                                    if (oData.string_check_in)
+                                        html += "<span style='font-weight:bold;' class='fw-bold'>" + oData.string_check_in + "</span><br/>";
+                                    if (oData.string_check_out)
+                                        html += "<span style='font-weight:bold;' class='fw-bold'" + oData.string_check_in + "</span><br/>";
+                                  
+                                } else {
+                                    html += "<span style='font-weight:bold;text-color:red;' class='bold'>Not Assigned</span>";
+                                }
+                                $(nTd).html("<span class='action-column'>" + html + "</span>");
+                            }
+                        },
+                        {
+                            "data": "opener", "searchable": true,
+                            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                                var html = "";
+                                if (oData.opener || oData.closer) {
+                                    if (oData.opener_name)
+                                        html += "<span style='font-weight:bold;' class='fw-bold'>" + oData.opener_name + "</span><br/>";
+                                    if (oData.closer_name)
+                                        html += "<span style='font-weight:bold;' class='fw-bold'" + oData.closer_name + "</span><br/>";
+
+                                } else {
+                                    html += "<span style='font-weight:bold;text-color:red;' class='bold'>Not Assigned</span>";
+                                }
+                                $(nTd).html("<span class='action-column'>" + html + "</span>");
+                            }
+                        },
+                        {
+                            "data": "financial_due_date",
                             "searchable": true
                         },
                         {
-                            "data": "id",
-                            "searchable": true
+                            "data": "paid_amount", "searchable": true,
+                            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                                var html = "";
+                                if (oData.paid_amount)
+                                    html += "<span style='font-weight:bold;' class='fw-bold'>" + addCommas(oData.paid_amount.toFixed(2)) + "</span><br/>";
+                                else
+                                    html += "<span style='font-weight:bold;text-color:red;' class='bold'>-</span>";
+
+                                $(nTd).html("<span class='action-column'>" + html + "</span>");
+                            }
                         },
                         {
-                            "data": "id",
-                            "searchable": true
+                            "data": "total_amount_after_tax", "searchable": true,
+                            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                                var html = "";
+                                if (oData.total_amount_after_tax)
+                                    html += "<span style='font-weight:bold;' class='fw-bold'>" + addCommas((oData.total_amount_after_tax - oData.paid_amount).toFixed(2)) + "</span><br/>";
+                                else
+                                    html += "<span style='font-weight:bold;text-color:red;' class='bold'>-</span>";
+                                
+                                $(nTd).html("<span class='action-column'>" + html + "</span>");
+                            }
                         },
                         {
-                            "data": "id",
-                            "searchable": true
-                        },
-                        {
-                            "data": "id",
-                            "searchable": true
-                        },
-                        {
-                            "data": "id",
-                            "searchable": true
-                        },
-                        {
-                            "data": "id",
-                            "searchable": true
+                            "data": "total_amount_after_tax", "searchable": true,
+                            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                                var html = "";
+                                if (oData.total_amount_after_tax)
+                                    html += "<span style='font-weight:bold;' class='fw-bold'>" + addCommas((oData.total_amount_after_tax).toFixed(2)) + "</span><br/>";
+                                else
+                                    html += "<span style='font-weight:bold;text-color:red;' class='bold'>-</span>";
+
+                                $(nTd).html("<span class='action-column'>" + html + "</span>");
+                            }
                         },
                         {
                             "data": "id", "searchable": true,
@@ -991,61 +1113,66 @@
                             "searchable": true
                         },
                         {
-                            "data": "id",
-                            "searchable": true
+                            "data": "status", "searchable": true,
+                            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                                var html = "";
+                                if (oData.status || oData.total_rooms || oData.total_nights) {
+                                    if (oData.status)
+                                        html += "<span style='font-weight:bold;' class='fw-bold'>" + oData.status + "</span><br/>";
+                                    if (oData.total_rooms)
+                                        html += oData.total_rooms + " <span style='font-weight:bold;' class='fw-bold'>Rooms</span><br/>";
+                                    if (oData.total_nights)
+                                        html += oData.total_nights + " <span style='font-weight:bold;' class='fw-bold'>Nights</span><br/>";
+                                } else {
+                                    html += "<span style='font-weight:bold;text-color:red;' class='bold'>Not Assigned</span>";
+                                }
+                                $(nTd).html("<span class='action-column'>" + html + "</span>");
+                            }
                         },
                         {
-                            "data": "opener_name", "searchable": true,
+                            "data": "check_in", "searchable": true,
                             fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
                                 var html = "";
                                 if (oData.string_check_in || oData.string_check_out) {
                                     if (oData.string_check_in)
-                                        html += "<span style='font-weight:bold;' class='bold'>Check in:</span>" + oData.string_check_in + "<br/>";
+                                        html += "<span style='font-weight:bold;' class='fw-bold'>" + oData.string_check_in + "</span><br/>";
                                     if (oData.string_check_out)
-                                        html += "<span style='font-weight:bold;' class='bold'>Check out:</span>" + oData.string_check_out;
+                                        html += "<span style='font-weight:bold;' class='fw-bold'" + oData.string_check_in + "</span><br/>";
 
                                 } else {
-                                    html += "<span style='font-weight:bold;' class='bold'>Not Assigned</span>";
+                                    html += "<span style='font-weight:bold;text-color:red;' class='bold'>Not Assigned</span>";
                                 }
-
                                 $(nTd).html("<span class='action-column'>" + html + "</span>");
                             }
                         },
                         {
-                            "data": "opener_name", "searchable": true,
+                            "data": "opener", "searchable": true,
                             fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
                                 var html = "";
-                                if (oData.opener_name || oData.closer_name) {
+                                if (oData.opener || oData.closer) {
                                     if (oData.opener_name)
-                                        html += "<span style='font-weight:bold;' class='fw-bold'>Opener:</span>" + oData.opener_name + "<br/>";
+                                        html += "<span style='font-weight:bold;' class='fw-bold'>" + oData.opener_name + "</span><br/>";
                                     if (oData.closer_name)
-                                        html += "<span style='font-weight:bold;' class='bold'>Closer:</span>" + oData.closer_name;
-                                } else
-                                    html += "<span style='font-weight:bold;text-color:red;' class='bold'>Not Assigned</span>";
+                                        html += "<span style='font-weight:bold;' class='fw-bold'" + oData.closer_name + "</span><br/>";
 
+                                } else {
+                                    html += "<span style='font-weight:bold;text-color:red;' class='bold'>Not Assigned</span>";
+                                }
                                 $(nTd).html("<span class='action-column'>" + html + "</span>");
                             }
                         },
                         {
-                            "data": "financial_due_date_string", "searchable": true,
-                            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-                                var html = "";
-                                if (oData.financial_due_date_string)
-                                    html += "<span style='font-weight:bold;' class='fw-bold'>" + oData.financial_due_date_string + "</span><br/>";
-                                else
-                                    html += "<span style='font-weight:bold;text-color:red;' class='bold'>Not Assigned</span>";
-
-                                $(nTd).html("<span class='action-column'>" + html + "</span>");
-                            }
+                            "data": "financial_due_date",
+                            "searchable": true
                         },
                         {
                             "data": "paid_amount", "searchable": true,
                             fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
                                 var html = "";
                                 if (oData.paid_amount)
-                                    html += "<span style='font-weight:bold;' class='fw-bold'>" + oData.paid_amount + "</span><br/>";
+                                    html += "<span style='font-weight:bold;' class='fw-bold'>" + addCommas(oData.paid_amount.toFixed(2)) + "</span><br/>";
                                 else
-                                    html += "<span style='font-weight:bold;text-color:red;' class='bold'>Not Assigned</span>";
+                                    html += "<span style='font-weight:bold;text-color:red;' class='bold'>-</span>";
 
                                 $(nTd).html("<span class='action-column'>" + html + "</span>");
                             }
@@ -1055,21 +1182,21 @@
                             fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
                                 var html = "";
                                 if (oData.total_amount_after_tax)
-                                    html += "<span style='font-weight:bold;' class='fw-bold'>" + oData.profit + "</span><br/>";
+                                    html += "<span style='font-weight:bold;' class='fw-bold'>" + addCommas((oData.total_amount_after_tax - oData.paid_amount).toFixed(2)) + "</span><br/>";
                                 else
-                                    html += "<span style='font-weight:bold;text-color:red;' class='bold'>Not Assigned</span>";
+                                    html += "<span style='font-weight:bold;text-color:red;' class='bold'>-</span>";
 
                                 $(nTd).html("<span class='action-column'>" + html + "</span>");
                             }
                         },
                         {
-                            "data": "profit", "searchable": true,
+                            "data": "total_amount_after_tax", "searchable": true,
                             fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
                                 var html = "";
-                                if (oData.profit)
-                                    html += "<span style='font-weight:bold;' class='fw-bold'>" + oData.profit + "</span><br/>";
+                                if (oData.total_amount_after_tax)
+                                    html += "<span style='font-weight:bold;' class='fw-bold'>" + addCommas((oData.total_amount_after_tax).toFixed(2)) + "</span><br/>";
                                 else
-                                    html += "<span style='font-weight:bold;text-color:red;' class='bold'>Not Assigned</span>";
+                                    html += "<span style='font-weight:bold;text-color:red;' class='bold'>-</span>";
 
                                 $(nTd).html("<span class='action-column'>" + html + "</span>");
                             }

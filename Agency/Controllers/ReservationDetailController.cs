@@ -326,6 +326,7 @@ namespace Agency.Controllers
                                          notification_date = task.notification_date,
                                          task_to_user = task.task_to_user,
                                          due_date = task.due_date,
+                                         status = task.status,
                                          created_by_string = assigned_by.full_name,
                                          task_to_user_string = assigned_to.full_name,
                                          created_at_string = task.created_at.ToString(),
@@ -381,6 +382,7 @@ namespace Agency.Controllers
                 reservationTaskOld.notification_date = RTaskViewModel.notification_date;
                 reservationTaskOld.due_date = RTaskViewModel.due_date;
                 reservationTaskOld.task_to_user = RTaskViewModel.task_to_user;
+                reservationTaskOld.status = RTaskViewModel.status;
                 reservationTaskOld.updated_at = DateTime.Now;
                 reservationTaskOld.updated_by = Session["id"].ToString().ToInt();
                 db.SaveChanges();
