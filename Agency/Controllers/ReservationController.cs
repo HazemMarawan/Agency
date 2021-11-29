@@ -42,8 +42,93 @@ namespace Agency.Controllers
         }
         public ActionResult View(int id)
         {
-            Reservation reservation = db.Reservations.Find(id);
-            return View(reservation);
+            var resData = (from res in db.Reservations
+                           join company in db.Companies on res.company_id equals company.id
+                           join event_hotel in db.EventHotels on res.event_hotel_id equals event_hotel.id
+                           join even in db.Events on event_hotel.event_id equals even.id
+                           join loc in db.Locations on even.location_id equals loc.id
+                           join city in db.Cities on loc.city_id equals city.id
+                           join hotel in db.Hotels on event_hotel.hotel_id equals hotel.id
+                           join oU in db.Users on res.opener equals oU.id into us
+                           from opener in us.DefaultIfEmpty()
+                           join cU in db.Users on res.closer equals cU.id into use
+                           from closer in use.DefaultIfEmpty()
+                           join createdBy in db.Users on res.created_by equals createdBy.id
+                           join uBy in db.Users on res.updated_by equals uBy.id into byU
+                           from updatedBy in byU.DefaultIfEmpty()
+                           select new ReservationViewModel
+                           {
+                               id = res.id,
+                               total_amount = res.total_amount,
+                               currency = res.currency,
+                               tax = res.tax,
+                               financial_advance = res.financial_advance,
+                               financial_advance_date = res.financial_advance_date,
+                               financial_due = res.financial_due,
+                               financial_due_date = res.financial_due_date,
+                               status = res.status,
+                               single_price = res.single_price,
+                               double_price = res.double_price,
+                               triple_price = res.triple_price,
+                               quad_price = res.quad_price,
+                               vendor_single_price = res.vendor_single_price,
+                               vendor_douple_price = res.vendor_douple_price,
+                               vendor_triple_price = res.vendor_triple_price,
+                               vendor_quad_price = res.vendor_quad_price,
+                               vendor_id = res.vendor_id,
+                               active = res.active,
+                               company_name = company.name,
+                               phone = company.phone,
+                               email = company.email,
+                               company_id = res.company_id,
+                               event_hotel_id = event_hotel.id,
+                               hotel_name = hotel.name,
+                               hotel_rate = hotel.rate,
+                               reservations_officer_name = res.reservations_officer_name,
+                               reservations_officer_email = res.reservations_officer_email,
+                               reservations_officer_phone = res.reservations_officer_phone,
+                               opener = res.opener,
+                               closer = res.closer,
+                               opener_name = opener.full_name == null ? "No Opener Assigned" : opener.full_name,
+                               closer_name = opener.full_name == null ? "No Closer Assigned" : closer.full_name,
+                               check_in = res.check_in,
+                               check_out = res.check_out,
+                               string_check_in = res.check_in.ToString(),
+                               string_check_out = res.check_out.ToString(),
+                               total_nights = res.total_nights,
+                               total_rooms = res.total_rooms,
+                               profit = res.profit,
+                               shift = res.shift,
+                               created_at_string = res.created_at.ToString(),
+                               updated_at_string = res.updated_at.ToString(),
+                               updated_by = res.updated_by,
+                               event_name = even.title,
+                               event_tax = even.tax,
+                               event_single_price = event_hotel.single_price,
+                               event_double_price = event_hotel.double_price,
+                               event_triple_price = event_hotel.triple_price,
+                               event_quad_price = event_hotel.quad_price,
+                               event_vendor_single_price = event_hotel.vendor_single_price,
+                               event_vendor_double_price = event_hotel.vendor_douple_price,
+                               event_vendor_triple_price = event_hotel.vendor_triple_price,
+                               event_vendor_quad_price = event_hotel.vendor_quad_price,
+                               total_price = db.ReservationDetails.Where(r => r.reservation_id == res.id).Select(p => p.amount).Sum(),
+                               paid_amount = res.paid_amount,
+                               total_amount_after_tax = res.total_amount_after_tax,
+                               total_amount_from_vendor = res.total_amount_from_vendor,
+                               advance_reservation_percentage = res.advance_reservation_percentage,
+                               tax_amount = res.tax_amount,
+                               created_by_name = createdBy.full_name,
+                               updated_by_name = updatedBy.full_name == null ? "Not Updated":updatedBy.full_name,
+                               shift_name = ((Shift)res.shift).ToString(),
+                               location_name = loc.name,
+                               city_name = city.name
+                               //profit = calculateProfit(res.id).profit
+                           }).Where(r => r.id == id).FirstOrDefault();
+            ViewBag.id = id;
+            ViewBag.Users = db.Users.Select(s => new { s.id, s.full_name }).ToList();
+
+            return View(resData);
         }
         public ReservationViewModel calculateTotalandVendor(int res_id)
         {

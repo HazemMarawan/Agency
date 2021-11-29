@@ -29,6 +29,8 @@ namespace Agency
             Mapper.CreateMap<HotelLocationViewModel, HotelLocation>();
             Mapper.CreateMap<ReservationViewModel, Reservation>();
             Mapper.CreateMap<VendorViewModel, Vendor>();
+            Mapper.CreateMap<ReservationCommentViewModel, ReservationComment>();
+            Mapper.CreateMap<ReservationTaskViewModel, ReservationTask>();
 
 
         }

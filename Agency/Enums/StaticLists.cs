@@ -44,4 +44,10 @@ namespace Agency.Enums
         USA = 2,
         Private = 3
     }
+    public enum TaskStatus
+    {
+        Pending = 0,
+        Active = 1,
+        Done = 2
+    }
 }

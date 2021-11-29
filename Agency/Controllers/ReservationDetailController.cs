@@ -75,6 +75,7 @@ namespace Agency.Controllers
             
             return View();
         }
+        
         public JsonResult saveReservation(ReservationDetailViewModel detailViewModel)
         {
             if(detailViewModel.id == 0)
@@ -226,6 +227,171 @@ namespace Agency.Controllers
             return Json(new { message = "done" }, JsonRequestBehavior.AllowGet);
 
         }
+        public ActionResult getComments(int? id)
+        {
+            if (Request.IsAjaxRequest())
+            {
+                var draw = Request.Form.GetValues("draw").FirstOrDefault();
+                var start = Request.Form.GetValues("start").FirstOrDefault();
+                var length = Request.Form.GetValues("length").FirstOrDefault();
+                var searchValue = Request.Form.GetValues("search[value]").FirstOrDefault();
+                int pageSize = length != null ? Convert.ToInt32(length) : 0;
+                int skip = start != null ? Convert.ToInt32(start) : 0;
+
+                // Getting all data    
+                var resDetailData = (from comm in db.ReservationComments
+                                     join comment_by in db.Users on comm.created_by equals comment_by.id
+                                     select new ReservationCommentViewModel
+                                     {
+                                         id = comm.id,
+                                         comment = comm.comment,
+                                         created_by_string = comment_by.full_name,
+                                         created_at_string = comm.created_at.ToString(),
+                                         reservation_id = comm.reservation_id
+                                     }).Where(r => r.reservation_id == id);
+
+                //Search    
+                //if (!string.IsNullOrEmpty(searchValue))
+                //{
+                //    resDetailData = resDetailData.Where(m => m.client_first_name.ToLower().Contains(searchValue.ToLower()) || m.amount.ToString().ToLower().Contains(searchValue.ToLower()) ||
+                //     m.client_last_name.ToLower().Contains(searchValue.ToLower()) || m.no_of_days.ToString().ToLower().Contains(searchValue.ToLower()));
+                //}
+
+                //total number of rows count     
+                var displayResult = resDetailData.OrderByDescending(u => u.id).Skip(skip)
+                     .Take(pageSize).ToList();
+                var totalRecords = resDetailData.Count();
+
+                return Json(new
+                {
+                    draw = draw,
+                    recordsTotal = totalRecords,
+                    recordsFiltered = totalRecords,
+                    data = displayResult
+
+                }, JsonRequestBehavior.AllowGet);
+
+            }
+            ViewBag.id = id;
+
+            return View();
+        }
+
+        public JsonResult saveComment(ReservationCommentViewModel RCommentViewModel)
+        {
+            if (RCommentViewModel.id == 0)
+            {
+                ReservationComment rComm = AutoMapper.Mapper.Map<ReservationCommentViewModel, ReservationComment>(RCommentViewModel);
+
+                rComm.created_at = DateTime.Now;
+                rComm.created_by = Session["id"].ToString().ToInt();
+                rComm.active = 1;
+                db.ReservationComments.Add(rComm);
+                db.SaveChanges();
+
+            }
+            else
+            {
+                ReservationComment rCommOld = db.ReservationComments.Find(RCommentViewModel.id);
+                rCommOld.comment = RCommentViewModel.comment;
+                rCommOld.updated_at = DateTime.Now;
+                rCommOld.updated_by = Session["id"].ToString().ToInt();
+                db.SaveChanges();
+            }
+
+            return Json(new { message = "done" }, JsonRequestBehavior.AllowGet);
+
+        }
+
+        public ActionResult getTasks(int? id)
+        {
+            if (Request.IsAjaxRequest())
+            {
+                var draw = Request.Form.GetValues("draw").FirstOrDefault();
+                var start = Request.Form.GetValues("start").FirstOrDefault();
+                var length = Request.Form.GetValues("length").FirstOrDefault();
+                var searchValue = Request.Form.GetValues("search[value]").FirstOrDefault();
+                int pageSize = length != null ? Convert.ToInt32(length) : 0;
+                int skip = start != null ? Convert.ToInt32(start) : 0;
+
+                // Getting all data    
+                var resDetailData = (from task in db.ReservationTasks
+                                     join assigned_by in db.Users on task.created_by equals assigned_by.id
+                                     join assigned_to in db.Users on task.task_to_user equals assigned_to.id
+                                     select new ReservationTaskViewModel
+                                     {
+                                         id = task.id,
+                                         task_title = task.task_title,
+                                         task_detail = task.task_detail,
+                                         notification_date = task.notification_date,
+                                         task_to_user = task.task_to_user,
+                                         due_date = task.due_date,
+                                         status = task.status,
+                                         created_by_string = assigned_by.full_name,
+                                         task_to_user_string = assigned_to.full_name,
+                                         created_at_string = task.created_at.ToString(),
+                                         reservation_id = task.reservation_id
+                                     }).Where(r => r.reservation_id == id);
+
+                //Search    
+                //if (!string.IsNullOrEmpty(searchValue))
+                //{
+                //    resDetailData = resDetailData.Where(m => m.client_first_name.ToLower().Contains(searchValue.ToLower()) || m.amount.ToString().ToLower().Contains(searchValue.ToLower()) ||
+                //     m.client_last_name.ToLower().Contains(searchValue.ToLower()) || m.no_of_days.ToString().ToLower().Contains(searchValue.ToLower()));
+                //}
+
+                //total number of rows count     
+                var displayResult = resDetailData.OrderByDescending(u => u.id).Skip(skip)
+                     .Take(pageSize).ToList();
+                var totalRecords = resDetailData.Count();
+
+                return Json(new
+                {
+                    draw = draw,
+                    recordsTotal = totalRecords,
+                    recordsFiltered = totalRecords,
+                    data = displayResult
+
+                }, JsonRequestBehavior.AllowGet);
+
+            }
+            ViewBag.id = id;
+            ViewBag.Users = db.Users.Select(s => new { s.id, s.full_name }).ToList();
+
+            return View();
+        }
+
+        public JsonResult saveTask(ReservationTaskViewModel RTaskViewModel)
+        {
+            if (RTaskViewModel.id == 0)
+            {
+                ReservationTask reservationTask = AutoMapper.Mapper.Map<ReservationTaskViewModel, ReservationTask>(RTaskViewModel);
+
+                reservationTask.created_at = DateTime.Now;
+                reservationTask.created_by = Session["id"].ToString().ToInt();
+                reservationTask.active = 1;
+                db.ReservationTasks.Add(reservationTask);
+                db.SaveChanges();
+
+            }
+            else
+            {
+                ReservationTask reservationTaskOld = db.ReservationTasks.Find(RTaskViewModel.id);
+                reservationTaskOld.task_title = RTaskViewModel.task_title;
+                reservationTaskOld.task_detail = RTaskViewModel.task_detail;
+                reservationTaskOld.notification_date = RTaskViewModel.notification_date;
+                reservationTaskOld.due_date = RTaskViewModel.due_date;
+                reservationTaskOld.task_to_user = RTaskViewModel.task_to_user;
+                reservationTaskOld.status = RTaskViewModel.status;
+                reservationTaskOld.updated_at = DateTime.Now;
+                reservationTaskOld.updated_by = Session["id"].ToString().ToInt();
+                db.SaveChanges();
+            }
+
+            return Json(new { message = "done" }, JsonRequestBehavior.AllowGet);
+
+        }
+
         public JsonResult deleteReservation(int id)
         {
             ReservationDetail detail = db.ReservationDetails.Find(id);
@@ -248,6 +414,26 @@ namespace Agency.Controllers
            
             reservation.updated_at = DateTime.Now;
             reservation.updated_by = Session["id"].ToString().ToInt();
+            db.SaveChanges();
+
+            return Json(new { message = "done" }, JsonRequestBehavior.AllowGet);
+
+        }
+        public JsonResult deleteComment(int id)
+        {
+            ReservationComment comment = db.ReservationComments.Find(id);
+
+            db.ReservationComments.Remove(comment);
+            db.SaveChanges();
+
+            return Json(new { message = "done" }, JsonRequestBehavior.AllowGet);
+
+        }
+        public JsonResult deleteTask(int id)
+        {
+            ReservationTask task = db.ReservationTasks.Find(id);
+
+            db.ReservationTasks.Remove(task);
             db.SaveChanges();
 
             return Json(new { message = "done" }, JsonRequestBehavior.AllowGet);

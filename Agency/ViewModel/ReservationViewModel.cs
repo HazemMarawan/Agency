@@ -46,6 +46,7 @@ namespace Agency.ViewModel
         public double? hotel_rate { get; set; }
         public string company_name { get; set; }
         public string created_at_string { get; set; }
+        public string updated_at_string { get; set; }
         public string financial_due_date_string { get; set; }
         public string hotel_name { get; set; }
         public string email { get; set; }
@@ -91,5 +92,11 @@ namespace Agency.ViewModel
         public int? quad_nights { get; set; }
         public List<ReservationDetailViewModel> ReservationDetailVM { get; set; }
         public List<string> hotelFacilities { get; set; }
+        public string created_by_name { get; set; }
+        public string updated_by_name { get; set; }
+        public string city_name { get; set; }
+        public string location_name { get; set; }
+
+
     }
 }
