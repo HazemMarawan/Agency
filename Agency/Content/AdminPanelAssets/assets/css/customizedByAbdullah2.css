@@ -12,7 +12,7 @@
     color: white;
     margin-bottom: 4%;
     box-shadow: 0px 0px 6px 1px #29a3db;
-    transition: 2s all ease-in-out;
+    transition: 1s all ease-in-out;
 }
 
 .separted-page .hotels .card .card-header {
