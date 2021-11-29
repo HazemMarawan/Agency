@@ -1,0 +1,60 @@
+﻿.separted-page .main-container {
+    margin-top:1%
+}
+
+.separted-page .hotels {
+    margin-top: 4%
+}
+
+.separted-page .hotels .card {
+    border-radius: 25px;
+    background-color: #8793b0;
+    color: white;
+    margin-bottom: 4%;
+    box-shadow: 0px 0px 6px 1px #29a3db;
+    transition: 2s all ease-in-out;
+}
+
+.separted-page .hotels .card .card-header {
+    background-color: #8793b0;
+    
+}
+
+.separted-page .hotels .card .card-header h3 {
+    color: white;
+    font-weight: bolder;
+}
+
+.separted-page .hotels .card .card-footer {
+    background-color: #8793b0;
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+    margin-top: 5%
+}
+
+.separted-page .hotels .card .card-footer .hotelDistance {
+    border-right: 1px solid
+}
+
+.separted-page .hotels .card .card-footer p {
+    color: white;
+    font-weight: bold
+}
+
+.separted-page .hotels .card img {
+    margin-bottom:3%
+}
+
+
+.separted-page .hotels .card:hover {
+    transform:translateY(-25px);
+}
+
+
+.fa-star {
+font-size: 11px
+}
+
+.fa-star.checked {
+    color: gold
+}

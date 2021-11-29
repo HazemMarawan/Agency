@@ -17,6 +17,10 @@ namespace Agency.Controllers
     {
         // GET: Event
         AgencyDbContext db = new AgencyDbContext();
+        public ActionResult Show()
+        {
+            return View();
+        }
         public ActionResult Index()
         {
             if (Request.IsAjaxRequest())

@@ -374,6 +374,7 @@
     <Content Include="Content\AdminPanelAssets\assets\css\components\tabs-accordian\custom-tabs.css" />
     <Content Include="Content\AdminPanelAssets\assets\css\components\timeline\custom-timeline.css" />
     <Content Include="Content\AdminPanelAssets\assets\css\customizedByAbdullah.css" />
+    <Content Include="Content\AdminPanelAssets\assets\css\customizedByAbdullah2.css" />
     <Content Include="Content\AdminPanelAssets\assets\css\dashboard\dash_1.css" />
     <Content Include="Content\AdminPanelAssets\assets\css\dashboard\dash_2.css" />
     <Content Include="Content\AdminPanelAssets\assets\css\elements\alert.css" />
@@ -427,6 +428,7 @@
     <Content Include="Content\AdminPanelAssets\assets\img\arrow-down.png" />
     <Content Include="Content\AdminPanelAssets\assets\img\bg.png" />
     <Content Include="Content\AdminPanelAssets\assets\img\ca.png" />
+    <Content Include="Content\AdminPanelAssets\assets\img\CHECKINNOWLOGO.jpeg" />
     <Content Include="Content\AdminPanelAssets\assets\img\contact-us-map-pin.svg" />
     <Content Include="Content\AdminPanelAssets\assets\img\cork-logo.png" />
     <Content Include="Content\AdminPanelAssets\assets\img\de.png" />
@@ -3829,6 +3831,7 @@
     <Content Include="Views\ReservationDetail\Invoice.cshtml" />
     <Content Include="Views\ReservationDetail\Itinirary.cshtml" />
     <Content Include="Views\Reservation\View.cshtml" />
+    <Content Include="Views\Event\Show.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
