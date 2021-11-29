@@ -611,15 +611,19 @@ input[type="date"] {
     padding: 10px 0px;
 }
 
+.nav-pills .nav-item:nth-child(1) {
+    margin-left: 10px
+}
+
 .nav-pills .nav-link.active {
     border: 1px solid;
     border-radius: 10px;
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 0px;
 }
-.nav-pills {
-    border-bottom: 1px solid lightgrey;
-}
+    .nav-pills {
+        border-bottom: 1px solid lightgrey;
+    }
 .nav-pills .nav-link {
     margin-bottom: -1px;
 }
@@ -722,3 +726,37 @@ input[type="date"] {
 .item-of-detailed-table .part-a p {
     border-right: 1px solid lightskyblue
 }
+
+
+
+
+
+/*booking tables for tabs */
+
+
+
+.widget-content-area-edit thead > tr > th {
+    font-size: 11px;
+    padding: 5px
+}
+
+.tab-content .dataTable.table-striped tbody tr:nth-of-type(odd) td {
+    text-align: center;
+    font-size: 11px;
+    padding: 0.75rem 5px;
+}
+
+
+
+
+
+.tab-content .table > tbody > tr > td {
+    text-align: center;
+    font-size: 11px;
+    padding: 0.75rem 5px;
+}
+
+.tab-content .form-group button, .row div input[type=button], .row div a {
+    margin: 0px 5px
+} 
+

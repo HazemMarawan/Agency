@@ -497,18 +497,18 @@
                                 <!--  widget-content-area-edit added class manually -->
                                 <table id="unPaidReservationTable" class="table table-striped table-bordered" style="width:100%">
                                     <thead>
-                                        <tr>
-                                            <th width="5%">BookingID</th>
-                                            <th width="9%">Date Submitted</th>
-                                            <th width="9%">Company Name</th>
-                                            <th width="9%">Status</th>
-                                            <th width="9%">Check-in/out</th>
-                                            <th width="9%">Opener/Closer</th>
-                                            <th width="9%">Balance Due Date</th>
-                                            <th width="9%">Collected</th>
-                                            <th width="9%">Balance</th>
-                                            <th width="9%">Profit</th>
-                                            <th width="15%"></th>
+                                        <tr class="text-center">
+                                            <th width="8%">Booking ID</th>
+                                            <th width="10%">Date Submitted</th>
+                                            <th width="14%">Company Name</th>
+                                            <th width="10%">Status</th>
+                                            <th width="10%">Check-in/out</th>
+                                            <th width="10%">Opener/Closer</th>
+                                            <th width="12%">Balance Due Date</th>
+                                            <th width="6%">Collected</th>
+                                            <th width="6%">Balance</th>
+                                            <th width="6%">Profit</th>
+                                            <th width="9%"></th>
                                         </tr>
                                     </thead>
                                 </table>
@@ -525,18 +525,18 @@
                                 <!--  widget-content-area-edit added class manually -->
                                 <table id="partiallyReservationTable" class="table table-striped table-bordered" style="width:100%">
                                     <thead>
-                                        <tr>
-                                            <th width="5%">BookingID</th>
-                                            <th width="9%">Date Submitted</th>
-                                            <th width="9%">Company Name</th>
-                                            <th width="9%">Status</th>
-                                            <th width="9%">Check-in/out</th>
-                                            <th width="9%">Opener/Closer</th>
-                                            <th width="9%">Balance Due Date</th>
-                                            <th width="9%">Collected</th>
-                                            <th width="9%">Balance</th>
-                                            <th width="9%">Profit</th>
-                                            <th width="14%"></th>
+                                        <tr class="text-center">
+                                            <th width="8%">Booking ID</th>
+                                            <th width="10%">Date Submitted</th>
+                                            <th width="14%">Company Name</th>
+                                            <th width="10%">Status</th>
+                                            <th width="10%">Check-in/out</th>
+                                            <th width="10%">Opener/Closer</th>
+                                            <th width="12%">Balance Due Date</th>
+                                            <th width="6%">Collected</th>
+                                            <th width="6%">Balance</th>
+                                            <th width="6%">Profit</th>
+                                            <th width="9%"></th>
                                         </tr>
                                     </thead>
                                 </table>
@@ -553,18 +553,18 @@
                                 <!--  widget-content-area-edit added class manually -->
                                 <table id="paidreservationTable" class="table table-striped table-bordered" style="width:100%">
                                     <thead style="width: 100%!important">
-                                        <tr>
-                                            <th width="5%">BookingID</th>
-                                            <th width="9%">Date Submitted</th>
-                                            <th width="9%">Company Name</th>
-                                            <th width="9%">Status</th>
-                                            <th width="9%">Check-in/out</th>
-                                            <th width="9%">Opener/Closer</th>
-                                            <th width="9%">Balance Due Date</th>
-                                            <th width="9%">Collected</th>
-                                            <th width="9%">Balance</th>
-                                            <th width="9%">Profit</th>
-                                            <th width="14%"></th>
+                                        <tr class="text-center">
+                                            <th width="8%">Booking ID</th>
+                                            <th width="10%">Date Submitted</th>
+                                            <th width="14%">Company Name</th>
+                                            <th width="10%">Status</th>
+                                            <th width="10%">Check-in/out</th>
+                                            <th width="10%">Opener/Closer</th>
+                                            <th width="12%">Balance Due Date</th>
+                                            <th width="6%">Collected</th>
+                                            <th width="6%">Balance</th>
+                                            <th width="6%">Profit</th>
+                                            <th width="9%"></th>
                                         </tr>
                                     </thead>
                                 </table>
@@ -1544,17 +1544,28 @@
             $(`.table `).css('width', '100%');
             $(`.table thead `).css('width', '100%');
             $(`.table thead tr`).css('width', '100%');
-            $(`.table thead tr th:nth-child(1)`).css('width', '5% ')
-            $(`.table thead tr th:nth-child(2)`).css('width', '9% ')
-            $(`.table thead tr th:nth-child(3)`).css('width', '9% ')
-            $(`.table thead tr th:nth-child(4)`).css('width', '9% ')
-            $(`.table thead tr th:nth-child(5)`).css('width', '9% ')
-            $(`.table thead tr th:nth-child(6)`).css('width', '9% ')
-            $(`.table thead tr th:nth-child(7)`).css('width', '9% ')
-            $(`.table thead tr th:nth-child(8)`).css('width', '9% ')
-            $(`.table thead tr th:nth-child(9)`).css('width', '9% ')
-            $(`.table thead tr th:nth-child(10)`).css('width', '9% ')
-            $(`.table thead tr th:nth-child(11)`).css('width', '14% ')
+            $(`.table thead tr th:nth-child(1)`).css('width', '8%')
+            $(`.table thead tr th:nth-child(2)`).css('width', '10%')
+            $(`.table thead tr th:nth-child(3)`).css('width', '14%')
+            $(`.table thead tr th:nth-child(4)`).css('width', '10%')
+            $(`.table thead tr th:nth-child(5)`).css('width', '10%')
+            $(`.table thead tr th:nth-child(6)`).css('width', '10%')
+            $(`.table thead tr th:nth-child(7)`).css('width', '12%')
+            $(`.table thead tr th:nth-child(8)`).css('width', '6%')
+            $(`.table thead tr th:nth-child(9)`).css('width', '6%')
+            $(`.table thead tr th:nth-child(10)`).css('width','6%')
+            $(`.table thead tr th:nth-child(11)`).css('width', '9%')
+            $(`.table thead tr td:nth-child(1)`).css('width', '8%')
+            $(`.table thead tr td:nth-child(2)`).css('width', '10%')
+            $(`.table thead tr td:nth-child(3)`).css('width', '14%')
+            $(`.table thead tr td:nth-child(4)`).css('width', '10%')
+            $(`.table thead tr td:nth-child(5)`).css('width', '10%')
+            $(`.table thead tr td:nth-child(6)`).css('width', '10%')
+            $(`.table thead tr td:nth-child(7)`).css('width', '12%')
+            $(`.table thead tr td:nth-child(8)`).css('width', '6%')
+            $(`.table thead tr td:nth-child(9)`).css('width', '6%')
+            $(`.table thead tr td:nth-child(10)`).css('width', '6%')
+            $(`.table thead tr td:nth-child(11)`).css('width', '9%')
         })
     </script>
 }
