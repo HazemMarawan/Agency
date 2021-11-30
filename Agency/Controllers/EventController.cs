@@ -9,7 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-
+using Agency.Security;
 namespace Agency.Controllers
 {
     [CustomAuthenticationFilter]
@@ -17,10 +17,6 @@ namespace Agency.Controllers
     {
         // GET: Event
         AgencyDbContext db = new AgencyDbContext();
-        public ActionResult Show()
-        {
-            return View();
-        }
         public ActionResult Index()
         {
             if (Request.IsAjaxRequest())
@@ -40,6 +36,7 @@ namespace Agency.Controllers
                                 {
                                     id = event_row.id,
                                     title = event_row.title,
+                                    secret_key = event_row.secret_key,
                                     description = event_row.description,
                                     event_from = event_row.event_from,
                                     due_date = event_row.due_date,
@@ -119,6 +116,7 @@ namespace Agency.Controllers
             if (eventVM.id == 0)
             {
                 Event event_row = AutoMapper.Mapper.Map<EventViewModel, Event>(eventVM);
+                event_row.secret_key = Hash.CreateMD5(Guid.NewGuid().ToString());
                 event_row.created_at = DateTime.Now;
                 event_row.updated_at = DateTime.Now;
                 event_row.created_by = Session["id"].ToString().ToInt();

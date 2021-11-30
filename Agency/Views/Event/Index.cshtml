@@ -274,7 +274,7 @@
                                         data-triple_price='${value.triple_price}' data-quad_price='${value.quad_price}'
                                         data-vendor_single_price='${value.vendor_single_price}'  data-vendor_douple_price='${value.vendor_douple_price}'
                                         data-vendor_triple_price='${value.vendor_triple_price}'  data-vendor_quad_price='${value.vendor_quad_price}'
-                                        data-eventHotelBenefit='${JSON.stringify(value.eventHotelBenefit)}' data-currency='${value.currency}' data-vendor_id='${value.vendor_id}'
+                                        data-eventHotelBenefit='${JSON.stringify(value.eventHotelBenefit)}' data-currency='${value.currency}' data-vendor_id='${value.vendor_id}Urlrl
                                         title='Edit Hotel'><i class='fa fa-edit'></i></a>&nbsp;`;
                                         html += "<a class='deleteHotel' href='javascript:void(0)' data-id='" + value.id + "' data-name='" + value.name + "' title='Delete Child'><i class='fa fa-trash'></i></a><br/>";
                                         html += "</li>";
@@ -303,7 +303,8 @@
                                 html += "<a class='addHotel' href='javascript:void(0)' id='" + oData.id + "' title='Add Hotels'><i class='fa fa-plus'></i></a>&nbsp; | &nbsp;";
 
                                 html += "<a class='edit' href='javascript:void(0)' title='Edit'><i class='far fa-edit'></i></a>&nbsp;";
-                                html += "<a class='delete' href='javascript:void(0)' title='Delete'><i class='fas fa-trash'></i></a>";
+                                html += "<a class='delete' href='javascript:void(0)' title='Delete'><i class='fas fa-trash'></i></a> | &nbsp;";
+                                html += "<a class='copyEventLink' href='javascript:void(0)' title='Copy Event Link'><i class='fas fa-copy'></i></a>";
                                 $(nTd).html("<span class='action-column'>" + html + "</span>");
                             }
                         },
@@ -574,6 +575,15 @@
                     });
                 });
             });
+           $(document).on("click", ".copyEventLink", function () {
+               var data = datatable.row($(this).closest('tr')).data();
+               //var eventLink = '/Booking/Show?secret_key=' + data.secret_key;
+               var eventLink = '@Url.Action("Show","Booking",new { secret_key = "secret_key_value" })';
+               eventLink = eventLink.replace('secret_key_value', data.secret_key);
+               
+               navigator.clipboard.writeText(window.location.origin+eventLink);
+           });
+           
 
         });
 
