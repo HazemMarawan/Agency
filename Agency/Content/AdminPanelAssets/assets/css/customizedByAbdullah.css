@@ -769,3 +769,8 @@ input[type="date"] {
     position: initial;
     transform: none;
 }
+
+input[type="date"] {
+    position: initial;
+    transform: none;
+}
