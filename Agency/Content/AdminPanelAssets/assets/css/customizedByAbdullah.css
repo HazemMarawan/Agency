@@ -763,3 +763,14 @@ input[type="date"] {
     margin: 0px 5px
 } 
 
+/* event page  pop up */
+
+.add-event-Eventpage input[type="date"] {
+    position: initial;
+    transform: none;
+}
+
+input[type="date"] {
+    position: initial;
+    transform: none;
+}
