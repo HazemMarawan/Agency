@@ -18,6 +18,10 @@ namespace Agency.ViewModel
         public int? room_type { get; set; }
         public DateTime reservation_from { get; set; }
         public DateTime reservation_to { get; set; }
+        public string string_reservation_from { get; set; }
+        public string string_reservation_to { get; set; }
+        public string vendor_code { get; set; }
+        public string cancelation_policy { get; set; }
         public int? no_of_days { get; set; }
         public int? active { get; set; }
         public int? created_by { get; set; }

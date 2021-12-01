@@ -176,6 +176,7 @@
     </Compile>
     <Compile Include="Helpers\ExtensionMethods.cs" />
     <Compile Include="Helpers\Helpers.cs" />
+    <Compile Include="Helpers\Logs.cs" />
     <Compile Include="Migrations\202110241830516_createDB.cs" />
     <Compile Include="Migrations\202110241830516_createDB.Designer.cs">
       <DependentUpon>202110241830516_createDB.cs</DependentUpon>
@@ -312,6 +313,18 @@
     <Compile Include="Migrations\202111301214543_secretKeyofEvent.Designer.cs">
       <DependentUpon>202111301214543_secretKeyofEvent.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202111302317413_addLogTable.cs" />
+    <Compile Include="Migrations\202111302317413_addLogTable.Designer.cs">
+      <DependentUpon>202111302317413_addLogTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202111302319278_addLogTable1.cs" />
+    <Compile Include="Migrations\202111302319278_addLogTable1.Designer.cs">
+      <DependentUpon>202111302319278_addLogTable1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202111302322433_addLogTableReservationId.cs" />
+    <Compile Include="Migrations\202111302322433_addLogTableReservationId.Designer.cs">
+      <DependentUpon>202111302322433_addLogTableReservationId.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AgencyDbContext.cs" />
     <Compile Include="Models\City.cs" />
@@ -328,6 +341,7 @@
     <Compile Include="Models\Reservation.cs" />
     <Compile Include="Models\ReservationComment.cs" />
     <Compile Include="Models\ReservationDetail.cs" />
+    <Compile Include="Models\ReservationLog.cs" />
     <Compile Include="Models\ReservationTask.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\Vendor.cs" />
@@ -347,6 +361,7 @@
     <Compile Include="ViewModel\HotelViewModel.cs" />
     <Compile Include="ViewModel\ReservationCommentViewModel.cs" />
     <Compile Include="ViewModel\ReservationDetailViewModel.cs" />
+    <Compile Include="ViewModel\ReservationLogViewModel.cs" />
     <Compile Include="ViewModel\ReservationTaskViewModel.cs" />
     <Compile Include="ViewModel\ReservationViewModel.cs" />
     <Compile Include="ViewModel\UserViewModel.cs" />
@@ -3972,6 +3987,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202111301214543_secretKeyofEvent.resx">
       <DependentUpon>202111301214543_secretKeyofEvent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202111302317413_addLogTable.resx">
+      <DependentUpon>202111302317413_addLogTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202111302319278_addLogTable1.resx">
+      <DependentUpon>202111302319278_addLogTable1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202111302322433_addLogTableReservationId.resx">
+      <DependentUpon>202111302322433_addLogTableReservationId.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
