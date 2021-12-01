@@ -43,6 +43,7 @@ namespace Agency.Models
         public virtual DbSet<Location> Locations { get; set; }
         public virtual DbSet<HotelLocation> HotelLocations { get; set; }
         public virtual DbSet<Vendor> Vendors { get; set; }
+        public virtual DbSet<ReservationLog> ReservationLogs { get; set; }
 
     }
 

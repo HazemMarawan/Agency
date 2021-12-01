@@ -32,6 +32,8 @@ namespace Agency.Controllers
                 var resDetailData = (from resDetail in db.ReservationDetails
                                join res in db.Reservations on resDetail.reservation_id equals res.id
                                join client in db.Clients on resDetail.client_id equals client.id
+                               join event_hotel in db.EventHotels on res.event_hotel_id equals event_hotel.id
+                               join vendor in db.Vendors on event_hotel.vendor_id equals vendor.id
                                select new ReservationDetailViewModel
                                {
                                    id = resDetail.id,
@@ -46,7 +48,11 @@ namespace Agency.Controllers
                                    client_first_name = client.first_name,
                                    client_last_name = client.last_name,
                                    reservation_id = resDetail.reservation_id,
-                                   currency = res.currency
+                                   currency = res.currency,
+                                   string_reservation_from = resDetail.reservation_from.ToString(),
+                                   string_reservation_to = resDetail.reservation_to.ToString(),
+                                   vendor_code = vendor.code,
+                                   cancelation_policy =""
                                }).Where(r => r.reservation_id == id);
 
                 //Search    
@@ -153,6 +159,8 @@ namespace Agency.Controllers
 
                 detail.client_id = client.id;
                 db.SaveChanges();
+                Logs.ReservationActionLog(Session["id"].ToString().ToInt(), detail.reservation_id, "Add", "Add Reservation #" + detail.id);
+
             }
             else
             {
@@ -222,8 +230,10 @@ namespace Agency.Controllers
                 reservation.updated_at = DateTime.Now;
                 reservation.updated_by = Session["id"].ToString().ToInt();
                 db.SaveChanges();
+                Logs.ReservationActionLog(Session["id"].ToString().ToInt(), detail.reservation_id, "Edit", "Edit Reservation #" + detail.id);
+
             }
-           
+
             return Json(new { message = "done" }, JsonRequestBehavior.AllowGet);
 
         }
@@ -288,6 +298,7 @@ namespace Agency.Controllers
                 rComm.active = 1;
                 db.ReservationComments.Add(rComm);
                 db.SaveChanges();
+                Logs.ReservationActionLog(Session["id"].ToString().ToInt(), rComm.reservation_id, "Add", "Add Comment #" + rComm.id);
 
             }
             else
@@ -297,6 +308,9 @@ namespace Agency.Controllers
                 rCommOld.updated_at = DateTime.Now;
                 rCommOld.updated_by = Session["id"].ToString().ToInt();
                 db.SaveChanges();
+
+                Logs.ReservationActionLog(Session["id"].ToString().ToInt(), rCommOld.reservation_id, "Edit", "Edit Comment #" + rCommOld.id);
+
             }
 
             return Json(new { message = "done" }, JsonRequestBehavior.AllowGet);
@@ -360,6 +374,48 @@ namespace Agency.Controllers
 
             return View();
         }
+        public ActionResult getLogs(int? id)
+        {
+            if (Request.IsAjaxRequest())
+            {
+                var draw = Request.Form.GetValues("draw").FirstOrDefault();
+                var start = Request.Form.GetValues("start").FirstOrDefault();
+                var length = Request.Form.GetValues("length").FirstOrDefault();
+                var searchValue = Request.Form.GetValues("search[value]").FirstOrDefault();
+                int pageSize = length != null ? Convert.ToInt32(length) : 0;
+                int skip = start != null ? Convert.ToInt32(start) : 0;
+
+                // Getting all data    
+                var resDetailData = (from log in db.ReservationLogs
+                                     join user in db.Users on log.user_id equals user.id
+                                     select new ReservationLogViewModel
+                                     {
+                                         id = log.id,
+                                         full_name = user.full_name,
+                                         string_created_at = log.created_at.ToString(),
+                                         action = log.action,
+                                         description = log.description,
+                                         reservation_id = log.reservation_id
+                                     }).Where(r => r.reservation_id == id);
+
+
+                //total number of rows count     
+                var displayResult = resDetailData.OrderByDescending(u => u.id).Skip(skip)
+                     .Take(pageSize).ToList();
+                var totalRecords = resDetailData.Count();
+
+                return Json(new
+                {
+                    draw = draw,
+                    recordsTotal = totalRecords,
+                    recordsFiltered = totalRecords,
+                    data = displayResult
+
+                }, JsonRequestBehavior.AllowGet);
+
+            }
+            return View();
+        }
 
         public JsonResult saveTask(ReservationTaskViewModel RTaskViewModel)
         {
@@ -372,6 +428,8 @@ namespace Agency.Controllers
                 reservationTask.active = 1;
                 db.ReservationTasks.Add(reservationTask);
                 db.SaveChanges();
+
+                Logs.ReservationActionLog(Session["id"].ToString().ToInt(), reservationTask.reservation_id, "Add", "Add Task #" + reservationTask.id);
 
             }
             else
@@ -386,6 +444,9 @@ namespace Agency.Controllers
                 reservationTaskOld.updated_at = DateTime.Now;
                 reservationTaskOld.updated_by = Session["id"].ToString().ToInt();
                 db.SaveChanges();
+
+                Logs.ReservationActionLog(Session["id"].ToString().ToInt(), reservationTaskOld.reservation_id, "Edit", "Edit Task #" + reservationTaskOld.id);
+
             }
 
             return Json(new { message = "done" }, JsonRequestBehavior.AllowGet);
@@ -395,6 +456,7 @@ namespace Agency.Controllers
         public JsonResult deleteReservation(int id)
         {
             ReservationDetail detail = db.ReservationDetails.Find(id);
+            int? reservationId = detail.reservation_id;
 
             Reservation reservation = db.Reservations.Find(detail.reservation_id);
            
@@ -415,6 +477,7 @@ namespace Agency.Controllers
             reservation.updated_at = DateTime.Now;
             reservation.updated_by = Session["id"].ToString().ToInt();
             db.SaveChanges();
+            Logs.ReservationActionLog(Session["id"].ToString().ToInt(), reservationId, "Delete", "Delete Reservation #" + id);
 
             return Json(new { message = "done" }, JsonRequestBehavior.AllowGet);
 
@@ -422,9 +485,11 @@ namespace Agency.Controllers
         public JsonResult deleteComment(int id)
         {
             ReservationComment comment = db.ReservationComments.Find(id);
-
+            int? reservationId = comment.reservation_id;
             db.ReservationComments.Remove(comment);
             db.SaveChanges();
+
+            Logs.ReservationActionLog(Session["id"].ToString().ToInt(), reservationId, "Delete", "Delete Comment #" + id);
 
             return Json(new { message = "done" }, JsonRequestBehavior.AllowGet);
 
@@ -432,16 +497,19 @@ namespace Agency.Controllers
         public JsonResult deleteTask(int id)
         {
             ReservationTask task = db.ReservationTasks.Find(id);
-
+            int? reservationId = task.reservation_id;
             db.ReservationTasks.Remove(task);
             db.SaveChanges();
+
+            Logs.ReservationActionLog(Session["id"].ToString().ToInt(), reservationId, "Delete", "Delete Task #" + id);
 
             return Json(new { message = "done" }, JsonRequestBehavior.AllowGet);
 
         }
         public ActionResult Itinirary(int id)
         {
-          
+            Logs.ReservationActionLog(Session["id"].ToString().ToInt(), id, "Export", "Export Itinirary #" + id);
+
             ReservationViewModel resData = (from res in db.Reservations
                            join company in db.Companies on res.company_id equals company.id
                            join event_hotel in db.EventHotels on res.event_hotel_id equals event_hotel.id
@@ -532,6 +600,8 @@ namespace Agency.Controllers
 
         public ActionResult Invoice(int id)
         {
+            Logs.ReservationActionLog(Session["id"].ToString().ToInt(), id, "Export", "Export Invoice #" + id);
+
             ReservationViewModel resData = (from res in db.Reservations
                                             join company in db.Companies on res.company_id equals company.id
                                             join event_hotel in db.EventHotels on res.event_hotel_id equals event_hotel.id

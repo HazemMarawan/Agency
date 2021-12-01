@@ -792,16 +792,26 @@
                 },
                 "columns": [
                     {
-                        "data": "id",
-                        "searchable": true
+                        "data": "id", "searchable": true,
+                        fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+
+                            var html = "<a href='/Reservation/View/" + oData.id + "'>" + oData.id + "</a>";
+
+                            $(nTd).html("<span class='action-column'>" + html + "</span>");
+                        }
                     },
                     {
                         "data": "created_at_string",
                         "searchable": true
                     },
                     {
-                        "data": "company_name",
-                        "searchable": true
+                        "data": "company_name", "searchable": true,
+                        fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+
+                            var html = "<a href='/Reservation/View/" + oData.id + "'>" + oData.company_name + "</a>";
+
+                            $(nTd).html("<span class='action-column'>" + html + "</span>");
+                        }
                     },
                     {
                         "data": "status", "searchable": true,
@@ -946,16 +956,26 @@
                     },
                     "columns": [
                         {
-                            "data": "id",
-                            "searchable": true
+                            "data": "id", "searchable": true,
+                            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+
+                                var html = "<a href='/Reservation/View/" + oData.id + "'>" + oData.id + "</a>";
+
+                                $(nTd).html("<span class='action-column'>" + html + "</span>");
+                            }
                         },
                         {
                             "data": "created_at_string",
                             "searchable": true
                         },
                         {
-                            "data": "company_name",
-                            "searchable": true
+                            "data": "company_name", "searchable": true,
+                            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+
+                                var html = "<a href='/Reservation/View/" + oData.id + "'>" + oData.company_name + "</a>";
+
+                                $(nTd).html("<span class='action-column'>" + html + "</span>");
+                            }
                         },
                         {
                             "data": "status", "searchable": true,
@@ -1101,16 +1121,26 @@
                     },
                     "columns": [
                         {
-                            "data": "id",
-                            "searchable": true
+                            "data": "id", "searchable": true,
+                            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+
+                                var html = "<a href='/Reservation/View/" + oData.id + "'>" + oData.id + "</a>";
+
+                                $(nTd).html("<span class='action-column'>" + html + "</span>");
+                            }
                         },
                         {
                             "data": "created_at_string",
                             "searchable": true
                         },
                         {
-                            "data": "company_name",
-                            "searchable": true
+                            "data": "company_name", "searchable": true,
+                            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                               
+                                var html = "<a href='/Reservation/View/" + oData.id + "'>" + oData.company_name + "</a>";
+
+                                $(nTd).html("<span class='action-column'>" + html + "</span>");
+                            }
                         },
                         {
                             "data": "status", "searchable": true,
@@ -1135,9 +1165,9 @@
                                 var html = "";
                                 if (oData.string_check_in || oData.string_check_out) {
                                     if (oData.string_check_in)
-                                        html += "<span style='font-weight:bold;' class='fw-bold'>" + oData.string_check_in + "</span><br/>";
+                                        html += "<span style='font-weight:bold;' class='fw-bold'>" + oData.string_check_in+ "</span><br/>";
                                     if (oData.string_check_out)
-                                        html += "<span style='font-weight:bold;' class='fw-bold'" + oData.string_check_in + "</span><br/>";
+                                        html += "<span style='font-weight:bold;' class='fw-bold'>" + oData.string_check_out+ "</span><br/>";
 
                                 } else {
                                     html += "<span style='font-weight:bold;text-color:red;' class='bold'>Not Assigned</span>";

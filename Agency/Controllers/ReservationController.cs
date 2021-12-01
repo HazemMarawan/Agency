@@ -49,6 +49,7 @@ namespace Agency.Controllers
                            join loc in db.Locations on even.location_id equals loc.id
                            join city in db.Cities on loc.city_id equals city.id
                            join hotel in db.Hotels on event_hotel.hotel_id equals hotel.id
+                           join vendor in db.Vendors on event_hotel.vendor_id equals vendor.id
                            join oU in db.Users on res.opener equals oU.id into us
                            from opener in us.DefaultIfEmpty()
                            join cU in db.Users on res.closer equals cU.id into use
@@ -89,14 +90,14 @@ namespace Agency.Controllers
                                reservations_officer_phone = res.reservations_officer_phone,
                                opener = res.opener,
                                closer = res.closer,
-                               opener_name = opener.full_name == null ? "No Opener Assigned" : opener.full_name,
-                               closer_name = opener.full_name == null ? "No Closer Assigned" : closer.full_name,
+                               opener_name = opener.full_name == null ? "-" : opener.full_name,
+                               closer_name = opener.full_name == null ? "-" : closer.full_name,
                                check_in = res.check_in,
                                check_out = res.check_out,
                                string_check_in = res.check_in.ToString(),
                                string_check_out = res.check_out.ToString(),
                                total_nights = res.total_nights,
-                               total_rooms = res.total_rooms,
+                               total_rooms = db.ReservationDetails.Where(rd=>rd.reservation_id == res.id).Count(),
                                profit = res.profit,
                                shift = res.shift,
                                created_at_string = res.created_at.ToString(),
@@ -122,7 +123,8 @@ namespace Agency.Controllers
                                updated_by_name = updatedBy.full_name == null ? "Not Updated":updatedBy.full_name,
                                shift_name = ((Shift)res.shift).ToString(),
                                location_name = loc.name,
-                               city_name = city.name
+                               city_name = city.name,
+                               vendor_code = vendor.code
                                //profit = calculateProfit(res.id).profit
                            }).Where(r => r.id == id).FirstOrDefault();
             ViewBag.id = id;
@@ -733,6 +735,8 @@ namespace Agency.Controllers
                 reservation.company_id = company.id;
                 db.SaveChanges();
 
+                Logs.ReservationActionLog(Session["id"].ToString().ToInt(), reservation.id, "Add", "Add Booking #" + reservation.id);
+
             } else
             {
                 Reservation reservation = db.Reservations.Find(reservationViewModel.id);
@@ -785,6 +789,9 @@ namespace Agency.Controllers
                 company.name = reservationViewModel.company_name;
                 db.Entry(company).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
+
+                Logs.ReservationActionLog(Session["id"].ToString().ToInt(), reservation.id, "Edit", "Edit Booking #" + reservation.id);
+
 
             }
             return Json(new { message = "done" }, JsonRequestBehavior.AllowGet);

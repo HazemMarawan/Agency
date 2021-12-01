@@ -79,6 +79,7 @@ namespace Agency.ViewModel
         public double? event_vendor_double_price { get; set; }
         public double? event_vendor_triple_price { get; set; }
         public double? event_vendor_quad_price { get; set; }
+        public string vendor_code { get; set; }
         public double? total_price { get; set; }
         public int hotel_id { get; set; }
         public string hotel_address { get; set; }

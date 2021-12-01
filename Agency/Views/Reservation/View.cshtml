@@ -255,23 +255,46 @@
 
                                     <div class="col-lg-10 offset-1 item-of-detailed-table ">
                                         <div class="col-lg-3 part-a">
+                                            <p>Events</p>
+                                            <p>Hotel</p>
                                             <p>Created By</p>
                                             <p>Modified By</p>
+                                            <p>Opener</p>
+                                            <p>Closer</p>
                                             <p>Booking ID</p>
                                             <p>Date Submitted</p>
+                                            <p>Check in</p>
+                                            <p>Check out</p>
                                             <p>Shift</p>
                                             <p>Company Name</p>
                                             <p>Contact Name</p>
-                                            @* <p>Payor Name</p>*@
                                             <p>Phone number</p>
-                                            @*<p>Fax</p>*@
                                             <p>e-mail </p>
-                                            @*<p>Address line 1</p>*@
-                                            @*<p>Address line 2</p>*@
+                                            <p>Vendor </p>
+                                            <p>Total Rooms </p>
+                                            <p>Total Nights </p>
                                             <p>Location</p>
                                             <p>City</p>
+                                            <p>Single Price</p>
+                                            <p>Double Price</p>
+                                            <p>Trible Price</p>
+                                            <p>Quad Price</p>
+                                            <p>Vendor Single Price</p>
+                                            <p>Vendor Double Price</p>
+                                            <p>Vendor Trible Price</p>
+                                            <p>Vendor Quad Price</p>
+                                            <p>Status</p>
+                                            <p>Collected</p>
+                                            <p>Balance</p>
+                                            @if(Model.paid_amount == Model.total_amount_after_tax)
+                                            {
+                                                <p>Profit</p>
+                                            }
                                         </div>
                                         <div class="col-lg-7 part-b">
+                                            <p>@Model.event_name</p>
+                                            <p>@Model.hotel_name</p>
+
                                             <p>@Model.created_by_name at @Model.created_at_string</p>
                                             <p>
                                                 @if (Model.updated_by != null)
@@ -282,21 +305,56 @@
                                                 {
                                                     <span>@Model.updated_by_name</span>
                                                 }
-                                        </p>
-                                        <p>@Model.id</p>
-                                        <p>@Model.created_at_string</p>
-                                        <p>@Model.shift_name</p>
-                                        <p>@Model.company_name</p>
-                                        <p>@Model.reservations_officer_name</p>
-                                        @*<p>Jerry Johnson</p>*@
-                                        <p>@Model.reservations_officer_phone</p>
-                                        @*<p>N/A</p>*@
-                                        <p>@Model.reservations_officer_email</p>
-                                        @*<p>18125 N Ramsey Rd.</p>*@
-                                        @*<p>N/A</p>*@
-                                        <p>@Model.location_name</p>
-                                        <p>@Model.city_name</p>
-                                    </div>
+                                            </p>
+                                            <p>@Model.opener_name</p>
+                                            <p>@Model.closer_name</p>
+                                            <p>@Model.id</p>
+                                            <p>@Model.created_at_string</p>
+                                            <p>@Model.check_in.ToString().Split(' ')[0]</p>
+                                            <p>@Model.check_out.ToString().Split(' ')[0]</p>
+                                            <p>@Model.shift_name</p>
+                                            <p>@Model.company_name</p>
+                                            <p>@Model.reservations_officer_name</p>
+                                            <p>@Model.reservations_officer_phone</p>
+                                            <p>@Model.reservations_officer_email</p>
+                                            <p>@Model.vendor_code</p>
+                                            <p>@Model.total_rooms</p>
+                                            <p>@Convert.ToDateTime(Model.check_out).Subtract(Convert.ToDateTime(Model.check_in)).Days</p>
+                                            <p>@Model.location_name</p>
+                                            <p>@Model.city_name</p>
+                                            <p>@Model.single_price</p>
+                                            <p>@Model.double_price</p>
+                                            <p>@Model.triple_price</p>
+                                            <p>@Model.quad_price</p>
+                                            <p>@Model.vendor_single_price</p>
+                                            <p>@Model.vendor_douple_price</p>
+                                            <p>@Model.vendor_triple_price</p>
+                                            <p>@Model.vendor_quad_price</p>
+                                            <p>@Model.paid_amount</p>
+                                            <p>@(Model.total_amount_after_tax - Model.paid_amount) </p>
+                                            @if (Model.paid_amount == Model.total_amount_after_tax)
+                                            {
+                                                <p>@(Model.total_amount_after_tax - Model.total_amount_from_vendor) </p>
+                                            }
+                                            <p>
+                                                @if (Model.paid_amount == 0)
+                                                {
+                                                    <span>Un Paid</span>
+                                                }
+                                                else if (Model.paid_amount < Model.total_amount_after_tax)
+                                                {
+                                                    <span>Partially Paid</span>
+                                                }
+                                                else
+                                                {
+                                                    <span>Paid</span>
+                                                }
+                                            </p>
+                                                @*<p>N/A</p>*@
+                                                @*<p>Jerry Johnson</p>*@
+                                                @*<p>18125 N Ramsey Rd.</p>*@
+                                                @*<p>N/A</p>*@
+                                            </div>
                                 </div>
 
 
@@ -318,15 +376,16 @@
                                             <table id="reservationTable" class="table table-striped table-bordered" style="width:100%">
                                                 <thead>
                                                     <tr class="text-center">
-                                                        <th width="10%">#</th>
-                                                        <th width="20%">Total Amount</th>
-                                                        <th width="20%">Reservation Info</th>
-                                                        <th width="20%">Client Info</th>
-                                                        <th width="20%">Active</th>
-                                                        <th width="10%"></th>
+                                                        <th>#</th>
+                                                        <th>Guest Name</th>
+                                                        <th>Check In/Out</th>
+                                                        <th>Room Type</th>
+                                                        <th>Vendor Code</th>
+                                                        <th>Cost</th>
+                                                        <th>Cancelation Policy</th>
+                                                        @*<th>Payment Deadline</th>*@
                                                     </tr>
                                                 </thead>
-
                                             </table>
                                         </div>
                                     </div>
@@ -400,7 +459,25 @@
 
                         <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
                             <div class="widget-content widget-content-area widget-content-area-edit br-6">
+                                <div class="card">
+                                    <div class="card-body">
 
+                                        <div class="table-responsive  text-left">
+                                            <table id="logsTable" class="table table-striped table-bordered" style="width:100%">
+                                                <thead>
+                                                    <tr class="text-center">
+                                                        <th>#</th>
+                                                        <th>User name</th>
+                                                        <th>Date Time</th>
+                                                        <th>Action</th>
+                                                        <th>Description</th>
+                                                    </tr>
+                                                </thead>
+
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -459,88 +536,129 @@
                             "searchable": true
                         },
                         {
+                            "data": "client_id", "searchable": true,
+                            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                                var html = "";
+                                if (oData.client_first_name)
+                                    html += oData.client_first_name;
+                                if (oData.client_last_name)
+                                    html += " " + oData.client_last_name;
+
+                                $(nTd).html("<span class='action-column'>" + html + "</span>");
+                            }
+                        },
+                        {
+                            "data": "string_reservation_from", "searchable": true,
+                            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                                var html = "";
+                                if (oData.string_reservation_from)
+                                    html += oData.string_reservation_from + "</br>";
+                                if (oData.string_reservation_to)
+                                    html += " " + oData.string_reservation_to;
+
+                                $(nTd).html("<span class='action-column'>" + html + "</span>");
+                            }
+                        },
+                        {
+                            "data": "room_type", "searchable": true,
+                            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                                var html = "";
+                                if (oData.room_type == 1)
+                                    html += "Single";
+                                else if (oData.room_type == 2)
+                                    html += "Double";
+                                else if (oData.room_type == 3)
+                                    html += "Triple";
+                                else if (oData.room_type == 4)
+                                    html += "Quad";
+
+                                $(nTd).html("<span class='action-column'>" + html + "</span>");
+                            }
+                        },
+                        {
+                            "data": "vendor_code",
+                            "searchable": true
+                        },
+                        {
                             "data": "amount", "searchable": true,
                             fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
                                 var html = "";
                                 if (oData.amount)
                                     html += "<span style='font-weight:bold;' class='bold'>Amount:</span>" + addCommas(oData.amount.toFixed(2));
-                                if (oData.currency) {
-                                    html += "<span style='font-weight:bold;' class='bold'>";
-                                    if (oData.currency == 1)
-                                        html += " USD";
-                                    if (oData.currency == 2)
-                                        html += " GBP";
-                                    if (oData.currency == 3)
-                                        html += " EUR";
-                                    html += "</span>";
-                                }
-                                html += "<br/>";
-                                if (oData.tax)
-                                    html += "<span style='font-weight:bold;' class='bold'>Tax:</span>" + addCommas(oData.tax.toFixed(2)) + "<br/>";
+                                //if (oData.currency) {
+                                //    html += "<span style='font-weight:bold;' class='bold'>";
+                                //    if (oData.currency == 1)
+                                //        html += " USD";
+                                //    if (oData.currency == 2)
+                                //        html += " GBP";
+                                //    if (oData.currency == 3)
+                                //        html += " EUR";
+                                //    html += "</span>";
+                                //}
+                                //html += "<br/>";
+                                //if (oData.tax)
+                                //    html += "<span style='font-weight:bold;' class='bold'>Tax:</span>" + addCommas(oData.tax.toFixed(2)) + "<br/>";
 
                                 $(nTd).html("<span class='action-column'>" + html + "</span>");
-                            }
+                            },
+
                         },
                         {
-                            "data": "no_of_days", "searchable": true,
+                            "data": "cancelation_policy", "searchable": true,
                             fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
                                 var html = "";
-                                if (oData.no_of_days)
-                                    html += "<span style='font-weight:bold;' class='bold'>Days:</span>" + oData.no_of_days + "<br/>";
-                                if (oData.room_type) {
-                                    if (oData.room_type == 1)
-                                        html += "<span style='font-weight:bold;' class='bold'>Room:</span> Single";
-                                    if (oData.room_type == 2)
-                                        html += "<span style='font-weight:bold;' class='bold'>Room:</span> Double";
-                                    if (oData.room_type == 3)
-                                        html += "<span style='font-weight:bold;' class='bold'>Room:</span> Triple";
-                                    if (oData.room_type == 4)
-                                        html += "<span style='font-weight:bold;' class='bold'>Room:</span> Quad";
-                                    html += "<br/>";
-                                }
-                                if (oData.from)
-                                    html += "<span style='font-weight:bold;' class='bold'>From:</span>" + oData.from + "<br/>";
-                                if (oData.to)
-                                    html += "<span style='font-weight:bold;' class='bold'>To:</span>" + oData.to + "<br/>";
-
                                 $(nTd).html("<span class='action-column'>" + html + "</span>");
-                            }
-                        },
-                        {
-                            "data": "client_id", "searchable": true,
-                            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-                                var html = "";
-                                if (oData.client_first_name)
-                                    html += "<span style='font-weight:bold;' class='bold'>First Name:</span>" + oData.client_first_name + "<br/>";
-                                if (oData.client_last_name)
-                                    html += "<span style='font-weight:bold;' class='bold'>Last Name:</span>" + oData.client_last_name + "<br/>";
+                            },
 
-
-                                $(nTd).html("<span class='action-column'>" + html + "</span>");
-                            }
                         },
-                        {
-                            "data": "active", "searchable": true,
-                            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-                                var html = "";
-                                if (oData.active == 1)
-                                    html += "<span class='badge badge-primary'>Yes</span>";
-                                else
-                                    html += "<span class='badge badge-danger'>No</span>";
-                                $(nTd).html("<span class='action-column'>" + html + "</span>");
-                            }
-                        },
-                        {
-                            "data": "id", "searchable": true,
-                            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-                                var html = "";
+                        //{
+                        //    "data": "no_of_days", "searchable": true,
+                        //    fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                        //        var html = "";
+                        //        if (oData.no_of_days)
+                        //            html += "<span style='font-weight:bold;' class='bold'>Days:</span>" + oData.no_of_days + "<br/>";
+                        //        if (oData.room_type) {
+                        //            if (oData.room_type == 1)
+                        //                html += "<span style='font-weight:bold;' class='bold'>Room:</span> Single";
+                        //            if (oData.room_type == 2)
+                        //                html += "<span style='font-weight:bold;' class='bold'>Room:</span> Double";
+                        //            if (oData.room_type == 3)
+                        //                html += "<span style='font-weight:bold;' class='bold'>Room:</span> Triple";
+                        //            if (oData.room_type == 4)
+                        //                html += "<span style='font-weight:bold;' class='bold'>Room:</span> Quad";
+                        //            html += "<br/>";
+                        //        }
+                        //        if (oData.from)
+                        //            html += "<span style='font-weight:bold;' class='bold'>From:</span>" + oData.from + "<br/>";
+                        //        if (oData.to)
+                        //            html += "<span style='font-weight:bold;' class='bold'>To:</span>" + oData.to + "<br/>";
 
-                                html += "<a class='edit' href='javascript:void(0);' title='Edit'><i class='far fa-edit'></i></a>&nbsp;";
-                                html += "<a class='delete' href='javascript:void(0);' title='Delete'><i class='fa fa-trash'></i></a>&nbsp;";
+                        //        $(nTd).html("<span class='action-column'>" + html + "</span>");
+                        //    }
+                        //},
+                        //,
+                        //{
+                        //    "data": "active", "searchable": true,
+                        //    fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                        //        var html = "";
+                        //        if (oData.active == 1)
+                        //            html += "<span class='badge badge-primary'>Yes</span>";
+                        //        else
+                        //            html += "<span class='badge badge-danger'>No</span>";
+                        //        $(nTd).html("<span class='action-column'>" + html + "</span>");
+                        //    }
+                        //},
+                        //{
+                        //    "data": "id", "searchable": true,
+                        //    fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                        //        var html = "";
 
-                                $(nTd).html("<span class='action-column'>" + html + "</span>");
-                            }
-                        },
+                        //        html += "<a class='edit' href='javascript:void(0);' title='Edit'><i class='far fa-edit'></i></a>&nbsp;";
+                        //        html += "<a class='delete' href='javascript:void(0);' title='Delete'><i class='fa fa-trash'></i></a>&nbsp;";
+
+                        //        $(nTd).html("<span class='action-column'>" + html + "</span>");
+                        //    }
+                        //},
                     ]
                  });
 
@@ -682,6 +800,68 @@
                     ]
                  });
 
+           var logstable = $('#logsTable')
+                .DataTable({/* we added this from the other system to have same search and same pagination*/
+                    "dom": "<'dt--top-section '<'row'<'col-sm-12 col-md-6 d-flex justify-content-md-start justify-content-center'B><'col-sm-12 col-md-6 d-flex justify-content-md-end justify-content-center mt-md-0 mt-3'f>>>" +
+                        "<'table-responsive  'tr>" +
+                        "<'dt--bottom-section d-sm-flex justify-content-sm-between text-center'<'dt--pages-count  mb-sm-0 mb-3'i><'dt--pagination'p>>",
+                    "buttons": {
+                        buttons: [
+                            { extend: 'copy', className: 'btn btn-sm' },
+                            { extend: 'csv', className: 'btn btn-sm' },
+                            { extend: 'excel', className: 'btn btn-sm' },
+                            { extend: 'print', className: 'btn btn-sm' }
+                        ]
+                    },
+                    "oLanguage": {
+                        "oPaginate": { "sPrevious": 'Perivous', "sNext": 'Next' },
+                        "sInfo": "Showing page _PAGE_ of _PAGES_",
+                        "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                        "sSearchPlaceholder": "Search...",
+                        "sLengthMenu": "Results :  _MENU_",
+                    },
+                    "processing": true,
+                    "serverSide": true,
+                    "scrollX": true,
+                    "stateSave": false,
+                    "lengthChange": false,
+                    "dom": 'Bfrtip',
+
+                    "buttons": ['copy', 'excel', 'pdf', 'print'],
+                    "pageLength":10,
+                    "rowId": 'id',
+                    "ajax": {
+                        "url": "/ReservationDetail/getLogs/@ViewBag.id",
+                        "type": "POST",
+                        "datatype": "json",
+                        "dataSrc": "data"
+                    },
+                    "columns": [
+                        {
+                            "data": "id",
+                            "searchable": true
+                        },
+                        {
+                            "data": "full_name",
+                            "searchable": true
+                        },
+                        {
+                            "data": "string_created_at",
+                            "searchable": true
+                        },
+                        {
+                            "data": "action",
+                            "searchable": true
+                        },
+                        {
+                            "data": "description",
+                            "searchable": true
+                        },
+                        
+                       
+                    ]
+                 });
+
 
             $('#search').on('click', function () {
                 datatable.search($("#text_search").val());
@@ -713,6 +893,7 @@
                 }, function (response) {
 
                         datatable.draw();
+                        logstable.draw();
 
                 }, function (response) {
 
@@ -732,7 +913,8 @@
                     progressText: 'progress_text',
                 }, function (response) {
 
-                    commentDatatable.draw();
+                        commentDatatable.draw();
+                        logstable.draw();
 
                 }, function (response) {
 
@@ -752,7 +934,9 @@
                     progressText: 'progress_text',
                 }, function (response) {
 
-                    taskDatatable.draw();
+                        taskDatatable.draw();
+                        logstable.draw();
+
 
                 }, function (response) {
 
@@ -774,6 +958,7 @@
                     progressText: 'progress_text',
                 }, function (response) {
                         commentDatatable.draw();
+                        logstable.draw();
 
                 }, function (response) {
 
@@ -798,6 +983,7 @@
                     progressText: 'progress_text',
                 }, function (response) {
                         datatable.draw();
+                        logstable.draw();
 
                 }, function (response) {
 
@@ -853,6 +1039,7 @@
                     progressText: 'progress_text',
                 }, function (response) {
                         datatable.draw();
+                        logstable.draw();
 
                 }, function (response) {
 
@@ -904,6 +1091,8 @@
                         datatype: "json",
                         success: function (data) {
                             datatable.draw();
+                            logstable.draw();
+
                         },
                         error: function () {
                             alert("Dynamic content load failed.");
@@ -923,6 +1112,8 @@
                         datatype: "json",
                         success: function (data) {
                             commentDatatable.draw();
+                            logstable.draw();
+
                         },
                         error: function () {
                             alert("Dynamic content load failed.");
@@ -942,6 +1133,8 @@
                         datatype: "json",
                         success: function (data) {
                             taskDatatable.draw();
+                            logstable.draw();
+
                         },
                         error: function () {
                             alert("Dynamic content load failed.");
@@ -962,7 +1155,7 @@
             $(`.table thead tr th:nth-child(4)`).css('width', '20%')
             $(`.table thead tr th:nth-child(5)`).css('width', '20%')
             $(`.table thead tr th:nth-child(6)`).css('width', '10%')
-          
+
             $(`.table thead tr td:nth-child(1)`).css('width', '10%')
             $(`.table thead tr td:nth-child(2)`).css('width', '20%')
             $(`.table thead tr td:nth-child(3)`).css('width', '20%')
