@@ -305,7 +305,7 @@
                                 html += "<a class='edit' href='javascript:void(0)' title='Edit'><i class='far fa-edit'></i></a>&nbsp;";
                                 html += "<a class='delete' href='javascript:void(0)' title='Delete'><i class='fas fa-trash'></i></a> | &nbsp;";
                                 if (oData.secret_key)
-                                    html += "<a class='copyEventLink' href='javascript:void(0)' title='Copy Event Link'><i class='fas fa-copy'></i></a>";
+                                    html += "<a class='copyEventLink' data-clipboard-text='mean you should — clipboard.js' href='javascript:void(0)' title='Copy Event Link'><i class='fas fa-copy'></i></a>";
                                 $(nTd).html("<span class='action-column'>" + html + "</span>");
                             }
                         },
@@ -576,14 +576,14 @@
                     });
                 });
             });
-           $(document).on("click", ".copyEventLink", function () {
+           @*$(document).on("click", ".copyEventLink", function () {
                var data = datatable.row($(this).closest('tr')).data();
                //var eventLink = '/Booking/Show?secret_key=' + data.secret_key;
                var eventLink = '@Url.Action("Show","Booking",new { secret_key = "secret_key_value" })';
                eventLink = eventLink.replace('secret_key_value', data.secret_key);
                
                navigator.clipboard.writeText(window.location.origin+eventLink);
-           });
+           });*@
            
 
         });
