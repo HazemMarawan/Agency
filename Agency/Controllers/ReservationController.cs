@@ -43,13 +43,20 @@ namespace Agency.Controllers
         public ActionResult View(int id)
         {
             var resData = (from res in db.Reservations
-                           join company in db.Companies on res.company_id equals company.id
-                           join event_hotel in db.EventHotels on res.event_hotel_id equals event_hotel.id
-                           join even in db.Events on event_hotel.event_id equals even.id
-                           join loc in db.Locations on even.location_id equals loc.id
-                           join city in db.Cities on loc.city_id equals city.id
-                           join hotel in db.Hotels on event_hotel.hotel_id equals hotel.id
-                           join vendor in db.Vendors on event_hotel.vendor_id equals vendor.id
+                           join com in db.Companies on res.company_id equals com.id into cm
+                           from company in cm.DefaultIfEmpty()
+                           join even_hot in db.EventHotels on res.event_hotel_id equals even_hot.id into eh
+                           from event_hotel in eh.DefaultIfEmpty()
+                           join eve in db.Events on event_hotel.event_id equals eve.id into ev
+                           from even in ev.DefaultIfEmpty()
+                           join location in db.Locations on even.location_id equals location.id into lc
+                           from loc in lc.DefaultIfEmpty()
+                           join cit in db.Cities on loc.city_id equals cit.id into ci
+                           from city in ci.DefaultIfEmpty()
+                           join hot in db.Hotels on event_hotel.hotel_id equals hot.id into ho
+                           from hotel in ho.DefaultIfEmpty()
+                           join vend in db.Vendors on event_hotel.vendor_id equals vend.id into  ven
+                           from vendor in ven.DefaultIfEmpty()
                            join oU in db.Users on res.opener equals oU.id into us
                            from opener in us.DefaultIfEmpty()
                            join cU in db.Users on res.closer equals cU.id into use
@@ -62,6 +69,7 @@ namespace Agency.Controllers
                                id = res.id,
                                total_amount = res.total_amount,
                                currency = res.currency,
+                               string_currency = ((Currency)res.currency).ToString(),
                                tax = res.tax,
                                financial_advance = res.financial_advance,
                                financial_advance_date = res.financial_advance_date,
@@ -124,7 +132,8 @@ namespace Agency.Controllers
                                shift_name = ((Shift)res.shift).ToString(),
                                location_name = loc.name,
                                city_name = city.name,
-                               vendor_code = vendor.code
+                               vendor_code = vendor.code,
+
                                //profit = calculateProfit(res.id).profit
                            }).Where(r => r.id == id).FirstOrDefault();
             ViewBag.id = id;

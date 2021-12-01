@@ -304,7 +304,8 @@
 
                                 html += "<a class='edit' href='javascript:void(0)' title='Edit'><i class='far fa-edit'></i></a>&nbsp;";
                                 html += "<a class='delete' href='javascript:void(0)' title='Delete'><i class='fas fa-trash'></i></a> | &nbsp;";
-                                html += "<a class='copyEventLink' href='javascript:void(0)' title='Copy Event Link'><i class='fas fa-copy'></i></a>";
+                                if (oData.secret_key)
+                                    html += "<a class='copyEventLink' href='javascript:void(0)' title='Copy Event Link'><i class='fas fa-copy'></i></a>";
                                 $(nTd).html("<span class='action-column'>" + html + "</span>");
                             }
                         },

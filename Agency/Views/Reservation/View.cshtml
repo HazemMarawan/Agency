@@ -312,30 +312,103 @@
                                             <p>@Model.created_at_string</p>
                                             <p>@Model.check_in.ToString().Split(' ')[0]</p>
                                             <p>@Model.check_out.ToString().Split(' ')[0]</p>
-                                            <p>@Model.shift_name</p>
+                                            @if (String.IsNullOrEmpty(Model.shift_name))
+                                            {
+                                                <p>-</p>
+                                            }
+                                            else
+                                            {
+                                                <p>@Model.shift_name</p>
+                                            }
                                             <p>@Model.company_name</p>
                                             <p>@Model.reservations_officer_name</p>
                                             <p>@Model.reservations_officer_phone</p>
                                             <p>@Model.reservations_officer_email</p>
-                                            <p>@Model.vendor_code</p>
+                                            @if (String.IsNullOrEmpty(Model.vendor_code))
+                                            {
+                                                <p>-</p>
+                                            }
+                                            else
+                                            {
+                                                <p>@Model.vendor_code</p>
+                                            }
                                             <p>@Model.total_rooms</p>
                                             <p>@Convert.ToDateTime(Model.check_out).Subtract(Convert.ToDateTime(Model.check_in)).Days</p>
                                             <p>@Model.location_name</p>
                                             <p>@Model.city_name</p>
-                                            <p>@Model.single_price</p>
-                                            <p>@Model.double_price</p>
-                                            <p>@Model.triple_price</p>
-                                            <p>@Model.quad_price</p>
-                                            <p>@Model.vendor_single_price</p>
-                                            <p>@Model.vendor_douple_price</p>
-                                            <p>@Model.vendor_triple_price</p>
-                                            <p>@Model.vendor_quad_price</p>
-                                            <p>@Model.paid_amount</p>
-                                            <p>@(Model.total_amount_after_tax - Model.paid_amount) </p>
-                                            @if (Model.paid_amount == Model.total_amount_after_tax)
+                                            @if (Model.single_price == null)
                                             {
-                                                <p>@(Model.total_amount_after_tax - Model.total_amount_from_vendor) </p>
+                                                <p>-</p>
                                             }
+                                            else
+                                            {
+                                                <p>@Model.single_price @Model.string_currency</p>
+                                            }
+
+                                            @if (Model.double_price == null)
+                                            {
+                                                <p>-</p>
+                                            }
+                                            else
+                                            {
+                                                <p>@Model.double_price @Model.string_currency</p>
+                                            }
+
+                                            @if (Model.triple_price == null)
+                                            {
+                                                <p>-</p>
+                                            }
+                                            else
+                                            {
+                                                <p>@Model.triple_price @Model.string_currency</p>
+                                            }
+
+                                            @if (Model.quad_price == null)
+                                            {
+                                                <p>-</p>
+                                            }
+                                            else
+                                            {
+                                                <p>@Model.quad_price @Model.string_currency</p>
+                                            }
+
+                                            @if (Model.vendor_single_price == null)
+                                            {
+                                                <p>-</p>
+                                            }
+                                            else
+                                            {
+                                                <p>@Model.vendor_single_price @Model.string_currency</p>
+                                            }
+
+                                            @if (Model.vendor_douple_price == null)
+                                            {
+                                                <p>-</p>
+                                            }
+                                            else
+                                            {
+                                                <p>@Model.vendor_douple_price @Model.string_currency</p>
+                                            }
+
+                                            @if (Model.vendor_triple_price == null)
+                                            {
+                                                <p>-</p>
+                                            }
+                                            else
+                                            {
+                                                <p>@Model.vendor_triple_price @Model.string_currency</p>
+
+                                            }
+
+                                            @if (Model.vendor_quad_price == null)
+                                            {
+                                                <p>-</p>
+                                            }
+                                            else
+                                            {
+                                                <p>@Model.vendor_quad_price @Model.string_currency</p>
+                                            }
+
                                             <p>
                                                 @if (Model.paid_amount == 0)
                                                 {
@@ -350,11 +423,18 @@
                                                     <span>Paid</span>
                                                 }
                                             </p>
-                                                @*<p>N/A</p>*@
-                                                @*<p>Jerry Johnson</p>*@
-                                                @*<p>18125 N Ramsey Rd.</p>*@
-                                                @*<p>N/A</p>*@
-                                            </div>
+                                            <p>@Model.paid_amount</p>
+                                            <p>@(Model.total_amount_after_tax - Model.paid_amount) </p>
+                                            @if (Model.paid_amount == Model.total_amount_after_tax)
+                                            {
+                                                <p>@(Model.total_amount_after_tax - Model.total_amount_from_vendor) </p>
+                                            }
+
+                                            @*<p>N/A</p>*@
+                                            @*<p>Jerry Johnson</p>*@
+                                            @*<p>18125 N Ramsey Rd.</p>*@
+                                            @*<p>N/A</p>*@
+                                        </div>
                                 </div>
 
 

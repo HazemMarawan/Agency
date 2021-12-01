@@ -32,6 +32,7 @@ namespace Agency.ViewModel
         public double? quad_price { get; set; }
         public int? vendor_id { get; set; }
         public int? currency { get; set; }
+        public string string_currency { get; set; }
         public double? profit { get; set; }
         public int? active { get; set; }
         public int? created_by { get; set; }
