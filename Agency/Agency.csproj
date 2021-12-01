@@ -3865,6 +3865,7 @@
     <Content Include="Views\ReservationDetail\Itinirary.cshtml" />
     <Content Include="Views\Reservation\View.cshtml" />
     <Content Include="Views\Booking\Show.cshtml" />
+    <Content Include="Views\Event\Show.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
