@@ -3829,6 +3829,7 @@
     <Content Include="Content\fontawesome\webfonts\fa-solid-900.woff2" />
     <Content Include="App_Browsers\qt.browser" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\clipboard.js" />
     <Content Include="Scripts\factory.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

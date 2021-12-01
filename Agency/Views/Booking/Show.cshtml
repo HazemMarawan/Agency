@@ -69,7 +69,7 @@
                                 @hotel.name
                             </h3>
                         </div>
-                        @if (hotel.hotelImages != null)
+                        @if (hotel.hotelImages.Count != 0)
                         {
                             <img class="hotelImg" src="@hotel.hotelImages[0].path" alt="">
                         }
