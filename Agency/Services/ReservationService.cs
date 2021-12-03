@@ -16,6 +16,7 @@ namespace Agency.Services
             double? tax_amount = 0;
             double? total_amount_after_tax = 0;
             double? total_amount_from_vendor = 0;
+            int? total_nights = 0;
             Reservation reservation = db.Reservations.Find(res_id);
             List<ReservationDetail> reservationDetails = db.ReservationDetails.Where(rd => rd.reservation_id == res_id).ToList();
             //Event event_obj = db.Events.Find(even_id);
@@ -50,12 +51,15 @@ namespace Agency.Services
                 total_amount_after_tax += resDetail.amount_after_tax;
                 total_amount_from_vendor += (vendor_room_price*resDetail.no_of_days);
                 tax_amount += resDetail.tax;
+                total_nights += resDetail.no_of_days;
             }
             ReservationViewModel reservationViewModel = new ReservationViewModel();
             reservationViewModel.total_amount = total_amount;
             reservationViewModel.total_amount_after_tax = total_amount_after_tax;
             reservationViewModel.total_amount_from_vendor = total_amount_from_vendor;
             reservationViewModel.tax_amount = tax_amount;
+            reservationViewModel.total_nights = total_nights;
+           
             return reservationViewModel;
         }
     }

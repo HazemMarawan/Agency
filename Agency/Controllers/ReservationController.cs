@@ -309,7 +309,6 @@ namespace Agency.Controllers
                 data = displayResult,
             }, JsonRequestBehavior.AllowGet);
         }
-
         public JsonResult partiallyPaidReservations()
         {
             var draw = Request.Form.GetValues("draw").FirstOrDefault();
@@ -502,12 +501,13 @@ namespace Agency.Controllers
             double? collected = 0.0;
             double? balance = 0.0;
             double? profit = 0.0;
+            int? total_nights = 0;
             if (reservation != null)
             {
                 collected = db.Reservations.Select(t => t.paid_amount).Sum();
                 balance = db.Reservations.Select(t => t.total_amount_after_tax).Sum() - collected;
                 profit = resData.ToList().Select(t => t.total_amount_after_tax).Sum() - resData.ToList().Select(t => t.total_amount_from_vendor).Sum();
-
+                total_nights = db.Reservations.Select(n => n.total_nights).Sum();
             }
             var displayResult = resData.OrderByDescending(u => u.id).Skip(skip)
                  .Take(pageSize).ToList();
@@ -521,7 +521,8 @@ namespace Agency.Controllers
                 data = displayResult,
                 collected = collected,
                 balance = balance,
-                profit = profit
+                profit = profit,
+                total_nights = total_nights
 
             }, JsonRequestBehavior.AllowGet);
         }
@@ -804,6 +805,7 @@ namespace Agency.Controllers
                 reservation.total_amount_after_tax = updatedTotals.total_amount_after_tax;
                 reservation.total_amount_from_vendor = updatedTotals.total_amount_from_vendor;
                 reservation.tax_amount = updatedTotals.tax_amount;
+                reservation.total_nights = updatedTotals.total_nights;
                 reservation.active = 1;
                 reservation.updated_at = DateTime.Now;
                 reservation.updated_by = Session["id"].ToString().ToInt();

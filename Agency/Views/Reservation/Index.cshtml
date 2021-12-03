@@ -423,7 +423,7 @@
                         <div class="card-body">
                             <div class="media align-items-center">
                                 <div class="media-body">
-                                    <p class="mb-0 font-weight-bold text-white"><span id="profit">0.00</span></p>
+                                    <p class="mb-0 font-weight-bold text-white"><span id="total_nights">0.00</span></p>
                                     <p class="mb-0 text-white">Nights</p>
                                 </div>
                                 <div class="font-35 text-white">
@@ -1211,6 +1211,7 @@
                 $('#profit').text(addCommas(json.profit.toFixed(2)));
                 $('#balance').text(addCommas(json.balance.toFixed(2)));
                 $('#collected').text(addCommas(json.collected.toFixed(2)));
+                $('#total_nights').text(addCommas(json.total_nights));
 
             });
            $(document).on("click", "#add_reservation", function () {

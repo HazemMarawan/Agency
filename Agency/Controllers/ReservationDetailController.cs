@@ -146,7 +146,7 @@ namespace Agency.Controllers
                 reservation.total_amount_after_tax = updatedTotals.total_amount_after_tax;
                 reservation.total_amount_from_vendor = updatedTotals.total_amount_from_vendor;
                 reservation.tax_amount = updatedTotals.tax_amount;
-
+                reservation.total_nights = updatedTotals.total_nights;
                 //reservation.tax_amount= reservation.tax_amount == null ? 0 : reservation.tax_amount;
                 //reservation.total_amount_from_vendor = reservation.total_amount_from_vendor == null ? 0 : reservation.total_amount_from_vendor;
                 //reservation.total_amount_from_vendor += vendor_amount;
@@ -159,6 +159,7 @@ namespace Agency.Controllers
 
                 detail.client_id = client.id;
                 db.SaveChanges();
+
                 Logs.ReservationActionLog(Session["id"].ToString().ToInt(), detail.reservation_id, "Add", "Add Reservation #" + detail.id);
 
             }
@@ -224,7 +225,7 @@ namespace Agency.Controllers
                 reservation.total_amount_after_tax = updatedTotals.total_amount_after_tax;
                 reservation.total_amount_from_vendor = updatedTotals.total_amount_from_vendor;
                 reservation.tax_amount = updatedTotals.tax_amount;
-
+                reservation.total_nights = updatedTotals.total_nights;
                 //reservation.tax += detail.tax;
                 //reservation.total_amount += detail.amount;
                 reservation.updated_at = DateTime.Now;
@@ -472,7 +473,7 @@ namespace Agency.Controllers
             reservation.total_amount_after_tax = updatedTotals.total_amount_after_tax;
             reservation.total_amount_from_vendor = updatedTotals.total_amount_from_vendor;
             reservation.tax_amount = updatedTotals.tax_amount;
-
+            reservation.total_nights = updatedTotals.total_nights;
            
             reservation.updated_at = DateTime.Now;
             reservation.updated_by = Session["id"].ToString().ToInt();
