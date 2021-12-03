@@ -1346,7 +1346,8 @@
                 });
 
             });
-           $(document).on("click", ".editPartiallyPaid", function () {
+
+            $(document).on("click", ".editPartiallyPaid", function () {
                var data = partiallyReservationTable.row($(this).closest('tr')).data();
                 console.log(data);
                 var modal = $('#edit_reservation_modal').clone();

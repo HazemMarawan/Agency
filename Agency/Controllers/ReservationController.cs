@@ -136,9 +136,25 @@ namespace Agency.Controllers
 
                                //profit = calculateProfit(res.id).profit
                            }).Where(r => r.id == id).FirstOrDefault();
+
             ViewBag.id = id;
             ViewBag.Users = db.Users.Select(s => new { s.id, s.full_name }).ToList();
+            ViewBag.Events = db.Events.Select(s => new { s.id, s.title, s.updated_at }).OrderByDescending(e => e.updated_at).ToList();
 
+            //ViewBag.Opener = db.Users.Select(s => new { s.id, s.full_name }).ToList();
+            ViewBag.Opener = db.Users.Select(s => new UserViewModel { id = s.id, full_name = s.full_name }).ToList();
+            ViewBag.Closer = db.Users.Select(s => new UserViewModel { id = s.id, full_name = s.full_name }).ToList();
+            ViewBag.Vendors = db.Vendors.Select(s => new VendorViewModel
+            {
+                id = s.id,
+                NamePlusCode = s.code + "-" + s.name
+            }).ToList();
+
+            ViewBag.currency = from Currency s in Enum.GetValues(typeof(Currency))
+                               select new ReservationViewModel { id = ((int)s), string_currency = s.ToString() };
+
+            ViewBag.Shift = from Shift s in Enum.GetValues(typeof(Shift))
+                            select new ReservationViewModel { id = ((int)s), shift_name = s.ToString() };
             return View(resData);
         }
         public ReservationViewModel calculateTotalandVendor(int res_id)
