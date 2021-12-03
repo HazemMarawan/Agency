@@ -608,11 +608,11 @@
 
            $(document).on("click", ".copyEventLink", function () {
                var data = datatable.row($(this).closest('tr')).data();
-               var eventLink = '/Booking/Show?secret_key=' + data.secret_key;
+               //var eventLink = '/Booking/Show?secret_key=' + data.secret_key;
 
-               navigator.clipboard.writeText(window.location.origin + eventLink);
+               //navigator.clipboard.writeText(window.location.origin + eventLink);
 
-               @*var modal = $('#event_link_modal').clone();
+               var modal = $('#event_link_modal').clone();
                 modal.find('#modal_title').text('Share Event');
                 modal.execModal({
                     progressBar: 'progress_bar',
@@ -627,7 +627,7 @@
                     var eventLink = '@Url.Action("Show","Booking",new { secret_key = "secret_key_value" })';
                     eventLink = eventLink.replace('secret_key_value', data.secret_key);
                         dialog.find('#link').val(window.location.origin+eventLink);
-                });*@
+                });
            });
 
 
