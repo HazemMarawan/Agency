@@ -351,6 +351,7 @@
     <Compile Include="ViewModel\CityViewModel.cs" />
     <Compile Include="ViewModel\ClientViewModel.cs" />
     <Compile Include="ViewModel\CompanyViewModel.cs" />
+    <Compile Include="ViewModel\DashboardViewModel.cs" />
     <Compile Include="ViewModel\EventHotelViewModel.cs" />
     <Compile Include="ViewModel\HotelLocationViewModel.cs" />
     <Compile Include="ViewModel\HotelImageViewModel.cs" />
@@ -480,6 +481,16 @@
     <Content Include="Content\AdminPanelAssets\assets\img\fr.png" />
     <Content Include="Content\AdminPanelAssets\assets\img\jp.png" />
     <Content Include="Content\AdminPanelAssets\assets\img\mindset.svg" />
+    <Content Include="Content\AdminPanelAssets\assets\img\Stars\0.png" />
+    <Content Include="Content\AdminPanelAssets\assets\img\Stars\1.5.png" />
+    <Content Include="Content\AdminPanelAssets\assets\img\Stars\1.png" />
+    <Content Include="Content\AdminPanelAssets\assets\img\Stars\2.5.png" />
+    <Content Include="Content\AdminPanelAssets\assets\img\Stars\2.png" />
+    <Content Include="Content\AdminPanelAssets\assets\img\Stars\3.5.png" />
+    <Content Include="Content\AdminPanelAssets\assets\img\Stars\3.png" />
+    <Content Include="Content\AdminPanelAssets\assets\img\Stars\4.5.png" />
+    <Content Include="Content\AdminPanelAssets\assets\img\Stars\4.png" />
+    <Content Include="Content\AdminPanelAssets\assets\img\Stars\5.png" />
     <Content Include="Content\AdminPanelAssets\assets\js\app.js" />
     <Content Include="Content\AdminPanelAssets\assets\js\apps\contact.js" />
     <Content Include="Content\AdminPanelAssets\assets\js\apps\custom-mailbox.js" />

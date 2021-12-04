@@ -1,4 +1,4 @@
-﻿
+﻿@model Agency.ViewModel.DashboardViewModel
 @{
     ViewBag.Title = "Index";
 }
@@ -10,7 +10,7 @@
                 <div class="widget widget-chart-one">
                     <div class="widget-heading">
                         <h5 class="">Revenue</h5>
-                        <div class="task-action">
+                        @*<div class="task-action">
                             <div class="dropdown">
                                 <a class="dropdown-toggle" href="#" role="button" id="pendingTask" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>
@@ -21,11 +21,11 @@
                                     <a class="dropdown-item" href="javascript:void(0);">Yearly</a>
                                 </div>
                             </div>
-                        </div>
+                        </div>*@
                     </div>
 
                     <div class="widget-content">
-                        <div id="revenueMonthly"></div>
+                        <div id="revenueReservations"></div>
                     </div>
                 </div>
             </div>
@@ -65,8 +65,8 @@
                                     <div class="w-summary-details">
 
                                         <div class="w-summary-info">
-                                            <h6>Income <span class="summary-count">$92,600 </span></h6>
-                                            <p class="summary-average">90%</p>
+                                            <h6>Collected <span class="summary-count" id="collectedCard"></span></h6>
+                                            <p class="summary-average" id="collectedPercentage">%</p>
                                         </div>
 
                                     </div>
@@ -85,8 +85,8 @@
                                     <div class="w-summary-details">
 
                                         <div class="w-summary-info">
-                                            <h6>Profit <span class="summary-count">$37,515</span></h6>
-                                            <p class="summary-average">65%</p>
+                                            <h6>Balance <span class="summary-count" id="balanceCard"></span></h6>
+                                            <p class="summary-average" id="balancePercentage">%</p>
                                         </div>
 
                                     </div>
@@ -105,8 +105,8 @@
                                     <div class="w-summary-details">
 
                                         <div class="w-summary-info">
-                                            <h6>Expenses <span class="summary-count">$55,085</span></h6>
-                                            <p class="summary-average">80%</p>
+                                            <h6>Profit <span class="summary-count" id="profitCard"></span></h6>
+                                            <p class="summary-average" id="profitPercentage">%</p>
                                         </div>
 
                                     </div>
@@ -134,7 +134,7 @@
                             </div>
                         </div>
                         <div class="w-chart">
-                            <div id="daily-sales"></div>
+                            <div id="daily-reservations"></div>
                         </div>
                     </div>
                 </div>
@@ -145,7 +145,7 @@
                 <div class="widget widget-table-three">
 
                     <div class="widget-heading">
-                        <h5 class="">Top Selling Product</h5>
+                        <h5 class="">Top Selling Hotels</h5>
                     </div>
 
                     <div class="widget-content">
@@ -153,50 +153,85 @@
                             <table class="table table-scroll">
                                 <thead>
                                     <tr>
-                                        <th><div class="th-content">Product</div></th>
-                                        <th><div class="th-content th-heading">Price</div></th>
-                                        <th><div class="th-content th-heading">Discount</div></th>
-                                        <th><div class="th-content">Sold</div></th>
-                                        <th><div class="th-content">Source</div></th>
+                                        <th><div class="th-content">Hotel</div></th>
+                                        <th><div class="th-content">Total Nights</div></th>
+                                        <th><div class="th-content">City</div></th>
+                                        <th><div class="th-content">Rate</div></th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach(var hotel in Model.topSellingHotels) {
                                     <tr>
-                                        <td><div class="td-content product-name"><img src="~/Content/AdminPanelAssets/assets/img/90x90.jpg" alt="product"><div class="align-self-center"><p class="prd-name">Headphone</p><p class="prd-category text-primary">Digital</p></div></div></td>
-                                        <td><div class="td-content"><span class="pricing">$168.09</span></div></td>
-                                        <td><div class="td-content"><span class="discount-pricing">$60.09</span></div></td>
-                                        <td><div class="td-content">170</div></td>
-                                        <td><div class="td-content"><a href="javascript:void(0);" class="text-danger"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-right"><polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline></svg> Direct</a></div></td>
-                                    </tr>
-                                    <tr>
-                                        <td><div class="td-content product-name"><img src="~/Content/AdminPanelAssets/assets/img/90x90.jpg" alt="product"><div class="align-self-center"><p class="prd-name">Shoes</p><p class="prd-category text-warning">Faishon</p></div></div></td>
-                                        <td><div class="td-content"><span class="pricing">$108.09</span></div></td>
-                                        <td><div class="td-content"><span class="discount-pricing">$47.09</span></div></td>
-                                        <td><div class="td-content">130</div></td>
-                                        <td><div class="td-content"><a href="javascript:void(0);" class="text-primary"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-right"><polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline></svg> Google</a></div></td>
-                                    </tr>
-                                    <tr>
-                                        <td><div class="td-content product-name"><img src="~/Content/AdminPanelAssets/assets/img/90x90.jpg" alt="product"><div class="align-self-center"><p class="prd-name">Watch</p><p class="prd-category text-danger">Accessories</p></div></div></td>
-                                        <td><div class="td-content"><span class="pricing">$88.00</span></div></td>
-                                        <td><div class="td-content"><span class="discount-pricing">$20.00</span></div></td>
-                                        <td><div class="td-content">66</div></td>
-                                        <td><div class="td-content"><a href="javascript:void(0);" class="text-warning"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-right"><polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline></svg> Ads</a></div></td>
-                                    </tr>
-                                    <tr>
-                                        <td><div class="td-content product-name"><img src="~/Content/AdminPanelAssets/assets/img/90x90.jpg" alt="product"><div class="align-self-center"><p class="prd-name">Laptop</p><p class="prd-category text-primary">Digital</p></div></div></td>
-                                        <td><div class="td-content"><span class="pricing">$110.00</span></div></td>
-                                        <td><div class="td-content"><span class="discount-pricing">$33.00</span></div></td>
-                                        <td><div class="td-content">35</div></td>
-                                        <td><div class="td-content"><a href="javascript:void(0);" class="text-info"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-right"><polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline></svg> Email</a></div></td>
-                                    </tr>
-                                    <tr>
-                                        <td><div class="td-content product-name"><img src="~/Content/AdminPanelAssets/assets/img/90x90.jpg" alt="product"><div class="align-self-center"><p class="prd-name">Camera</p><p class="prd-category text-primary">Digital</p></div></div></td>
-                                        <td><div class="td-content"><span class="pricing">$126.04</span></div></td>
-                                        <td><div class="td-content"><span class="discount-pricing">$26.04</span></div></td>
-                                        <td><div class="td-content">30</div></td>
-                                        <td><div class="td-content"><a href="javascript:void(0);" class="text-secondary"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-right"><polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline></svg> Referral</a></div></td>
-                                    </tr>
 
+                                        <td>
+                                            <div class="td-content product-name">
+                                                @if (hotel.path != null && hotel.path != "")
+                                                {
+                                                    <img src="@hotel.path" alt="product">
+
+                                                }
+                                                else
+                                                {
+                                                    <img src="~/Content/AdminPanelAssets/assets/img/90x90.jpg" alt="product">
+
+                                                }
+                                                <div class="align-self-center">
+                                                    <p class="prd-name">@hotel.name</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td><div class="td-content">@hotel.total_nights</div></td>
+                                        <td><div class="td-content">@hotel.cityName</div></td>
+                                        <td>
+                                            <div >
+                                                @if (hotel.rating == 0 || hotel.rating == null)
+                                                {
+                                                    <img src="~/Content/AdminPanelAssets/assets/img/Stars/0.png" width="90" alt="Rate">
+                                                }
+                                                else if (hotel.rating == 1)
+                                                {
+                                                    <img src="~/Content/AdminPanelAssets/assets/img/Stars/1.png" width="20" alt="Rate">
+                                                }
+                                                else if (hotel.rating == 1.5)
+                                                {
+                                                    <img src="~/Content/AdminPanelAssets/assets/img/Stars/1.5.png" width="35" alt="Rate">
+                                                }
+                                                else if (hotel.rating == 2)
+                                                {
+                                                    <img src="~/Content/AdminPanelAssets/assets/img/Stars/2.png" width="35" alt="Rate">
+                                                }
+                                                else if (hotel.rating == 2.5)
+                                                {
+                                                    <img src="~/Content/AdminPanelAssets/assets/img/Stars/2.5.png" width="55" alt="Rate">
+                                                }
+                                                else if (hotel.rating == 3)
+                                                {
+                                                    <img src="~/Content/AdminPanelAssets/assets/img/Stars/3.png" width="55" alt="Rate">
+                                                }
+                                                else if (hotel.rating == 3.5)
+                                                {
+                                                    <img src="~/Content/AdminPanelAssets/assets/img/Stars/3.5.png" width="70" alt="Rate">
+                                                }
+                                                else if (hotel.rating == 4)
+                                                {
+                                                    <img src="~/Content/AdminPanelAssets/assets/img/Stars/4.png" width="70" alt="Rate">
+                                                }
+                                                else if (hotel.rating == 4.5)
+                                                {
+                                                    <img src="~/Content/AdminPanelAssets/assets/img/Stars/4.5.png" width="90" alt="Rate">
+                                                }
+                                                else
+                                                {
+                                                    <img src="~/Content/AdminPanelAssets/assets/img/Stars/5.png" width="90" alt="Rate">
+                                                }
+
+                                             
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    }
+                                    
+                                  
 
                                 </tbody>
                             </table>
@@ -210,9 +245,9 @@
 
                     <div class="widget-heading">
                         <h5 class="">Recent Activities</h5>
-                        <div class="w-icon">
+                        @*<div class="w-icon">
                             <a class="btn btn-primary" href="javascript:void(0);"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
-                        </div>
+                        </div>*@
                     </div>
 
                     <div class="widget-content">
@@ -220,172 +255,28 @@
                         <div class="mt-container mx-auto">
                             <div class="timeline-line">
 
-                                <div class="item-timeline timeline-primary">
-                                    <div class="t-dot" data-original-title="" title="">
+                                @foreach (var log in Model.logs)
+                                {
+                                    <div class="item-timeline timeline-success">
+                                        <div class="t-dot" data-original-title="" title="">
+                                        </div>
+                                        <div class="t-text">
+                                            <p>@log.description <a href="javascript:void(0);">By</a>@log.full_name</p>
+                                            <span class="badge">@log.action</span>
+                                            <p class="t-time">@log.created_at.ToString()</p>
+                                        </div>
                                     </div>
-                                    <div class="t-text">
-                                        <p><span>Updated</span> Server Logs</p>
-                                        <span class="badge">Pending</span>
-                                        <p class="t-time">Just Now</p>
-                                    </div>
-                                </div>
 
-                                <div class="item-timeline timeline-success">
-                                    <div class="t-dot" data-original-title="" title="">
-                                    </div>
-                                    <div class="t-text">
-                                        <p>Send Mail to <a href="javascript:void(0);">HR</a> and <a href="javascript:void(0);">Admin</a></p>
-                                        <span class="badge">Completed</span>
-                                        <p class="t-time">2 min ago</p>
-                                    </div>
-                                </div>
+                                    
+                                }
 
-                                <div class="item-timeline  timeline-danger">
-                                    <div class="t-dot" data-original-title="" title="">
-                                    </div>
-                                    <div class="t-text">
-                                        <p>Backup <span>Files EOD</span></p>
-                                        <span class="badge">Pending</span>
-                                        <p class="t-time">14:00</p>
-                                    </div>
-                                </div>
-
-                                <div class="item-timeline  timeline-dark">
-                                    <div class="t-dot" data-original-title="" title="">
-                                    </div>
-                                    <div class="t-text">
-                                        <p>Collect documents from <a href="javascript:void(0);">Sara</a></p>
-                                        <span class="badge">Completed</span>
-                                        <p class="t-time">16:00</p>
-                                    </div>
-                                </div>
-
-                                <div class="item-timeline  timeline-warning">
-                                    <div class="t-dot" data-original-title="" title="">
-                                    </div>
-                                    <div class="t-text">
-                                        <p>Conference call with <a href="javascript:void(0);">Marketing Manager</a>.</p>
-                                        <span class="badge">In progress</span>
-                                        <p class="t-time">17:00</p>
-                                    </div>
-                                </div>
-
-                                <div class="item-timeline  timeline-secondary">
-                                    <div class="t-dot" data-original-title="" title="">
-                                    </div>
-                                    <div class="t-text">
-                                        <p>Rebooted Server</p>
-                                        <span class="badge">Completed</span>
-                                        <p class="t-time">17:00</p>
-                                    </div>
-                                </div>
-
-                                <div class="item-timeline  timeline-warning">
-                                    <div class="t-dot" data-original-title="" title="">
-                                    </div>
-                                    <div class="t-text">
-                                        <p>Send contract details to Freelancer</p>
-                                        <span class="badge">Pending</span>
-                                        <p class="t-time">18:00</p>
-                                    </div>
-                                </div>
-
-                                <div class="item-timeline  timeline-dark">
-                                    <div class="t-dot" data-original-title="" title="">
-                                    </div>
-                                    <div class="t-text">
-                                        <p>Kelly want to increase the time of the project.</p>
-                                        <span class="badge">In Progress</span>
-                                        <p class="t-time">19:00</p>
-                                    </div>
-                                </div>
-
-                                <div class="item-timeline  timeline-success">
-                                    <div class="t-dot" data-original-title="" title="">
-                                    </div>
-                                    <div class="t-text">
-                                        <p>Server down for maintanence</p>
-                                        <span class="badge">Completed</span>
-                                        <p class="t-time">19:00</p>
-                                    </div>
-                                </div>
-
-                                <div class="item-timeline  timeline-secondary">
-                                    <div class="t-dot" data-original-title="" title="">
-                                    </div>
-                                    <div class="t-text">
-                                        <p>Malicious link detected</p>
-                                        <span class="badge">Block</span>
-                                        <p class="t-time">20:00</p>
-                                    </div>
-                                </div>
-
-                                <div class="item-timeline  timeline-warning">
-                                    <div class="t-dot" data-original-title="" title="">
-                                    </div>
-                                    <div class="t-text">
-                                        <p>Rebooted Server</p>
-                                        <span class="badge">Completed</span>
-                                        <p class="t-time">23:00</p>
-                                    </div>
-                                </div>
-
-                                <div class="item-timeline timeline-primary">
-                                    <div class="t-dot" data-original-title="" title="">
-                                    </div>
-                                    <div class="t-text">
-                                        <p><span>Updated</span> Server Logs</p>
-                                        <span class="badge">Pending</span>
-                                        <p class="t-time">Just Now</p>
-                                    </div>
-                                </div>
-
-                                <div class="item-timeline timeline-success">
-                                    <div class="t-dot" data-original-title="" title="">
-                                    </div>
-                                    <div class="t-text">
-                                        <p>Send Mail to <a href="javascript:void(0);">HR</a> and <a href="javascript:void(0);">Admin</a></p>
-                                        <span class="badge">Completed</span>
-                                        <p class="t-time">2 min ago</p>
-                                    </div>
-                                </div>
-
-                                <div class="item-timeline  timeline-danger">
-                                    <div class="t-dot" data-original-title="" title="">
-                                    </div>
-                                    <div class="t-text">
-                                        <p>Backup <span>Files EOD</span></p>
-                                        <span class="badge">Pending</span>
-                                        <p class="t-time">14:00</p>
-                                    </div>
-                                </div>
-
-                                <div class="item-timeline  timeline-dark">
-                                    <div class="t-dot" data-original-title="" title="">
-                                    </div>
-                                    <div class="t-text">
-                                        <p>Collect documents from <a href="javascript:void(0);">Sara</a></p>
-                                        <span class="badge">Completed</span>
-                                        <p class="t-time">16:00</p>
-                                    </div>
-                                </div>
-
-                                <div class="item-timeline  timeline-warning">
-                                    <div class="t-dot" data-original-title="" title="">
-                                    </div>
-                                    <div class="t-text">
-                                        <p>Conference call with <a href="javascript:void(0);">Marketing Manager</a>.</p>
-                                        <span class="badge">In progress</span>
-                                        <p class="t-time">17:00</p>
-                                    </div>
-                                </div>
 
                             </div>
                         </div>
 
-                        <div class="tm-action-btn">
+                        @*<div class="tm-action-btn">
                             <button class="btn"><span>View All</span> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></button>
-                        </div>
+                        </div>*@
                     </div>
                 </div>
             </div>
@@ -624,3 +515,347 @@
         </div>
     </div>
 </div>
+@section scripts {
+    <script>
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("revenueReservations", "Dashboard")',
+            contentType: "application/json; charset=utf-8",
+            datatype: "json",
+            success: function (data) {
+                $("#collectedCard").text(addCommas(data.collected.toFixed(2)));
+                $("#balanceCard").text(addCommas(data.balance.toFixed(2)));
+                $("#profitCard").text(addCommas(data.profit.toFixed(2)));
+                //percentage
+                $("#collectedPercentage").text(addCommas(data.collectedPercentage.toFixed(2))+'%');
+                $("#balancePercentage").text(addCommas(data.balancePercentage.toFixed(2)) + '%');
+                $("#profitPercentage").text(addCommas(data.profitPercentage.toFixed(2)) + '%');
+
+                    var options1 = {
+                        chart: {
+                            fontFamily: 'Nunito, sans-serif',
+                            height: 365,
+                            type: 'area',
+                            zoom: {
+                                enabled: false
+                            },
+                            dropShadow: {
+                                enabled: true,
+                                opacity: 0.2,
+                                blur: 10,
+                                left: -7,
+                                top: 22
+                            },
+                            toolbar: {
+                                show: false
+                            },
+                            events: {
+                                mounted: function (ctx, config) {
+                                    const highest1 = ctx.getHighestValueInSeries(0);
+                                    const highest2 = ctx.getHighestValueInSeries(1);
+
+                                    ctx.addPointAnnotation({
+                                        x: new Date(ctx.w.globals.seriesX[0][ctx.w.globals.series[0].indexOf(highest1)]).getTime(),
+                                        y: highest1,
+                                        label: {
+                                            style: {
+                                                cssClass: 'd-none'
+                                            }
+                                        },
+                                        customSVG: {
+                                            SVG: '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="#1b55e2" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle"><circle cx="12" cy="12" r="10"></circle></svg>',
+                                            cssClass: undefined,
+                                            offsetX: -8,
+                                            offsetY: 5
+                                        }
+                                    })
+
+                                    ctx.addPointAnnotation({
+                                        x: new Date(ctx.w.globals.seriesX[1][ctx.w.globals.series[1].indexOf(highest2)]).getTime(),
+                                        y: highest2,
+                                        label: {
+                                            style: {
+                                                cssClass: 'd-none'
+                                            }
+                                        },
+                                        customSVG: {
+                                            SVG: '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="#e7515a" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle"><circle cx="12" cy="12" r="10"></circle></svg>',
+                                            cssClass: undefined,
+                                            offsetX: -8,
+                                            offsetY: 5
+                                        }
+                                    })
+                                },
+                            }
+                        },
+                        colors: ['#1b55e2', '#e7515a', '#00FF00'],
+                        dataLabels: {
+                            enabled: false
+                        },
+                        markers: {
+                            discrete: [{
+                                seriesIndex: 0,
+                                dataPointIndex: 7,
+                                fillColor: '#000',
+                                strokeColor: '#000',
+                                size: 5
+                            }, {
+                                seriesIndex: 2,
+                                dataPointIndex: 11,
+                                fillColor: '#000',
+                                strokeColor: '#000',
+                                size: 4
+                            }]
+                        },
+                        subtitle: {
+                            text: addCommas(data.profit.toFixed(2)),
+                            align: 'left',
+                            margin: 0,
+                            offsetX: 95,
+                            offsetY: 0,
+                            floating: false,
+                            style: {
+                                fontSize: '18px',
+                                color: '#4361ee'
+                            }
+                        },
+                        title: {
+                            text: 'Total Profit',
+                            align: 'left',
+                            margin: 0,
+                            offsetX: -10,
+                            offsetY: 0,
+                            floating: false,
+                            style: {
+                                fontSize: '18px',
+                                color: '#0e1726'
+                            },
+                        },
+                        stroke: {
+                            show: true,
+                            curve: 'smooth',
+                            width: 2,
+                            lineCap: 'square'
+                        },
+                        series: [{
+                            name: 'Collected',
+                            data: data.yAxisCollected
+                        }, {
+                            name: 'Balance',
+                            data: data.yAxisBalance
+                        }, {
+                            name: 'Profit',
+                            data: data.yAxisProfit
+                        }],
+                        labels: data.xAxis,
+                        xaxis: {
+                            axisBorder: {
+                                show: false
+                            },
+                            axisTicks: {
+                                show: false
+                            },
+                            crosshairs: {
+                                show: true
+                            },
+                            labels: {
+                                offsetX: 0,
+                                offsetY: 5,
+                                style: {
+                                    fontSize: '12px',
+                                    fontFamily: 'Nunito, sans-serif',
+                                    cssClass: 'apexcharts-xaxis-title',
+                                },
+                            }
+                        },
+                        yaxis: {
+                            labels: {
+                                formatter: function (value, index) {
+                                    return (value / 1000) + 'K'
+                                },
+                                offsetX: -22,
+                                offsetY: 0,
+                                style: {
+                                    fontSize: '12px',
+                                    fontFamily: 'Nunito, sans-serif',
+                                    cssClass: 'apexcharts-yaxis-title',
+                                },
+                            }
+                        },
+                        grid: {
+                            borderColor: '#e0e6ed',
+                            strokeDashArray: 5,
+                            xaxis: {
+                                lines: {
+                                    show: true
+                                }
+                            },
+                            yaxis: {
+                                lines: {
+                                    show: false,
+                                }
+                            },
+                            padding: {
+                                top: 0,
+                                right: 0,
+                                bottom: 0,
+                                left: -10
+                            },
+                        },
+                        legend: {
+                            position: 'top',
+                            horizontalAlign: 'right',
+                            offsetY: -50,
+                            fontSize: '16px',
+                            fontFamily: 'Nunito, sans-serif',
+                            markers: {
+                                width: 10,
+                                height: 10,
+                                strokeWidth: 0,
+                                strokeColor: '#fff',
+                                fillColors: undefined,
+                                radius: 12,
+                                onClick: undefined,
+                                offsetX: 0,
+                                offsetY: 0
+                            },
+                            itemMargin: {
+                                horizontal: 0,
+                                vertical: 20
+                            }
+                        },
+                        tooltip: {
+                            theme: 'dark',
+                            marker: {
+                                show: true,
+                            },
+                            x: {
+                                show: false,
+                            }
+                        },
+                        fill: {
+                            type: "gradient",
+                            gradient: {
+                                type: "vertical",
+                                shadeIntensity: 1,
+                                inverseColors: !1,
+                                opacityFrom: .28,
+                                opacityTo: .05,
+                                stops: [45, 100]
+                            }
+                        },
+                        responsive: [{
+                            breakpoint: 575,
+                            options: {
+                                legend: {
+                                    offsetY: -30,
+                                },
+                            },
+                        }]
+                    }
+
+                    /*
+                    ================================
+                    Revenue Monthly | Render
+                    ================================
+                    */
+                    var chart1 = new ApexCharts(
+                        document.querySelector("#revenueReservations"),
+                        options1
+                    );
+
+                    chart1.render();
+                }
+            });
+
+         $.ajax({
+            type: "GET",
+            url: '@Url.Action("dailyReservations", "Dashboard")',
+            contentType: "application/json; charset=utf-8",
+            datatype: "json",
+            success: function (data) {
+                var d_2options1 = {
+                    chart: {
+                        height: 160,
+                        type: 'bar',
+                        stacked: true,
+                        stackType: '100%',
+                        toolbar: {
+                            show: false,
+                        }
+                    },
+                    dataLabels: {
+                        enabled: false,
+                    },
+                    stroke: {
+                        show: true,
+                        width: 1,
+                    },
+                    colors: ['#1b55e2', '#e7515a', '#00FF00'],
+                    responsive: [{
+                        breakpoint: 480,
+                        options: {
+                            legend: {
+                                position: 'bottom',
+                                offsetX: -10,
+                                offsetY: 0
+                            }
+                        }
+                    }],
+                    series: [{
+                        name: 'Collected',
+                        data: data.yAxisCollected
+                    }, {
+                        name: 'Balance',
+                        data: data.yAxisBalance
+                    }, {
+                        name: 'Profit',
+                        data: data.yAxisProfit
+                    }],
+                    xaxis: {
+                        labels: {
+                            show: true,
+                        },
+                        categories: data.xAxis,
+                    },
+                    yaxis: {
+                        show: true
+                    },
+                    fill: {
+                        opacity: 1
+                    },
+                    plotOptions: {
+                        bar: {
+                            horizontal: false,
+                            columnWidth: '25%',
+
+                        }
+                    },
+                    legend: {
+                        show: false,
+                    },
+                    grid: {
+                        show: false,
+                        xaxis: {
+                            lines: {
+                                show: false
+                            }
+                        },
+                        padding: {
+                            top: 10,
+                            right: 0,
+                            bottom: -40,
+                            left: 0
+                        },
+                    },
+                }
+
+                var d_2C_1 = new ApexCharts(document.querySelector("#daily-reservations"), d_2options1);
+                d_2C_1.render();
+            }
+         });
+
+
+    </script>
+
+}

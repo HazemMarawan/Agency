@@ -28,7 +28,8 @@ namespace Agency.ViewModel
         public int? location_id { get; set; }
         public List<HotelImageViewModel> HotelImagesVM { get; set; }
         public List<HttpPostedFileBase> images { get; set; }
-
+        public int total_nights { get; set; }
+        public string path { get; set; }
 
     }
 }

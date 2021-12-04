@@ -2,6 +2,167 @@
 @{
     ViewBag.Title = "View";
 }
+
+<div class="modal fade" id="edit_reservation_modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <form action="" method="post" enctype='multipart/form-data'>
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal_title"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-body">
+                        <div class="form-row">
+                            <input type="hidden" name="id" id="id" value="@Model.id" />
+                            <input type="hidden" name="company_id" id="company_id" value="@Model.company_id" />
+
+                            <div class="form-group col-md-6">
+                                <label>Company Name</label>
+                                <input name="company_name" id="company_name" type="text" class="form-control radius-30" value="@Model.company_name" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Name</label>
+                                <input name="reservations_officer_name" id="reservations_officer_name" type="text" value="@Model.reservations_officer_name" class="form-control radius-30" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Phone</label>
+                                <input name="reservations_officer_phone" id="reservations_officer_phone" type="text" value="@Model.reservations_officer_phone" class="form-control radius-30" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Email</label>
+                                <input name="reservations_officer_email" id="reservations_officer_email" type="email" value="@Model.reservations_officer_email" class="form-control radius-30" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Vendor</label>
+                                @Html.DropDownListFor(m => m.vendor_id, new SelectList(ViewBag.Vendors, "id", "NamePlusCode"), "Select Vendor", new { @class = "form-control", @name = "vendor_id", @id = "vendor_id" })
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Advance Reservation Percentage</label>
+                                <input name="advance_reservation_percentage" id="advance_reservation_percentage" value="@Model.advance_reservation_percentage" type="number" min="0" step="0.1" class="form-control radius-30" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Single Price</label>
+                                <input name="single_price" id="single_price" type="number" min="0" step="0.1"  value="@Model.single_price" class="form-control radius-30" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Vendor Single Price</label>
+                                <input name="vendor_single_price" id="vendor_single_price" type="number" min="0" step="0.1" value="@Model.vendor_single_price" class="form-control radius-30" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Double Price</label>
+                                <input name="double_price" id="double_price" type="number" min="0" step="0.1"  value="@Model.double_price" class="form-control radius-30" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Vendor Double Price</label>
+                                <input name="vendor_douple_price" id="vendor_douple_price" type="number" min="0" step="0.1" value="@Model.vendor_douple_price" class="form-control radius-30" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Triple Price</label>
+                                <input name="triple_price" id="triple_price" type="number" min="0" step="0.1" value="@Model.triple_price" class="form-control radius-30" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Vendor Triple Price</label>
+                                <input name="vendor_triple_price" id="vendor_triple_price" type="number" min="0" step="0.1" value="@Model.vendor_douple_price" class="form-control radius-30" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Quad Price</label>
+                                <input name="quad_price" id="quad_price" type="number" min="0" step="0.1" value="@Model.quad_price" class="form-control radius-30" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Vendor Quad Price</label>
+                                <input name="vendor_quad_price" id="vendor_quad_price" type="number" min="0" step="0.1" value="@Model.vendor_quad_price" class="form-control radius-30" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Tax</label>
+                                <input name="tax" id="tax" type="number" min="0" step="0.1" value="@Model.tax" class="form-control radius-30" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Opener</label>
+                                <select class="form-control" name="opener" id="opener">
+                                    <option value="">Select Opener</option>
+                                    @foreach (var open in ViewBag.Opener)
+                                    {
+                                        if (open.id == Model.opener)
+                                        {
+                                            <option value="@open.id" selected>@open.full_name</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@open.id">@open.full_name</option>
+                                        }
+                                    }
+                                </select>
+                                @*@Html.DropDownListFor(m => m.opener, new SelectList(ViewBag.Opener, "id", "full_name"), "Select Opener", new { @class = "form-control", @name = "opener", @id = "opener" })*@
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Closer</label>
+                                <select class="form-control" name="closer" id="closer">
+                                    <option value="">Select Closer</option>
+                                    @foreach (var closer in ViewBag.Closer)
+                                    {
+                                        if (closer.id == Model.closer)
+                                        {
+                                            <option value="@closer.id" selected>@closer.full_name</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@closer.id">@closer.full_name</option>
+                                        }
+                                    }
+                                </select>
+                                @*@Html.DropDownListFor(m => m.closer, new SelectList(ViewBag.Closer, "id", "full_name"), "Select Closer", new { @class = "form-control", @name = "closer", @id = "closer" })*@
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Shift</label>
+                                <select class="form-control" name="shift" id="shift">
+                                    <option value="">Select shift</option>
+                                    @foreach (var shift in ViewBag.Shift)
+                                    {
+                                        if (shift.id == Model.shift)
+                                        {
+                                            <option value="@shift.id" selected>@shift.shift_name</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@shift.id">@shift.shift_name</option>
+                                        }
+                                    }
+                                </select>
+                                @*@Html.DropDownListFor(m => m.shift, new SelectList(ViewBag.Shift, "id", "shift_name"), "Select Shift", new { @class = "form-control", @name = "shift", @id = "shift" })*@
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Currency</label>
+                                <select class="form-control" name="currency" id="currency">
+                                    <option value="">Select Currency</option>
+                                    @foreach (var currency in ViewBag.currency)
+                                    {
+                                        if (currency.id == Model.currency)
+                                        {
+                                            <option value="@currency.id" selected>@currency.string_currency</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@currency.id">@currency.string_currency</option>
+                                        }
+                                    }
+                                </select>
+                                @*@Html.DropDownListFor(m => m.currency, new SelectList(ViewBag.currency, "id", "name"), "Select Currency", new { @class = "form-control", @name = "currency", @id = "currency" })*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
 <div class="modal fade" id="manage_reservation_modal" tabindex="-1" role="dialog" aria-hidden="true">
     <form action="" method="post" enctype='multipart/form-data'>
         <div class="modal-dialog">
@@ -55,7 +216,6 @@
         </div>
     </form>
 </div>
-
 
 <div class="modal fade" id="manage_comments" tabindex="-1" role="dialog" aria-hidden="true">
     <form action="" method="post" enctype='multipart/form-data'>
@@ -144,11 +304,12 @@
         </div>
     </form>
 </div>
+
 <!--need to make this site map work -->
 <div class="page-header">
     <nav class="breadcrumb-two" aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="javascript:void(0);">Bookings</a></li>
+            <li class="breadcrumb-item"><a href="@Url.Action("Index","Reservation")">Bookings</a></li>
             <li class="breadcrumb-item active"><a href="javascript:void(0);">Booking Information</a></li>
         </ol>
     </nav>
@@ -222,7 +383,7 @@
                 <ul class="nav nav-pills mb-3 mt-3" id="icon-pills-tab" role="tablist">
                     <li class="nav-item">
                         <a class="nav-link active" id="icon-pills-about-tab" data-toggle="pill" href="#icon-pills-about" role="tab" aria-controls="icon-pills-about" aria-selected="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="far fa-list-alt"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg> Booking Information</a>
-                        <a class="edit" href="javascript:void(0)"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="far fa-edit"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg></a>
+                        <a class="edit" id="edit_reservation" href="javascript:void(0)"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="far fa-edit"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" id="icon-pills-home-tab" data-toggle="pill" href="#icon-pills-home" role="tab" aria-controls="icon-pills-home" aria-selected="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="far fa-check-circle"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg> Reservations</a>
@@ -282,7 +443,7 @@
                                             <p>Status</p>
                                             <p>Collected</p>
                                             <p>Balance</p>
-                                            @if(Model.paid_amount == Model.total_amount_after_tax)
+                                            @if (Model.paid_amount == Model.total_amount_after_tax)
                                             {
                                                 <p>Profit</p>
                                             }
@@ -431,126 +592,128 @@
                                             @*<p>18125 N Ramsey Rd.</p>*@
                                             @*<p>N/A</p>*@
                                         </div>
+                                    </div>
+
+
                                 </div>
-
-
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="tab-pane fade" id="icon-pills-home" role="tabpanel" aria-labelledby="icon-pills-home-tab">
-                    <div class="row" id="cancel-row">
-                        <!--layout-top-spacing got deleted-->
+                    <div class="tab-pane fade" id="icon-pills-home" role="tabpanel" aria-labelledby="icon-pills-home-tab">
+                        <div class="row" id="cancel-row">
+                            <!--layout-top-spacing got deleted-->
 
-                        <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
-                            <div class="widget-content widget-content-area widget-content-area-edit br-6">
-                                <!--  widget-content-area-edit added class manually -->
-                                <div class="card">
-                                    <div class="card-body">
+                            <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
+                                <div class="widget-content widget-content-area widget-content-area-edit br-6">
+                                    <!--  widget-content-area-edit added class manually -->
+                                    <div class="card">
+                                        <div class="card-body">
 
-                                        <div class="table-responsive text-left">
-                                            <table id="reservationTable" class="table table-striped table-bordered" style="width:100%">
-                                                <thead>
-                                                    <tr class="text-center">
-                                                        <th>#</th>
-                                                        <th>Guest Name</th>
-                                                        <th>Check In/Out</th>
-                                                        <th>Room Type</th>
-                                                        <th>Vendor Code</th>
-                                                        <th>Cost</th>
-                                                        <th>Cancelation Policy</th>
-                                                        @*<th>Payment Deadline</th>*@
-                                                    </tr>
-                                                </thead>
-                                            </table>
+                                            <div class="table-responsive text-left">
+                                                <table id="reservationTable" class="table table-striped table-bordered reservationTable" style="width:100%">
+                                                    <thead>
+                                                        <tr class="text-center">
+                                                            <th>#</th>
+                                                            <th>Guest Name</th>
+                                                            <th>Check In/Out</th>
+                                                            <th>Room Type</th>
+                                                            <th>Vendor Code</th>
+                                                            <th>Cost</th>
+                                                            <th>Cancelation Policy</th>
+                                                            @*<th>Payment Deadline</th>*@
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="tab-pane fade" id="icon-pills-contact" role="tabpanel" aria-labelledby="icon-pills-contact-tab">
-                    <div class="row " id="cancel-row">
-                        <!--layout-top-spacing got deleted-->
+                    <div class="tab-pane fade" id="icon-pills-contact" role="tabpanel" aria-labelledby="icon-pills-contact-tab">
+                        <div class="row " id="cancel-row">
+                            <!--layout-top-spacing got deleted-->
 
-                        <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
-                            <div class="widget-content widget-content-area widget-content-area-edit br-6">
-                                <div class="card">
-                                    <div class="card-body">
+                            <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
+                                <div class="widget-content widget-content-area widget-content-area-edit br-6">
+                                    <div class="card">
+                                        <div class="card-body">
 
-                                        <div class="table-responsive  text-left">
-                                            <table id="commentTable" class="table table-striped table-bordered" style="width:100%">
-                                                <thead>
-                                                    <tr class="text-center">
-                                                        <th>#</th>
-                                                        <th>Comment</th>
-                                                        <th>Creation Time</th>
-                                                        <th>Created By</th>
-                                                        <th></th>
-                                                    </tr>
-                                                </thead>
+                                            <div class="table-responsive  text-left">
+                                                <table id="commentTable" class="table table-striped table-bordered" style="width:100%">
+                                                    <thead>
+                                                        <tr class="text-center">
+                                                            <th>#</th>
+                                                            <th>Comment</th>
+                                                            <th>Creation Time</th>
+                                                            <th>Created By</th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead>
 
-                                            </table>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="tab-pane fade" id="icon-pills-think" role="tabpanel" aria-labelledby="icon-pills-think-tab">
-                    <div class="row " id="cancel-row">
-                        <!--layout-top-spacing got deleted-->
+                    <div class="tab-pane fade" id="icon-pills-think" role="tabpanel" aria-labelledby="icon-pills-think-tab">
+                        <div class="row " id="cancel-row">
+                            <!--layout-top-spacing got deleted-->
 
-                        <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
-                            <div class="widget-content widget-content-area widget-content-area-edit br-6">
-                                <div class="card">
-                                    <div class="card-body">
+                            <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
+                                <div class="widget-content widget-content-area widget-content-area-edit br-6">
+                                    <div class="card">
+                                        <div class="card-body">
 
-                                        <div class="table-responsive  text-left">
-                                            <table id="taskTable" class="table table-striped table-bordered" style="width:100%">
-                                                <thead>
-                                                    <tr class="text-center">
-                                                        <th>#</th>
-                                                        <th>Target User</th>
-                                                        <th>Task Title</th>
-                                                        <th>Creation Time</th>
-                                                        <th>Created By</th>
-                                                        <th></th>
-                                                    </tr>
-                                                </thead>
+                                            <div class="table-responsive  text-left">
+                                                <table id="taskTable" class="table table-striped table-bordered" style="width:100%">
+                                                    <thead>
+                                                        <tr class="text-center">
+                                                            <th>#</th>
+                                                            <th>Target User</th>
+                                                            <th>Task Title</th>
+                                                            <th>Creation Time</th>
+                                                            <th>Created By</th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead>
 
-                                            </table>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="tab-pane fade" id="icon-pills-thought" role="tabpanel" aria-labelledby="icon-pills-thought-tab">
-                    <div class="row " id="cancel-row">
-                        <!--layout-top-spacing got deleted-->
+                    <div class="tab-pane fade" id="icon-pills-thought" role="tabpanel" aria-labelledby="icon-pills-thought-tab">
+                        <div class="row " id="cancel-row">
+                            <!--layout-top-spacing got deleted-->
 
-                        <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
-                            <div class="widget-content widget-content-area widget-content-area-edit br-6">
-                                <div class="card">
-                                    <div class="card-body">
+                            <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
+                                <div class="widget-content widget-content-area widget-content-area-edit br-6">
+                                    <div class="card">
+                                        <div class="card-body">
 
-                                        <div class="table-responsive  text-left">
-                                            <table id="logsTable" class="table table-striped table-bordered" style="width:100%">
-                                                <thead>
-                                                    <tr class="text-center">
-                                                        <th>#</th>
-                                                        <th>User name</th>
-                                                        <th>Date Time</th>
-                                                        <th>Action</th>
-                                                        <th>Description</th>
-                                                    </tr>
-                                                </thead>
+                                            <div class="table-responsive  text-left">
+                                                <table id="logsTable" class="table table-striped table-bordered" style="width:100%">
+                                                    <thead>
+                                                        <tr class="text-center">
+                                                            <th>#</th>
+                                                            <th>User name</th>
+                                                            <th>Date Time</th>
+                                                            <th>Action</th>
+                                                            <th>Description</th>
+                                                        </tr>
+                                                    </thead>
 
-                                            </table>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -561,7 +724,6 @@
             </div>
         </div>
     </div>
-</div>
 </div>
 
 
@@ -724,17 +886,17 @@
                         //        $(nTd).html("<span class='action-column'>" + html + "</span>");
                         //    }
                         //},
-                        //{
-                        //    "data": "id", "searchable": true,
-                        //    fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-                        //        var html = "";
+                        {
+                            "data": "id", "searchable": true,
+                            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                                var html = "";
 
-                        //        html += "<a class='edit' href='javascript:void(0);' title='Edit'><i class='far fa-edit'></i></a>&nbsp;";
-                        //        html += "<a class='delete' href='javascript:void(0);' title='Delete'><i class='fa fa-trash'></i></a>&nbsp;";
+                                html += "<a class='edit' href='javascript:void(0);' title='Edit'><i class='far fa-edit'></i></a>&nbsp;";
+                                html += "<a class='delete' href='javascript:void(0);' title='Delete'><i class='fa fa-trash'></i></a>&nbsp;";
 
-                        //        $(nTd).html("<span class='action-column'>" + html + "</span>");
-                        //    }
-                        //},
+                                $(nTd).html("<span class='action-column'>" + html + "</span>");
+                            }
+                        },
                     ]
                  });
 
@@ -933,8 +1095,8 @@
                             "data": "description",
                             "searchable": true
                         },
-                        
-                       
+
+
                     ]
                  });
 
@@ -978,6 +1140,89 @@
 
                 });
            });
+
+           $(document).on("click", "#edit_reservation", function () {
+               
+                //var data = unPaidReservationTable.row($(this).closest('tr')).data();
+                //console.log(data);
+                var modal = $('#edit_reservation_modal').clone();
+                var action = '@Url.Action("saveReservation", "Reservation")';
+                modal.find('form').attr('action', action);
+                modal.find('#modal_title').text('Edit Reservations');
+                modal.execModal({
+                    progressBar: 'progress_bar',
+                    progressText: 'progress_text',
+                }, function (response) {
+                    location.reload();
+
+                }, function (response) {
+
+                }, function (dialog) {
+                
+                        //dialog.find('#id').val(data.id);
+                        //dialog.find('#company_id').val(data.company_id);
+                        //dialog.find('#company_name').val(data.company_name);
+                        //dialog.find('#reservations_officer_name').val(data.reservations_officer_name);
+                        //dialog.find('#reservations_officer_email').val(data.reservations_officer_email);
+                        //dialog.find('#reservations_officer_phone').val(data.reservations_officer_phone);
+
+                        //if(data.single_price > 0)
+                        //    dialog.find('#single_price').val(data.single_price);
+                        //else
+                        //    dialog.find('#single_price').val(data.event_single_price);
+                        //---------------------------------------
+                        //if(data.double_price > 0)
+                        //    dialog.find('#double_price').val(data.double_price);
+                        //else
+                        //    dialog.find('#double_price').val(data.event_double_price);
+                        //---------------------------------------
+                        //if(data.triple_price > 0)
+                        //    dialog.find('#triple_price').val(data.triple_price);
+                        //else
+                        //    dialog.find('#triple_price').val(data.event_triple_price);
+                        //---------------------------------------
+                        //if(data.quad_price > 0)
+                        //    dialog.find('#quad_price').val(data.quad_price);
+                        //else
+                        //    dialog.find('#quad_price').val(data.event_quad_price);
+                        //---------------------------------------
+                        //if(data.vendor_single_price > 0)
+                        //    dialog.find('#vendor_single_price').val(data.vendor_single_price);
+                        //else
+                        //    dialog.find('#vendor_single_price').val(data.event_vendor_single_price);
+                        //---------------------------------------
+                        // if(data.vendor_douple_price > 0)
+                        //     dialog.find('#vendor_douple_price').val(data.vendor_douple_price);
+                        //else
+                        //    dialog.find('#vendor_douple_price').val(data.event_vendor_double_price);
+                        //---------------------------------------
+                        // if(data.vendor_triple_price > 0)
+                        //    dialog.find('#vendor_triple_price').val(data.vendor_triple_price);
+                        //else
+                        //    dialog.find('#vendor_triple_price').val(data.event_vendor_triple_price);
+                        //---------------------------------------
+                        // if(data.vendor_quad_price > 0)
+                        //    dialog.find('#vendor_quad_price').val(data.vendor_quad_price);
+                        //else
+                        //    dialog.find('#vendor_quad_price').val(data.event_vendor_quad_price);
+                        //---------------------------------------
+                       //if(data.tax > 0)
+                       //     dialog.find('#tax').val(data.tax);
+                       // else
+                       //     dialog.find('#tax').val(data.event_tax);
+
+                       // dialog.find("#advance_reservation_percentage").val(data.advance_reservation_percentage);
+                       // dialog.find("#currency").val(data.currency);
+                       // dialog.find('#opener option[value=' + data.opener + ']').attr('selected', 'selected');
+                       // dialog.find('#closer option[value=' + data.closer + ']').attr('selected', 'selected');
+                       // dialog.find('#shift option[value=' + data.shift + ']').attr('selected', 'selected');
+                       // dialog.find('#vendor_id option[value=' + data.vendor_id + ']').attr('selected', 'selected');
+
+
+                });
+
+            });
+
 
            $("#add_comment").click(function () {
                var modal = $('#manage_comments').clone();
@@ -1219,7 +1464,8 @@
                 });
             });
 
-        });
+       });
+
         $(".nav-link").on("click", function () {
             $(`.dataTables_scrollHeadInner`).css('width', '100%');
             $(`.table `).css('width', '100%');
@@ -1238,6 +1484,16 @@
             $(`.table thead tr td:nth-child(4)`).css('width', '20%')
             $(`.table thead tr td:nth-child(5)`).css('width', '20%')
             $(`.table thead tr td:nth-child(6)`).css('width', '10%')
+
+            $(`.reservationTable thead tr`).css('width', '100%');
+            $(`.reservationTable thead tr th:nth-child(1)`).css('width', '5%')
+            $(`.reservationTable thead tr th:nth-child(2)`).css('width', '20%')
+            $(`.reservationTable thead tr th:nth-child(3)`).css('width', '20%')
+            $(`.reservationTable thead tr th:nth-child(4)`).css('width', '10%')
+            $(`.reservationTable thead tr th:nth-child(5)`).css('width', '10%')
+            $(`.reservationTable thead tr th:nth-child(6)`).css('width', '10%')
+            $(`.reservationTable thead tr th:nth-child(7)`).css('width', '10%')
+            $(`.reservationTable thead tr th:nth-child(8)`).css('width', '15%')
         })
     </script>
 }
