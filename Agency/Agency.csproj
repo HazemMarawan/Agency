@@ -334,6 +334,10 @@
     <Compile Include="Migrations\202112101647449_chatsTable1.Designer.cs">
       <DependentUpon>202112101647449_chatsTable1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202112101702091_addv_code_res_det.cs" />
+    <Compile Include="Migrations\202112101702091_addv_code_res_det.Designer.cs">
+      <DependentUpon>202112101702091_addv_code_res_det.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AgencyDbContext.cs" />
     <Compile Include="Models\Chat.cs" />
@@ -4026,6 +4030,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202112101647449_chatsTable1.resx">
       <DependentUpon>202112101647449_chatsTable1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112101702091_addv_code_res_det.resx">
+      <DependentUpon>202112101702091_addv_code_res_det.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

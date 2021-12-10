@@ -18,6 +18,7 @@ namespace Agency.Models
         public DateTime reservation_from { get; set; }
         public DateTime reservation_to { get; set; }
         public int? no_of_days { get; set; }
+        public string vendor_code { get; set; }
         public int? active { get; set; }
         public int? created_by { get; set; }
         public int? updated_by { get; set; }
