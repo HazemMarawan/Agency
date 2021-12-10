@@ -123,15 +123,9 @@ namespace Agency.Controllers
 
         public JsonResult deleteTask(int id)
         {
-            Task task = db.Tasks.Where(s => s.id == id).FirstOrDefault();
-            //db.userTasks.Where(s => s.task_id == task.id).ToList().ForEach(s=>db.userTasks.Remove(s));
-            //db.SaveChanges();
-
-            task.active = 0;
-            db.Entry(task).State = System.Data.Entity.EntityState.Modified;
+            UserTask userTask = db.UserTasks.Find(id);
+            db.UserTasks.Remove(userTask);
             db.SaveChanges();
-
-            User currentUser = Session["user"] as User;
 
             return Json(new { message = "done" }, JsonRequestBehavior.AllowGet);
         }

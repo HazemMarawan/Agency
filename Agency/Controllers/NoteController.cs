@@ -66,9 +66,9 @@ namespace Agency.Controllers
         public JsonResult deleteNote(int id)
         {
             Note note = db.Notes.Find(id);
-            //db.notes.Remove(note);
-            note.active = 0;
-            db.Entry(note).State = System.Data.Entity.EntityState.Modified;
+            db.Notes.Remove(note);
+            //note.active = 0;
+            //db.Entry(note).State = System.Data.Entity.EntityState.Modified;
             db.SaveChanges();
 
             return Json(new { message = "done" }, JsonRequestBehavior.AllowGet);

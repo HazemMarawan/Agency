@@ -168,7 +168,7 @@
 
             $(".delete").click(function () {
                 var id = $(this).attr('data-id');
-
+                console.log(id);
                 warningBox("Are you sure you want to delete this note?", function () {
                     $.ajax({
                         type: "GET",

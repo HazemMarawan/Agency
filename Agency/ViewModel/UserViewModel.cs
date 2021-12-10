@@ -28,9 +28,12 @@ namespace Agency.ViewModel
         public int? created_by { get; set; }
         public int? updated_by { get; set; }
         public int? deleted_by { get; set; }
+        public List<RoleViewModel> roles { get; set; }
         public DateTime? created_at { get; set; }
         public DateTime? updated_at { get; set; }
         public DateTime? deleted_at { get; set; }
         public List<ChatViewModel> chats { get; set; }
+        public int role_id { get; set; }
+        public List<int> role_ids { get; set; }
     }
 }

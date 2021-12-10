@@ -22,7 +22,7 @@
                         <div class="form-row">
                             <input type="hidden" name="id" id="id" value="0" />
                             <div class="form-group col-md-12">
-                                <center><img src="~/Images/userProfile.png" width="150" height="150" id="imageProfile" class="rounded-circle shadow" alt="" /></center>
+                                <center><img src="~/images/userProfile.jpeg" width="150" height="150" id="imageProfile" class="rounded-circle shadow" alt="" /></center>
                             </div>
                             <div class="form-group col-md-6">
                                 <label>Username <small id="user_name_error" style="display:none;" class="badge badge-danger"> <i class="lni lni-close"></i> username already taken</small><small id="user_name_valid" class="badge badge-success" style="display:none;"><i class="lni lni-checkmark"></i> valid username</small></label>
@@ -63,6 +63,11 @@
                                     <option value="@female_id">@Gender.Female</option>
                                 </select>
                             </div>
+                            <div class="form-group col-md-12">
+                                <label>Role</label>
+                                @Html.DropDownList("role_ids", new SelectList(ViewBag.roles, "id", "name"), "Select Role", new { @class = "selectize", @multiple = "multiple", @name = "role_ids", @style = "width:100%", @id = "role_ids" })
+
+                            </div>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
@@ -72,6 +77,9 @@
                                     <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
                                 </div>
                             </div>
+                            @*<div class="form-group col-md-12">
+                                    <img id="imageProfile" src="" width="100" height="100" />
+                                </div>*@
                             <div class="form-group col-md-12">
                                 <label>Status</label>
                                 <select class="form-control" name="active" id="active">
@@ -98,18 +106,14 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="javascript:void(0);">Users</a></li>
         </ol>
-    </nav> <!-- we commented old button and add new button with the id of add resrvation in old dropdown menu-->
-    <button class="special-btn" id="add_user"><a href="javascript:void(0);">Add User</a></button>
-    <!--
-        <div class="dropdown filter custom-dropdown-icon">
+    </nav>
+    <div class="dropdown filter custom-dropdown-icon">
         <a class="dropdown-toggle btn" href="#" role="button" id="filterDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="text">More</span> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
 
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="filterDropdown">
             <a class="dropdown-item" id="add_user" data-value="<span>Show</span> : Add User" href="javascript:void(0);">Add User</a>
         </div>
     </div>
-    -->
-
 </div>
 
 
@@ -138,7 +142,7 @@
                         <th>Code</th>
                         <th>Contact</th>
                         <th>Gender</th>
-                        <th>Type</th>
+                        <th>Roles</th>
                         <th>Active</th>
                         <th></th>
                     </tr>
@@ -159,25 +163,7 @@
        $(document).ready(function () {
 
            var datatable = $('#userTable')
-               .DataTable({/* we added this from the other system to have same search and same pagination*/
-                   "dom": "<'dt--top-section '<'row'<'col-sm-12 col-md-6 d-flex justify-content-md-start justify-content-center'B><'col-sm-12 col-md-6 d-flex justify-content-md-end justify-content-center mt-md-0 mt-3'f>>>" +
-                       "<'table-responsive  'tr>" +
-                       "<'dt--bottom-section d-sm-flex justify-content-sm-between text-center'<'dt--pages-count  mb-sm-0 mb-3'i><'dt--pagination'p>>",
-                   "buttons": {
-                       buttons: [
-                           { extend: 'copy', className: 'btn btn-sm' },
-                           { extend: 'csv', className: 'btn btn-sm' },
-                           { extend: 'excel', className: 'btn btn-sm' },
-                           { extend: 'print', className: 'btn btn-sm' }
-                       ]
-                   },
-                   "oLanguage": {
-                       "oPaginate": { "sPrevious": 'Perivous', "sNext": 'Next' },
-                       "sInfo": "Showing page _PAGE_ of _PAGES_",
-                       "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
-                       "sSearchPlaceholder": "Search...",
-                       "sLengthMenu": "Results :  _MENU_",
-                   },
+                .DataTable({
                     "processing": true,
                     "serverSide": true,
                     "scrollX": true,
@@ -236,12 +222,17 @@
                                         html += ", " + oData.address2;
                                 }
                                 else
-                                    html += "No Addresses<br>";
+                                    html += "No Addresses";
                                 html += "</span><br>";
-                                html += "<span> <b>Email:</b> " +oData.email+"</span>";
+                                if (oData.email)
+                                    html += "<span> <b>Email:</b> " + oData.email + "</span>";
+                                else
+                                    html += "<span> <b>No Email</b></span>";
+
                                 $(nTd).html("<span class='action-column'>" + html + "</span>");
                             }
                         },
+
                         {
                             "data": "gender", "searchable": true,
                             fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
@@ -259,8 +250,22 @@
                             }
                         },
                         {
-                            "data": "type",
-                            "searchable": true
+                            "data": "roles", "searchable": true,
+                            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                                var html = "";
+                                console.log(oData.roles)
+                                if (oData.roles.length > 0) {
+                                    oData.roles.forEach(function (value) {
+                                        html += "<span class='badge badge-primary'>" + value.name + "</span>&nbsp;";
+
+                                    })
+                                ;
+
+                                }
+                                else
+                                    html += "<span class='badge badge-danger'>-</span>";
+                                $(nTd).html("<span class='action-column'>" + html + "</span>");
+                            }
                         },
                         {
                             "data": "active", "searchable": true,
@@ -447,6 +452,18 @@
 
                         });
 
+                        var ids = [];
+                        var $select = dialog.find('#role_ids').selectize({
+                            plugins: ['remove_button'],
+                        });
+                        $select[0].selectize.clear();
+                        var selectize = $select[0].selectize;
+
+                        data.roles.forEach(function (value) {
+                            ids.push(value.id);
+
+                        });
+                        selectize.setValue(ids);
                          $(document).on('keyup', '#user_name', function () {
                             var user_name = dialog.find('#user_name').val().length != 0 ? dialog.find('#user_name').val() : null;
                             if (user_name != null) {
