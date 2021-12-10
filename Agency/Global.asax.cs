@@ -37,7 +37,6 @@ namespace Agency
             Mapper.CreateMap<RoleViewModel, Role>();
             Mapper.CreateMap<PermissionGroupViewModel, PermissionGroup>();
             Mapper.CreateMap<UserViewModel, User>();
-            //Mapper.CreateMap<User, UserViewModel>();
             Mapper.CreateMap<EmailViewModel, Email>();
             Mapper.CreateMap<NoteViewModel, Note>();
             Mapper.CreateMap<TaskViewModel, Task>();
