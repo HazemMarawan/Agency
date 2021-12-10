@@ -159,5 +159,30 @@ namespace Agency.Controllers
 
             return Json(new { message = "valid username", is_valid = true }, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult Profile()
+        {
+            User currentUser = Session["user"] as User;
+            UserViewModel userData = (from user in db.Users
+                            select new UserViewModel
+                            {
+                                id = user.id,
+                                user_name = user.user_name,
+                                full_name = user.full_name,
+                                password = user.password,
+                                type = user.type,
+                                phone1 = user.phone1,
+                                phone2 = user.phone2,
+                                imagePath = user.image,
+                                address1 = user.address1,
+                                address2 = user.address2,
+                                birthDate = user.birthDate,
+                                code = user.code,
+                                email = user.email,
+                                gender = user.gender,
+                                active = user.active,
+                            }).Where(u => u.id == currentUser.id).FirstOrDefault() ;
+            return View(userData);
+        }
     }
 }

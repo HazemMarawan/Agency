@@ -45,9 +45,19 @@
                                     <div class="f-body">
                                         <div class="meta-info">
                                             <span class="user-name" data-name="@user.full_name">@user.full_name</span>
-                                            <span class="user-meta-time">2:09 PM</span>
+                                            <span class="user-meta-time">
+                                                @if (user.chats.Count != 0)
+                                                {
+                                                    <span>@user.chats[user.chats.Count - 1].string_created_at.Split(' ')[@user.chats[user.chats.Count - 1].string_created_at.Split(' ').Length-1]</span>
+                                                }
+                                            </span>
                                         </div>
-                                        <span class="preview">How do you do?</span>
+                                        <span class="preview">
+                                            @if (user.chats.Count != 0)
+                                            {
+                                                <span>@user.chats[user.chats.Count - 1].message</span>
+                                            }
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -81,7 +91,12 @@
                                 {
                                     <div class="chat" data-chat="@user.id">
                                         <div class="conversation-start">
-                                            <span>Monday, 1:27 PM</span>
+                                            <span>
+                                                @if (user.chats.Count != 0)
+                                                {
+                                                    <span>@user.chats[user.chats.Count - 1].string_created_at.Split(' ')[@user.chats[user.chats.Count - 1].string_created_at.Split(' ').Length - 1]</span>
+                                                }
+                                            </span>
                                         </div>
                                         @foreach(var chat in user.chats)
                                         {
