@@ -37,5 +37,7 @@ namespace Agency.ViewModel
         public string client_first_name { get; set; }
         public string client_last_name { get; set; }
         public int? currency  { get; set; }
+        public double? vendor_cost { get; set; }
+
     }
 }

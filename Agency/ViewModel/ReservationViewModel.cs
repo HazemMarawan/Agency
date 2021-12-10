@@ -98,6 +98,7 @@ namespace Agency.ViewModel
         public string updated_by_name { get; set; }
         public string city_name { get; set; }
         public string location_name { get; set; }
+        public double? vendor_cost { get; set; }
 
 
     }

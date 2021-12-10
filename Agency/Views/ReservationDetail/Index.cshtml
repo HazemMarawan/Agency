@@ -168,7 +168,11 @@
                                 <label>Date To</label>
                                 <input required name="reservation_to" id="reservation_to" type="date" class="form-control radius-30" />
                             </div>
-                            <div class="form-group col-md-12">
+                            <div class="form-group col-md-6">
+                                <label>Vendor Code</label>
+                                <input required name="vendor_code" id="vendor_code" type="text" class="form-control radius-30" />
+                            </div>
+                            <div class="form-group col-md-6">
                                 <label>Room Type</label>
                                 <select id="room_type" name="room_type" class="form-control radius-30">
                                     <option value="1">Single</option>
@@ -415,6 +419,7 @@
 
                         dialog.find('#client_first_name').val(data.client_first_name);
                         dialog.find('#client_last_name').val(data.client_last_name);
+                        dialog.find('#vendor_code').val(data.vendor_code);
                         if (data.reservation_from) {
                             var value = new Date
                                 (

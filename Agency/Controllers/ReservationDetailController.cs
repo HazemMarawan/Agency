@@ -33,7 +33,6 @@ namespace Agency.Controllers
                                join res in db.Reservations on resDetail.reservation_id equals res.id
                                join client in db.Clients on resDetail.client_id equals client.id
                                join event_hotel in db.EventHotels on res.event_hotel_id equals event_hotel.id
-                               join vendor in db.Vendors on event_hotel.vendor_id equals vendor.id
                                select new ReservationDetailViewModel
                                {
                                    id = resDetail.id,
@@ -51,9 +50,75 @@ namespace Agency.Controllers
                                    currency = res.currency,
                                    string_reservation_from = resDetail.reservation_from.ToString(),
                                    string_reservation_to = resDetail.reservation_to.ToString(),
-                                   vendor_code = vendor.code,
+                                   vendor_code = resDetail.vendor_code,
+                                   vendor_cost = resDetail.vendor_cost,
                                    cancelation_policy =""
-                               }).Where(r => r.reservation_id == id);
+                               }).Where(d => d.reservation_id == id);
+
+                //Search    
+                if (!string.IsNullOrEmpty(searchValue))
+                {
+                    resDetailData = resDetailData.Where(m => m.client_first_name.ToLower().Contains(searchValue.ToLower()) || m.amount.ToString().ToLower().Contains(searchValue.ToLower()) ||
+                     m.client_last_name.ToLower().Contains(searchValue.ToLower()) || m.no_of_days.ToString().ToLower().Contains(searchValue.ToLower()));
+                }
+
+                //total number of rows count     
+                var displayResult = resDetailData.OrderByDescending(u => u.id).Skip(skip)
+                     .Take(pageSize).ToList();
+                var totalRecords = resDetailData.Count();
+
+                return Json(new
+                {
+                    draw = draw,
+                    recordsTotal = totalRecords,
+                    recordsFiltered = totalRecords,
+                    data = displayResult
+
+                }, JsonRequestBehavior.AllowGet);
+
+            }
+
+            ViewBag.id = id;
+
+            return View();
+        }
+        public ActionResult getAll(int? id)
+        {
+            if (Request.IsAjaxRequest())
+            {
+                var draw = Request.Form.GetValues("draw").FirstOrDefault();
+                var start = Request.Form.GetValues("start").FirstOrDefault();
+                var length = Request.Form.GetValues("length").FirstOrDefault();
+                var searchValue = Request.Form.GetValues("search[value]").FirstOrDefault();
+                int pageSize = length != null ? Convert.ToInt32(length) : 0;
+                int skip = start != null ? Convert.ToInt32(start) : 0;
+
+                // Getting all data    
+                var resDetailData = (from resDetail in db.ReservationDetails
+                                     join res in db.Reservations on resDetail.reservation_id equals res.id
+                                     join client in db.Clients on resDetail.client_id equals client.id
+                                     join event_hotel in db.EventHotels on res.event_hotel_id equals event_hotel.id
+                                     select new ReservationDetailViewModel
+                                     {
+                                         id = resDetail.id,
+                                         amount = resDetail.amount,
+                                         tax = resDetail.tax,
+                                         room_type = resDetail.room_type,
+                                         reservation_from = resDetail.reservation_from,
+                                         reservation_to = resDetail.reservation_to,
+                                         no_of_days = resDetail.no_of_days,
+                                         active = resDetail.active,
+                                         client_id = resDetail.client_id,
+                                         client_first_name = client.first_name,
+                                         client_last_name = client.last_name,
+                                         reservation_id = resDetail.reservation_id,
+                                         currency = res.currency,
+                                         string_reservation_from = resDetail.reservation_from.ToString(),
+                                         string_reservation_to = resDetail.reservation_to.ToString(),
+                                         vendor_code = resDetail.vendor_code,
+                                         vendor_cost = resDetail.vendor_cost,
+                                         cancelation_policy = ""
+                                     }).Where(r => r.reservation_id == id);
 
                 //Search    
                 if (!string.IsNullOrEmpty(searchValue))
@@ -78,10 +143,10 @@ namespace Agency.Controllers
 
             }
             ViewBag.id = id;
-            
+
             return View();
         }
-        
+
         public JsonResult saveReservation(ReservationDetailViewModel detailViewModel)
         {
             if(detailViewModel.id == 0)
@@ -176,6 +241,7 @@ namespace Agency.Controllers
                 detail.reservation_from = detailViewModel.reservation_from;
                 detail.reservation_to = detailViewModel.reservation_to;
                 detail.room_type = detailViewModel.room_type;
+                detail.vendor_code = detailViewModel.vendor_code;
 
                 double? room_price = 0;
                 double? vendor_room_price = 0;

@@ -41,6 +41,7 @@ namespace Agency.Models
         public DateTime? check_out { get; set; }
         public double? profit { get; set; }
         public int? shift { get; set; }
+        public int? is_canceled { get; set; }
         public int? active { get; set; }
         public DateTime? financial_advance_date { get; set; }
         public DateTime? financial_due_date { get; set; }

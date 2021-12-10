@@ -338,6 +338,14 @@
     <Compile Include="Migrations\202112101702091_addv_code_res_det.Designer.cs">
       <DependentUpon>202112101702091_addv_code_res_det.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202112101810368_add_vendor_cost.cs" />
+    <Compile Include="Migrations\202112101810368_add_vendor_cost.Designer.cs">
+      <DependentUpon>202112101810368_add_vendor_cost.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202112101835072_add_fields.cs" />
+    <Compile Include="Migrations\202112101835072_add_fields.Designer.cs">
+      <DependentUpon>202112101835072_add_fields.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AgencyDbContext.cs" />
     <Compile Include="Models\Chat.cs" />
@@ -4034,6 +4042,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202112101702091_addv_code_res_det.resx">
       <DependentUpon>202112101702091_addv_code_res_det.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112101810368_add_vendor_cost.resx">
+      <DependentUpon>202112101810368_add_vendor_cost.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112101835072_add_fields.resx">
+      <DependentUpon>202112101835072_add_fields.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

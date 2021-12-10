@@ -133,7 +133,7 @@ namespace Agency.Controllers
                                location_name = loc.name,
                                city_name = city.name,
                                vendor_code = vendor.code,
-
+                               
                                //profit = calculateProfit(res.id).profit
                            }).Where(r => r.id == id).FirstOrDefault();
 
