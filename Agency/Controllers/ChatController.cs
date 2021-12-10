@@ -25,7 +25,7 @@ namespace Agency.Controllers
                                              id = user.id,
                                              full_name = user.full_name,
                                              imagePath = user.image,
-                                             chats = db.Chats.Where(c => c.from_user == currentUser.id || c.to_user == currentUser.id).Select(c => new ChatViewModel {
+                                             chats = db.Chats.Where(c => c.from_user == currentUser.id && c.to_user == user.id || c.to_user == currentUser.id && c.from_user == user.id).Select(c => new ChatViewModel {
                                                  id = c.id,
                                                  message = c.message,
                                                  message_class = c.from_user == currentUser.id? "bubble me": "bubble you",
