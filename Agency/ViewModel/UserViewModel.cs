@@ -22,6 +22,7 @@ namespace Agency.ViewModel
         public DateTime? birthDate { get; set; }
         public HttpPostedFileBase image { get; set; }
         public string imagePath { get; set; }
+        public ChatViewModel latest_message { get; set; }
         public int? type { get; set; }
         public int? active { get; set; }
         public int? created_by { get; set; }
