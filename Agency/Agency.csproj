@@ -162,6 +162,7 @@
     <Compile Include="Controllers\BookingController.cs" />
     <Compile Include="Controllers\ChatController.cs" />
     <Compile Include="Controllers\CityController.cs" />
+    <Compile Include="Controllers\CommentController.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\EventController.cs" />
@@ -3905,6 +3906,7 @@
     <Content Include="Views\Chat\Index.cshtml" />
     <Content Include="Views\User\Profile.cshtml" />
     <Content Include="Views\ReservationDetail\getAll.cshtml" />
+    <Content Include="Views\Comment\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

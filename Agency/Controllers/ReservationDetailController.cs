@@ -135,8 +135,8 @@ namespace Agency.Controllers
                                          amount_paid_to_vendor = resDetail.amount_paid_to_vendor,
                                          cancelation_policy = resDetail.cancelation_policy,
                                          confirmation_id = resDetail.confirmation_id,
-                                     });
 
+                                     });
                 //Search    
                 if (!string.IsNullOrEmpty(searchValue))
                 {
