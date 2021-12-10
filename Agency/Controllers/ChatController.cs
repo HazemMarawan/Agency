@@ -36,5 +36,17 @@ namespace Agency.Controllers
                                          
             return View(users);
         }
+
+        public JsonResult SaveMessage(ChatViewModel chatViewModel)
+        {
+            User currentUser = Session["user"] as User;
+
+            Chat chat = AutoMapper.Mapper.Map<ChatViewModel, Chat>(chatViewModel);
+            chat.from_user = currentUser.id;
+            chat.created_at = DateTime.Now;
+            db.Chats.Add(chat);
+            db.SaveChanges();
+            return Json(new { msg = "done" }, JsonRequestBehavior.AllowGet);
+        }
     }
 }

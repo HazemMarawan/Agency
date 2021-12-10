@@ -31,6 +31,7 @@ namespace Agency
             Mapper.CreateMap<VendorViewModel, Vendor>();
             Mapper.CreateMap<ReservationCommentViewModel, ReservationComment>();
             Mapper.CreateMap<ReservationTaskViewModel, ReservationTask>();
+            Mapper.CreateMap<ChatViewModel, Chat>();
 
 
         }

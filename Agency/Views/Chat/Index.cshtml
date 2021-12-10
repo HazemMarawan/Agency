@@ -98,7 +98,7 @@
                             <div class="chat-input">
                                 <form class="chat-form" action="javascript:void(0);">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-square"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-                                    <input type="text" class="mail-write-box form-control" data-to-user="5" placeholder="Message" />
+                                    <input type="text" class="mail-write-box form-control" id="mail_write_id" data-to-user="0" placeholder="Message" />
                                 </form>
                             </div>
                         </div>
@@ -119,7 +119,7 @@
                 if (event.key === 'Enter') {
                     var chatInput = $(this);
                     var to_user = $(this).attr('data-to-user');
-                    alert(to_user);
+                    //alert(to_user);
                     var chatMessageValue = chatInput.val();
                     if (chatMessageValue === '') { return; }
                     $messageHtml = '<div class="bubble me">' + chatMessageValue + '</div>';
@@ -128,7 +128,23 @@
                     getScrollContainer.scrollTop = getScrollContainer.scrollHeight;
                     var clearChatInput = chatInput.val('');
 
-                    
+                    var Chat = new Object();
+                    Chat.to_user = to_user;
+                    Chat.message = chatMessageValue;
+                   
+                    $.ajax({
+                        type: "POST",
+                        url: "/Chat/SaveMessage",
+                        data: JSON.stringify(Chat),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (response) {
+                            console.log(response.msg);
+                        },
+                        error: function (response) {
+                            console.log(response.msg);
+                        }
+                    });
                 }
             });
         });

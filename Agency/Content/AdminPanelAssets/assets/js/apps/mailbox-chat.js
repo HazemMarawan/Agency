@@ -6,11 +6,14 @@ $('.search > input').on('keyup', function() {
     }).show();
 });
 
-$('.user-list-box .person').on('click', function(event) {
+$('.user-list-box .person').on('click', function (event) {
+    //alert('sss');
+
     if ($(this).hasClass('.active')) {
         return false;
     } else {
         var findChat = $(this).attr('data-chat');
+        $("#mail_write_id").attr('data-to-user', findChat);
         var personName = $(this).find('.user-name').text();
         var personImage = $(this).find('img').attr('src');
         var hideTheNonSelectedContent = $(this).parents('.chat-system').find('.chat-box .chat-not-selected').hide();
