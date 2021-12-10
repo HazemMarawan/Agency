@@ -45,7 +45,7 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label>Single Price</label>
-                                <input name="single_price" id="single_price" type="number" min="0" step="0.1"  value="@Model.single_price" class="form-control radius-30" />
+                                <input name="single_price" id="single_price" type="number" min="0" step="0.1" value="@Model.single_price" class="form-control radius-30" />
                             </div>
                             <div class="form-group col-md-6">
                                 <label>Vendor Single Price</label>
@@ -53,7 +53,7 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label>Double Price</label>
-                                <input name="double_price" id="double_price" type="number" min="0" step="0.1"  value="@Model.double_price" class="form-control radius-30" />
+                                <input name="double_price" id="double_price" type="number" min="0" step="0.1" value="@Model.double_price" class="form-control radius-30" />
                             </div>
                             <div class="form-group col-md-6">
                                 <label>Vendor Double Price</label>
@@ -211,8 +211,102 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label>Room Price</label>
-                                <input required name="room_price" id="room_price" type="number" step="0.1" min="1" class="form-control radius-30" />
+                                <input required name="vendor_cost" id="vendor_cost" type="number" step="0.1" min="1" class="form-control radius-30" />
                             </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="modal fade" id="edit_reservation_detail_modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <form action="" method="post" enctype='multipart/form-data'>
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal_title"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-body">
+                        <div class="form-row">
+                            <input type="hidden" name="id" id="id" value="0" />
+                            <input type="hidden" name="reservation_id" id="reservation_id" value="@ViewBag.id" />
+
+                            <div class="form-group col-md-6">
+                                <label>First Name</label>
+                                <input required name="client_first_name" id="client_first_name" type="text" class="form-control radius-30" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Last Name</label>
+                                <input required name="client_last_name" id="client_last_name" type="text" class="form-control radius-30" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Date From</label>
+                                <input required name="reservation_from" id="reservation_from" type="date" class="form-control radius-30" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Date To</label>
+                                <input required name="reservation_to" id="reservation_to" type="date" class="form-control radius-30" />
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label>Vendor Code</label>
+                                <input required name="vendor_code" id="vendor_code" type="text" class="form-control radius-30" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Room Type</label>
+                                <select id="room_type" name="room_type" class="form-control radius-30">
+                                    <option value="1">Single</option>
+                                    <option value="2">Double</option>
+                                    <option value="3">Triple</option>
+                                    <option value="4">Quad</option>
+
+                                </select>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Room Price</label>
+                                <input required name="vendor_cost" id="vendor_cost" type="number" step="0.1" min="1" class="form-control radius-30" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Payment to Vendor Deadline</label>
+                                <input required name="payment_to_vendor_deadline" id="payment_to_vendor_deadline" type="date" class="form-control radius-30" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>payment to Vendor Notification Date</label>
+                                <input required name="payment_to_vendor_notification_date" id="payment_to_vendor_notification_date" type="date" class="form-control radius-30" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Paid to Vendor</label>
+                                <select id="paid_to_vendor" name="paid_to_vendor" class="form-control radius-30">
+                                    <option value="0" selected>No</option>
+                                    <option value="1">Yes</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Amount Paid to Vendor</label>
+                                <input name="amount_paid_to_vendor" id="amount_paid_to_vendor" type="number" class="form-control radius-30" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Confirmation #</label>
+                                <input name="confirmation_id" id="confirmation_id" type="number" class="form-control radius-30" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Paid to Vendor Date</label>
+                                <input name="paid_to_vendor_date" id="paid_to_vendor_date" type="date" class="form-control radius-30" />
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label>Cancelation Policy</label>
+                                <textarea id="cancelation_policy" name="cancelation_policy" class="form-control radius-30"></textarea>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -1144,16 +1238,16 @@
                 }, function (response) {
 
                 }, function (dialog) {
-                    dialog.find('#room_price').val('@Model.vendor_single_price');
+                    dialog.find('#vendor_cost').val('@Model.vendor_single_price');
                     dialog.find('#room_type').change(function () {
                         if ($(this).val() == 1)
-                            dialog.find('#room_price').val('@Model.vendor_single_price');
+                            dialog.find('#vendor_cost').val('@Model.vendor_single_price');
                         else if ($(this).val() == 2)
-                            dialog.find('#room_price').val('@Model.vendor_douple_price');
+                            dialog.find('#vendor_cost').val('@Model.vendor_douple_price');
                         else if ($(this).val() == 3)
-                            dialog.find('#room_price').val('@Model.vendor_triple_price');
+                            dialog.find('#vendor_cost').val('@Model.vendor_triple_price');
                         else if ($(this).val() == 4)
-                            dialog.find('#room_price').val('@Model.vendor_quad_price');
+                            dialog.find('#vendor_cost').val('@Model.vendor_quad_price');
 
                     })
 
@@ -1161,7 +1255,7 @@
            });
 
            $(document).on("click", "#edit_reservation", function () {
-               
+
                 //var data = unPaidReservationTable.row($(this).closest('tr')).data();
                 //console.log(data);
                 var modal = $('#edit_reservation_modal').clone();
@@ -1177,7 +1271,7 @@
                 }, function (response) {
 
                 }, function (dialog) {
-                
+
                         //dialog.find('#id').val(data.id);
                         //dialog.find('#company_id').val(data.company_id);
                         //dialog.find('#company_name').val(data.company_name);
@@ -1365,12 +1459,10 @@
 
             });
 
-
-
             $(document).on("click", ".edit", function () {//lll
                 var data = datatable.row($(this).closest('tr')).data();
                 console.log(data);
-                var modal = $('#manage_reservation_modal').clone();
+                var modal = $('#edit_reservation_detail_modal').clone();
                 var action = '@Url.Action("saveReservation", "ReservationDetail")';
                 modal.find('form').attr('action', action);
                 modal.find('#modal_title').text('Edit User');
@@ -1389,7 +1481,14 @@
                         dialog.find('#client_first_name').val(data.client_first_name);
                         dialog.find('#client_last_name').val(data.client_last_name);
                         dialog.find('#vendor_code').val(data.vendor_code);
-                        dialog.find('#room_price').val(data.vendor_cost);
+                        dialog.find('#vendor_cost').val(data.vendor_cost);
+
+                        dialog.find('#notify').val(data.notify);
+                        dialog.find('#is_canceled').val(data.is_canceled);
+                        dialog.find('#paid_to_vendor').val(data.paid_to_vendor);
+                        dialog.find('#amount_paid_to_vendor').val(data.amount_paid_to_vendor);
+                        dialog.find('#confirmation_id').val(data.confirmation_id);
+                        dialog.find('#cancelation_policy').val(data.cancelation_policy);                       
                         
                         if (data.reservation_from) {
                             var value = new Date
@@ -1417,7 +1516,49 @@
                                 ;
                             dialog.find('#reservation_to').val(reservation_to);
                         }
-                        
+                        //payment_to_vendor_deadline
+                        if (data.payment_to_vendor_deadline) {
+                            var value = new Date
+                                (
+                                    parseInt(data.payment_to_vendor_deadline.replace(/(^.*\()|([+-].*$)/g, ''))
+                                );
+                            var payment_to_vendor_deadline = value.getFullYear() +
+                                "-" +
+                                ("0" + (value.getMonth() + 1)).slice(-2) +
+                                "-" +
+                                ("0" + value.getDate()).slice(-2)
+                                ;
+                            dialog.find('#payment_to_vendor_deadline').val(payment_to_vendor_deadline);
+                        }
+                        //payment_to_vendor_notification_date
+                        if (data.payment_to_vendor_notification_date) {
+                            var value = new Date
+                                (
+                                    parseInt(data.payment_to_vendor_notification_date.replace(/(^.*\()|([+-].*$)/g, ''))
+                                );
+                            var payment_to_vendor_notification_date = value.getFullYear() +
+                                "-" +
+                                ("0" + (value.getMonth() + 1)).slice(-2) +
+                                "-" +
+                                ("0" + value.getDate()).slice(-2)
+                                ;
+                            dialog.find('#payment_to_vendor_notification_date').val(payment_to_vendor_notification_date);
+                        }
+                        //paid_to_vendor_date
+                         if (data.paid_to_vendor_date) {
+                            var value = new Date
+                                (
+                                    parseInt(data.paid_to_vendor_date.replace(/(^.*\()|([+-].*$)/g, ''))
+                                );
+                             var paid_to_vendor_date = value.getFullYear() +
+                                "-" +
+                                ("0" + (value.getMonth() + 1)).slice(-2) +
+                                "-" +
+                                ("0" + value.getDate()).slice(-2)
+                                ;
+                             dialog.find('#paid_to_vendor_date').val(paid_to_vendor_date);
+                        }
+
                         dialog.find('#room_type option[value=' + data.room_type + ']').attr('selected', 'selected');
 
                 });

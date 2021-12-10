@@ -52,7 +52,16 @@ namespace Agency.Controllers
                                    string_reservation_to = resDetail.reservation_to.ToString(),
                                    vendor_code = resDetail.vendor_code,
                                    vendor_cost = resDetail.vendor_cost,
-                                   cancelation_policy =""
+                                   notify = resDetail.notify,
+                                   is_canceled = resDetail.is_canceled,
+                                   paid_to_vendor = resDetail.paid_to_vendor,
+                                   payment_to_vendor_deadline = resDetail.payment_to_vendor_deadline,
+                                   payment_to_vendor_notification_date = resDetail.payment_to_vendor_notification_date,
+                                   paid_to_vendor_date = resDetail.paid_to_vendor_date,
+                                   amount_paid_to_vendor = resDetail.amount_paid_to_vendor,
+                                   cancelation_policy = resDetail.cancelation_policy,
+                                   confirmation_id = resDetail.confirmation_id,
+
                                }).Where(d => d.reservation_id == id);
 
                 //Search    
@@ -82,7 +91,7 @@ namespace Agency.Controllers
 
             return View();
         }
-        public ActionResult getAll(int? id)
+        public ActionResult getAll()
         {
             if (Request.IsAjaxRequest())
             {
@@ -117,8 +126,16 @@ namespace Agency.Controllers
                                          string_reservation_to = resDetail.reservation_to.ToString(),
                                          vendor_code = resDetail.vendor_code,
                                          vendor_cost = resDetail.vendor_cost,
-                                         cancelation_policy = ""
-                                     }).Where(r => r.reservation_id == id);
+                                         notify = resDetail.notify,
+                                         is_canceled = resDetail.is_canceled,
+                                         paid_to_vendor = resDetail.paid_to_vendor,
+                                         payment_to_vendor_deadline = resDetail.payment_to_vendor_deadline,
+                                         payment_to_vendor_notification_date = resDetail.payment_to_vendor_notification_date,
+                                         paid_to_vendor_date = resDetail.paid_to_vendor_date,
+                                         amount_paid_to_vendor = resDetail.amount_paid_to_vendor,
+                                         cancelation_policy = resDetail.cancelation_policy,
+                                         confirmation_id = resDetail.confirmation_id,
+                                     });
 
                 //Search    
                 if (!string.IsNullOrEmpty(searchValue))
@@ -142,8 +159,7 @@ namespace Agency.Controllers
                 }, JsonRequestBehavior.AllowGet);
 
             }
-            ViewBag.id = id;
-
+           
             return View();
         }
 
@@ -242,20 +258,42 @@ namespace Agency.Controllers
                 detail.reservation_to = detailViewModel.reservation_to;
                 detail.room_type = detailViewModel.room_type;
                 detail.vendor_code = detailViewModel.vendor_code;
+                detail.vendor_cost = detailViewModel.vendor_cost;
+                detail.cancelation_policy = detailViewModel.cancelation_policy;
+                detail.notify = detailViewModel.notify;
+                detail.paid_to_vendor_date = detailViewModel.paid_to_vendor_date;
+                detail.payment_to_vendor_deadline = detailViewModel.payment_to_vendor_deadline;
+                detail.paid_to_vendor = detailViewModel.paid_to_vendor;
+                detail.amount_paid_to_vendor = detailViewModel.amount_paid_to_vendor;
+                detail.payment_to_vendor_notification_date = detailViewModel.payment_to_vendor_notification_date;
+                detail.is_canceled = detailViewModel.is_canceled;
+                detail.confirmation_id = detailViewModel.confirmation_id;
 
                 double? room_price = 0;
-                double? vendor_room_price = 0;
+                double? vendor_room_price = detailViewModel.vendor_cost;
 
                 if (detailViewModel.room_type == 1)
                 {
                     room_price = reservation.single_price;
-                    vendor_room_price = reservation.vendor_single_price;
                 }
-                else
+                else if(detailViewModel.room_type == 2)
                 {
                     room_price = reservation.double_price;
-                    vendor_room_price = reservation.vendor_douple_price;
                 }
+                else if (detailViewModel.room_type == 3)
+                {
+                    room_price = reservation.triple_price;
+                }
+                else if (detailViewModel.room_type == 4)
+                {
+                    room_price = reservation.quad_price;
+                }
+                else
+                { 
+                    //default single
+                    room_price = reservation.single_price;
+                }
+
                 int Days = (detailViewModel.reservation_to - detailViewModel.reservation_from).Days + 1;
                 detail.no_of_days = Days;
                 var amount = (room_price * Days); //* (100 - reservation.advance_reservation_percentage)) / 100;  //event_row
@@ -263,7 +301,7 @@ namespace Agency.Controllers
                 detail.tax = amount * (reservation.tax / 100);
                 detail.amount = amount;
                 detail.amount_after_tax = amount + detail.tax;
-
+               
                 detail.updated_at = DateTime.Now;
                 detail.updated_by = Session["id"].ToString().ToInt();
                 db.SaveChanges();
