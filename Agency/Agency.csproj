@@ -3894,6 +3894,7 @@
     <Content Include="Views\Booking\Show.cshtml" />
     <Content Include="Views\Event\Show.cshtml" />
     <Content Include="Views\Chat\Index.cshtml" />
+    <Content Include="Views\User\Profile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
