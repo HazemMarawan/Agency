@@ -51,21 +51,8 @@ const ps = new PerfectScrollbar('.people', {
 
 
 
-$('.mail-write-box').on('keydown', function(event) {
-    if(event.key === 'Enter') {
-        var chatInput = $(this);
-        var chatMessageValue = chatInput.val();
-        if (chatMessageValue === '') { return; }
-        $messageHtml = '<div class="bubble me">' + chatMessageValue + '</div>';
-        var appendMessage = $(this).parents('.chat-system').find('.active-chat').append($messageHtml);
-        const getScrollContainer = document.querySelector('.chat-conversation-box');
-        getScrollContainer.scrollTop = getScrollContainer.scrollHeight;
-        var clearChatInput = chatInput.val('');
 
-        alert('ss');
-    }
-})
 
-$('.hamburger, .chat-system .chat-box .chat-not-selected p').on('click', function(event) {
-  $(this).parents('.chat-system').find('.user-list-box').toggleClass('user-list-box-show')
-})
+$('.hamburger, .chat-system .chat-box .chat-not-selected p').on('click', function (event) {
+    $(this).parents('.chat-system').find('.user-list-box').toggleClass('user-list-box-show')
+});

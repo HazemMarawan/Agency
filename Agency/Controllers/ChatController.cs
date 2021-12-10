@@ -18,7 +18,23 @@ namespace Agency.Controllers
         // GET: Chat
         public ActionResult Index()
         {
-            return View();
+            User currentUser = Session["user"] as User;
+            List<UserViewModel> users = (from user in db.Users
+                                         select new UserViewModel
+                                         {
+                                             id = user.id,
+                                             full_name = user.full_name,
+                                             imagePath = user.image,
+                                             chats = db.Chats.Where(c => c.from_user == currentUser.id || c.to_user == currentUser.id).Select(c => new ChatViewModel {
+                                                 id = c.id,
+                                                 message = c.message,
+                                                 message_class = c.from_user == currentUser.id? "bubble you": "bubble me",
+                                                 string_created_at = c.created_at.ToString(),
+                                                 created_at = c.created_at
+                                             }).OrderBy(c=>c.created_at).ToList()
+                                         }).Where(u=>u.id != currentUser.id).ToList();
+                                         
+            return View(users);
         }
     }
 }
