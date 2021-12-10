@@ -61,6 +61,8 @@ $('.mail-write-box').on('keydown', function(event) {
         const getScrollContainer = document.querySelector('.chat-conversation-box');
         getScrollContainer.scrollTop = getScrollContainer.scrollHeight;
         var clearChatInput = chatInput.val('');
+
+        alert('ss');
     }
 })
 

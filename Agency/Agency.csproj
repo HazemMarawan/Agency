@@ -160,6 +160,7 @@
     <Compile Include="Auth\CustomAuthenticationFilter.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BookingController.cs" />
+    <Compile Include="Controllers\ChatController.cs" />
     <Compile Include="Controllers\CityController.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
@@ -325,8 +326,17 @@
     <Compile Include="Migrations\202111302322433_addLogTableReservationId.Designer.cs">
       <DependentUpon>202111302322433_addLogTableReservationId.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202112101647100_chatsTable.cs" />
+    <Compile Include="Migrations\202112101647100_chatsTable.Designer.cs">
+      <DependentUpon>202112101647100_chatsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202112101647449_chatsTable1.cs" />
+    <Compile Include="Migrations\202112101647449_chatsTable1.Designer.cs">
+      <DependentUpon>202112101647449_chatsTable1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AgencyDbContext.cs" />
+    <Compile Include="Models\Chat.cs" />
     <Compile Include="Models\City.cs" />
     <Compile Include="Models\Client.cs" />
     <Compile Include="Models\Company.cs" />
@@ -3878,6 +3888,7 @@
     <Content Include="Views\Reservation\View.cshtml" />
     <Content Include="Views\Booking\Show.cshtml" />
     <Content Include="Views\Event\Show.cshtml" />
+    <Content Include="Views\Chat\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -4009,6 +4020,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202111302322433_addLogTableReservationId.resx">
       <DependentUpon>202111302322433_addLogTableReservationId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112101647100_chatsTable.resx">
+      <DependentUpon>202112101647100_chatsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112101647449_chatsTable1.resx">
+      <DependentUpon>202112101647449_chatsTable1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
