@@ -1009,6 +1009,7 @@
 
                                 html += "<a class='edit' href='javascript:void(0);' title='Edit'><i class='far fa-edit'></i></a>&nbsp;";
                                 html += "<a class='delete' href='javascript:void(0);' title='Delete'><i class='fa fa-trash'></i></a>&nbsp;";
+                                html += "<a class='cancel' href='javascript:void(0);' title='Cancel'><i class='far fa-times-circle'></i></a>&nbsp;";
 
                                 $(nTd).html("<span class='action-column'>" + html + "</span>");
                             }
@@ -1496,12 +1497,12 @@
                         dialog.find('#client_last_name').val(data.client_last_name);
                         dialog.find('#vendor_code').val(data.vendor_code);
                         dialog.find('#vendor_cost').val(data.vendor_cost);
-                       
+
                         dialog.find('#paid_to_vendor').val(data.paid_to_vendor);
                         dialog.find('#amount_paid_to_vendor').val(data.amount_paid_to_vendor);
                         dialog.find('#confirmation_id').val(data.confirmation_id);
-                        dialog.find('#cancelation_policy').val(data.cancelation_policy);                       
-                        
+                        dialog.find('#cancelation_policy').val(data.cancelation_policy);
+
                         if (data.reservation_from) {
                             var value = new Date
                                 (
@@ -1574,7 +1575,7 @@
                         dialog.find('#room_type option[value=' + data.room_type + ']').attr('selected', 'selected');
                         dialog.find('#notify option[value=' + data.notify + ']').attr('selected', 'selected');
                         dialog.find('#is_canceled option[value=' + data.is_canceled + ']').attr('selected', 'selected');
-                
+
                 });
 
             });
@@ -1632,6 +1633,27 @@
                         datatype: "json",
                         success: function (data) {
                             taskDatatable.draw();
+                            logstable.draw();
+
+                        },
+                        error: function () {
+                            alert("Dynamic content load failed.");
+                        }
+                    });
+                });
+            });
+
+            $(document).on("click", ".cancel", function () {
+                var data = datatable.row($(this).closest('tr')).data();
+                warningBox("Are you sure you want to cancel this reservation (<b>" + data.client_first_name +"</b>) ?", function () {
+                    $.ajax({
+                        type: "GET",
+                        url: '@Url.Action("cancelReservation", "ReservationDetail")',
+                        contentType: "application/json; charset=utf-8",
+                        data: { "id": data.id },
+                        datatype: "json",
+                        success: function (data) {
+                            datatable.draw();
                             logstable.draw();
 
                         },
