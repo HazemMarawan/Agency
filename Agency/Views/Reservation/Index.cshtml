@@ -872,6 +872,8 @@
                             html += "<a class='confMail' href='javascript:void(0)' title='Send Email'><i class='far fa-envelope-open'></i></a>&nbsp;|";
                             //html += "<a target='_blank' class='Itinirary' href='/ReservationDetail/Itinirary/" + oData.id + "' title='Itinirary'><i class='far fa-eye'></i></a>&nbsp;|";
                             html += "<a target='_blank' class='view' href='/Reservation/View/" + oData.id + "' title='View'><i class='far fa-eye'></i></a>";
+                            html += "<a class='cancel' href='javascript:void(0);' title='Cancel'><i class='far fa-times-circle'></i></a>&nbsp;";
+
                             $(nTd).html("<span class='action-column'>" + html + "</span>");
                         }
                     },
@@ -963,7 +965,7 @@
                                         html += "<span style='font-weight:bold;' class='fw-bold'>" + oData.string_check_in + "</span><br/>";
                                     if (oData.string_check_out)
                                         html += "<span style='font-weight:bold;' class='fw-bold'" + oData.string_check_in + "</span><br/>";
-                                  
+
                                 } else {
                                     html += "<span style='font-weight:bold;text-color:red;' class='bold'>Not Assigned</span>";
                                 }
@@ -1010,7 +1012,7 @@
                                     html += "<span style='font-weight:bold;' class='fw-bold'>" + addCommas((oData.total_amount_after_tax - oData.paid_amount).toFixed(2)) + "</span><br/>";
                                 else
                                     html += "<span style='font-weight:bold;text-color:red;' class='bold'>-</span>";
-                                
+
                                 $(nTd).html("<span class='action-column'>" + html + "</span>");
                             }
                         },
@@ -1036,10 +1038,12 @@
                                 html += "<a class='confMail' href='javascript:void(0)' title='Send Email'><i class='far fa-envelope-open'></i></a>&nbsp;|";
                                 //html += "<a target='_blank' class='Itinirary' href='/ReservationDetail/Itinirary/" + oData.id + "' title='Itinirary'><i class='far fa-eye'></i></a>&nbsp;|";
                                 html += "<a target='_blank' class='view' href='/Reservation/View/" + oData.id + "' title='View'><i class='far fa-eye'></i></a>";
+                                html += "<a class='cancel' href='javascript:void(0);' title='Cancel'><i class='far fa-times-circle'></i></a>&nbsp;";
+
                                 $(nTd).html("<span class='action-column'>" + html + "</span>");
                             }
                         },
-                       
+
                     ]
                  });
 
@@ -1096,7 +1100,7 @@
                         {
                             "data": "company_name", "searchable": true,
                             fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-                               
+
                                 var html = "<a href='/Reservation/View/" + oData.id + "'>" + oData.company_name + "</a>";
 
                                 $(nTd).html("<span class='action-column'>" + html + "</span>");
@@ -1201,6 +1205,7 @@
                                 html += "<a class='confMail' href='javascript:void(0)' title='Send Email'><i class='far fa-envelope-open'></i></a>&nbsp;|";
                                 //html += "<a target='_blank' class='Itinirary' href='/ReservationDetail/Itinirary/" + oData.id + "' title='Itinirary'><i class='far fa-eye'></i></a>&nbsp;|";
                                 html += "<a target='_blank' class='view' href='/Reservation/View/" + oData.id + "' title='View'><i class='far fa-eye'></i></a>";
+                                html += "<a class='cancel' href='javascript:void(0);' title='Cancel'><i class='far fa-times-circle'></i></a>&nbsp;";
                                 $(nTd).html("<span class='action-column'>" + html + "</span>");
                             }
                         },
@@ -1527,6 +1532,68 @@
                 });
            });
 
+
+            $(document).on("click", ".cancel", function () {
+                var data = unPaidReservationTable.row($(this).closest('tr')).data();
+                console.log(data)
+                warningBox("Are you sure you want to cancel this reservation (<b>" + data.id +"</b>) ?", function () {
+                    $.ajax({
+                        type: "GET",
+                        url: '@Url.Action("cancelReservation", "Reservation")',
+                        contentType: "application/json; charset=utf-8",
+                        data: { "id": data.id },
+                        datatype: "json",
+                        success: function (data) {
+                            unPaidReservationTable.draw();
+                            logstable.draw();
+
+                        },
+                        error: function () {
+                            alert("Dynamic content load failed.");
+                        }
+                    });
+                });
+            });
+            $(document).on("click", ".cancel", function () {
+                var data = partiallyReservationTable.row($(this).closest('tr')).data();
+                warningBox("Are you sure you want to cancel this reservation (<b>" + data.id +"</b>) ?", function () {
+                    $.ajax({
+                        type: "GET",
+                        url: '@Url.Action("cancelReservation", "Reservation")',
+                        contentType: "application/json; charset=utf-8",
+                        data: { "id": data.id },
+                        datatype: "json",
+                        success: function (data) {
+                            partiallyReservationTable.draw();
+                            logstable.draw();
+
+                        },
+                        error: function () {
+                            alert("Dynamic content load failed.");
+                        }
+                    });
+                });
+            });
+            $(document).on("click", ".cancel", function () {
+                var data = paidreservationTable.row($(this).closest('tr')).data();
+                warningBox("Are you sure you want to cancel this reservation (<b>" + data.id +"</b>) ?", function () {
+                    $.ajax({
+                        type: "GET",
+                        url: '@Url.Action("cancelReservation", "Reservation")',
+                        contentType: "application/json; charset=utf-8",
+                        data: { "id": data.id },
+                        datatype: "json",
+                        success: function (data) {
+                            paidreservationTable.draw();
+                            logstable.draw();
+
+                        },
+                        error: function () {
+                            alert("Dynamic content load failed.");
+                        }
+                    });
+                });
+            });
 
 
         });

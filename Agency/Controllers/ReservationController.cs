@@ -838,5 +838,17 @@ namespace Agency.Controllers
             return Json(new { hotels = eventHotelViewModel }, JsonRequestBehavior.AllowGet);
 
         }
+
+        public JsonResult cancelReservation(int id)
+        {
+            Reservation reservation = db.Reservations.Find(id);
+            reservation.is_canceled = 1;
+            db.SaveChanges();
+
+            Logs.ReservationActionLog(Session["id"].ToString().ToInt(), id, "Cancel", "Cancel Reservation #" + id);
+
+            return Json(new { message = "done" }, JsonRequestBehavior.AllowGet);
+
+        }
     }
 }
