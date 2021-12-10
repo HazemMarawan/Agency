@@ -260,13 +260,13 @@ namespace Agency.Controllers
                 detail.vendor_code = detailViewModel.vendor_code;
                 detail.vendor_cost = detailViewModel.vendor_cost;
                 detail.cancelation_policy = detailViewModel.cancelation_policy;
-                detail.notify = detailViewModel.notify;
+                detail.notify = detailViewModel.notify ? 1 : 0;
                 detail.paid_to_vendor_date = detailViewModel.paid_to_vendor_date;
                 detail.payment_to_vendor_deadline = detailViewModel.payment_to_vendor_deadline;
                 detail.paid_to_vendor = detailViewModel.paid_to_vendor;
                 detail.amount_paid_to_vendor = detailViewModel.amount_paid_to_vendor;
                 detail.payment_to_vendor_notification_date = detailViewModel.payment_to_vendor_notification_date;
-                detail.is_canceled = detailViewModel.is_canceled;
+                detail.is_canceled = detailViewModel.is_canceled ? 1 : 0;
                 detail.confirmation_id = detailViewModel.confirmation_id;
 
                 double? room_price = 0;

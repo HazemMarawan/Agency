@@ -40,8 +40,8 @@ namespace Agency.ViewModel
         public double? vendor_cost { get; set; }
         public DateTime? payment_to_vendor_deadline { get; set; }
         public DateTime? paid_to_vendor_date { get; set; }
-        public int? is_canceled { get; set; }
-        public int? notify { get; set; }
+        public bool is_canceled { get; set; }
+        public bool notify { get; set; }
         public int? paid_to_vendor { get; set; }
         public double? amount_paid_to_vendor { get; set; }
         public DateTime? payment_to_vendor_notification_date { get; set; }

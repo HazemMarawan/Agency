@@ -306,7 +306,14 @@
                                 <label>Cancelation Policy</label>
                                 <textarea id="cancelation_policy" name="cancelation_policy" class="form-control radius-30"></textarea>
                             </div>
-
+                            <div class="form-group col-md-6">
+                                <input id="is_canceled" type="checkbox" name="is_canceled" />
+                                <label>Canceled</label>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <input type="checkbox" id="notify" name="notify" />
+                                <label>Notify</label>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -395,6 +402,7 @@
                                 <label>Due Date</label>
                                 <input id="due_date" type="date" name="due_date" class="form-control" />
                             </div>
+                           
                         </div>
                     </div>
                 </div>
@@ -1482,9 +1490,16 @@
                         dialog.find('#client_last_name').val(data.client_last_name);
                         dialog.find('#vendor_code').val(data.vendor_code);
                         dialog.find('#vendor_cost').val(data.vendor_cost);
+                        if(data.notify)
+                            dialog.find('#notify').attr('checked', true);
+                        else
+                            dialog.find('#notify').attr('checked', false);
 
-                        dialog.find('#notify').val(data.notify);
-                        dialog.find('#is_canceled').val(data.is_canceled);
+                        if (data.is_canceled)
+                            dialog.find('#is_canceled').attr('checked', true);
+                        else
+                            dialog.find('#is_canceled').attr('checked', false);
+                        
                         dialog.find('#paid_to_vendor').val(data.paid_to_vendor);
                         dialog.find('#amount_paid_to_vendor').val(data.amount_paid_to_vendor);
                         dialog.find('#confirmation_id').val(data.confirmation_id);
