@@ -28,7 +28,7 @@ namespace Agency.Controllers
                                              chats = db.Chats.Where(c => c.from_user == currentUser.id || c.to_user == currentUser.id).Select(c => new ChatViewModel {
                                                  id = c.id,
                                                  message = c.message,
-                                                 message_class = c.from_user == currentUser.id? "bubble you": "bubble me",
+                                                 message_class = c.from_user == currentUser.id? "bubble me": "bubble you",
                                                  string_created_at = c.created_at.ToString(),
                                                  created_at = c.created_at
                                              }).OrderBy(c=>c.created_at).ToList()
