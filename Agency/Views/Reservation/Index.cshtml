@@ -872,7 +872,7 @@
                             html += "<a class='confMail' href='javascript:void(0)' title='Send Email'><i class='far fa-envelope-open'></i></a>&nbsp;|";
                             //html += "<a target='_blank' class='Itinirary' href='/ReservationDetail/Itinirary/" + oData.id + "' title='Itinirary'><i class='far fa-eye'></i></a>&nbsp;|";
                             html += "<a target='_blank' class='view' href='/Reservation/View/" + oData.id + "' title='View'><i class='far fa-eye'></i></a>";
-                            html += "<a class='cancel' href='javascript:void(0);' title='Cancel'><i class='far fa-times-circle'></i></a>&nbsp;";
+                            html += "<a class='cancelUnpaid' href='javascript:void(0);' title='Cancel'><i class='far fa-times-circle'></i></a>&nbsp;";
 
                             $(nTd).html("<span class='action-column'>" + html + "</span>");
                         }
@@ -1038,7 +1038,7 @@
                                 html += "<a class='confMail' href='javascript:void(0)' title='Send Email'><i class='far fa-envelope-open'></i></a>&nbsp;|";
                                 //html += "<a target='_blank' class='Itinirary' href='/ReservationDetail/Itinirary/" + oData.id + "' title='Itinirary'><i class='far fa-eye'></i></a>&nbsp;|";
                                 html += "<a target='_blank' class='view' href='/Reservation/View/" + oData.id + "' title='View'><i class='far fa-eye'></i></a>";
-                                html += "<a class='cancel' href='javascript:void(0);' title='Cancel'><i class='far fa-times-circle'></i></a>&nbsp;";
+                                html += "<a class='cancelPartiallyPaid' href='javascript:void(0);' title='Cancel'><i class='far fa-times-circle'></i></a>&nbsp;";
 
                                 $(nTd).html("<span class='action-column'>" + html + "</span>");
                             }
@@ -1205,7 +1205,7 @@
                                 html += "<a class='confMail' href='javascript:void(0)' title='Send Email'><i class='far fa-envelope-open'></i></a>&nbsp;|";
                                 //html += "<a target='_blank' class='Itinirary' href='/ReservationDetail/Itinirary/" + oData.id + "' title='Itinirary'><i class='far fa-eye'></i></a>&nbsp;|";
                                 html += "<a target='_blank' class='view' href='/Reservation/View/" + oData.id + "' title='View'><i class='far fa-eye'></i></a>";
-                                html += "<a class='cancel' href='javascript:void(0);' title='Cancel'><i class='far fa-times-circle'></i></a>&nbsp;";
+                                html += "<a class='cancelPaid' href='javascript:void(0);' title='Cancel'><i class='far fa-times-circle'></i></a>&nbsp;";
                                 $(nTd).html("<span class='action-column'>" + html + "</span>");
                             }
                         },
@@ -1533,7 +1533,7 @@
            });
 
 
-            $(document).on("click", ".cancel", function () {
+            $(document).on("click", ".cancelUnpaid", function () {
                 var data = unPaidReservationTable.row($(this).closest('tr')).data();
                 console.log(data)
                 warningBox("Are you sure you want to cancel this reservation (<b>" + data.id +"</b>) ?", function () {
@@ -1554,7 +1554,7 @@
                     });
                 });
             });
-            $(document).on("click", ".cancel", function () {
+            $(document).on("click", ".cancelPartiallyPaid", function () {
                 var data = partiallyReservationTable.row($(this).closest('tr')).data();
                 warningBox("Are you sure you want to cancel this reservation (<b>" + data.id +"</b>) ?", function () {
                     $.ajax({
@@ -1574,7 +1574,7 @@
                     });
                 });
             });
-            $(document).on("click", ".cancel", function () {
+            $(document).on("click", ".cancelPaid", function () {
                 var data = paidreservationTable.row($(this).closest('tr')).data();
                 warningBox("Are you sure you want to cancel this reservation (<b>" + data.id +"</b>) ?", function () {
                     $.ajax({
