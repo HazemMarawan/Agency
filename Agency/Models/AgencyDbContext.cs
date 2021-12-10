@@ -45,6 +45,16 @@ namespace Agency.Models
         public virtual DbSet<Vendor> Vendors { get; set; }
         public virtual DbSet<ReservationLog> ReservationLogs { get; set; }
         public virtual DbSet<Chat> Chats { get; set; }
+        public virtual DbSet<Email> Emails { get; set; }
+        public virtual DbSet<EmailAttachment> EmailAttachments { get; set; }
+        public virtual DbSet<Note> Notes { get; set; }
+        public virtual DbSet<Permission> Permissions { get; set; }
+        public virtual DbSet<PermissionGroup> PermissionGroups { get; set; }
+        public virtual DbSet<Role> Roles { get; set; }
+        public virtual DbSet<RolePermission> RolePermissions { get; set; }
+        public virtual DbSet<Task> Tasks { get; set; }
+        public virtual DbSet<UserRole> UserRoles { get; set; }
+        public virtual DbSet<UserTask> UserTasks { get; set; }
 
     }
 
