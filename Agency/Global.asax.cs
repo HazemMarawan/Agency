@@ -33,6 +33,13 @@ namespace Agency
             Mapper.CreateMap<ReservationTaskViewModel, ReservationTask>();
             Mapper.CreateMap<ChatViewModel, Chat>();
 
+            Mapper.CreateMap<PermissionViewModel, Permission>();
+            Mapper.CreateMap<RoleViewModel, Role>();
+            Mapper.CreateMap<PermissionGroupViewModel, PermissionGroup>();
+            Mapper.CreateMap<UserViewModel, User>();
+            Mapper.CreateMap<EmailViewModel, Email>();
+            Mapper.CreateMap<NoteViewModel, Note>();
+            Mapper.CreateMap<TaskViewModel, Task>();
 
         }
     }
