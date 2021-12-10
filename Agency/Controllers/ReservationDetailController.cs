@@ -52,8 +52,8 @@ namespace Agency.Controllers
                                    string_reservation_to = resDetail.reservation_to.ToString(),
                                    vendor_code = resDetail.vendor_code,
                                    vendor_cost = resDetail.vendor_cost,
-                                   notify = resDetail.notify == 1 ? true :false,
-                                   is_canceled = resDetail.is_canceled == 1 ? true : false,
+                                   notify = resDetail.notify,
+                                   is_canceled = resDetail.is_canceled,
                                    paid_to_vendor = resDetail.paid_to_vendor,
                                    payment_to_vendor_deadline = resDetail.payment_to_vendor_deadline,
                                    payment_to_vendor_notification_date = resDetail.payment_to_vendor_notification_date,
@@ -126,8 +126,8 @@ namespace Agency.Controllers
                                          string_reservation_to = resDetail.reservation_to.ToString(),
                                          vendor_code = resDetail.vendor_code,
                                          vendor_cost = resDetail.vendor_cost,
-                                         notify = resDetail.notify == 1 ? true : false,
-                                         is_canceled = resDetail.is_canceled == 1 ? true : false,
+                                         notify = resDetail.notify,
+                                         is_canceled = resDetail.is_canceled,
                                          paid_to_vendor = resDetail.paid_to_vendor,
                                          payment_to_vendor_deadline = resDetail.payment_to_vendor_deadline,
                                          payment_to_vendor_notification_date = resDetail.payment_to_vendor_notification_date,
@@ -260,13 +260,13 @@ namespace Agency.Controllers
                 detail.vendor_code = detailViewModel.vendor_code;
                 detail.vendor_cost = detailViewModel.vendor_cost;
                 detail.cancelation_policy = detailViewModel.cancelation_policy;
-                detail.notify = detailViewModel.notify ? 1 : 0;
+                detail.notify = detailViewModel.notify;
                 detail.paid_to_vendor_date = detailViewModel.paid_to_vendor_date;
                 detail.payment_to_vendor_deadline = detailViewModel.payment_to_vendor_deadline;
                 detail.paid_to_vendor = detailViewModel.paid_to_vendor;
                 detail.amount_paid_to_vendor = detailViewModel.amount_paid_to_vendor;
                 detail.payment_to_vendor_notification_date = detailViewModel.payment_to_vendor_notification_date;
-                detail.is_canceled = detailViewModel.is_canceled ? 1 : 0;
+                detail.is_canceled = detailViewModel.is_canceled;
                 detail.confirmation_id = detailViewModel.confirmation_id;
 
                 double? room_price = 0;
