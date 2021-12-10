@@ -50,4 +50,10 @@ namespace Agency.Enums
         Active = 1,
         Done = 2
     }
+    public enum UserTaskStatus
+    {
+        WatingForAction = 1,
+        Follow = 2,
+        Done = 3
+    }
 }
