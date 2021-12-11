@@ -668,6 +668,10 @@ input[type="date"] {
     border-radius: 25px;
     margin: 0px 7px;
 }
+.paginate_button.page-item a {
+    border-radius: 25px;
+    margin: 0px 7px;
+}
 
                                         /* icons */
 .action-column .addHotel {
@@ -1086,10 +1090,11 @@ font-size: 17px;
 #content .col-right-content {
     background: #030305;
     padding: 32px 32px 0px 32px;
-    margin: 20px 15px;
+    margin: 20px 0px 20px 40px;
     z-index: 4;
     height: 100%;
     border-radius: 25px;
+    width: 97%;
 }
 
 
@@ -1637,3 +1642,22 @@ body .col-right-content .col-right-content-container .ps__rail-y.ps--clicking {
 }
 
 
+                                                /* apps editing pages */
+.app-notes{
+    background-color: ghostwhite
+}
+
+.note-container.note-grid .note-item .note-inner-content {
+    margin-top:30px
+}
+
+                                                 /* fixing problem of dropdown menus that covered by black sideBar */
+
+.header-container {
+    z-index: 2;
+}
+
+.dashboard-edit .row {
+    position:absolute;
+    z-index:1
+}
