@@ -133,7 +133,7 @@ namespace Agency.Controllers
                                location_name = loc.name,
                                city_name = city.name,
                                vendor_code = vendor.code,
-
+                               
                                //profit = calculateProfit(res.id).profit
                            }).Where(r => r.id == id).FirstOrDefault();
 
@@ -836,6 +836,18 @@ namespace Agency.Controllers
                                                        }).Where(r => r.event_id == id).ToList();
 
             return Json(new { hotels = eventHotelViewModel }, JsonRequestBehavior.AllowGet);
+
+        }
+
+        public JsonResult cancelReservation(int id)
+        {
+            Reservation reservation = db.Reservations.Find(id);
+            reservation.is_canceled = 1;
+            db.SaveChanges();
+
+            Logs.ReservationActionLog(Session["id"].ToString().ToInt(), id, "Cancel", "Cancel Reservation #" + id);
+
+            return Json(new { message = "done" }, JsonRequestBehavior.AllowGet);
 
         }
     }

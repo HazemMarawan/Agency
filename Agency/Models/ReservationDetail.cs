@@ -18,6 +18,17 @@ namespace Agency.Models
         public DateTime reservation_from { get; set; }
         public DateTime reservation_to { get; set; }
         public int? no_of_days { get; set; }
+        public int? confirmation_id { get; set; }
+        public string vendor_code { get; set; }
+        public string cancelation_policy { get; set; }
+        public double? vendor_cost { get; set; }
+        public DateTime? payment_to_vendor_deadline { get; set; }
+        public DateTime? paid_to_vendor_date { get; set; }
+        public int? is_canceled { get; set; }
+        public int? notify { get; set; }
+        public int? paid_to_vendor { get; set; }
+        public double? amount_paid_to_vendor { get; set; }
+        public DateTime? payment_to_vendor_notification_date { get; set; }
         public int? active { get; set; }
         public int? created_by { get; set; }
         public int? updated_by { get; set; }

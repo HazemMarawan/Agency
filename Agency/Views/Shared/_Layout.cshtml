@@ -16,6 +16,13 @@
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM STYLES -->
     <link href="~/Content/AdminPanelAssets/plugins/apex/apexcharts.css" rel="stylesheet" type="text/css">
     <link href="~/Content/AdminPanelAssets/assets/css/dashboard/dash_1.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/AdminPanelAssets/assets/css/apps/contacts.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/AdminPanelAssets/assets/css/apps/mailbox.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/AdminPanelAssets/assets/css/apps/notes.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/AdminPanelAssets/assets/css/forms/theme-checkbox-radio.css" rel="stylesheet" type="text/css" />
+
+    <link href="~/Content/AdminPanelAssets/assets/css/apps/scrumboard.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/AdminPanelAssets/assets/css/forms/theme-checkbox-radio.css" rel="stylesheet" type="text/css">
     <style class="dark-theme">
         #chart-2 path {
             stroke: #0e1726;
@@ -110,15 +117,15 @@
                                     </div>
                                 </a>
                             </li>
-                            <li class="menu single-menu">
-                                <a href="@Url.Action("Index","Vendor")">
-                                    <div class="">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-cpu"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg>
+                            @*<li class="menu single-menu">
+                                    <a href="@Url.Action("Index","Vendor")">
+                                        <div class="">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-cpu"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg>
 
-                                        <span>Vendors</span>
-                                    </div>
-                                </a>
-                            </li>
+                                            <span>Vendors</span>
+                                        </div>
+                                    </a>
+                                </li>*@
                             <li class="menu single-menu">
                                 <a href="@Url.Action("Index","Event")">
                                     <div class="">
@@ -137,7 +144,86 @@
                                     </div>
                                 </a>
                             </li>
+                            <li class="menu single-menu">
+                                <a href="@Url.Action("Index","Comment")">
+                                    <div class="">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-cpu"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg>
 
+                                        <span>Comments</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="menu single-menu">
+                                <a href="@Url.Action("getAll","ReservationDetail")">
+                                    <div class="">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-cpu"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg>
+
+                                        <span>Reservations</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="menu single-menu">
+                                <a href="#users" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                                    <div class="">
+                                        <i class='fa fa-user'></i>
+                                        <span>Users Management</span>
+                                    </div>
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                </a>
+                                <ul class="collapse submenu list-unstyled" id="users" data-parent="#topAccordion">
+                                    @if (Agency.Auth.can.hasPermission("access_user"))
+                                    {
+                                        <li>
+                                            <a href="@Url.Action("Index", "Group")">Groups</a>
+                                        </li>
+                                    }
+                                    @if (Agency.Auth.can.hasPermission("access_permission"))
+                                    {
+                                        <li>
+                                            <a href="@Url.Action("Index", "Permission")">Permissions</a>
+                                        </li>
+                                    }
+                                    @if (Agency.Auth.can.hasPermission("access_role"))
+                                    {
+                                        <li>
+                                            <a href="@Url.Action("Show", "Role")">Roles</a>
+                                        </li>
+                                    }
+                                    @if (Agency.Auth.can.hasPermission("access_user"))
+                                    {
+                                        <li>
+                                            <a href="@Url.Action("Index", "User")">Users</a>
+                                        </li>
+                                    }
+
+                                </ul>
+                            </li>
+                            <li class="menu single-menu">
+                                <a href="#app" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle">
+                                    <div class="">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-cpu"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg>
+                                        <span>Apps</span>
+                                    </div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                </a>
+                                <ul class="collapse submenu list-unstyled" id="app" data-parent="#topAccordion">
+                                    <li>
+                                        <a href="@Url.Action("Index","Mail")"> Mailbox </a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.Action("Index","Chat")"> Chat </a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.Action("Index","Contact")"> Contacts </a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.Action("Index","Note")"> Notes </a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.Action("Index","Task")"> Task List </a>
+                                    </li>
+                                </ul>
+                            </li>
                         </ul>
                     </nav>
                 </div>
@@ -229,6 +315,19 @@
     <script src="~/Content/fontawesome/js/all.js"></script>
     <script src="~/Content/AdminPanelAssets/plugins/font-icons/feather/feather.min.js"></script>
     <script src="~/Scripts/clipboard.js"></script>
+
+    <script src="~/Content/AdminPanelAssets/assets/js/ie11fix/fn.fix-padStart.js"></script>
+    <script src="~/Content/AdminPanelAssets/plugins/editors/quill/quill.js"></script>
+    <script src="~/Content/AdminPanelAssets/plugins/notification/snackbar/snackbar.min.js"></script>
+    <script src="~/Content/AdminPanelAssets/assets/js/apps/custom-mailbox.js"></script>
+
+    <script src="~/Content/AdminPanelAssets/assets/js/apps/contact.js"></script>
+
+    <script src="~/Content/AdminPanelAssets/assets/js/ie11fix/fn.fix-padStart.js"></script>
+    <script src="~/Content/AdminPanelAssets/assets/js/apps/notes.js"></script>
+
+    <script src="~/Content/AdminPanelAssets/assets/js/ie11fix/fn.fix-padStart.js"></script>
+    <script src="~/Content/AdminPanelAssets/assets/js/apps/scrumboard.js"></script>
     <script type="text/javascript">
         feather.replace();
     </script>

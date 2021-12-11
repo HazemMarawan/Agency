@@ -1,0 +1,169 @@
+﻿@model IEnumerable<Agency.ViewModel.UserViewModel>
+@{
+    ViewBag.Title = "Index";
+}
+
+@section css
+{
+    <link href="~/Content/AdminPanelAssets/assets/css/apps/mailing-chat.css" rel="stylesheet" type="text/css" />
+}
+
+<div class="page-header">
+    <nav class="breadcrumb-one" aria-label="breadcrumb">
+        <div class="title">
+            <h3>Chat</h3>
+        </div>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="javascript:void(0);">Apps</a></li>
+            <li class="breadcrumb-item active" aria-current="page"><a href="javascript:void(0);">Chat</a></li>
+        </ol>
+    </nav>
+
+
+</div>
+
+<div class="chat-section layout-top-spacing">
+    <div class="row">
+
+        <div class="col-xl-12 col-lg-12 col-md-12">
+
+            <div class="chat-system">
+                <div class="hamburger"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu mail-menu d-lg-none"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></div>
+                <div class="user-list-box">
+                    <div class="search">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        <input type="text" class="form-control" placeholder="Search" />
+                    </div>
+                    <div class="people">
+                        @foreach(var user in Model)
+                        {
+                            <div class="person" data-chat="@user.id">
+                                <div class="user-info">
+                                    <div class="f-head">
+                                        <img src="@user.imagePath" alt="avatar">
+                                    </div>
+                                    <div class="f-body">
+                                        <div class="meta-info">
+                                            <span class="user-name" data-name="@user.full_name">@user.full_name</span>
+                                            <span class="user-meta-time">
+                                                @if (user.chats.Count != 0)
+                                                {
+                                                    <span>@user.chats[user.chats.Count - 1].string_created_at.Split(' ')[@user.chats[user.chats.Count - 1].string_created_at.Split(' ').Length-1]</span>
+                                                }
+                                            </span>
+                                        </div>
+                                        <span class="preview">
+                                            @if (user.chats.Count != 0)
+                                            {
+                                                <span>@user.chats[user.chats.Count - 1].message</span>
+                                            }
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+                <div class="chat-box">
+
+                    <div class="chat-not-selected">
+                        <p> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-square"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg> Click User To Chat</p>
+                    </div>
+
+                    
+                    <div class="chat-box-inner">
+                        <div class="chat-meta-user">
+                            <div class="current-chat-user-name"><span><img src="assets/img/90x90.jpg" alt="dynamic-image"><span class="name"></span></span></div>
+
+                            <div class="chat-action-btn align-self-center">
+                                <div class="dropdown d-inline-block">
+                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    </a>
+
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink-2">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chat-conversation-box">
+                            <div id="chat-conversation-box-scroll" class="chat-conversation-box-scroll">
+                                @foreach (var user in Model)
+                                {
+                                    <div class="chat" data-chat="@user.id">
+                                        <div class="conversation-start">
+                                            <span>
+                                                @if (user.chats.Count != 0)
+                                                {
+                                                    <span>@user.chats[user.chats.Count - 1].string_created_at.Split(' ')[@user.chats[user.chats.Count - 1].string_created_at.Split(' ').Length - 1]</span>
+                                                }
+                                            </span>
+                                        </div>
+                                        @foreach(var chat in user.chats)
+                                        {
+                                            <div class="@chat.message_class">
+                                                @chat.message
+                                            </div>
+                                        
+                                        }
+                                    </div>
+                                }
+                                </div>
+                        </div>
+                        <div class="chat-footer">
+                            <div class="chat-input">
+                                <form class="chat-form" action="javascript:void(0);">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-square"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                                    <input type="text" class="mail-write-box form-control" id="mail_write_id" data-to-user="0" placeholder="Message" />
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+@section scripts
+{
+    <script src="~/Content/AdminPanelAssets/assets/js/apps/mailbox-chat.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            $('.mail-write-box').on('keydown', function (event) {
+                if (event.key === 'Enter') {
+                    var chatInput = $(this);
+                    var to_user = $(this).attr('data-to-user');
+                    //alert(to_user);
+                    var chatMessageValue = chatInput.val();
+                    if (chatMessageValue === '') { return; }
+                    $messageHtml = '<div class="bubble me">' + chatMessageValue + '</div>';
+                    var appendMessage = $(this).parents('.chat-system').find('.active-chat').append($messageHtml);
+                    const getScrollContainer = document.querySelector('.chat-conversation-box');
+                    getScrollContainer.scrollTop = getScrollContainer.scrollHeight;
+                    var clearChatInput = chatInput.val('');
+
+                    var Chat = new Object();
+                    Chat.to_user = to_user;
+                    Chat.message = chatMessageValue;
+                   
+                    $.ajax({
+                        type: "POST",
+                        url: "/Chat/SaveMessage",
+                        data: JSON.stringify(Chat),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (response) {
+                            console.log(response.msg);
+                        },
+                        error: function (response) {
+                            console.log(response.msg);
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+}
+
+

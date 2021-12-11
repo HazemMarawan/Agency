@@ -22,13 +22,18 @@ namespace Agency.ViewModel
         public DateTime? birthDate { get; set; }
         public HttpPostedFileBase image { get; set; }
         public string imagePath { get; set; }
+        public ChatViewModel latest_message { get; set; }
         public int? type { get; set; }
         public int? active { get; set; }
         public int? created_by { get; set; }
         public int? updated_by { get; set; }
         public int? deleted_by { get; set; }
+        public List<RoleViewModel> roles { get; set; }
         public DateTime? created_at { get; set; }
         public DateTime? updated_at { get; set; }
         public DateTime? deleted_at { get; set; }
+        public List<ChatViewModel> chats { get; set; }
+        public int role_id { get; set; }
+        public List<int> role_ids { get; set; }
     }
 }

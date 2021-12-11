@@ -200,7 +200,7 @@ namespace Agency.Controllers
                 oldEvent.vendor_douple_price = eventVM.vendor_douple_price;
                 oldEvent.vendor_triple_price = eventVM.vendor_triple_price;
                 oldEvent.vendor_quad_price = eventVM.vendor_quad_price;
-                oldEvent.vendor_id = eventVM.vendor_id;
+                //oldEvent.vendor_id = eventVM.vendor_id;
                 oldEvent.updated_by = Session["id"].ToString().ToInt();
                 oldEvent.updated_at = DateTime.Now;
 

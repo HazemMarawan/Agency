@@ -6,11 +6,14 @@ $('.search > input').on('keyup', function() {
     }).show();
 });
 
-$('.user-list-box .person').on('click', function(event) {
+$('.user-list-box .person').on('click', function (event) {
+    //alert('sss');
+
     if ($(this).hasClass('.active')) {
         return false;
     } else {
         var findChat = $(this).attr('data-chat');
+        $("#mail_write_id").attr('data-to-user', findChat);
         var personName = $(this).find('.user-name').text();
         var personImage = $(this).find('img').attr('src');
         var hideTheNonSelectedContent = $(this).parents('.chat-system').find('.chat-box .chat-not-selected').hide();
@@ -51,19 +54,8 @@ const ps = new PerfectScrollbar('.people', {
 
 
 
-$('.mail-write-box').on('keydown', function(event) {
-    if(event.key === 'Enter') {
-        var chatInput = $(this);
-        var chatMessageValue = chatInput.val();
-        if (chatMessageValue === '') { return; }
-        $messageHtml = '<div class="bubble me">' + chatMessageValue + '</div>';
-        var appendMessage = $(this).parents('.chat-system').find('.active-chat').append($messageHtml);
-        const getScrollContainer = document.querySelector('.chat-conversation-box');
-        getScrollContainer.scrollTop = getScrollContainer.scrollHeight;
-        var clearChatInput = chatInput.val('');
-    }
-})
 
-$('.hamburger, .chat-system .chat-box .chat-not-selected p').on('click', function(event) {
-  $(this).parents('.chat-system').find('.user-list-box').toggleClass('user-list-box-show')
-})
+
+$('.hamburger, .chat-system .chat-box .chat-not-selected p').on('click', function (event) {
+    $(this).parents('.chat-system').find('.user-list-box').toggleClass('user-list-box-show')
+});
