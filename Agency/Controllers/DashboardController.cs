@@ -157,7 +157,7 @@ namespace Agency.Controllers
                                      created_by = task.created_by,
                                      stringCreatedToBy = user.full_name
 
-                                 }).Where(s => s.user_id == currentUser.id).OrderByDescending(s => s.created_at).Take(3).ToList();
+                                 }).Where(s => s.user_id == currentUser.id).OrderByDescending(s => s.created_at).Take(2).ToList();
 
             List<ReservationViewModel> balanceDueDateReservations = (from res in db.Reservations
                            join company in db.Companies on res.company_id equals company.id
@@ -231,7 +231,7 @@ namespace Agency.Controllers
                                is_canceled = res.is_canceled,
                                balance_due_date = (DateTime)res.balance_due_date
                                //profit = calculateProfit(res.id).profit
-                           }).Where(r => r.balance_due_date.Year == DateTime.Now.Year && r.balance_due_date.Month == DateTime.Now.Month && r.balance_due_date.Day == DateTime.Now.Day && r.is_canceled == null).ToList();
+                           }).Where(r => r.balance_due_date.Year == DateTime.Now.Year && r.balance_due_date.Month == DateTime.Now.Month && r.balance_due_date.Day == DateTime.Now.Day && r.is_canceled == null).Take(2).ToList();
 
             DashboardViewModel dashboardViewModel = new DashboardViewModel();
             dashboardViewModel.topSellingHotels = hotels;
@@ -241,6 +241,7 @@ namespace Agency.Controllers
             dashboardViewModel.CheckinClients = CheckinClients;
             dashboardViewModel.currentUserTasks = currentUserTasks;
             dashboardViewModel.balanceDueDateReservations = balanceDueDateReservations;
+            dashboardViewModel.TotalNotes = db.Notes.Where(n => n.created_by == currentUser.id).ToList().Count();
             return View(dashboardViewModel);
         }
 
