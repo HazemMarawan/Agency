@@ -3947,6 +3947,8 @@
     <Content Include="Views\Role\Show.cshtml" />
     <Content Include="Views\Task\Index.cshtml" />
     <Content Include="Views\UserRole\Index.cshtml" />
+    <Content Include="Views\Event\Show1.cshtml" />
+    <Content Include="Views\Event\Show2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

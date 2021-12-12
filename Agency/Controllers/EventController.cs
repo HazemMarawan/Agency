@@ -21,6 +21,14 @@ namespace Agency.Controllers
         {
             return View();
         }
+        public ActionResult Show1()
+        {
+            return View();
+        }
+        public ActionResult Show2()
+        {
+            return View();
+        }
         public ActionResult Index()
         {
             if (Request.IsAjaxRequest())
