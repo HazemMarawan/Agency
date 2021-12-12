@@ -63,15 +63,20 @@ namespace Agency.ViewModel
         public int? total_nights { get; set; }
         public DateTime? check_in { get; set; }
         public DateTime? check_out { get; set; }
+        public DateTime balance_due_date { get; set; }
+        public string string_balance_due_date { get; set; }
         public string string_check_in { get; set; }
         public string string_check_out { get; set; }
         public EventHotel EventHotel { get; set; }
         public string opener_name { get; set; }
         public string closer_name { get; set; }
         public int? shift { get; set; }
+        public int? is_canceled { get; set; }
         public string shift_name { get; set; }
         public string event_name { get; set; }
         public double? event_tax { get; set; }
+        public double? reservation_avg_price { get; set; }
+        public double? vendor_avg_price { get; set; }
         public double? event_single_price { get; set; }
         public double? event_double_price { get; set; }
         public double? event_triple_price { get; set; }

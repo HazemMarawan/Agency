@@ -219,6 +219,7 @@ namespace Agency.Controllers
 
                     reservation.check_in = minDate;
                     reservation.check_out = maxDate;
+                    reservation.balance_due_date = Convert.ToDateTime(reservation.check_in).AddDays(-21);
                 }
 
                 ReservationViewModel updatedTotals = ReservationService.calculateTotalandVendor(reservation.id);
@@ -321,6 +322,7 @@ namespace Agency.Controllers
 
                     reservation.check_in = minDate;
                     reservation.check_out = maxDate;
+                    reservation.balance_due_date = Convert.ToDateTime(reservation.check_in).AddDays(-21);
                 }
 
                 ReservationViewModel updatedTotals = ReservationService.calculateTotalandVendor(reservation.id);

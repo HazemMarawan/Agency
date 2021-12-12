@@ -548,14 +548,20 @@
                                             <p>Total Nights </p>
                                             <p>Location</p>
                                             <p>City</p>
-                                            <p>Single Price</p>
-                                            <p>Double Price</p>
-                                            <p>Trible Price</p>
-                                            <p>Quad Price</p>
-                                            <p>Vendor Single Price</p>
-                                            <p>Vendor Double Price</p>
-                                            <p>Vendor Trible Price</p>
-                                            <p>Vendor Quad Price</p>
+                                            <p>Total Customer Cost (-Tax)</p>
+                                            <p>Tax</p>
+                                            <p>Final Customer Cost</p>
+                                            <p>Customer/Night Rate</p>
+                                            <p>Final Vendor Cost</p>
+                                            <p>Vendor Cost/Night</p>
+                                            <p>Amended Check-in</p>
+                                            <p>Amended Check-out</p>
+                                            <p>Rooms After Amendment</p>
+                                            <p>Nights After Amendment</p>
+                                            <p>Price/Night After Amendment</p>
+                                            <p>Tax</p>
+                                            <p>Customer Cost After Amend</p>
+                                            <p>Vend. Cost After Amend</p>
                                             <p>Status</p>
                                             <p>Collected</p>
                                             <p>Balance</p>
@@ -609,79 +615,91 @@
                                             <p>@Convert.ToDateTime(Model.check_out).Subtract(Convert.ToDateTime(Model.check_in)).Days</p>
                                             <p>@Model.location_name</p>
                                             <p>@Model.city_name</p>
-                                            @if (Model.single_price == null)
+                                            @if (Model.total_amount == null)
                                             {
                                                 <p>-</p>
                                             }
                                             else
                                             {
-                                                <p>@Model.single_price @Model.string_currency</p>
+                                                <p>@Model.total_amount @Model.string_currency</p>
                                             }
-
-                                            @if (Model.double_price == null)
+                                            @if (Model.tax == null)
                                             {
                                                 <p>-</p>
                                             }
                                             else
                                             {
-                                                <p>@Model.double_price @Model.string_currency</p>
+                                                <p>@Model.tax %</p>
                                             }
-
-                                            @if (Model.triple_price == null)
+                                            @if (Model.total_amount_after_tax == null)
                                             {
                                                 <p>-</p>
                                             }
                                             else
                                             {
-                                                <p>@Model.triple_price @Model.string_currency</p>
+                                                <p>@Model.total_amount_after_tax @Model.string_currency</p>
                                             }
-
-                                            @if (Model.quad_price == null)
+                                            @if (Model.reservation_avg_price == null)
                                             {
                                                 <p>-</p>
                                             }
                                             else
                                             {
-                                                <p>@Model.quad_price @Model.string_currency</p>
+                                                <p>@Model.reservation_avg_price @Model.string_currency</p>
                                             }
-
-                                            @if (Model.vendor_single_price == null)
+                                            @if (Model.total_amount_from_vendor == null)
                                             {
                                                 <p>-</p>
                                             }
                                             else
                                             {
-                                                <p>@Model.vendor_single_price @Model.string_currency</p>
+                                                <p>@Model.total_amount_from_vendor @Model.string_currency</p>
                                             }
-
-                                            @if (Model.vendor_douple_price == null)
+                                            @if (Model.vendor_avg_price == null)
                                             {
                                                 <p>-</p>
                                             }
                                             else
                                             {
-                                                <p>@Model.vendor_douple_price @Model.string_currency</p>
+                                                <p>@Model.vendor_avg_price @Model.string_currency</p>
                                             }
+                                            <p>@Model.check_in.ToString().Split(' ')[0]</p>
+                                            <p>@Model.check_out.ToString().Split(' ')[0]</p>
 
-                                            @if (Model.vendor_triple_price == null)
+                                            <p>@Model.total_rooms</p>
+                                            <p>@Convert.ToDateTime(Model.check_out).Subtract(Convert.ToDateTime(Model.check_in)).Days</p>
+                                            @if (Model.reservation_avg_price == null)
                                             {
                                                 <p>-</p>
                                             }
                                             else
                                             {
-                                                <p>@Model.vendor_triple_price @Model.string_currency</p>
-
+                                                <p>@Model.reservation_avg_price @Model.string_currency</p>
                                             }
-
-                                            @if (Model.vendor_quad_price == null)
+                                            @if (Model.tax == null)
                                             {
                                                 <p>-</p>
                                             }
                                             else
                                             {
-                                                <p>@Model.vendor_quad_price @Model.string_currency</p>
+                                                <p>@Model.tax %</p>
                                             }
-
+                                            @if (Model.total_amount == null)
+                                            {
+                                                <p>-</p>
+                                            }
+                                            else
+                                            {
+                                                <p>@Model.total_amount @Model.string_currency</p>
+                                            }
+                                            @if (Model.total_amount_from_vendor == null)
+                                            {
+                                                <p>-</p>
+                                            }
+                                            else
+                                            {
+                                                <p>@Model.total_amount_from_vendor @Model.string_currency</p>
+                                            }
                                             <p>
                                                 @if (Model.paid_amount == 0)
                                                 {
@@ -702,6 +720,7 @@
                                             {
                                                 <p>@(Model.total_amount_after_tax - Model.total_amount_from_vendor) </p>
                                             }
+
 
                                             @*<p>N/A</p>*@
                                             @*<p>Jerry Johnson</p>*@

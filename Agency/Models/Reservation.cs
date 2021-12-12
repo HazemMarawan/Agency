@@ -45,6 +45,7 @@ namespace Agency.Models
         public int? active { get; set; }
         public DateTime? financial_advance_date { get; set; }
         public DateTime? financial_due_date { get; set; }
+        public DateTime? balance_due_date { get; set; }
         public int? created_by { get; set; }
         public int? updated_by { get; set; }
         public int? deleted_by { get; set; }

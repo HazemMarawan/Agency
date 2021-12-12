@@ -359,6 +359,10 @@
     <Compile Include="Migrations\202112102246250_appsTables.Designer.cs">
       <DependentUpon>202112102246250_appsTables.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202112122013352_balance_due_date.cs" />
+    <Compile Include="Migrations\202112122013352_balance_due_date.Designer.cs">
+      <DependentUpon>202112122013352_balance_due_date.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AgencyDbContext.cs" />
     <Compile Include="Models\Chat.cs" />
@@ -4099,6 +4103,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202112102246250_appsTables.resx">
       <DependentUpon>202112102246250_appsTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112122013352_balance_due_date.resx">
+      <DependentUpon>202112122013352_balance_due_date.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
