@@ -65,11 +65,13 @@ font-size: 11px
 
 /* main card and img*/
 .hotel-data {
-    margin: 25px auto
+    margin: 25px auto 5px;
 }
 
 .hotel-data .carousel-indicators {
-    position: initial
+    position: initial;
+    margin: 0px;
+    justify-content: space-between;
 }
 .hotel-data .carousel-indicators li {
     width:initial;
@@ -77,19 +79,26 @@ font-size: 11px
 }
 
 .hotel-data .widget-content-area {
-    padding: 0px
+    padding: 0px;
+    border-radius: 25px;
+}
+.hotel-data .statbox.widget.box.box-shadow {
+    border-radius: 25px;
+}
+.hotel-data .widget-content-area > .row {
+    flex-wrap:initial
 }
 
-.hotel-data .carousel-item {
-    width: 100%;
-    height:300px;
+.hotel-data .widget-content-area .carousel-inner img{
+    border-radius: 25px;
 }
 
 /* hotel name card*/
 .hotel-data .hotel-sum-info {
     border:1px solid red;
     border-radius: 25px;
-    padding: 0px
+    padding: 0px;
+    height: fit-content!important
 }
 
 .hotel-data .rateWrapper {
@@ -99,4 +108,24 @@ font-size: 11px
 .hotel-data .card-footer {
     display: flex;
     justify-content: space-around;
+}
+
+/*info tab */
+
+.hotel-data .accordion-icons .collapsed {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Booking-sec*/
+.Booking-sec-main{
+    padding-right:1.5rem;
+    margin-bottom: 10px
+}
+.Booking-sec-small {
+    border: 1px solid lightblue;
+    border-radius: 25px;
+    background-color: ghostwhite;
+    padding: 15px 0px;
+    align-items: center;
 }
