@@ -120,7 +120,8 @@ font-size: 11px
 /* Booking-sec*/
 .Booking-sec-main{
     padding-right:1.5rem;
-    margin-bottom: 10px
+    margin-bottom: 10px;
+    margin-top: 20px;
 }
 .Booking-sec-small {
     border: 1px solid lightblue;
@@ -128,4 +129,39 @@ font-size: 11px
     background-color: ghostwhite;
     padding: 15px 0px;
     align-items: center;
+}
+
+                                                            /* show 2 view*/
+.Wizard-form-container {
+    padding: 0px 0.5rem 0px 4.5rem;
+    margin: 10px auto ;
+}
+.buttons-form-position {
+    display:flex;
+    justify-content:right;
+}
+.buttons-form-position button {
+    margin-right: 10px
+}
+
+.edit-form-new-data {
+    border: 1px solid lightsteelblue;
+    border-radius: 25px;
+    padding: 5px 10px;
+}
+.edit-form-new-dataSP {
+    font-weight:bolder;
+}
+
+
+.radio-options-edit {
+    display:flex;
+}
+
+.termsx {
+    overflow-y: scroll;
+    height: 300px;
+    width: 100%;
+    border: 1px solid #DDD;
+    padding: 15px;
 }

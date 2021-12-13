@@ -540,6 +540,7 @@
     <Content Include="Content\AdminPanelAssets\assets\img\fr.png" />
     <Content Include="Content\AdminPanelAssets\assets\img\jp.png" />
     <Content Include="Content\AdminPanelAssets\assets\img\mindset.svg" />
+    <Content Include="Content\AdminPanelAssets\assets\img\security_certificate_seal_comodo.png" />
     <Content Include="Content\AdminPanelAssets\assets\img\Stars\0.png" />
     <Content Include="Content\AdminPanelAssets\assets\img\Stars\1.5.png" />
     <Content Include="Content\AdminPanelAssets\assets\img\Stars\1.png" />
