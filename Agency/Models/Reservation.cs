@@ -14,6 +14,10 @@ namespace Agency.Models
         public string reservations_officer_name { get; set; }
         public string reservations_officer_phone { get; set; }
         public string reservations_officer_email { get; set; }
+        public int payment_type { get; set; }
+        public string credit_card_number { get; set; }
+        public string security_code { get; set; }
+        public string card_expiration_date { get; set; }
         public double? total_amount { get; set; }
         public double? total_amount_after_tax { get; set; }
         public double? paid_amount { get; set; }

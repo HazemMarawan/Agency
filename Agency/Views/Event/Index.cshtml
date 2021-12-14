@@ -624,7 +624,7 @@
                 }, function (response) {
 
                 }, function (dialog) {
-                    var eventLink = '@Url.Action("Show","Booking",new { secret_key = "secret_key_value" })';
+                    var eventLink = '@Url.Action("Event","Booking",new { secret_key = "secret_key_value" })';
                     eventLink = eventLink.replace('secret_key_value', data.secret_key);
                         dialog.find('#link').val(window.location.origin+eventLink);
                 });

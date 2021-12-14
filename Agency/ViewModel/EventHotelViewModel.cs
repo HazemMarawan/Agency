@@ -8,6 +8,7 @@ namespace Agency.ViewModel
     public class EventHotelViewModel
     {
         public int id { get; set; }
+        public int event_hotel_id { get; set; }
         public string name { get; set; }
         public double? rate { get; set; }
         public int fixed_rate { get; set; }

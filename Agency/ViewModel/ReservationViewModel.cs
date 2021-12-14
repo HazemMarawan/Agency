@@ -15,6 +15,20 @@ namespace Agency.ViewModel
         public string reservations_officer_name { get; set; }
         public string reservations_officer_phone { get; set; }
         public string reservations_officer_email { get; set; }
+        public string company_fax { get; set; }
+        public string company_address { get; set; }
+        public string company_state { get; set; }
+        public string company_postal_code { get; set; }
+        public string company_country { get; set; }
+        public int? payment_type { get; set; }
+        public string credit_card_number { get; set; }
+        public string security_code { get; set; }
+        public string card_expiration_date { get; set; }
+        public List<string> first_name { get; set; }
+        public List<string> last_name { get; set; }
+        public List<int> room_type { get; set; }
+        public List<DateTime> reservation_from { get; set; }
+        public List<DateTime> reservation_to { get; set; }
         public double? total_amount { get; set; }
         public double? total_amount_after_tax { get; set; }
         public double? total_amount_from_vendor { get; set; }

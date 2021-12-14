@@ -44,6 +44,7 @@ namespace Agency.Controllers
                                     hotelFacilities =  db.HotelFacilities.Where(f => f.hotel_id == hotel.id)
                                     .Select(f => new HotelFacilitieViewModel { facilitie_id = f.facilitie_id , name = f.name }).ToList(),
                                     HotelImagesVM = db.HotelImages.Where(hi => hi.hotel_id == hotel.id).Select(h => new HotelImageViewModel { id= h.id, hotel_id = h.hotel_id, path = h.path }).ToList()                
+                                
                                 });
 
                 //Search    

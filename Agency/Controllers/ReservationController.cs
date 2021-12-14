@@ -864,6 +864,7 @@ namespace Agency.Controllers
                 reservation.vendor_id = eventHotel.vendor_id;
                 reservation.created_at = DateTime.Now;
                 reservation.updated_at = DateTime.Now;
+                reservation.balance_due_date = DateTime.Now;
                 reservation.active = 1;
                 reservation.created_by = Session["id"].ToString().ToInt();
                 db.Reservations.Add(reservation);
