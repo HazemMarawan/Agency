@@ -133,6 +133,12 @@ namespace Agency.Controllers
                                                 rating = hotel.rate,
                                                 map_link = location_hotel.map_link,
                                                 cityName = city.name,
+                                                tax =selected_event.tax,
+                                                single_price = event_hotel.single_price,
+                                                double_price = event_hotel.double_price,
+                                                triple_price = event_hotel.triple_price,
+                                                quad_price = event_hotel.quad_price,
+                                                advance_reservation_percentage = selected_event.advance_reservation_percentage,
                                                 active = hotel.active,
                                                 hotelFacilities = db.HotelFacilities.Where(f => f.hotel_id == hotel.id).Select(f => new HotelFacilitieViewModel { facilitie_id = f.facilitie_id, name = f.name }).ToList(),
                                                 HotelImagesVM = db.HotelImages.Where(hi => hi.hotel_id == hotel.id).Select(h => new HotelImageViewModel { id = h.id, hotel_id = h.hotel_id, path = h.path }).ToList(),
@@ -177,7 +183,7 @@ namespace Agency.Controllers
             reservation.vendor_id = eventHotel.vendor_id;
             reservation.created_at = DateTime.Now;
             reservation.updated_at = DateTime.Now;
-            reservation.balance_due_date = DateTime.Now;
+            reservation.balance_due_date = null;
             reservation.active = 1;
             db.Reservations.Add(reservation);
             db.SaveChanges();
@@ -192,22 +198,42 @@ namespace Agency.Controllers
 
             reservation.company_id = company.id;
             db.SaveChanges();
-            for(int i=0;i< reservationViewModel.first_name.Count;i++)
+
+            DateTime minCheckin = reservationViewModel.reservation_from.Min();
+            DateTime maxCheckout = reservationViewModel.reservation_to.Min();
+            double? total_amount_from_vendor = 0;
+            for (int i=0;i< reservationViewModel.first_name.Count;i++)
             { 
                 double? room_price = 0;
                 double? vendor_room_price = 0;
                 ReservationDetail detail = new ReservationDetail();
+
                 if (reservationViewModel.room_type[i] == 1)
                 {
                     room_price = reservation.single_price;
                     vendor_room_price = reservation.vendor_single_price;
+                  
                 }
-                else
+                else if (reservationViewModel.room_type[i] == 2)
                 {
                     room_price = reservation.double_price;
                     vendor_room_price = reservation.vendor_douple_price;
                 }
-                int Days = (reservationViewModel.reservation_to[i] - reservationViewModel.reservation_from[i]).Days + 1;
+                else if (reservationViewModel.room_type[i] == 3)
+                {
+                    room_price = reservation.triple_price;
+                    vendor_room_price = reservation.vendor_triple_price;
+                }
+                else if (reservationViewModel.room_type[i] == 4)
+                {
+                    room_price = reservation.quad_price;
+                    vendor_room_price = reservation.vendor_quad_price;
+                }
+                else
+                {
+                    vendor_room_price = reservation.vendor_single_price;
+                }
+                int Days = (reservationViewModel.reservation_to[i] - reservationViewModel.reservation_from[i]).Days;
                 detail.no_of_days = Days;
 
                 var amount = (room_price * Days);
@@ -217,8 +243,13 @@ namespace Agency.Controllers
                 detail.amount = amount;
                 detail.amount_after_tax = amount + detail.tax;
                 detail.created_at = DateTime.Now;
+                detail.reservation_from = reservationViewModel.reservation_from[i];
+                detail.reservation_to = reservationViewModel.reservation_to[i];
+                detail.room_type = reservationViewModel.room_type[i];
                 //detail.created_by = Session["id"].ToString().ToInt();
                 detail.active = 1;
+                detail.payment_to_vendor_deadline = detail.paid_to_vendor_date = detail.payment_to_vendor_notification_date = detail.deleted_at = detail.updated_at = null;
+                detail.vendor_cost = vendor_room_price;
                 db.ReservationDetails.Add(detail);
                 db.SaveChanges();
 
@@ -231,16 +262,24 @@ namespace Agency.Controllers
                 db.Clients.Add(client);
                 db.SaveChanges();
 
-                List<ReservationDetail> reservationDetails = db.ReservationDetails.Where(r => r.reservation_id == reservation.id).ToList();
-                if (reservationDetails.Count() != 0)
-                {
-                    DateTime minDate = reservationDetails.Select(s => s.reservation_from).Min();
-                    DateTime maxDate = reservationDetails.Select(s => s.reservation_to).Max();
+               
 
-                    reservation.check_in = minDate;
-                    reservation.check_out = maxDate;
-                    reservation.balance_due_date = Convert.ToDateTime(reservation.check_in).AddDays(-21);
-                }
+                detail.client_id = client.id;
+                db.SaveChanges();
+
+                total_amount_from_vendor += vendor_room_price;
+            }
+
+            List<ReservationDetail> reservationDetails = db.ReservationDetails.Where(r => r.reservation_id == reservation.id).ToList();
+            if (reservationDetails.Count() != 0)
+            {
+                DateTime minDate = reservationDetails.Select(s => s.reservation_from).Min();
+                DateTime maxDate = reservationDetails.Select(s => s.reservation_to).Max();
+
+                reservation.check_in = minDate;
+                reservation.check_out = maxDate;
+                reservation.balance_due_date = Convert.ToDateTime(reservation.check_in).AddDays(-21);
+                reservation.total_rooms = reservationViewModel.first_name.Count;
 
                 ReservationViewModel updatedTotals = ReservationService.calculateTotalandVendor(reservation.id);
 
@@ -250,12 +289,11 @@ namespace Agency.Controllers
                 reservation.tax_amount = updatedTotals.tax_amount;
                 reservation.total_nights = updatedTotals.total_nights;
                 reservation.updated_at = DateTime.Now;
-                //reservation.updated_by = Session["id"].ToString().ToInt();
-                db.SaveChanges();
-
-                detail.client_id = client.id;
                 db.SaveChanges();
             }
+
+            
+
             EventHotel currentEventHotel = db.EventHotels.Find(reservation.event_hotel_id);
             Event currentEvent = db.Events.Find(currentEventHotel.event_id);
             return RedirectToAction("Event", new { secret_key = currentEvent.secret_key });

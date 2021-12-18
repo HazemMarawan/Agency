@@ -30,6 +30,12 @@ namespace Agency.ViewModel
         public int? deleted_by { get; set; }
         public int? city_id { get; set; }
         public int? event_id { get; set; }
+        public double? tax { get; set; }
+        public double? single_price { get; set; }
+        public double? double_price { get; set; }
+        public double? triple_price { get; set; }
+        public double? quad_price { get; set; }
+        public double? advance_reservation_percentage { get; set; }
         public DateTime? created_at { get; set; }
         public DateTime? updated_at { get; set; }
         public DateTime? deleted_at { get; set; }

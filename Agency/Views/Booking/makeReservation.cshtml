@@ -1,6 +1,6 @@
 ﻿@model Agency.ViewModel.HotelViewModel
 @{
-    Layout = null; 
+    Layout = null;
 }
 
 <!DOCTYPE html>
@@ -99,7 +99,7 @@
                             <div class="widget-content widget-content-area">
                                 <div id="circle-basic" class="">
 
-                                    <h3>Keyboard</h3>
+                                    <h3>Rooms</h3>
                                     <section>
                                         <div id="basic" class="col-lg-12 layout-spacing">
                                             <div class="statbox widget box box-shadow">
@@ -110,14 +110,13 @@
                                                             <div class="col-12 mb-4">
                                                                 <div class="form-row mb-4">
                                                                     <div class="col-3">
-                                                                        <input type="text" class="form-control" placeholder="First Name" name="first_name">
+                                                                        <input type="text" class="form-control" required placeholder="First Name" name="first_name">
                                                                     </div>
                                                                     <div class="col-3 offset-1">
-                                                                        <input type="text" class="form-control" placeholder="Last Name" name="last_name">
+                                                                        <input type="text" class="form-control" required placeholder="Last Name" name="last_name">
                                                                     </div>
                                                                     <div class="col-3 offset-1">
-                                                                        <select class="form-control" name="room_type">
-                                                                            <option value="" selected hidden> Room Type</option>
+                                                                        <select class="form-control room_type" required name="room_type" id="room_type_@i" data-reservation-from="in-date_@i" data-reservation-to="out-date_@i" data-row="@i">
                                                                             <option value="1">Single</option>
                                                                             <option value="2">Double</option>
                                                                             <option value="3">Tribble</option>
@@ -129,17 +128,17 @@
                                                                 <div class="form-row mb-4">
                                                                     <div class="col-3">
                                                                         <label for="in-date">Checkin Date</label>
-                                                                        <input type="date" id="in-date" name="reservation_from" class="form-control">
+                                                                        <input type="date" id="in-date_@i" required name="reservation_from" class="form-control reservation_from" data-room-type="room_type_@i" data-reservation-to="out-date_@i" data-row="@i">
                                                                     </div>
                                                                     <div class="col-3  offset-1">
                                                                         <label for="out-date">Checkout Date</label>
-                                                                        <input type="date" id="out-date" name="reservation_to" class="form-control">
+                                                                        <input type="date" id="out-date_@i" required name="reservation_to" class="form-control reservation_to" data-room-type="room_type_@i" data-reservation-from="in-date_@i" data-row="@i">
                                                                     </div>
 
                                                                 </div>
                                                                 <div class="buttons-form-position">
                                                                     @*<button class="btn btn-success">Add</button>*@
-                                                                    <button class="btn btn-danger delete_room" data-control-div="room_number_@i">Del</button>
+                                                                    <a href="javascript:void(0)" class="btn btn-danger delete_room" data-control-div="room_number_@i">Del</a>
                                                                 </div>
 
 
@@ -150,7 +149,7 @@
                                             </div>
                                         </div>
                                     </section>
-                                    <h3>Effects</h3>
+                                    <h3>Details</h3>
                                     <section>
                                         <div id="basic" class="col-lg-12 layout-spacing">
                                             <div class="statbox widget box box-shadow">
@@ -168,13 +167,13 @@
                                                                 <div class="col-3 offset-1">
                                                                     <span class="edit-form-new-dataSP">Price per Night</span>
                                                                     <p class="edit-form-new-data">
-                                                                        $<span>100</span>
+                                                                        $<span>S: @Model.single_price D: @Model.double_price T: @Model.triple_price Q: @Model.quad_price</span>
                                                                     </p>
                                                                 </div>
                                                                 <div class="col-3 offset-1">
                                                                     <span class="edit-form-new-dataSP">Number of nights</span>
                                                                     <p class="edit-form-new-data">
-                                                                        <span>100</span> nights
+                                                                        <span id="calculated_number_of_nights">0</span> nights
                                                                     </p>
                                                                 </div>
 
@@ -183,19 +182,19 @@
                                                                 <div class="col-3">
                                                                     <span class="edit-form-new-dataSP">Check In Date</span>
                                                                     <p class="edit-form-new-data">
-                                                                        12/12/2021
+                                                                        <span id="check_in_min">YYYY/MM/DD</span>
                                                                     </p>
                                                                 </div>
                                                                 <div class="col-3 offset-1">
                                                                     <span class="edit-form-new-dataSP">Check Out Date</span>
                                                                     <p class="edit-form-new-data">
-                                                                        12/17/2021
+                                                                        <span id="check_out_max">YYYY/MM/DD</span>
                                                                     </p>
                                                                 </div>
                                                                 <div class="col-3 offset-1">
                                                                     <span class="edit-form-new-dataSP">Taxes</span>
                                                                     <p class="edit-form-new-data">
-                                                                        $<span>50</span>
+                                                                        $<span id="calculated_tax">0</span>
                                                                     </p>
                                                                 </div>
 
@@ -204,20 +203,17 @@
                                                                 <div class="col-3">
                                                                     <span class="edit-form-new-dataSP">Total after tax</span>
                                                                     <p class="edit-form-new-data">
-                                                                        $<span>700</span>
+                                                                        $<span id="calculated_total_after_tax">0</span>
                                                                     </p>
                                                                 </div>
                                                                 <div class="col-3  offset-1">
-                                                                    <span class="edit-form-new-dataSP">deposit</span>
+                                                                    <span class="edit-form-new-dataSP">Deposit</span>
                                                                     <p class="edit-form-new-data">
-                                                                        $<span>350</span>
+                                                                        $<span id="calculated_deposit">0</span>
                                                                     </p>
                                                                 </div>
 
                                                             </div>
-                                                            @*<div class="buttons-form-position">
-                                                                <button class="btn btn-success">Add More Rooms</button>
-                                                            </div>*@
                                                         </div>
                                                     </div>
 
@@ -225,7 +221,7 @@
                                             </div>
                                         </div>
                                     </section>
-                                    <h3>Pager</h3>
+                                    <h3>Payment</h3>
                                     <section>
                                         <div id="basic" class="col-lg-12 layout-spacing">
                                             <div class="statbox widget box box-shadow">
@@ -414,11 +410,22 @@
     <script src="~/Content/AdminPanelAssets/assets/js/scrollspyNav.js"></script>
     <script src="~/Content/AdminPanelAssets/plugins/jquery-step/jquery.steps.min.js"></script>
     <script src="~/Content/AdminPanelAssets/plugins/jquery-step/custom-jquery.steps.js"></script>
+    <script src="~/Scripts/factory.js"></script>
+
     <!-- END PAGE LEVEL SCRIPTS -->
 
     <script>
         $(document).ready(function () {
             var number_of_rooms = '@ViewBag.NumberOfRooms';
+
+            function subtractDays(from, to) {
+                var day_from = new Date(from);
+                var day_to = new Date(to);
+                var difference = Math.abs(day_to - day_from);
+                days = difference / (1000 * 3600 * 24)
+                return days;
+            }
+
             $(document).on("click", ".delete_room", function () {
                 if (number_of_rooms > 1) {
                     $("#" + $(this).attr('data-control-div')).remove();
@@ -429,49 +436,152 @@
                     alert('1 room at least allowed');
                 }
             });
+            var check_in = check_out = null;
+            var total_nights = 0;
+            var deposit = total_after_tax = price_per_night = tax = 0;
+            var reservation_rows = [];
+
+            function calculateTotals(reservation_rows) {
+
+                var calculated_total_after_tax = 0;
+                var calculated_tax = 0;
+                var calculated_deposit = 0;
+                var calculated_total_nights = 0;
+                var calculated_check_in = null;
+                var calculated_check_out = null;
+
+
+                reservation_rows.forEach(function (value) {
+                    if (calculated_check_in == null)
+                        calculated_check_in = value.from;
+                    else {
+                        if (value.from && value.from < calculated_check_in)
+                            calculated_check_in = value.from;
+                    }
+
+                    if (calculated_check_out == null)
+                        calculated_check_out = value.to;
+                    else {
+                        if (value.to && value.to > calculated_check_out)
+                            calculated_check_out = value.to;
+                    }
+
+                    if (value.from && value.to) {
+                        if (value.room_type) {
+                            var calculated_total_nights_per_reservation = subtractDays(value.from, value.to);
+
+                            if (value.room_type == 1) {
+                                calculated_total_after_tax += calculated_total_nights_per_reservation * '@Model.single_price';
+                            }
+                            else if (value.room_type == 2) {
+                                calculated_total_after_tax += calculated_total_nights_per_reservation * '@Model.double_price';
+                            }
+                            else if (value.room_type == 3) {
+                                calculated_total_after_tax += calculated_total_nights_per_reservation * '@Model.triple_price';
+                            }
+                            else if (value.room_type == 4) {
+                                calculated_total_after_tax += calculated_total_nights_per_reservation * '@Model.quad_price';
+                            }
+
+                        }
+                        else {
+                            calculated_total_after_tax += calculated_total_nights_per_reservation * '@Model.single_price';
+                        }
+                        calculated_total_nights += calculated_total_nights_per_reservation;
+                    }
+                });
+
+
+                calculated_tax = '@Model.tax' / 100 * calculated_total_after_tax;
+                calculated_total_after_tax += calculated_tax;
+                calculated_deposit = '@Model.advance_reservation_percentage' / 100 * calculated_total_after_tax;
+                $("#calculated_tax").text(addCommas(calculated_tax.toFixed(2)));
+                $("#calculated_deposit").text(addCommas(calculated_deposit.toFixed(2)));
+                $("#calculated_total_after_tax").text(addCommas(calculated_total_after_tax.toFixed(2)));
+                $("#calculated_number_of_nights").text(calculated_total_nights);
+                $("#check_out_max").text(calculated_check_out);
+                $("#check_in_min").text(calculated_check_in);
+
+            }
+
+            $(document).on("change", ".reservation_from", function () {
+                const row = {
+                    room_type: $("#" + $(this).attr("data-room-type")).val(),
+                    from: $(this).val(),
+                    to: $("#" + $(this).attr("data-reservation-to")).val(),
+                };
+                reservation_rows[$(this).attr("data-row")] = row;
+                console.log(reservation_rows);
+
+
+                calculateTotals(reservation_rows);
+            });
+
+            $(document).on("change", ".reservation_to", function () {
+                const row = {
+                    room_type: $("#" + $(this).attr("data-room-type")).val(),
+                    from: $("#" + $(this).attr("data-reservation-from")).val(),
+                    to: $(this).val(),
+                };
+                reservation_rows[$(this).attr("data-row")] = row;
+                console.log(reservation_rows);
+
+                calculateTotals(reservation_rows);
+            });
+
+            $(document).on("change", ".room_type", function () {
+                debugger
+                const row = {
+                    room_type: $(this).val(),
+                    from: $("#"+$(this).attr("data-reservation-from")).val(),
+                    to: $("#" + $(this).attr("data-reservation-to")).val(),
+                };
+                reservation_rows[$(this).attr("data-row")] = row;
+
+                calculateTotals(reservation_rows);
+            });
 
             $("#add_room").click(function () {
                 number_of_rooms++;
                 var html = `<div class="row" id="room_number_${number_of_rooms}">
-                                                    <div class="col-12">
+                                                            <div class="col-12 mb-4">
+                                                                <div class="form-row mb-4">
+                                                                    <div class="col-3">
+                                                                        <input type="text" class="form-control" required placeholder="First Name" name="first_name">
+                                                                    </div>
+                                                                    <div class="col-3 offset-1">
+                                                                        <input type="text" class="form-control" required placeholder="Last Name" name="last_name">
+                                                                    </div>
+                                                                    <div class="col-3 offset-1">
+                                                                        <select class="form-control room_type" required name="room_type" id="room_type_${number_of_rooms}" data-reservation-from="in-date_${number_of_rooms}" data-reservation-to="out-date_${number_of_rooms}" data-row="${number_of_rooms}">
+                                                                            <option value="1">Single</option>
+                                                                            <option value="2">Double</option>
+                                                                            <option value="3">Tribble</option>
+                                                                            <option value="4">Quadro</option>
+                                                                        </select>
+                                                                    </div>
 
-                                                            <div class="form-row mb-4">
-                                                                <div class="col-3">
-                                                                    <input type="text" class="form-control" placeholder="First Name">
                                                                 </div>
-                                                                <div class="col-3 offset-1">
-                                                                    <input type="text" class="form-control" placeholder="Last Name">
+                                                                <div class="form-row mb-4">
+                                                                    <div class="col-3">
+                                                                        <label for="in-date">Checkin Date</label>
+                                                                        <input type="date" id="in-date_${number_of_rooms}" required name="reservation_from" class="form-control reservation_from" data-room-type="room_type_${number_of_rooms}" data-reservation-to="out-date_${number_of_rooms}" data-row="${number_of_rooms}">
+                                                                    </div>
+                                                                    <div class="col-3  offset-1">
+                                                                        <label for="out-date">Checkout Date</label>
+                                                                        <input type="date" id="out-date_${number_of_rooms}" required name="reservation_to" class="form-control reservation_to" data-room-type="room_type_${number_of_rooms}" data-reservation-from="in-date_${number_of_rooms}" data-row="${number_of_rooms}">
+                                                                    </div>
+
                                                                 </div>
-                                                                <div class="col-3 offset-1">
-                                                                    <select class="form-control">
-                                                                        <option value="" disabled selected hidden> Room Type</option>
-                                                                        <option value="1">Single</option>
-                                                                        <option value="2">Double</option>
-                                                                        <option value="3">Tribble</option>
-                                                                        <option value="4">Quadro</option>
-                                                                    </select>
+                                                                <div class="buttons-form-position">
+                                                                    <a href="javascript:void(0)" class="btn btn-danger delete_room" data-control-div="room_number_${number_of_rooms}">Del</a>
                                                                 </div>
+
 
                                                             </div>
-                                                            <div class="form-row mb-4">
-                                                                <div class="col-3">
-                                                                    <label for="in-date">Checkin Date</label>
-                                                                    <input type="date" id="in-date" class="form-control">
-                                                                </div>
-                                                                <div class="col-3  offset-1">
-                                                                    <label for="out-date">Checkout Date</label>
-                                                                    <input type="date" id="out-date" class="form-control">
-                                                                </div>
-
-                                                            </div>
-                                                            <div class="buttons-form-position">
-                                                                <button class="btn btn-danger delete_room" data-control-div="room_number_${number_of_rooms}">Del</button>
-                                                            </div>
-
-
-                                                    </div>
-                                                </div>`;
+                                                        </div>`;
                 $("#rooms_div").append(html);
+                $("#number_of_room_strong_paragraph").text(number_of_rooms);
             });
         });
     </script>

@@ -144,6 +144,7 @@ namespace Agency.Controllers
                 oldEvent.title = eventVM.title;
                 if(String.IsNullOrEmpty(oldEvent.secret_key))
                     oldEvent.secret_key = Hash.CreateMD5(Guid.NewGuid().ToString());
+
                 oldEvent.description = eventVM.description;
                 oldEvent.event_from = eventVM.event_from;
                 oldEvent.to = eventVM.to;

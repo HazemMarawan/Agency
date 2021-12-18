@@ -68,7 +68,7 @@ namespace Agency.Controllers
 
             while (reader.Read())
             {
-                hotels.Add(new HotelViewModel { total_nights = reader["total_nights"].ToString().ToInt(), 
+                hotels.Add(new HotelViewModel { total_nights = !String.IsNullOrEmpty(reader["total_nights"].ToString())? reader["total_nights"].ToString().ToInt():0, 
                     name = reader["hotel_name"].ToString(),
                     cityName = reader["city_name"].ToString(),
                     rating = Convert.ToDouble(reader["rate"].ToString()),

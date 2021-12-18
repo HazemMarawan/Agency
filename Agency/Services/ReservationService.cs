@@ -28,24 +28,18 @@ namespace Agency.Services
                 if (resDetail.room_type == 1)
                 {
                     room_price = reservation.single_price;
-                    //vendor_room_price = reservation.vendor_single_price;// > 0 ? reservation.vendor_single_price : eventhotel.vendor_single_price;
                 }
                 else if (resDetail.room_type == 2)
                 {
                     room_price = reservation.double_price;
-                    //vendor_room_price = reservation.vendor_douple_price; //> 0 ? reservation.vendor_douple_price : eventhotel.vendor_douple_price;
-
                 }
                 else if (resDetail.room_type == 3)
                 {
                     room_price = reservation.triple_price;
-                    //vendor_room_price = reservation.vendor_triple_price;// > 0 ? reservation.vendor_triple_price : eventhotel.vendor_triple_price;
-
                 }
                 else if (resDetail.room_type == 4)
                 {
                     room_price = reservation.quad_price;
-                    //vendor_room_price = reservation.vendor_quad_price;// > 0 ? reservation.vendor_quad_price : eventhotel.vendor_quad_price;
                 }
                 else
                 {

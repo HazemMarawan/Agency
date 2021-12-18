@@ -183,15 +183,29 @@ namespace Agency.Controllers
                     room_price = reservation.single_price;
                     vendor_room_price = reservation.vendor_single_price;
                 }
-                else
+                else if (detailViewModel.room_type == 2)
                 {
                     room_price = reservation.double_price;
                     vendor_room_price = reservation.vendor_douple_price;
                 }
+                else if (detailViewModel.room_type == 3)
+                {
+                    room_price = reservation.triple_price;
+                    vendor_room_price = reservation.vendor_triple_price;
+                }
+                else if (detailViewModel.room_type == 4)
+                {
+                    room_price = reservation.quad_price;
+                    vendor_room_price = reservation.vendor_quad_price;
+                }
+                else
+                {
+                    vendor_room_price = reservation.vendor_single_price;
+                }
                 int Days = (detailViewModel.reservation_to - detailViewModel.reservation_from).Days + 1;
                 detail.no_of_days = Days;
-                var amount = (room_price * Days); //* (100 - reservation.advance_reservation_percentage)) / 100;  //event_row
-                var vendor_amount = (vendor_room_price * Days) ;//* (100 - reservation.advance_reservation_percentage)) / 100;  //event_row
+                var amount = (room_price * Days); 
+                var vendor_amount = (vendor_room_price * Days) ;
                 detail.tax = amount * (reservation.tax/100);
                 detail.amount = amount;
                 detail.amount_after_tax = amount + detail.tax;
