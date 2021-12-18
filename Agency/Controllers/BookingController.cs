@@ -179,7 +179,7 @@ namespace Agency.Controllers
             reservation.paid_amount = 0;
             reservation.financial_advance = 0;
             reservation.financial_due = 0;
-            reservation.advance_reservation_percentage = c_event.advance_reservation_percentage;
+            reservation.advance_reservation_percentage = c_event.advance_reservation_percentage;       
             reservation.vendor_id = eventHotel.vendor_id;
             reservation.created_at = DateTime.Now;
             reservation.updated_at = DateTime.Now;
@@ -286,6 +286,7 @@ namespace Agency.Controllers
                 reservation.total_amount = updatedTotals.total_amount;
                 reservation.total_amount_after_tax = updatedTotals.total_amount_after_tax;
                 reservation.total_amount_from_vendor = updatedTotals.total_amount_from_vendor;
+                reservation.paid_amount = (c_event.advance_reservation_percentage / 100) * reservation.total_amount_after_tax;
                 reservation.tax_amount = updatedTotals.tax_amount;
                 reservation.total_nights = updatedTotals.total_nights;
                 reservation.updated_at = DateTime.Now;

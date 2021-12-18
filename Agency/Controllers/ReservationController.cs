@@ -61,7 +61,8 @@ namespace Agency.Controllers
                            from opener in us.DefaultIfEmpty()
                            join cU in db.Users on res.closer equals cU.id into use
                            from closer in use.DefaultIfEmpty()
-                           join createdBy in db.Users on res.created_by equals createdBy.id
+                           join usr in db.Users on res.created_by equals usr.id into ucr
+                           from createdBy in ucr.DefaultIfEmpty()
                            join uBy in db.Users on res.updated_by equals uBy.id into byU
                            from updatedBy in byU.DefaultIfEmpty()
                            select new ReservationViewModel
