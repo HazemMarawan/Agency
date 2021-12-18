@@ -202,7 +202,7 @@ namespace Agency.Controllers
                 {
                     vendor_room_price = reservation.vendor_single_price;
                 }
-                int Days = (detailViewModel.reservation_to - detailViewModel.reservation_from).Days + 1;
+                int Days = (detailViewModel.reservation_to - detailViewModel.reservation_from).Days;
                 detail.no_of_days = Days;
                 var amount = (room_price * Days); 
                 var vendor_amount = (vendor_room_price * Days) ;
