@@ -71,12 +71,12 @@
                         </div>
                         @if (hotel.hotelImages.Count != 0)
                         {
-                            <a href="@Url.Action("Hotel","Booking",new { id = hotel.event_hotel_id})"><img width="300" height="400" class="hotelImg" src="@hotel.hotelImages[0].path" alt=""></a>
+                            <a href="@Url.Action("Hotel","Booking",new { id = hotel.event_hotel_id})"><img class="hotelImg d-block w-100" src="@hotel.hotelImages[0].path" alt=""></a>
                         }
                         else
                         {
                             <a href="@Url.Action("Hotel","Booking",new { id = hotel.event_hotel_id})">
-                                <img width="300" height="400"  class="hotelImg" src="https://i.travelapi.com/hotels/19000000/18230000/18228600/18228514/0577d0d6_b.jpg" alt="">
+                                <img   class="hotelImg d-block w-100" src="https://i.travelapi.com/hotels/19000000/18230000/18228600/18228514/0577d0d6_b.jpg" alt="">
                             </a>
                         }
                             <div class="rateWrapper">
