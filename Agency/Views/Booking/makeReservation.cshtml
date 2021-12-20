@@ -51,7 +51,7 @@
     <div class="header-container">
         <header class="header navbar navbar-expand-sm">
             <div class="nav-logo align-self-center">
-                <a class="navbar-brand" href="index.html"><img src="~/Content/AdminPanelAssets/assets/img/CHECKINNOWLOGO.jpeg" style="width: auto;height:40px" /></a>
+                <a class="navbar-brand" href="#"><img src="~/Content/AdminPanelAssets/assets/img/CHECKINNOWLOGO.jpeg" style="width: auto;height:40px" /></a>
             </div>
         </header>
     </div>
@@ -99,6 +99,11 @@
                                                 <div class="widget-content widget-content-area" id="rooms_div">
                                                     @for (int i = 1; i <= ViewBag.NumberOfRooms; i++)
                                                     {
+                                                        if (i > 1)
+                                                        {
+                                                            <hr style="border-top-color:lightgrey;width:80%"></hr>
+
+                                                        }
                                                         <div class="row" id="room_number_@i">
                                                             <div class="col-12 mb-4">
                                                                 <div class="form-row mb-4">
