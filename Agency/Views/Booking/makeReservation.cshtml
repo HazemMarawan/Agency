@@ -79,16 +79,9 @@
                         </p>
                     </div>
                 </div>
-                <div class="row Booking-sec-main">
-                    <div class="Booking-sec-small offset-1 col-11 row">
-                        <div class="col-3 text-center">
-                            <h5>
-                                No Of Rooms
-                            </h5>
-                        </div>
-                        <div class="offset-5 col-3">
-                            <p><strong style="font-size:16px"><span id="number_of_room_strong_paragraph">@ViewBag.NumberOfRooms </span></strong> <a href="javascript::void(0)" id="add_room" style="margin-left:2.5rem"><i class="fa fa-plus btn-success btn-rounded" style="padding:5px 6px"></i></a></p>
-                        </div>
+                <div class="Booking-sec-main">
+                    <div class="text-center">
+                        <h5>No Of Rooms <span id="number_of_room_strong_paragraph">@ViewBag.NumberOfRooms </span></h5> <strong style="font-size:16px"></strong> <!--<a href="javascript::void(0)" id="add_room" style="margin-left:2.5rem"><i class="fa fa-plus btn-success btn-rounded" style="padding:5px 6px"></i></a>-->
                     </div>
                 </div>
                 <div class="Wizard-form-container">
@@ -101,7 +94,7 @@
 
                                     <h3>Rooms</h3>
                                     <section style="padding:2.5%!important">
-                                        <div id="basic" class="col-lg-12" style="padding:unset!important">
+                                        <div id="basic" class="col-lg-12 mb-2" style="padding:unset!important">
                                             <div class="statbox widget box box-shadow">
                                                 <div class="widget-content widget-content-area" id="rooms_div">
                                                     @for (int i = 1; i <= ViewBag.NumberOfRooms; i++)
@@ -117,6 +110,7 @@
                                                                     </div>
                                                                     <div class="col-3 offset-1">
                                                                         <select class="form-control room_type" required name="room_type" id="room_type_@i" data-reservation-from="in-date_@i" data-reservation-to="out-date_@i" data-row="@i">
+                                                                            <option value="" disabled selected hidden> Room Type</option>
                                                                             <option value="1">Single</option>
                                                                             <option value="2">Double</option>
                                                                             <option value="3">Tribble</option>
@@ -148,6 +142,7 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <a href="javascript::void(0)" id="add_room" class="mt-2"><span class="btn btn-success" style="padding:5px 6px"> Add Room</span></a>
                                     </section>
                                     <h3>Details</h3>
                                     <section>
@@ -544,7 +539,8 @@
             $("#add_room").click(function () {
                 number_of_rooms++;
                 var html = `<div class="row" id="room_number_${number_of_rooms}">
-                                                            <div class="col-12 mb-4">
+                                                               <hr style="border-top-color:lightgrey;width:80%"></hr>
+                                                            <div class="col-12 mb-4 mt-2">
                                                                 <div class="form-row mb-4">
                                                                     <div class="col-3">
                                                                         <input type="text" class="form-control" required placeholder="First Name" name="first_name">
@@ -554,6 +550,7 @@
                                                                     </div>
                                                                     <div class="col-3 offset-1">
                                                                         <select class="form-control room_type" required name="room_type" id="room_type_${number_of_rooms}" data-reservation-from="in-date_${number_of_rooms}" data-reservation-to="out-date_${number_of_rooms}" data-row="${number_of_rooms}">
+                                                                            <option value="" disabled selected hidden> Room Type</option>
                                                                             <option value="1">Single</option>
                                                                             <option value="2">Double</option>
                                                                             <option value="3">Tribble</option>
