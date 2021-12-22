@@ -134,22 +134,25 @@ font-size: 11px
                                                             /* show 2 view*/
 .Wizard-form-container {
     margin: 10px auto ;
+    width: 70%;
 }
+.Wizard-form-container .tab-wizard-form {
+    padding: 2.5%!important;
+}
+
 .buttons-form-position {
-    display:flex;
-    justify-content:right;
+    display: flex;
+    justify-content: right;
 }
 .buttons-form-position button {
     margin-right: 10px
 }
 
 .edit-form-new-data {
-    border: 1px solid lightsteelblue;
-    border-radius: 25px;
-    padding: 5px 10px;
 }
 .edit-form-new-dataSP {
     font-weight:bolder;
+    border-right: 1px solid lightsteelblue;
 }
 
 
@@ -159,8 +162,16 @@ font-size: 11px
 
 .termsx {
     overflow-y: scroll;
-    height: 300px;
+    height: 100px;
     width: 100%;
     border: 1px solid #DDD;
     padding: 15px;
+}
+
+.Wizard-form-container .tab-wizard-form .form-control {
+    font-size: 13px!important;
+    padding: 8px 10px!important;
+    letter-spacing: 1px!important;
+    height: calc(1.2em + 1rem + 2px)!important;
+    padding: 0.25rem 1.25rem!important;
 }

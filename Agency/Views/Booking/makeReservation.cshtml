@@ -93,7 +93,7 @@
                                 <div id="circle-basic" class="">
 
                                     <h3>Rooms</h3>
-                                    <section style="padding:2.5%!important">
+                                    <section class="rooms-tab tab-wizard-form">
                                         <div id="basic" class="col-lg-12 mb-2" style="padding:unset!important">
                                             <div class="statbox widget box box-shadow">
                                                 <div class="widget-content widget-content-area" id="rooms_div">
@@ -101,7 +101,7 @@
                                                     {
                                                         if (i > 1)
                                                         {
-                                                            <hr style="border-top-color:lightgrey;width:80%"></hr>
+                                                            <hr style="border-top-color:lightgrey;width:80%" />
 
                                                         }
                                                         <div class="row" id="room_number_@i">
@@ -149,125 +149,147 @@
                                         </div>
                                         <a href="javascript::void(0)" id="add_room" class="mt-2"><span class="btn btn-success" style="padding:5px 6px"> Add Room</span></a>
                                     </section>
-                                    <h3>Details</h3>
-                                    <section>
-                                        <div id="basic" class="col-lg-12 layout-spacing">
+                                    <h3>Payment Details</h3>
+                                    <section class="tab-wizard-form">
+                                        <div id="basic" class="col-lg-12" style="padding:unset!important">
                                             <div class="statbox widget box box-shadow">
                                                 <div class="widget-content widget-content-area">
                                                     <div class="row">
-                                                        <div class="col-12">
-
-                                                            <div class="form-row mb-4">
-                                                                <div class="col-3">
-                                                                    <span class="edit-form-new-dataSP">Hotel Name</span>
-                                                                    <p class="edit-form-new-data">
-                                                                        @Model.name
-                                                                    </p>
-                                                                </div>
-                                                                <div class="col-3 offset-1">
-                                                                    <span class="edit-form-new-dataSP">Price per Night</span>
-                                                                    <p class="edit-form-new-data">
-                                                                        $<span>S: @Model.single_price D: @Model.double_price T: @Model.triple_price Q: @Model.quad_price</span>
-                                                                    </p>
-                                                                </div>
-                                                                <div class="col-3 offset-1">
-                                                                    <span class="edit-form-new-dataSP">Number of nights</span>
-                                                                    <p class="edit-form-new-data">
-                                                                        <span id="calculated_number_of_nights">0</span> nights
-                                                                    </p>
-                                                                </div>
-
+                                                        <div class="col-12 mb-2">
+                                                            <h4 class="mx-auto text-center  mb-3"> Details</h4>
+                                                            <div class="form-row mb-2 col-11 offset-1">
+                                                                <span class="edit-form-new-dataSP col-4">Number of nights</span>
+                                                                <span class="edit-form-new-data col-6 offset-1" id="calculated_number_of_nights">0  nights</span>
                                                             </div>
-                                                            <div class="form-row mb-4">
-                                                                <div class="col-3">
-                                                                    <span class="edit-form-new-dataSP">Check In Date</span>
-                                                                    <p class="edit-form-new-data">
-                                                                        <span id="check_in_min">YYYY/MM/DD</span>
-                                                                    </p>
-                                                                </div>
-                                                                <div class="col-3 offset-1">
-                                                                    <span class="edit-form-new-dataSP">Check Out Date</span>
-                                                                    <p class="edit-form-new-data">
-                                                                        <span id="check_out_max">YYYY/MM/DD</span>
-                                                                    </p>
-                                                                </div>
-                                                                <div class="col-3 offset-1">
-                                                                    <span class="edit-form-new-dataSP">Taxes</span>
-                                                                    <p class="edit-form-new-data">
-                                                                        $<span id="calculated_tax">0</span>
-                                                                    </p>
-                                                                </div>
-
+                                                            <div class="form-row mb-2 col-11 offset-1">
+                                                                <span class="edit-form-new-dataSP col-4">Taxes</span>
+                                                                <span class="edit-form-new-data col-6 offset-1" id="calculated_tax">$ 0</span>
                                                             </div>
-                                                            <div class="form-row mb-4">
-                                                                <div class="col-3">
-                                                                    <span class="edit-form-new-dataSP">Total after tax</span>
-                                                                    <p class="edit-form-new-data">
-                                                                        $<span id="calculated_total_after_tax">0</span>
-                                                                    </p>
-                                                                </div>
-                                                                <div class="col-3  offset-1">
-                                                                    <span class="edit-form-new-dataSP">Deposit</span>
-                                                                    <p class="edit-form-new-data">
-                                                                        $<span id="calculated_deposit">0</span>
-                                                                    </p>
-                                                                </div>
-
+                                                            <div class="form-row mb-2 col-11 offset-1">
+                                                                <span class="edit-form-new-dataSP col-4">Total after tax</span>
+                                                                <span class="edit-form-new-data col-6 offset-1" id="calculated_total_after_tax">$ 0</span>
                                                             </div>
+                                                            <div class="form-row mb-2 col-11 offset-1">
+                                                                <span class="edit-form-new-dataSP col-4">Deposit</span>
+                                                                <span class="edit-form-new-data col-6 offset-1" id="calculated_deposit">$ 0</span>
+                                                            </div>
+                                                            <div class="form-row mb-2 col-11 offset-1">
+                                                                <span class="edit-form-new-dataSP col-4">Total</span>
+                                                                <span class="edit-form-new-data col-6 offset-1" id="calculated_total">$ 0</span>
+                                                            </div>
+
+                                                            <!--
+                                                                                     <div class="form-row mb-4">
+
+                               <div class="col-3">
+                                <span class="edit-form-new-dataSP">Hotel Name</span>
+                                <p class="edit-form-new-data">
+                                    @Model.name
+                                </p>
+                            </div>
+                                                                               <div class="col-3 offset-1">
+                                <span class="edit-form-new-dataSP">Price per Night</span>
+                                <p class="edit-form-new-data">
+                                    $<span>S: @Model.single_price D: @Model.double_price T: @Model.triple_price Q: @Model.quad_price</span>
+                                </p>
+                            </div>
+                                                                                <div class="col-3 offset-1">
+                                                                                    <span class="edit-form-new-dataSP">Number of nights</span>
+                                                                                    <p class="edit-form-new-data">
+                                                                                        <span id="calculated_number_of_nights">0</span> nights
+                                                                                    </p>
+                                                                                </div>
+
+                                                                            </div>
+                                                                            <div class="form-row mb-4">
+                                <div class="col-3">
+                                <span class="edit-form-new-dataSP">Check In Date</span>
+                                <p class="edit-form-new-data">
+                                    <span id="check_in_min">YYYY/MM/DD</span>
+                                </p>
+                            </div>
+
+
+                                                                                        <div class="col-3 offset-1">
+                                                                                            <span class="edit-form-new-dataSP">Check Out Date</span>
+                                                                                            <p class="edit-form-new-data">
+                                                                                                <span id="check_out_max">YYYY/MM/DD</span>
+                                                                                            </p>
+                                                                                        </div>
+
+
+
+                                                                                <div class="col-3 offset-1">
+                                                                                    <span class="edit-form-new-dataSP">Taxes</span>
+                                                                                    <p class="edit-form-new-data">
+                                                                                        $<span id="calculated_tax">0</span>
+                                                                                    </p>
+                                                                                </div>
+
+                                                                            </div>
+                                                                            <div class="form-row mb-4">
+                                                                                <div class="col-3">
+                                                                                    <span class="edit-form-new-dataSP">Total after tax</span>
+                                                                                    <p class="edit-form-new-data">
+                                                                                        $<span id="calculated_total_after_tax">0</span>
+                                                                                    </p>
+                                                                                </div>
+                                                                                <div class="col-3  offset-1">
+                                                                                    <span class="edit-form-new-dataSP">Deposit</span>
+                                                                                    <p class="edit-form-new-data">
+                                                                                        $<span id="calculated_deposit">0</span>
+                                                                                    </p>
+                                                                                </div>
+
+                                                                            </div>
+                                                                            -->
+                                                            <!-- code before editing -->
+
                                                         </div>
-                                                    </div>
 
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </section>
-                                    <h3>Payment</h3>
-                                    <section>
-                                        <div id="basic" class="col-lg-12 layout-spacing">
-                                            <div class="statbox widget box box-shadow">
-                                                <div class="widget-content widget-content-area">
-                                                    <div class="row">
+                                                        <hr style="border-top-color:lightgrey;width:80%;margin-top:10px;margin-bottom:10px" />
+
                                                         <div class="col-12">
 
-                                                            <h4 class="mx-auto text-center  mb-4"> Info Needed</h4>
-                                                            <div class="form-row mb-4">
-                                                                <div class="col-3">
+                                                            <h4 class="mx-auto text-center  mb-3"> Info Needed</h4>
+                                                            <div class="form-row mb-2">
+                                                                <div class="col">
                                                                     <input type="text" class="form-control" placeholder="Company Name" name="company_name">
                                                                 </div>
-                                                                <div class="col-3 offset-1">
+                                                                <div class="col offset-1">
                                                                     <input type="text" class="form-control" placeholder="Contact Name" name="reservations_officer_name">
                                                                 </div>
-                                                                <div class="col-3 offset-1">
+                                                                <div class="col offset-1">
                                                                     <input type="text" class="form-control" placeholder="Phone Number" name="reservations_officer_phone">
                                                                 </div>
 
                                                             </div>
-                                                            <div class="form-row mb-4">
-                                                                <div class="col-3">
+                                                            <div class="form-row mb-2">
+                                                                <div class="col">
                                                                     <input type="email" class="form-control" placeholder="Your Email" name="reservations_officer_email">
                                                                 </div>
-                                                                <div class="col-3 offset-1">
+                                                                <div class="col offset-1">
                                                                     <input type="number" class="form-control" placeholder="fax" name="company_fax">
                                                                 </div>
-                                                                <div class="col-3 offset-1">
+                                                                <div class="col offset-1">
                                                                     <input type="text" class="form-control" placeholder="Address" name="company_address">
                                                                 </div>
 
                                                             </div>
-                                                            <div class="form-row mb-4">
-                                                                <div class="col-3">
+                                                            <div class="form-row mb-3">
+                                                                <div class="col">
                                                                     <input type="text" class="form-control" placeholder="State" name="company_state">
                                                                 </div>
-                                                                <div class="col-3 offset-1">
+                                                                <div class="col offset-1">
                                                                     <input type="number" class="form-control" placeholder="Postal/Zip Code" name="company_postal_code">
                                                                 </div>
-                                                                <div class="col-3 offset-1">
+                                                                <div class="col offset-1">
                                                                     <input type="text" class="form-control" placeholder="Country" name="company_country">
                                                                 </div>
 
                                                             </div>
-                                                            <h4 class="mx-auto text-center mb-4"> Payment Details</h4>
-                                                            <div class="form-row mb-4 ">
+                                                            <h4 class="mx-auto text-center mb-3"> Payment Details</h4>
+                                                            <div class="form-row mb-2 ">
                                                                 <div class="col-3">
                                                                     <h5>Payment Method </h5>
                                                                 </div>
@@ -300,18 +322,18 @@
 
                                                             </div>
                                                             <div class="form-row mb-4">
-                                                                <div class="col-4">
+                                                                <div class="col">
                                                                     <input type="text" class="form-control" placeholder="Credit Card Number" name="credit_card_number">
                                                                 </div>
-                                                                <div class="col-3 offset-1">
+                                                                <div class="col offset-1">
                                                                     <input type="text" class="form-control" placeholder="Security Code" name="security_code">
                                                                 </div>
-                                                                <div class="col-3 offset-1">
+                                                                <div class="col offset-1">
                                                                     <input type="text" class="form-control" placeholder="Card Expiration Date" name="card_expiration_date">
                                                                 </div>
 
                                                             </div>
-                                                            <div class="form-row mb-4">
+                                                            <div class="form-row mb-2">
                                                                 <div class="custom-control custom-checkbox mb-2">
                                                                     <input type="checkbox" class="custom-control-input" id="customCheck1">
                                                                     <label class="custom-control-label" for="customCheck1">
@@ -357,7 +379,7 @@
                                                                     • Tampa FL 33602<br />
                                                                 </div>
                                                             </div>
-                                                            <div class="row form-group" style="align-items:center;">
+                                                            <div class="row " style="align-items:center;">
                                                                 <div class="col-3">
                                                                     <img src="~/Content/AdminPanelAssets/assets/img/security_certificate_seal_comodo.png" />
                                                                 </div>
@@ -376,16 +398,175 @@
                                             </div>
                                         </div>
                                     </section>
+                                   <!--deleted section from wizard-->
+                                    <!--
+        <section class="tab-wizard-form">
+        <div id="basic" class="col-lg-12 " style="padding:unset!important">
+            <div class="statbox widget box box-shadow">
+                <div class="widget-content widget-content-area">
+                    <div class="row">
+                        <div class="col-12">
 
+                            <h4 class="mx-auto text-center  mb-4"> Info Needed</h4>
+                            <div class="form-row mb-4">
+                                <div class="col-3">
+                                    <input type="text" class="form-control" placeholder="Company Name" name="company_name">
+                                </div>
+                                <div class="col-3 offset-1">
+                                    <input type="text" class="form-control" placeholder="Contact Name" name="reservations_officer_name">
+                                </div>
+                                <div class="col-3 offset-1">
+                                    <input type="text" class="form-control" placeholder="Phone Number" name="reservations_officer_phone">
+                                </div>
+
+                            </div>
+                            <div class="form-row mb-4">
+                                <div class="col-3">
+                                    <input type="email" class="form-control" placeholder="Your Email" name="reservations_officer_email">
+                                </div>
+                                <div class="col-3 offset-1">
+                                    <input type="number" class="form-control" placeholder="fax" name="company_fax">
+                                </div>
+                                <div class="col-3 offset-1">
+                                    <input type="text" class="form-control" placeholder="Address" name="company_address">
+                                </div>
+
+                            </div>
+                            <div class="form-row mb-4">
+                                <div class="col-3">
+                                    <input type="text" class="form-control" placeholder="State" name="company_state">
+                                </div>
+                                <div class="col-3 offset-1">
+                                    <input type="number" class="form-control" placeholder="Postal/Zip Code" name="company_postal_code">
+                                </div>
+                                <div class="col-3 offset-1">
+                                    <input type="text" class="form-control" placeholder="Country" name="company_country">
+                                </div>
+
+                            </div>
+                            <h4 class="mx-auto text-center mb-4"> Payment Details</h4>
+                            <div class="form-row mb-4 ">
+                                <div class="col-3">
+                                    <h5>Payment Method </h5>
+                                </div>
+                                <div class="col-9 radio-options-edit">
+                                    <div class="n-chk">
+                                        <label class="new-control new-radio new-radio-text radio-classic-primary">
+                                            <input type="radio" class="new-control-input" name="payment_type" value="1">
+                                            <span class="new-control-indicator"></span><span class="new-radio-content">Visa</span>
+                                        </label>
+                                    </div>
+                                    <div class="n-chk">
+                                        <label class="new-control new-radio new-radio-text radio-classic-info">
+                                            <input type="radio" class="new-control-input" name="payment_type" value="2">
+                                            <span class="new-control-indicator"></span><span class="new-radio-content">Amex</span>
+                                        </label>
+                                    </div>
+                                    <div class="n-chk">
+                                        <label class="new-control new-radio new-radio-text radio-classic-danger">
+                                            <input type="radio" class="new-control-input" name="payment_type" value="3">
+                                            <span class="new-control-indicator"></span><span class="new-radio-content">Master Card</span>
+                                        </label>
+                                    </div>
+                                    <div class="n-chk">
+                                        <label class="new-control new-radio new-radio-text radio-classic-warning">
+                                            <input type="radio" class="new-control-input" name="payment_type" value="4">
+                                            <span class="new-control-indicator"></span><span class="new-radio-content">Discover</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="form-row mb-4">
+                                <div class="col-4">
+                                    <input type="text" class="form-control" placeholder="Credit Card Number" name="credit_card_number">
+                                </div>
+                                <div class="col-3 offset-1">
+                                    <input type="text" class="form-control" placeholder="Security Code" name="security_code">
+                                </div>
+                                <div class="col-3 offset-1">
+                                    <input type="text" class="form-control" placeholder="Card Expiration Date" name="card_expiration_date">
+                                </div>
+
+                            </div>
+                            <div class="form-row mb-4">
+                                <div class="custom-control custom-checkbox mb-2">
+                                    <input type="checkbox" class="custom-control-input" id="customCheck1">
+                                    <label class="custom-control-label" for="customCheck1">
+                                        By clicking the submit button, I agree to terms & conditions.
+                                    </label>
+                                </div>
+                                <div class="termsx">
+                                    You acknowledge that the Check In Now Companies pre-negotiate certain room rates with hotel suppliers to facilitate the booking of reservations.<br />
+                                    You also acknowledge that the Check In Now Companies provide you services to facilitate such booking of reservations for a consideration (the “facilitation fee”).<br />
+                                    The room rate provided is a combination of the pre-negotiated room rate for rooms reserved on your behalf by the Check In Now Companies and the facilitation fee retained by the Check In Now Companies for their services. You authorize the Check In Now Companies to book reservations for the total reservation price, which includes the room rate provided, plus tax recovery charges, service fees, and where applicable, taxes on the Check In Now Companies’ services.<br />
+                                    Check In Now is a is a privately-owned company, not affiliated with any event or other organization.<br />
+                                    You agree to arrange payment no later than 24 hours after submitting this booking form. Upon submitting your reservation request you authorize the Check In Now Companies to facilitate hotel reservations on your behalf, including making payment arrangements with hotel suppliers.<br />
+                                    You acknowledge that except as provided below with respect to tax obligations on the amounts we retain for our services, the Check In Now Companies do not collect taxes for remittance to applicable taxing authorities.<br />
+                                    The tax recovery charges on prepaid hotel transactions are a recovery of the estimated taxes (e.g. sales and use, occupancy, room tax, excise tax, value added tax, etc.) that the Check In Now Companies pay to the hotel supplier for taxes due on the hotel’s rental rate for the room.<br />
+                                    The hotel suppliers invoice the Check In Now Companies for certain charges, including tax amounts.<br />
+                                    The hotel suppliers are responsible for remitting applicable taxes to the applicable taxing jurisdictions.<br />
+                                    None of the Check In Now Companies act as co-vendors with the supplier with whom we book or reserve our customer’s travel arrangements.<br />
+                                    Taxability and the appropriate tax rate vary greatly by location. The actual tax amounts paid by the Check In Now Companies to the hotel suppliers may vary from the tax recovery charge amounts, depending upon the rates, taxability, etc. in effect at the time of the actual use of the hotel by our customers.<br />
+                                    <br /> We retain service fees as additional compensation in servicing your travel reservation.<br />
+                                    Service fees retained by the Check In Now Companies for their services vary based on the amount and type of hotel reservation.<br />
+                                    <br />
+                                    Cancellation and Modification Policy:<br />
+                                    You may change your prepaid hotel reservation, but you will be charged the cancellation or change fee if changes requested less than 14 days prior to check-in.<br />
+                                    If you do not change your reservation before the cancellation policy period applicable to the hotel you reserved, which varies by hotel (usually 15 to 30 days) prior to your date of arrival, you will be subject to a charge equal to applicable nightly rates, tax recovery charges and service fees. <br />
+                                    In the event you do not show for the first night of the reservation and plan to check-in for subsequent nights in your reservation, you must confirm the reservation changes with us no later than 30 days prior to the first night of the reservation to prevent cancellation of your reservation.<br />
+                                    If the entire reservation is cancelled, you will be charged a cancellation fee equal to 30 % of your total Contract price. <br />
+                                    You agree to pay any cancellation or change fees that you incur.
+                                    <br />In limited cases, some hotels do not permit changes to or cancellations of reservations after they are made.<br />
+                                    <br />
+                                    SERVICE HELP<br />
+                                    <br />
+                                    For quick answers to your questions or ways to contact us, visit our Customer Support Center. Or, you can write to us at:<br />
+                                    <br />
+                                    • Attn: Customer Service<br />
+                                    <br />
+                                    • Check In Now Inc.<br />
+                                    <br />
+                                    (813) 793-7396<br />
+                                    (888) 808-0988<br />
+                                    <br />
+                                    • 100 S. Ashely Drive,Suite 600<br />
+                                    <br />
+                                    • Tampa FL 33602<br />
                                 </div>
                             </div>
+                            <div class="row form-group" style="align-items:center;">
+                                <div class="col-3">
+                                    <img src="~/Content/AdminPanelAssets/assets/img/security_certificate_seal_comodo.png" />
+                                </div>
+                                <div class="col-4 offset-1">
+                                    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+                                    <div class="g-recaptcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"></div>
+                                </div>
+
+
+                            </div>
+
                         </div>
-                    </form>
+                    </div>
+
                 </div>
             </div>
-            <!--  END CONTENT PART  -->
-
         </div>
+    </section>
+
+        -->
+
+
+                                </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!--  END CONTENT PART  -->
+
+                                                            </div>
 
     </div>
     <!-- END MAIN CONTAINER -->
@@ -544,7 +725,7 @@
             $("#add_room").click(function () {
                 number_of_rooms++;
                 var html = `<div class="row" id="room_number_${number_of_rooms}">
-                                                               <hr style="border-top-color:lightgrey;width:80%"></hr>
+                                                               <hr style="border-top-color:lightgrey;width:80%"/>
                                                             <div class="col-12 mb-4 mt-2">
                                                                 <div class="form-row mb-4">
                                                                     <div class="col-3">
