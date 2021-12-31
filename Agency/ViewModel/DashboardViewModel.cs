@@ -11,7 +11,7 @@ namespace Agency.ViewModel
         public List<ReservationLogViewModel> logs { get; set; }
         public UserViewModel userData { get; set; }
         public List<ChatViewModel> LatestChats { get; set; }
-        public List<ReservationDetailViewModel> CheckinClients { get; set; }
+        public List<ReservationViewModel> CheckinCompanies { get; set; }
         public List<TaskViewModel> currentUserTasks { get; set; }
         public List<ReservationViewModel> balanceDueDateReservations { get; set; }
         public int TotalNotes { get; set; }

@@ -188,6 +188,8 @@ namespace Agency.Controllers
             db.Reservations.Add(reservation);
             db.SaveChanges();
 
+            
+
             Company company = new Company();
             company.name = reservationViewModel.company_name;
             company.created_at = DateTime.Now;
@@ -293,7 +295,11 @@ namespace Agency.Controllers
                 db.SaveChanges();
             }
 
-            
+            InitialReservation initialReservation = AutoMapper.Mapper.Map<Reservation, InitialReservation>(reservation);
+            initialReservation.id = 0;
+            initialReservation.reservation_id = reservation.id;
+            db.InitialReservations.Add(initialReservation);
+            db.SaveChanges();
 
             EventHotel currentEventHotel = db.EventHotels.Find(reservation.event_hotel_id);
             Event currentEvent = db.Events.Find(currentEventHotel.event_id);

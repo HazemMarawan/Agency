@@ -10,8 +10,8 @@ namespace Agency.ViewModel
 {
     public class ReservationViewModel
     {
-        [Key]
         public int id { get; set; }
+        public int? reservation_id { get; set; }
         public string reservations_officer_name { get; set; }
         public string reservations_officer_phone { get; set; }
         public string reservations_officer_email { get; set; }
@@ -57,6 +57,7 @@ namespace Agency.ViewModel
         public DateTime? deleted_at { get; set; }
         public int? company_id { get; set; }
         public Company Company { get; set; }
+        public int? paid_to_vendor { get; set; }
         public int? event_hotel_id { get; set; }
         public double? hotel_rate { get; set; }
         public string company_name { get; set; }

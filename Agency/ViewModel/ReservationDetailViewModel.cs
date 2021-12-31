@@ -20,10 +20,15 @@ namespace Agency.ViewModel
         public DateTime reservation_to { get; set; }
         public string string_reservation_from { get; set; }
         public string string_reservation_to { get; set; }
+        public string event_name { get; set; }
+        public string hotel_name { get; set; }
         public string vendor_code { get; set; }
+        public int? is_canceled { get; set; }
+        public double? price_per_night { get; set; }
         public string cancelation_policy { get; set; }
         public int? no_of_days { get; set; }
         public int? active { get; set; }
+        public int? is_transfered { get; set; }
         public int? created_by { get; set; }
         public int? updated_by { get; set; }
         public int? deleted_by { get; set; }
@@ -40,7 +45,6 @@ namespace Agency.ViewModel
         public double? vendor_cost { get; set; }
         public DateTime? payment_to_vendor_deadline { get; set; }
         public DateTime? paid_to_vendor_date { get; set; }
-        public int? is_canceled { get; set; }
         public int? notify { get; set; }
         public int? paid_to_vendor { get; set; }
         public double? amount_paid_to_vendor { get; set; }

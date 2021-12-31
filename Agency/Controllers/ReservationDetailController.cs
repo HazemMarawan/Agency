@@ -358,6 +358,29 @@ namespace Agency.Controllers
             return Json(new { message = "done" }, JsonRequestBehavior.AllowGet);
 
         }
+
+        public JsonResult TransferReservation(ReservationDetailViewModel detailViewModel)
+        {
+            ReservationDetail destinationReservation = db.ReservationDetails.Find(detailViewModel.reservation_id);
+            if(destinationReservation != null)
+            { 
+                ReservationDetail transferedReservation = db.ReservationDetails.Find(detailViewModel.id);
+                transferedReservation.reservation_id = detailViewModel.reservation_id;
+                transferedReservation.is_transfered = 1;
+                //db.SaveChanges();
+
+                Client client = db.Clients.Find(transferedReservation.client_id);
+                client.first_name = detailViewModel.client_first_name;
+                client.last_name = detailViewModel.client_last_name;
+                db.SaveChanges();
+                return Json(new { done = 1 }, JsonRequestBehavior.AllowGet);
+
+            }
+            else
+            {
+                return Json(new { done = 0 }, JsonRequestBehavior.AllowGet);
+            }
+        }
         public ActionResult getComments(int? id)
         {
             if (Request.IsAjaxRequest())

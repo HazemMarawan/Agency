@@ -135,6 +135,44 @@
     </style>
 
 }
+<div class="modal fade" id="move_reservation_to_another_booking_modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <form action="" method="post" enctype='multipart/form-data'>
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal_title"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-body">
+                        <div class="form-row">
+                            <input type="hidden" name="id" id="id" />
+
+                            <div class="form-group col-md-6">
+                                <label>First Name</label>
+                                <input required name="client_first_name" id="client_first_name" type="text" class="form-control radius-30" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Last Name</label>
+                                <input required name="client_last_name" id="client_last_name" type="text" class="form-control radius-30" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Booking Id</label>
+                                <input required name="reservation_id" id="reservation_id" type="text" class="form-control radius-30" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
 
 <div class="modal fade" id="manage_city_modal" tabindex="-1" role="dialog" aria-hidden="true">
     <form action="" method="post" enctype='multipart/form-data'>
@@ -449,8 +487,12 @@
                 <li class="nav-item">
                     <a class="nav-link" id="icon-canceled-reservations-tab" data-toggle="pill" href="#icon-canceled-reservations" role="tab" aria-controls="icon-canceled-reservations" aria-selected="false"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg> Canceled</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="icon-our-rooms-reservations-tab" data-toggle="pill" href="#icon-our-rooms-reservations" role="tab" aria-controls="icon-our-rooms-reservations" aria-selected="false"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg> Our Rooms</a>
+                </li>
             </ul>
             <div class="tab-content" id="icon-pills-tabContent">
+
                 <div class="tab-pane fade show active" id="icon-pills-about" role="tabpanel" aria-labelledby="icon-pills-about-tab">
                     <div class="row" id="cancel-row">
                         <!-- layout spacing got deleted-->
@@ -544,18 +586,49 @@
                                 <!--  widget-content-area-edit added class manually -->
                                 <table id="canceledReservationsTable" class="table table-striped table-bordered" style="width:100%">
                                     <thead style="width: 100%!important">
+                                        @*<tr class="text-center">
+            <th width="8%">Booking ID</th>
+            <th width="10%">Date Submitted</th>
+            <th width="14%">Company Name</th>
+            <th width="10%">Status</th>
+            <th width="10%">Check-in/out</th>
+            <th width="10%">Opener/Closer</th>
+            <th width="12%">Balance Due Date</th>
+            <th width="6%">Collected</th>
+            <th width="6%">Balance</th>
+            <th width="6%">Profit</th>
+            <th width="9%"></th>
+        </tr>*@
                                         <tr class="text-center">
-                                            <th width="8%">Booking ID</th>
-                                            <th width="10%">Date Submitted</th>
-                                            <th width="14%">Company Name</th>
-                                            <th width="10%">Status</th>
-                                            <th width="10%">Check-in/out</th>
-                                            <th width="10%">Opener/Closer</th>
-                                            <th width="12%">Balance Due Date</th>
-                                            <th width="6%">Collected</th>
-                                            <th width="6%">Balance</th>
-                                            <th width="6%">Profit</th>
-                                            <th width="9%"></th>
+                                            <th>#</th>
+                                            <th>Event</th>
+                                            <th>Hotel</th>
+                                            <th>Check in/out</th>
+                                            <th>Price/Night</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="icon-our-rooms-reservations" role="tabpanel" aria-labelledby="icon-our-rooms-reservations">
+                    <div class="row " id="cancel-row">
+                        <!--layout-top-spacing got deleted-->
+
+                        <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
+                            <div class="widget-content widget-content-area widget-content-area-edit br-6">
+                                <!--  widget-content-area-edit added class manually -->
+                                <table id="our_rooms_table" class="table table-striped table-bordered" style="width:100%">
+                                    <thead style="width: 100%!important">
+                                        <tr class="text-center">
+                                            <th>#</th>
+                                            <th>Event</th>
+                                            <th>Hotel</th>
+                                            <th>Check in/out</th>
+                                            <th>Price/Night</th>
+                                            <th></th>
                                         </tr>
                                     </thead>
                                 </table>
@@ -1243,7 +1316,7 @@
                     ]
                });
 
-            var canceledreservationTable = $('#canceledReservationsTable')
+            @*var canceledreservationTable = $('#canceledReservationsTable')
                .DataTable({/* we added this from the other system to have same search and same pagination*/
                    "dom": "<'dt--top-section'<'row'<'col-sm-12 col-md-6 d-flex justify-content-md-start justify-content-center'B><'col-sm-12 col-md-6 d-flex justify-content-md-end justify-content-center mt-md-0 mt-3'f>>>" +
                        "<'table-responsive'tr>" +
@@ -1402,6 +1475,160 @@
                                 //html += "<a target='_blank' class='Itinirary' href='/ReservationDetail/Itinirary/" + oData.id + "' title='Itinirary'><i class='far fa-eye'></i></a>&nbsp;|";
                                 html += "<a target='_blank' class='view' href='/Reservation/View/" + oData.id + "' title='View'><i class='far fa-eye'></i></a>";
                                 html += "<a class='cancelPaid' href='javascript:void(0);' title='Cancel'><i class='far fa-times-circle'></i></a>&nbsp;";
+                                $(nTd).html("<span class='action-column'>" + html + "</span>");
+                            }
+                        },
+                    ]
+               });*@
+
+            var canceledreservationTable = $('#canceledReservationsTable')
+               .DataTable({/* we added this from the other system to have same search and same pagination*/
+                   "dom": "<'dt--top-section'<'row'<'col-sm-12 col-md-6 d-flex justify-content-md-start justify-content-center'B><'col-sm-12 col-md-6 d-flex justify-content-md-end justify-content-center mt-md-0 mt-3'f>>>" +
+                       "<'table-responsive'tr>" +
+                       "<'dt--bottom-section d-sm-flex justify-content-sm-between text-center'<'dt--pages-count  mb-sm-0 mb-3'i><'dt--pagination'p>>",
+                   "buttons": {
+                       buttons: [
+                           { extend: 'copy', className: 'btn btn-sm' },
+                           { extend: 'csv', className: 'btn btn-sm' },
+                           { extend: 'excel', className: 'btn btn-sm' },
+                           { extend: 'print', className: 'btn btn-sm' }
+                       ]
+                   },
+                   "oLanguage": {
+                       "oPaginate": { "sPrevious": 'Perivous', "sNext": 'Next' },
+                       "sInfo": "Showing page _PAGE_ of _PAGES_",
+                       "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                       "sSearchPlaceholder": "Search...",
+                       "sLengthMenu": "Results :  _MENU_",
+                   },
+                    "processing": true,
+                    "serverSide": true,
+                    "scrollX": true,
+                    "stateSave": false,
+                    "lengthChange": false,
+                    "dom": 'Bfrtip',
+
+                    "buttons": ['copy', 'excel', 'pdf', 'print'],
+                    "pageLength":10,
+                    "rowId": 'id',
+                    "ajax": {
+                        "url": "@Url.Action("canceledReservations", "Reservation")",
+                        "type": "POST",
+                        "datatype": "json",
+                        "dataSrc": "data"
+                    },
+                    "columns": [
+                        {
+                            "data": "id",
+                            "searchable": true
+                        },
+                        {
+                            "data": "event_name",
+                            "searchable": true
+                        },
+                        {
+                            "data": "hotel_name",
+                            "searchable": true
+                        },
+                        {
+                            "data": "string_reservation_from", "searchable": true,
+                            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+
+                                var html = "";
+                                if (oData.string_reservation_from)
+                                    html += "In: " + oData.string_reservation_from+"<br>";
+                                if (oData.string_reservation_to)
+                                    html += "In: " + oData.string_reservation_to;
+
+                                $(nTd).html("<span class='action-column'>" + html + "</span>");
+                            }
+                        },
+                        {
+                            "data": "price_per_night",
+                            "searchable": true
+                        },
+                        {
+                            "data": "id", "searchable": true,
+                            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                                var html = "";
+                                html += "<a class='move_reservation_to_another_booking' href='javascript:void(0);' title='Transfer Reservation'><i class='fas fa-people-arrows'></i></a>&nbsp;";
+                                $(nTd).html("<span class='action-column'>" + html + "</span>");
+                            }
+                        },
+                    ]
+                 });
+
+            var ourRoomsTable = $('#our_rooms_table')
+               .DataTable({/* we added this from the other system to have same search and same pagination*/
+                   "dom": "<'dt--top-section'<'row'<'col-sm-12 col-md-6 d-flex justify-content-md-start justify-content-center'B><'col-sm-12 col-md-6 d-flex justify-content-md-end justify-content-center mt-md-0 mt-3'f>>>" +
+                       "<'table-responsive'tr>" +
+                       "<'dt--bottom-section d-sm-flex justify-content-sm-between text-center'<'dt--pages-count  mb-sm-0 mb-3'i><'dt--pagination'p>>",
+                   "buttons": {
+                       buttons: [
+                           { extend: 'copy', className: 'btn btn-sm' },
+                           { extend: 'csv', className: 'btn btn-sm' },
+                           { extend: 'excel', className: 'btn btn-sm' },
+                           { extend: 'print', className: 'btn btn-sm' }
+                       ]
+                   },
+                   "oLanguage": {
+                       "oPaginate": { "sPrevious": 'Perivous', "sNext": 'Next' },
+                       "sInfo": "Showing page _PAGE_ of _PAGES_",
+                       "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                       "sSearchPlaceholder": "Search...",
+                       "sLengthMenu": "Results :  _MENU_",
+                   },
+                    "processing": true,
+                    "serverSide": true,
+                    "scrollX": true,
+                    "stateSave": false,
+                    "lengthChange": false,
+                    "dom": 'Bfrtip',
+
+                    "buttons": ['copy', 'excel', 'pdf', 'print'],
+                    "pageLength":10,
+                    "rowId": 'id',
+                    "ajax": {
+                        "url": "@Url.Action("ourRooms", "Reservation")",
+                        "type": "POST",
+                        "datatype": "json",
+                        "dataSrc": "data"
+                    },
+                    "columns": [
+                        {
+                            "data": "id",
+                            "searchable": true
+                        },
+                        {
+                            "data": "event_name",
+                            "searchable": true
+                        },
+                        {
+                            "data": "hotel_name",
+                            "searchable": true
+                        },
+                        {
+                            "data": "string_reservation_from", "searchable": true,
+                            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+
+                                var html = "";
+                                if (oData.string_reservation_from)
+                                    html += "In: " + oData.string_reservation_from+"<br>";
+                                if (oData.string_reservation_to)
+                                    html += "In: " + oData.string_reservation_to;
+
+                                $(nTd).html("<span class='action-column'>" + html + "</span>");
+                            }
+                        },
+                        {
+                            "data": "price_per_night",
+                            "searchable": true
+                        },
+                        {
+                            "data": "id", "searchable": true,
+                            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                                var html = "";
+                                html += "<a class='move_reservation_to_another_booking' href='javascript:void(0);' title='Transfer Reservation'><i class='fas fa-people-arrows'></i></a>&nbsp;";
                                 $(nTd).html("<span class='action-column'>" + html + "</span>");
                             }
                         },
@@ -1728,6 +1955,45 @@
                 });
            });
 
+            $(document).on("click", ".move_reservation_to_another_booking", function () {
+
+                var data = ourRoomsTable.row($(this).closest('tr')).data();
+
+               var modal = $('#move_reservation_to_another_booking_modal').clone();
+                var action = '@Url.Action("TransferReservation", "ReservationDetail")';
+                modal.find('form').attr('action', action);
+                modal.find('#modal_title').text('Transfer Reservation');
+                modal.execModal({
+                    progressBar: 'progress_bar',
+                    progressText: 'progress_text',
+                }, function (response) {
+                        ourRoomsTable.draw();
+                        if (response.done == 1)
+                        {
+                            Swal.fire(
+                                'Done',
+                                'Reservation has been Transfered Successfully',
+                                'success'
+                            )
+                        }
+                        else
+                            {
+                                Swal.fire(
+                                    'Error!',
+                                    'Destination Booking Id Not Found!',
+                                    'error'
+                                )
+                            }
+                }, function (response) {
+
+                }, function (dialog) {
+
+                        dialog.find('#id').val(data.id);
+
+
+                });
+
+            });
 
             $(document).on("click", ".cancelUnpaid", function () {
                 var data = unPaidReservationTable.row($(this).closest('tr')).data();
@@ -1741,6 +2007,8 @@
                         datatype: "json",
                         success: function (data) {
                             unPaidReservationTable.draw();
+                            canceledreservationTable.draw();
+                            ourRoomsTable.draw();
                             logstable.draw();
 
                         },
@@ -1761,6 +2029,8 @@
                         datatype: "json",
                         success: function (data) {
                             partiallyReservationTable.draw();
+                            canceledreservationTable.draw();
+                            ourRoomsTable.draw();
                             logstable.draw();
 
                         },
@@ -1781,6 +2051,8 @@
                         datatype: "json",
                         success: function (data) {
                             paidreservationTable.draw();
+                            canceledreservationTable.draw();
+                            ourRoomsTable.draw();
                             logstable.draw();
 
                         },

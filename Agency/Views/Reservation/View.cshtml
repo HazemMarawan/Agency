@@ -1,5 +1,43 @@
-﻿@model Agency.ViewModel.ReservationViewModel
+﻿@model  Agency.ViewModel.ReservationViewScreenViewModel
 
+<div class="modal fade" id="move_reservation_to_another_booking_modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <form action="" method="post" enctype='multipart/form-data'>
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal_title"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-body">
+                        <div class="form-row">
+                            <input type="hidden" name="id" id="id" />
+
+                            <div class="form-group col-md-6">
+                                <label>First Name</label>
+                                <input required name="client_first_name" id="client_first_name" type="text" class="form-control radius-30" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Last Name</label>
+                                <input required name="client_last_name" id="client_last_name" type="text" class="form-control radius-30" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Booking Id</label>
+                                <input required name="reservation_id" id="reservation_id" type="text" class="form-control radius-30" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
 
 <div class="modal fade" id="edit_reservation_modal" tabindex="-1" role="dialog" aria-hidden="true">
     <form action="" method="post" enctype='multipart/form-data'>
@@ -14,68 +52,68 @@
                 <div class="modal-body">
                     <div class="form-body">
                         <div class="form-row">
-                            <input type="hidden" name="id" id="id" value="@Model.id" />
-                            <input type="hidden" name="company_id" id="company_id" value="@Model.company_id" />
+                            <input type="hidden" name="id" id="id" value="@Model.CurrentReservation.id" />
+                            <input type="hidden" name="company_id" id="company_id" value="@Model.CurrentReservation.company_id" />
 
                             <div class="form-group col-md-6">
                                 <label>Company Name</label>
-                                <input name="company_name" id="company_name" type="text" class="form-control radius-30" value="@Model.company_name" />
+                                <input name="company_name" id="company_name" type="text" class="form-control radius-30" value="@Model.CurrentReservation.company_name" />
                             </div>
                             <div class="form-group col-md-6">
                                 <label>Name</label>
-                                <input name="reservations_officer_name" id="reservations_officer_name" type="text" value="@Model.reservations_officer_name" class="form-control radius-30" />
+                                <input name="reservations_officer_name" id="reservations_officer_name" type="text" value="@Model.CurrentReservation.reservations_officer_name" class="form-control radius-30" />
                             </div>
                             <div class="form-group col-md-6">
                                 <label>Phone</label>
-                                <input name="reservations_officer_phone" id="reservations_officer_phone" type="text" value="@Model.reservations_officer_phone" class="form-control radius-30" />
+                                <input name="reservations_officer_phone" id="reservations_officer_phone" type="text" value="@Model.CurrentReservation.reservations_officer_phone" class="form-control radius-30" />
                             </div>
                             <div class="form-group col-md-6">
                                 <label>Email</label>
-                                <input name="reservations_officer_email" id="reservations_officer_email" type="email" value="@Model.reservations_officer_email" class="form-control radius-30" />
+                                <input name="reservations_officer_email" id="reservations_officer_email" type="email" value="@Model.CurrentReservation.reservations_officer_email" class="form-control radius-30" />
                             </div>
                             <div class="form-group col-md-6">
                                 <label>Vendor</label>
-                                @Html.DropDownListFor(m => m.vendor_id, new SelectList(ViewBag.Vendors, "id", "NamePlusCode"), "Select Vendor", new { @class = "form-control", @name = "vendor_id", @id = "vendor_id" })
+                                @Html.DropDownListFor(m=>m.CurrentReservation.vendor_id, new SelectList(ViewBag.Vendors, "id", "NamePlusCode"), "Select Vendor", new { @class = "form-control", @name = "vendor_id", @id = "vendor_id" })
                             </div>
                             <div class="form-group col-md-6">
                                 <label>Advance Reservation Percentage</label>
-                                <input name="advance_reservation_percentage" id="advance_reservation_percentage" value="@Model.advance_reservation_percentage" type="number" min="0" step="0.1" class="form-control radius-30" />
+                                <input name="advance_reservation_percentage" id="advance_reservation_percentage" value="@Model.CurrentReservation.advance_reservation_percentage" type="number" min="0" step="0.1" class="form-control radius-30" />
                             </div>
                             <div class="form-group col-md-6">
                                 <label>Single Price</label>
-                                <input name="single_price" id="single_price" type="number" min="0" step="0.1" value="@Model.single_price" class="form-control radius-30" />
+                                <input name="single_price" id="single_price" type="number" min="0" step="0.1" value="@Model.CurrentReservation.single_price" class="form-control radius-30" />
                             </div>
                             <div class="form-group col-md-6">
                                 <label>Vendor Single Price</label>
-                                <input name="vendor_single_price" id="vendor_single_price" type="number" min="0" step="0.1" value="@Model.vendor_single_price" class="form-control radius-30" />
+                                <input name="vendor_single_price" id="vendor_single_price" type="number" min="0" step="0.1" value="@Model.CurrentReservation.vendor_single_price" class="form-control radius-30" />
                             </div>
                             <div class="form-group col-md-6">
                                 <label>Double Price</label>
-                                <input name="double_price" id="double_price" type="number" min="0" step="0.1" value="@Model.double_price" class="form-control radius-30" />
+                                <input name="double_price" id="double_price" type="number" min="0" step="0.1" value="@Model.CurrentReservation.double_price" class="form-control radius-30" />
                             </div>
                             <div class="form-group col-md-6">
                                 <label>Vendor Double Price</label>
-                                <input name="vendor_douple_price" id="vendor_douple_price" type="number" min="0" step="0.1" value="@Model.vendor_douple_price" class="form-control radius-30" />
+                                <input name="vendor_douple_price" id="vendor_douple_price" type="number" min="0" step="0.1" value="@Model.CurrentReservation.vendor_douple_price" class="form-control radius-30" />
                             </div>
                             <div class="form-group col-md-6">
                                 <label>Triple Price</label>
-                                <input name="triple_price" id="triple_price" type="number" min="0" step="0.1" value="@Model.triple_price" class="form-control radius-30" />
+                                <input name="triple_price" id="triple_price" type="number" min="0" step="0.1" value="@Model.CurrentReservation.triple_price" class="form-control radius-30" />
                             </div>
                             <div class="form-group col-md-6">
                                 <label>Vendor Triple Price</label>
-                                <input name="vendor_triple_price" id="vendor_triple_price" type="number" min="0" step="0.1" value="@Model.vendor_douple_price" class="form-control radius-30" />
+                                <input name="vendor_triple_price" id="vendor_triple_price" type="number" min="0" step="0.1" value="@Model.CurrentReservation.vendor_douple_price" class="form-control radius-30" />
                             </div>
                             <div class="form-group col-md-6">
                                 <label>Quad Price</label>
-                                <input name="quad_price" id="quad_price" type="number" min="0" step="0.1" value="@Model.quad_price" class="form-control radius-30" />
+                                <input name="quad_price" id="quad_price" type="number" min="0" step="0.1" value="@Model.CurrentReservation.quad_price" class="form-control radius-30" />
                             </div>
                             <div class="form-group col-md-6">
                                 <label>Vendor Quad Price</label>
-                                <input name="vendor_quad_price" id="vendor_quad_price" type="number" min="0" step="0.1" value="@Model.vendor_quad_price" class="form-control radius-30" />
+                                <input name="vendor_quad_price" id="vendor_quad_price" type="number" min="0" step="0.1" value="@Model.CurrentReservation.vendor_quad_price" class="form-control radius-30" />
                             </div>
                             <div class="form-group col-md-6">
                                 <label>Tax</label>
-                                <input name="tax" id="tax" type="number" min="0" step="0.1" value="@Model.tax" class="form-control radius-30" />
+                                <input name="tax" id="tax" type="number" min="0" step="0.1" value="@Model.CurrentReservation.tax" class="form-control radius-30" />
                             </div>
                             <div class="form-group col-md-6">
                                 <label>Opener</label>
@@ -83,7 +121,7 @@
                                     <option value="">Select Opener</option>
                                     @foreach (var open in ViewBag.Opener)
                                     {
-                                        if (open.id == Model.opener)
+                                        if (open.id == Model.CurrentReservation.opener)
                                         {
                                             <option value="@open.id" selected>@open.full_name</option>
                                         }
@@ -101,7 +139,7 @@
                                     <option value="">Select Closer</option>
                                     @foreach (var closer in ViewBag.Closer)
                                     {
-                                        if (closer.id == Model.closer)
+                                        if (closer.id == Model.CurrentReservation.closer)
                                         {
                                             <option value="@closer.id" selected>@closer.full_name</option>
                                         }
@@ -119,7 +157,7 @@
                                     <option value="">Select shift</option>
                                     @foreach (var shift in ViewBag.Shift)
                                     {
-                                        if (shift.id == Model.shift)
+                                        if (shift.id == Model.CurrentReservation.shift)
                                         {
                                             <option value="@shift.id" selected>@shift.shift_name</option>
                                         }
@@ -137,7 +175,7 @@
                                     <option value="">Select Currency</option>
                                     @foreach (var currency in ViewBag.currency)
                                     {
-                                        if (currency.id == Model.currency)
+                                        if (currency.id == Model.CurrentReservation.currency)
                                         {
                                             <option value="@currency.id" selected>@currency.string_currency</option>
                                         }
@@ -406,7 +444,7 @@
                                 <label>Due Date</label>
                                 <input id="due_date" type="date" name="due_date" class="form-control" />
                             </div>
-                           
+
                         </div>
                     </div>
                 </div>
@@ -563,147 +601,147 @@
                                             <p>Status</p>
                                             <p>Collected</p>
                                             <p>Balance</p>
-                                            @if (Model.paid_amount == Model.total_amount_after_tax)
+                                            @if (Model.CurrentReservation.paid_amount == Model.CurrentReservation.total_amount_after_tax)
                                             {
                                                 <p>Profit</p>
                                             }
                                         </div>
                                         <div class="col-lg-7 part-b">
-                                            <p>@Model.event_name</p>
-                                            <p>@Model.hotel_name</p>
+                                            <p>@Model.CurrentReservation.event_name</p>
+                                            <p>@Model.CurrentReservation.hotel_name</p>
 
-                                            <p>@Model.created_by_name at @Model.created_at_string</p>
+                                            <p>@Model.CurrentReservation.created_by_name at @Model.CurrentReservation.created_at_string</p>
                                             <p>
-                                                @if (Model.updated_by != null)
+                                                @if (Model.CurrentReservation.updated_by != null)
                                                 {
-                                                    <span>@Model.updated_by_name at @Model.updated_at_string</span>
+                                                    <span>@Model.CurrentReservation.updated_by_name at @Model.CurrentReservation.updated_at_string</span>
                                                 }
                                                 else
                                                 {
-                                                    <span>@Model.updated_by_name</span>
+                                                    <span>@Model.CurrentReservation.updated_by_name</span>
                                                 }
                                             </p>
-                                            <p>@Model.opener_name</p>
-                                            <p>@Model.closer_name</p>
-                                            <p>@Model.id</p>
-                                            <p>@Model.created_at_string</p>
-                                            <p>@Model.check_in.ToString().Split(' ')[0]</p>
-                                            <p>@Model.check_out.ToString().Split(' ')[0]</p>
-                                            @if (String.IsNullOrEmpty(Model.shift_name))
+                                            <p>@Model.CurrentReservation.opener_name</p>
+                                            <p>@Model.CurrentReservation.closer_name</p>
+                                            <p>@Model.CurrentReservation.id</p>
+                                            <p>@Model.CurrentReservation.created_at_string</p>
+                                            <p>@Model.CurrentReservation.check_in.ToString().Split(' ')[0]</p>
+                                            <p>@Model.CurrentReservation.check_out.ToString().Split(' ')[0]</p>
+                                            @if (String.IsNullOrEmpty(Model.CurrentReservation.shift_name))
                                             {
                                                 <p>-</p>
                                             }
                                             else
                                             {
-                                                <p>@Model.shift_name</p>
+                                                <p>@Model.CurrentReservation.shift_name</p>
                                             }
-                                            <p>@Model.company_name</p>
-                                            <p>@Model.reservations_officer_name</p>
-                                            <p>@Model.reservations_officer_phone</p>
-                                            <p>@Model.reservations_officer_email</p>
-                                            @if (String.IsNullOrEmpty(Model.vendor_code))
+                                            <p>@Model.CurrentReservation.company_name</p>
+                                            <p>@Model.CurrentReservation.reservations_officer_name</p>
+                                            <p>@Model.CurrentReservation.reservations_officer_phone</p>
+                                            <p>@Model.CurrentReservation.reservations_officer_email</p>
+                                            @if (String.IsNullOrEmpty(Model.CurrentReservation.vendor_code))
                                             {
                                                 <p>-</p>
                                             }
                                             else
                                             {
-                                                <p>@Model.vendor_code</p>
+                                                <p>@Model.CurrentReservation.vendor_code</p>
                                             }
-                                            <p>@Model.total_rooms</p>
-                                            <p>@Convert.ToDateTime(Model.check_out).Subtract(Convert.ToDateTime(Model.check_in)).Days</p>
-                                            <p>@Model.location_name</p>
-                                            <p>@Model.city_name</p>
-                                            @if (Model.total_amount == null)
+                                            <p>@Model.CurrentReservation.total_rooms</p>
+                                            <p>@Convert.ToDateTime(Model.CurrentReservation.check_out).Subtract(Convert.ToDateTime(Model.CurrentReservation.check_in)).Days</p>
+                                            <p>@Model.CurrentReservation.location_name</p>
+                                            <p>@Model.CurrentReservation.city_name</p>
+                                            @if (Model.CurrentReservation.total_amount == null)
                                             {
                                                 <p>-</p>
                                             }
                                             else
                                             {
-                                                <p>@Model.total_amount @Model.string_currency</p>
+                                                <p>@Model.CurrentReservation.total_amount @Model.CurrentReservation.string_currency</p>
                                             }
-                                            @if (Model.tax == null)
+                                            @if (Model.CurrentReservation.tax == null)
                                             {
                                                 <p>-</p>
                                             }
                                             else
                                             {
-                                                <p>@Model.tax %</p>
+                                                <p>@Model.CurrentReservation.tax %</p>
                                             }
-                                            @if (Model.total_amount_after_tax == null)
+                                            @if (Model.CurrentReservation.total_amount_after_tax == null)
                                             {
                                                 <p>-</p>
                                             }
                                             else
                                             {
-                                                <p>@Model.total_amount_after_tax @Model.string_currency</p>
+                                                <p>@Model.CurrentReservation.total_amount_after_tax @Model.CurrentReservation.string_currency</p>
                                             }
-                                            @if (Model.reservation_avg_price == null)
+                                            @if (Model.CurrentReservation.reservation_avg_price == null)
                                             {
                                                 <p>-</p>
                                             }
                                             else
                                             {
-                                                <p>@Model.reservation_avg_price @Model.string_currency</p>
+                                                <p>@Model.CurrentReservation.reservation_avg_price @Model.CurrentReservation.string_currency</p>
                                             }
-                                            @if (Model.total_amount_from_vendor == null)
+                                            @if (Model.CurrentReservation.total_amount_from_vendor == null)
                                             {
                                                 <p>-</p>
                                             }
                                             else
                                             {
-                                                <p>@Model.total_amount_from_vendor @Model.string_currency</p>
+                                                <p>@Model.CurrentReservation.total_amount_from_vendor @Model.CurrentReservation.string_currency</p>
                                             }
-                                            @if (Model.vendor_avg_price == null)
+                                            @if (Model.CurrentReservation.vendor_avg_price == null)
                                             {
                                                 <p>-</p>
                                             }
                                             else
                                             {
-                                                <p>@Model.vendor_avg_price @Model.string_currency</p>
+                                                <p>@Model.CurrentReservation.vendor_avg_price @Model.CurrentReservation.string_currency</p>
                                             }
-                                            <p>@Model.check_in.ToString().Split(' ')[0]</p>
-                                            <p>@Model.check_out.ToString().Split(' ')[0]</p>
+                                            <p>@Model.CurrentReservation.check_in.ToString().Split(' ')[0]</p>
+                                            <p>@Model.CurrentReservation.check_out.ToString().Split(' ')[0]</p>
 
-                                            <p>@Model.total_rooms</p>
-                                            <p>@Convert.ToDateTime(Model.check_out).Subtract(Convert.ToDateTime(Model.check_in)).Days</p>
-                                            @if (Model.reservation_avg_price == null)
+                                            <p>@Model.CurrentReservation.total_rooms</p>
+                                            <p>@Convert.ToDateTime(Model.CurrentReservation.check_out).Subtract(Convert.ToDateTime(Model.CurrentReservation.check_in)).Days</p>
+                                            @if (Model.CurrentReservation.reservation_avg_price == null)
                                             {
                                                 <p>-</p>
                                             }
                                             else
                                             {
-                                                <p>@Model.reservation_avg_price @Model.string_currency</p>
+                                                <p>@Model.CurrentReservation.reservation_avg_price @Model.CurrentReservation.string_currency</p>
                                             }
-                                            @if (Model.tax == null)
+                                            @if (Model.CurrentReservation.tax == null)
                                             {
                                                 <p>-</p>
                                             }
                                             else
                                             {
-                                                <p>@Model.tax %</p>
+                                                <p>@Model.CurrentReservation.tax %</p>
                                             }
-                                            @if (Model.total_amount == null)
+                                            @if (Model.CurrentReservation.total_amount == null)
                                             {
                                                 <p>-</p>
                                             }
                                             else
                                             {
-                                                <p>@Model.total_amount @Model.string_currency</p>
+                                                <p>@Model.CurrentReservation.total_amount @Model.CurrentReservation.string_currency</p>
                                             }
-                                            @if (Model.total_amount_from_vendor == null)
+                                            @if (Model.CurrentReservation.total_amount_from_vendor == null)
                                             {
                                                 <p>-</p>
                                             }
                                             else
                                             {
-                                                <p>@Model.total_amount_from_vendor @Model.string_currency</p>
+                                                <p>@Model.CurrentReservation.total_amount_from_vendor @Model.CurrentReservation.string_currency</p>
                                             }
                                             <p>
-                                                @if (Model.paid_amount == 0)
+                                                @if (Model.CurrentReservation.paid_amount == 0)
                                                 {
                                                     <span>Un Paid</span>
                                                 }
-                                                else if (Model.paid_amount < Model.total_amount_after_tax)
+                                                else if (Model.CurrentReservation.paid_amount < Model.CurrentReservation.total_amount_after_tax)
                                                 {
                                                     <span>Partially Paid</span>
                                                 }
@@ -712,11 +750,11 @@
                                                     <span>Paid</span>
                                                 }
                                             </p>
-                                            <p>@Model.paid_amount</p>
-                                            <p>@(Model.total_amount_after_tax - Model.paid_amount) </p>
-                                            @if (Model.paid_amount == Model.total_amount_after_tax)
+                                            <p>@Model.CurrentReservation.paid_amount</p>
+                                            <p>@(Model.CurrentReservation.total_amount_after_tax - Model.CurrentReservation.paid_amount) </p>
+                                            @if (Model.CurrentReservation.paid_amount == Model.CurrentReservation.total_amount_after_tax)
                                             {
-                                                <p>@(Model.total_amount_after_tax - Model.total_amount_from_vendor) </p>
+                                                <p>@(Model.CurrentReservation.total_amount_after_tax - Model.CurrentReservation.total_amount_from_vendor) </p>
                                             }
 
 
@@ -726,8 +764,211 @@
                                             @*<p>N/A</p>*@
                                         </div>
                                     </div>
+                                    @if(Model.InitialReservation != null)
+                                    { 
+                                    <div class="col-lg-10 offset-1 item-of-detailed-table">
+                                        <div class="col-lg-3 part-a" style="color:red;">
+                                            <p style="color:red;">Events</p>
+                                            <p  style="color:red;">Hotel</p>
+                                            <p  style="color:red;">Created By</p>
+                                            <p  style="color:red;">Modified By</p>
+                                            <p  style="color:red;">Opener</p>
+                                            <p  style="color:red;">Closer</p>
+                                            <p  style="color:red;">Booking ID</p>
+                                            <p  style="color:red;">Date Submitted</p>
+                                            <p  style="color:red;">Check in</p>
+                                            <p  style="color:red;">Check out</p>
+                                            <p  style="color:red;">Shift</p>
+                                            <p  style="color:red;">Company Name</p>
+                                            <p  style="color:red;">Contact Name</p>
+                                            <p  style="color:red;">Phone number</p>
+                                            <p  style="color:red;">e-mail </p>
+                                            <p  style="color:red;">Vendor </p>
+                                            <p  style="color:red;">Total Rooms </p>
+                                            <p  style="color:red;">Total Nights </p>
+                                            <p  style="color:red;">Location</p>
+                                            <p  style="color:red;">City</p>
+                                            <p  style="color:red;">Total Customer Cost (-Tax)</p>
+                                            <p  style="color:red;">Tax</p>
+                                            <p  style="color:red;">Final Customer Cost</p>
+                                            <p  style="color:red;">Customer/Night Rate</p>
+                                            <p  style="color:red;">Final Vendor Cost</p>
+                                            <p  style="color:red;">Vendor Cost/Night</p>
+                                            <p  style="color:red;">Amended Check-in</p>
+                                            <p  style="color:red;">Amended Check-out</p>
+                                            <p  style="color:red;">Rooms After Amendment</p>
+                                            <p  style="color:red;">Nights After Amendment</p>
+                                            <p  style="color:red;">Price/Night After Amendment</p>
+                                            <p  style="color:red;">Tax</p>
+                                            <p  style="color:red;">Customer Cost After Amend</p>
+                                            <p  style="color:red;">Vend. Cost After Amend</p>
+                                            <p  style="color:red;">Status</p>
+                                            <p  style="color:red;">Collected</p>
+                                            <p  style="color:red;">Balance</p>
+                                            @if (Model.CurrentReservation.paid_amount == Model.CurrentReservation.total_amount_after_tax)
+                                            {
+                                                <p style="color:red;">Profit</p>
+                                            }
+                                        </div>
+                                        <div class="col-lg-7 part-b">
+                                            <p>@Model.InitialReservation.event_name</p>
+                                            <p>@Model.InitialReservation.hotel_name</p>
+
+                                            <p>@Model.InitialReservation.created_by_name at @Model.InitialReservation.created_at_string</p>
+                                            <p>
+                                                @if (Model.InitialReservation.updated_by != null)
+                                                {
+                                                    <span>@Model.InitialReservation.updated_by_name at @Model.InitialReservation.updated_at_string</span>
+                                                }
+                                                else
+                                                {
+                                                    <span>@Model.InitialReservation.updated_by_name</span>
+                                                }
+                                            </p>
+                                            <p>@Model.InitialReservation.opener_name</p>
+                                            <p>@Model.InitialReservation.closer_name</p>
+                                            <p>@Model.InitialReservation.id</p>
+                                            <p>@Model.InitialReservation.created_at_string</p>
+                                            <p>@Model.InitialReservation.check_in.ToString().Split(' ')[0]</p>
+                                            <p>@Model.InitialReservation.check_out.ToString().Split(' ')[0]</p>
+                                            @if (String.IsNullOrEmpty(Model.InitialReservation.shift_name))
+                                            {
+                                                <p>-</p>
+                                            }
+                                            else
+                                            {
+                                                <p>@Model.InitialReservation.shift_name</p>
+                                            }
+                                            <p>@Model.InitialReservation.company_name</p>
+                                            <p>@Model.InitialReservation.reservations_officer_name</p>
+                                            <p>@Model.InitialReservation.reservations_officer_phone</p>
+                                            <p>@Model.InitialReservation.reservations_officer_email</p>
+                                            @if (String.IsNullOrEmpty(Model.InitialReservation.vendor_code))
+                                            {
+                                                <p>-</p>
+                                            }
+                                            else
+                                            {
+                                                <p>@Model.InitialReservation.vendor_code</p>
+                                            }
+                                            <p>@Model.InitialReservation.total_rooms</p>
+                                            <p>@Convert.ToDateTime(Model.InitialReservation.check_out).Subtract(Convert.ToDateTime(Model.InitialReservation.check_in)).Days</p>
+                                            <p>@Model.InitialReservation.location_name</p>
+                                            <p>@Model.InitialReservation.city_name</p>
+                                            @if (Model.InitialReservation.total_amount == null)
+                                            {
+                                                <p>-</p>
+                                            }
+                                            else
+                                            {
+                                                <p>@Model.InitialReservation.total_amount @Model.InitialReservation.string_currency</p>
+                                            }
+                                            @if (Model.InitialReservation.tax == null)
+                                            {
+                                                <p>-</p>
+                                            }
+                                            else
+                                            {
+                                                <p>@Model.InitialReservation.tax %</p>
+                                            }
+                                            @if (Model.InitialReservation.total_amount_after_tax == null)
+                                            {
+                                                <p>-</p>
+                                            }
+                                            else
+                                            {
+                                                <p>@Model.InitialReservation.total_amount_after_tax @Model.InitialReservation.string_currency</p>
+                                            }
+                                            @if (Model.InitialReservation.reservation_avg_price == null)
+                                            {
+                                                <p>-</p>
+                                            }
+                                            else
+                                            {
+                                                <p>@Model.InitialReservation.reservation_avg_price @Model.InitialReservation.string_currency</p>
+                                            }
+                                            @if (Model.InitialReservation.total_amount_from_vendor == null)
+                                            {
+                                                <p>-</p>
+                                            }
+                                            else
+                                            {
+                                                <p>@Model.InitialReservation.total_amount_from_vendor @Model.InitialReservation.string_currency</p>
+                                            }
+                                            @if (Model.InitialReservation.vendor_avg_price == null)
+                                            {
+                                                <p>-</p>
+                                            }
+                                            else
+                                            {
+                                                <p>@Model.InitialReservation.vendor_avg_price @Model.InitialReservation.string_currency</p>
+                                            }
+                                            <p>@Model.InitialReservation.check_in.ToString().Split(' ')[0]</p>
+                                            <p>@Model.InitialReservation.check_out.ToString().Split(' ')[0]</p>
+
+                                            <p>@Model.InitialReservation.total_rooms</p>
+                                            <p>@Convert.ToDateTime(Model.InitialReservation.check_out).Subtract(Convert.ToDateTime(Model.InitialReservation.check_in)).Days</p>
+                                            @if (Model.InitialReservation.reservation_avg_price == null)
+                                            {
+                                                <p>-</p>
+                                            }
+                                            else
+                                            {
+                                                <p>@Model.InitialReservation.reservation_avg_price @Model.InitialReservation.string_currency</p>
+                                            }
+                                            @if (Model.InitialReservation.tax == null)
+                                            {
+                                                <p>-</p>
+                                            }
+                                            else
+                                            {
+                                                <p>@Model.InitialReservation.tax %</p>
+                                            }
+                                            @if (Model.InitialReservation.total_amount == null)
+                                            {
+                                                <p>-</p>
+                                            }
+                                            else
+                                            {
+                                                <p>@Model.InitialReservation.total_amount @Model.InitialReservation.string_currency</p>
+                                            }
+                                            @if (Model.InitialReservation.total_amount_from_vendor == null)
+                                            {
+                                                <p>-</p>
+                                            }
+                                            else
+                                            {
+                                                <p>@Model.InitialReservation.total_amount_from_vendor @Model.InitialReservation.string_currency</p>
+                                            }
+                                            <p>
+                                                @if (Model.InitialReservation.paid_amount == 0)
+                                                {
+                                                    <span>Un Paid</span>
+                                                }
+                                                else if (Model.InitialReservation.paid_amount < Model.InitialReservation.total_amount_after_tax)
+                                                {
+                                                    <span>Partially Paid</span>
+                                                }
+                                                else
+                                                {
+                                                    <span>Paid</span>
+                                                }
+                                            </p>
+                                            <p>@Model.InitialReservation.paid_amount</p>
+                                            <p>@(Model.InitialReservation.total_amount_after_tax - Model.InitialReservation.paid_amount) </p>
+                                            @if (Model.InitialReservation.paid_amount == Model.InitialReservation.total_amount_after_tax)
+                                            {
+                                                <p>@(Model.InitialReservation.total_amount_after_tax - Model.InitialReservation.total_amount_from_vendor) </p>
+                                            }
 
 
+                                            @*<p>N/A</p>*@
+                                            @*<p>Jerry Johnson</p>*@
+                                            @*<p>18125 N Ramsey Rd.</p>*@
+                                            @*<p>N/A</p>*@
+                                        </div>
+                                    </div>
+                                    }
                                 </div>
                             </div>
                         </div>
@@ -1027,7 +1268,8 @@
                                 html += "<a class='edit' href='javascript:void(0);' title='Edit'><i class='far fa-edit'></i></a>&nbsp;";
                                 html += "<a class='delete' href='javascript:void(0);' title='Delete'><i class='fa fa-trash'></i></a>&nbsp;";
                                 html += "<a class='cancel' href='javascript:void(0);' title='Cancel'><i class='far fa-times-circle'></i></a>&nbsp;";
-
+                                html += "<a class='move_reservation_to_another_booking' href='javascript:void(0);' title='Transfer Reservation'><i class='fas fa-people-arrows'></i></a>&nbsp;";
+                                
                                 $(nTd).html("<span class='action-column'>" + html + "</span>");
                             }
                         },
@@ -1270,16 +1512,16 @@
                 }, function (response) {
 
                 }, function (dialog) {
-                    dialog.find('#vendor_cost').val('@Model.vendor_single_price');
+                    dialog.find('#vendor_cost').val('@Model.CurrentReservation.vendor_single_price');
                     dialog.find('#room_type').change(function () {
                         if ($(this).val() == 1)
-                            dialog.find('#vendor_cost').val('@Model.vendor_single_price');
+                            dialog.find('#vendor_cost').val('@Model.CurrentReservation.vendor_single_price');
                         else if ($(this).val() == 2)
-                            dialog.find('#vendor_cost').val('@Model.vendor_douple_price');
+                            dialog.find('#vendor_cost').val('@Model.CurrentReservation.vendor_douple_price');
                         else if ($(this).val() == 3)
-                            dialog.find('#vendor_cost').val('@Model.vendor_triple_price');
+                            dialog.find('#vendor_cost').val('@Model.CurrentReservation.vendor_triple_price');
                         else if ($(this).val() == 4)
-                            dialog.find('#vendor_cost').val('@Model.vendor_quad_price');
+                            dialog.find('#vendor_cost').val('@Model.CurrentReservation.vendor_quad_price');
 
                     })
 
@@ -1368,6 +1610,45 @@
 
             });
 
+           $(document).on("click", ".move_reservation_to_another_booking", function () {
+
+               var data = datatable.row($(this).closest('tr')).data();
+                
+               var modal = $('#move_reservation_to_another_booking_modal').clone();
+                var action = '@Url.Action("TransferReservation", "ReservationDetail")';
+                modal.find('form').attr('action', action);
+                modal.find('#modal_title').text('Transfer Reservation');
+                modal.execModal({
+                    progressBar: 'progress_bar',
+                    progressText: 'progress_text',
+                }, function (response) {
+                        datatable.draw();
+                        if (response.done == 1)
+                        {
+                            Swal.fire(
+                                'Done',
+                                'Reservation has been Transfered Successfully',
+                                'success'
+                            )
+                        }
+                        else
+                            {
+                                Swal.fire(
+                                    'Error!',
+                                    'Destination Booking Id Not Found!',
+                                    'error'
+                                )
+                            }
+                }, function (response) {
+
+                }, function (dialog) {
+
+                        dialog.find('#id').val(data.id);
+
+
+                });
+
+            });
 
            $("#add_comment").click(function () {
                var modal = $('#manage_comments').clone();

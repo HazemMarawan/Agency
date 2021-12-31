@@ -40,6 +40,7 @@ namespace Agency
             Mapper.CreateMap<EmailViewModel, Email>();
             Mapper.CreateMap<NoteViewModel, Note>();
             Mapper.CreateMap<TaskViewModel, Task>();
+            Mapper.CreateMap<Reservation, InitialReservation>();
 
         }
     }

@@ -55,12 +55,7 @@ namespace Agency.Models
         public virtual DbSet<Task> Tasks { get; set; }
         public virtual DbSet<UserRole> UserRoles { get; set; }
         public virtual DbSet<UserTask> UserTasks { get; set; }
-
+        public virtual DbSet<InitialReservation> InitialReservations { get; set; }
+        
     }
-
-    //public class MyEntity
-    //{
-    //    public int Id { get; set; }
-    //    public string Name { get; set; }
-    //}
 }

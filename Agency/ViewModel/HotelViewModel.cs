@@ -15,6 +15,8 @@ namespace Agency.ViewModel
         public double? rating { get; set; }
         public string map_link { get; set; }
         public string cityName { get; set; }
+        public string companyName { get; set; }
+        public int? total_rooms { get; set; }
         public string title { get; set; }
         public string secret_key { get; set; }
         public string event_description { get; set; }

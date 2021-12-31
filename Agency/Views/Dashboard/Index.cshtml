@@ -172,6 +172,8 @@
                                 <thead>
                                     <tr>
                                         <th><div class="th-content">Hotel</div></th>
+                                        <th><div class="th-content">Company</div></th>
+                                        <th><div class="th-content">Total Rooms</div></th>
                                         <th><div class="th-content">Total Nights</div></th>
                                         <th><div class="th-content">City</div></th>
                                         <th><div class="th-content">Rate</div></th>
@@ -180,74 +182,76 @@
                                 <tbody>
                                     @foreach (var hotel in Model.topSellingHotels)
                                     {
-                                        <tr>
+                                    <tr>
 
-                                            <td>
-                                                <div class="td-content product-name">
-                                                    @if (hotel.path != null && hotel.path != "")
-                                                    {
-                                                        <img src="@hotel.path" alt="product">
+                                        <td>
+                                            <div class="td-content product-name">
+                                                @if (hotel.path != null && hotel.path != "")
+                                                {
+                                                    <img src="@hotel.path" alt="product">
 
-                                                    }
-                                                    else
-                                                    {
-                                                        <img src="~/Content/AdminPanelAssets/assets/img/90x90.jpg" alt="product">
+                                                }
+                                                else
+                                                {
+                                                    <img src="~/Content/AdminPanelAssets/assets/img/90x90.jpg" alt="product">
 
-                                                    }
-                                                    <div class="align-self-center">
-                                                        <p class="prd-name">@hotel.name</p>
-                                                    </div>
+                                                }
+                                                <div class="align-self-center">
+                                                    <p class="prd-name">@hotel.name</p>
                                                 </div>
-                                            </td>
-                                            <td><div class="td-content">@hotel.total_nights</div></td>
-                                            <td><div class="td-content">@hotel.cityName</div></td>
-                                            <td>
-                                                <div>
-                                                    @if (hotel.rating == 0 || hotel.rating == null)
-                                                    {
-                                                        <img src="~/Content/AdminPanelAssets/assets/img/Stars/0.png" width="90" alt="Rate">
-                                                    }
-                                                    else if (hotel.rating == 1)
-                                                    {
-                                                        <img src="~/Content/AdminPanelAssets/assets/img/Stars/1.png" width="20" alt="Rate">
-                                                    }
-                                                    else if (hotel.rating == 1.5)
-                                                    {
-                                                        <img src="~/Content/AdminPanelAssets/assets/img/Stars/1.5.png" width="35" alt="Rate">
-                                                    }
-                                                    else if (hotel.rating == 2)
-                                                    {
-                                                        <img src="~/Content/AdminPanelAssets/assets/img/Stars/2.png" width="35" alt="Rate">
-                                                    }
-                                                    else if (hotel.rating == 2.5)
-                                                    {
-                                                        <img src="~/Content/AdminPanelAssets/assets/img/Stars/2.5.png" width="55" alt="Rate">
-                                                    }
-                                                    else if (hotel.rating == 3)
-                                                    {
-                                                        <img src="~/Content/AdminPanelAssets/assets/img/Stars/3.png" width="55" alt="Rate">
-                                                    }
-                                                    else if (hotel.rating == 3.5)
-                                                    {
-                                                        <img src="~/Content/AdminPanelAssets/assets/img/Stars/3.5.png" width="70" alt="Rate">
-                                                    }
-                                                    else if (hotel.rating == 4)
-                                                    {
-                                                        <img src="~/Content/AdminPanelAssets/assets/img/Stars/4.png" width="70" alt="Rate">
-                                                    }
-                                                    else if (hotel.rating == 4.5)
-                                                    {
-                                                        <img src="~/Content/AdminPanelAssets/assets/img/Stars/4.5.png" width="90" alt="Rate">
-                                                    }
-                                                    else
-                                                    {
-                                                        <img src="~/Content/AdminPanelAssets/assets/img/Stars/5.png" width="90" alt="Rate">
-                                                    }
+                                            </div>
+                                        </td>
+                                        <td><div class="td-content">@hotel.companyName</div></td>
+                                        <td><div class="td-content">@hotel.total_rooms</div></td>
+                                        <td><div class="td-content">@hotel.total_nights</div></td>
+                                        <td><div class="td-content">@hotel.cityName</div></td>
+                                        <td>
+                                            <div>
+                                                @if (hotel.rating == 0 || hotel.rating == null)
+                                                {
+                                                    <img src="~/Content/AdCheckinClientsminPanelAssets/assets/img/Stars/0.png" width="90" alt="Rate">
+                                                }
+                                                else if (hotel.rating == 1)
+                                                {
+                                                    <img src="~/Content/AdminPanelAssets/assets/img/Stars/1.png" width="20" alt="Rate">
+                                                }
+                                                else if (hotel.rating == 1.5)
+                                                {
+                                                    <img src="~/Content/AdminPanelAssets/assets/img/Stars/1.5.png" width="35" alt="Rate">
+                                                }
+                                                else if (hotel.rating == 2)
+                                                {
+                                                    <img src="~/Content/AdminPanelAssets/assets/img/Stars/2.png" width="35" alt="Rate">
+                                                }
+                                                else if (hotel.rating == 2.5)
+                                                {
+                                                    <img src="~/Content/AdminPanelAssets/assets/img/Stars/2.5.png" width="55" alt="Rate">
+                                                }
+                                                else if (hotel.rating == 3)
+                                                {
+                                                    <img src="~/Content/AdminPanelAssets/assets/img/Stars/3.png" width="55" alt="Rate">
+                                                }
+                                                else if (hotel.rating == 3.5)
+                                                {
+                                                    <img src="~/Content/AdminPanelAssets/assets/img/Stars/3.5.png" width="70" alt="Rate">
+                                                }
+                                                else if (hotel.rating == 4)
+                                                {
+                                                    <img src="~/Content/AdminPanelAssets/assets/img/Stars/4.png" width="70" alt="Rate">
+                                                }
+                                                else if (hotel.rating == 4.5)
+                                                {
+                                                    <img src="~/Content/AdminPanelAssets/assets/img/Stars/4.5.png" width="90" alt="Rate">
+                                                }
+                                                else
+                                                {
+                                                    <img src="~/Content/AdminPanelAssets/assets/img/Stars/5.png" width="90" alt="Rate">
+                                                }
 
 
-                                                </div>
-                                            </td>
-                                        </tr>
+                                            </div>
+                                        </td>
+                                    </tr>
                                     }
 
 
@@ -304,10 +308,10 @@
 
                     <div class="widget-heading">
                         <h5 class="">Next Week Check in  
-                        @if(Model.CheckinClients.Count != 0)
+                        @if(Model.CheckinCompanies.Count != 0)
                         {
                             <span>
-                                - @Model.CheckinClients[0].reservation_from.ToString().Split(' ')[0]
+                                - @Model.CheckinCompanies[0].check_in.ToString().Split(' ')[0]
                             </span>
                         }
                         </h5>
@@ -318,48 +322,23 @@
                             <table class="table table-scroll">
                                 <thead>
                                     <tr>
-                                        <th><div class="th-content">Guest Name</div></th>
-                                        <th><div class="th-content">Check in</div></th>
-                                        <th><div class="th-content">Check out</div></th>
-                                        <th><div class="th-content">Room</div></th>
+                                        <th><div class="th-content">Company Name</div></th>
+                                        <th><div class="th-content">Hotel</div></th>
+                                        <th><div class="th-content">No of Nights</div></th>
+                                        <th><div class="th-content">No of Rooms</div></th>
+
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach (var client in Model.CheckinClients)
+                                    @foreach (var company in Model.CheckinCompanies)
                                     {
                                         <tr>
 
-                                            <td>
-                                                <div class="td-content product-name">
-                                                    
-                                                    <div class="align-self-center">
-                                                        <p class="prd-name">@client.client_first_name @client.client_last_name</p>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td><div class="td-content">@client.reservation_from.ToString().Split(' ')[0]</div></td>
-                                            <td><div class="td-content">@client.reservation_to.ToString().Split(' ')[0]</div></td>
-                                            <td>
-                                                <div class="td-content">
-                                                    @if (client.room_type == 1)
-                                                    {
-                                                        <span>Single</span>
-                                                    }
-                                                    else if (client.room_type == 2)
-                                                    {
-                                                        <span>Double</span>
-                                                    }
-                                                    else if (client.room_type == 3)
-                                                    {
-                                                        <span>Triple</span>
-                                                    }
-                                                    else if (client.room_type == 4)
-                                                    {
-                                                        <span>Quad</span>
-                                                    }
-                                                </div>
-                                            </td>
-                                            
+                                         
+                                            <td><div class="td-content">@company.company_name</div></td>
+                                            <td><div class="td-content">@company.hotel_name</div></td>
+                                            <td><div class="td-content">@company.total_nights</div></td>
+                                            <td><div class="td-content">@company.total_rooms</div></td>
                                         </tr>
                                     }
 

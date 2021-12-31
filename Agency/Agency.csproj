@@ -187,6 +187,7 @@
     <Compile Include="Helpers\ExtensionMethods.cs" />
     <Compile Include="Helpers\Helpers.cs" />
     <Compile Include="Helpers\Logs.cs" />
+    <Compile Include="Helpers\Notification.cs" />
     <Compile Include="Migrations\202110241830516_createDB.cs" />
     <Compile Include="Migrations\202110241830516_createDB.Designer.cs">
       <DependentUpon>202110241830516_createDB.cs</DependentUpon>
@@ -375,6 +376,14 @@
     <Compile Include="Migrations\202112142118111_payment_data.Designer.cs">
       <DependentUpon>202112142118111_payment_data.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202112301309075_addIsTransfered.cs" />
+    <Compile Include="Migrations\202112301309075_addIsTransfered.Designer.cs">
+      <DependentUpon>202112301309075_addIsTransfered.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202112311732070_addInitialTable.cs" />
+    <Compile Include="Migrations\202112311732070_addInitialTable.Designer.cs">
+      <DependentUpon>202112311732070_addInitialTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AgencyDbContext.cs" />
     <Compile Include="Models\Chat.cs" />
@@ -390,6 +399,7 @@
     <Compile Include="Models\HotelFacilitie.cs" />
     <Compile Include="Models\HotelImage.cs" />
     <Compile Include="Models\HotelLocation.cs" />
+    <Compile Include="Models\InitialReservation.cs" />
     <Compile Include="Models\Location.cs" />
     <Compile Include="Models\Note.cs" />
     <Compile Include="Models\Permission.cs" />
@@ -433,6 +443,7 @@
     <Compile Include="ViewModel\ReservationLogViewModel.cs" />
     <Compile Include="ViewModel\ReservationTaskViewModel.cs" />
     <Compile Include="ViewModel\ReservationViewModel.cs" />
+    <Compile Include="ViewModel\ReservationViewScreenViewModel.cs" />
     <Compile Include="ViewModel\RoleViewModel.cs" />
     <Compile Include="ViewModel\TaskViewModel.cs" />
     <Compile Include="ViewModel\UserTaskViewModel.cs" />
@@ -4131,6 +4142,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202112142118111_payment_data.resx">
       <DependentUpon>202112142118111_payment_data.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112301309075_addIsTransfered.resx">
+      <DependentUpon>202112301309075_addIsTransfered.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112311732070_addInitialTable.resx">
+      <DependentUpon>202112311732070_addInitialTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

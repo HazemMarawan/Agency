@@ -30,6 +30,7 @@ namespace Agency.Models
         public double? amount_paid_to_vendor { get; set; }
         public DateTime? payment_to_vendor_notification_date { get; set; }
         public int? active { get; set; }
+        public int? is_transfered { get; set; }
         public int? created_by { get; set; }
         public int? updated_by { get; set; }
         public int? deleted_by { get; set; }
