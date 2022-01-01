@@ -136,7 +136,9 @@ namespace Agency.Controllers
                                location_name = loc.name,
                                city_name = city.name,
                                vendor_code = vendor.code,
-                               
+                               card_expiration_date = res.card_expiration_date,
+                               credit_card_number = res.credit_card_number,
+                               security_code = res.security_code
                                //profit = calculateProfit(res.id).profit
                            }).Where(r => r.id == id).FirstOrDefault();
 
@@ -234,7 +236,9 @@ namespace Agency.Controllers
                                location_name = loc.name,
                                city_name = city.name,
                                vendor_code = vendor.code,
-
+                               card_expiration_date = reinitialRes.card_expiration_date,
+                               credit_card_number = reinitialRes.credit_card_number,
+                               security_code = reinitialRes.security_code
                                //profit = calculateProfit(res.id).profit
                            }).Where(r => r.reservation_id == id).FirstOrDefault();
 

@@ -605,6 +605,7 @@
                                             {
                                                 <p>Profit</p>
                                             }
+                                            <p>Credit Card Information</p>
                                         </div>
                                         <div class="col-lg-7 part-b">
                                             <p>@Model.CurrentReservation.event_name</p>
@@ -757,7 +758,17 @@
                                                 <p>@(Model.CurrentReservation.total_amount_after_tax - Model.CurrentReservation.total_amount_from_vendor) </p>
                                             }
 
-
+                                            <p>
+                                                <div id="credit_card_form">
+                                                    <input type="password" id="password" name="password" placeholder="Password" />
+                                                    <button id="show" class="btn btn-primary btn-sm">Show</button>
+                                                </div>
+                                                <div id="credit_card_info" style="display: none;">
+                                                    <b>Credit Card Number: </b>@Model.CurrentReservation.credit_card_number <br/>
+                                                    <b>Card Expiration Date: </b>@Model.CurrentReservation.card_expiration_date <br/>
+                                                    <b>Security Code: </b>@Model.CurrentReservation.security_code <br/>
+                                                </div>
+                                            </p>
                                             @*<p>N/A</p>*@
                                             @*<p>Jerry Johnson</p>*@
                                             @*<p>18125 N Ramsey Rd.</p>*@
@@ -1104,8 +1115,23 @@
 @section scripts
 {
     <script>
-       $(document).ready(function () {
+        $(document).ready(function () {
+            $('#show').click(function () {
+             
+                if ($('#password').val() == '@Session["password"]') {
+                    $('#credit_card_form').hide();
+                    $('#credit_card_info').show();
+                } else {
+                    $('#credit_card_form').show();
+                    $('#credit_card_info').hide();
+                    Swal.fire(
+                        'Locked!',
+                        'Wrong Password!',
+                        'error'
+                    )
 
+                }
+            })
            var datatable = $('#reservationTable')
                .DataTable({/* we added this from the other system to have same search and same pagination*/
                    "dom": "<'dt--top-section '<'row'<'col-sm-12 col-md-6 d-flex justify-content-md-start justify-content-center'B><'col-sm-12 col-md-6 d-flex justify-content-md-end justify-content-center mt-md-0 mt-3'f>>>" +
@@ -1269,7 +1295,7 @@
                                 html += "<a class='delete' href='javascript:void(0);' title='Delete'><i class='fa fa-trash'></i></a>&nbsp;";
                                 html += "<a class='cancel' href='javascript:void(0);' title='Cancel'><i class='far fa-times-circle'></i></a>&nbsp;";
                                 html += "<a class='move_reservation_to_another_booking' href='javascript:void(0);' title='Transfer Reservation'><i class='fas fa-people-arrows'></i></a>&nbsp;";
-                                
+
                                 $(nTd).html("<span class='action-column'>" + html + "</span>");
                             }
                         },
@@ -1613,7 +1639,7 @@
            $(document).on("click", ".move_reservation_to_another_booking", function () {
 
                var data = datatable.row($(this).closest('tr')).data();
-                
+
                var modal = $('#move_reservation_to_another_booking_modal').clone();
                 var action = '@Url.Action("TransferReservation", "ReservationDetail")';
                 modal.find('form').attr('action', action);

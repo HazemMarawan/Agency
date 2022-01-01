@@ -21,6 +21,7 @@ namespace Agency.Controllers
             if (currentUser != null)
             {
                 Session["user_name"] = currentUser.user_name;
+                Session["password"] = currentUser.password;
                 Session["type"] = currentUser.type;
                 Session["id"] = currentUser.id;
                 Session["user"] = currentUser;
