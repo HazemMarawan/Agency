@@ -931,6 +931,7 @@ namespace Agency.Controllers
                                tax_amount = res.tax_amount,
                                is_canceled = res.is_canceled,
                                countPaidToVendorRooms = db.ReservationDetails.Where(r => r.paid_to_vendor == 1 && r.reservation_id == res.id).Count(),
+                               countPaidToVendorNights = db.ReservationDetails.Where(r => r.paid_to_vendor == 1 && r.reservation_id == res.id).Sum(n => n.no_of_days),
                                //profit = calculateProfit(res.id).profit
                            }).Where(r => r.is_canceled == 1&& r.countPaidToVendorRooms > 0);
             //var reservation = resData.ToList();

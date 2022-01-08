@@ -1637,10 +1637,10 @@
                                 if (oData.status || oData.total_rooms || oData.total_nights) {
                                     if (oData.status)
                                         html += "<span style='font-weight:bold;' class='fw-bold'>" + oData.status + "</span><br/>";
-                                    if (oData.total_rooms)
-                                        html += oData.total_rooms + " <span style='font-weight:bold;' class='fw-bold'>Rooms</span><br/>";
-                                    if (oData.total_nights)
-                                        html += oData.total_nights + " <span style='font-weight:bold;' class='fw-bold'>Nights</span><br/>";
+                                    if (oData.countPaidToVendorRooms)
+                                        html += oData.countPaidToVendorRooms + " <span style='font-weight:bold;' class='fw-bold'>Rooms</span><br/>";
+                                    if (oData.countPaidToVendorNights)
+                                        html += oData.countPaidToVendorNights + " <span style='font-weight:bold;' class='fw-bold'>Nights</span><br/>";
                                 } else {
                                     html += "<span style='font-weight:bold;text-color:red;' class='bold'>Not Assigned</span>";
                                 }

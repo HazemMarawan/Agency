@@ -120,6 +120,7 @@ namespace Agency.ViewModel
         public string location_name { get; set; }
         public double? vendor_cost { get; set; }
         public int countPaidToVendorRooms { get; set; }
+        public int? countPaidToVendorNights { get; set; }
 
     }
 }
