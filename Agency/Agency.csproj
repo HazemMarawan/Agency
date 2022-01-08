@@ -3980,6 +3980,7 @@
     <Content Include="Views\Event\Show2.cshtml" />
     <Content Include="Views\Booking\Hotel.cshtml" />
     <Content Include="Views\Booking\makeReservation.cshtml" />
+    <Content Include="Views\Reservation\ViewOurRooms.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
