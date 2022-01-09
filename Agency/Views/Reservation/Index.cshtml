@@ -586,7 +586,7 @@
                                 <!--  widget-content-area-edit added class manually -->
                                 <table id="canceledReservationsTable" class="table table-striped table-bordered" style="width:100%">
                                     <thead style="width: 100%!important">
-                                        @*<tr class="text-center">
+                                        <tr class="text-center">
                                             <th width="8%">Booking ID</th>
                                             <th width="10%">Date Submitted</th>
                                             <th width="14%">Company Name</th>
@@ -598,15 +598,15 @@
                                             <th width="6%">Balance</th>
                                             <th width="6%">Profit</th>
                                             <th width="9%"></th>
-                                        </tr>*@
-                                        <tr class="text-center">
+                                        </tr>
+                                        @*<tr class="text-center">
                                             <th>#</th>
                                             <th>Event</th>
                                             <th>Hotel</th>
                                             <th>Check in/out</th>
                                             <th>Price/Night</th>
                                             <th></th>
-                                        </tr>
+                                        </tr>*@
                                     </thead>
                                 </table>
                             </div>
@@ -623,17 +623,13 @@
                                 <table id="our_rooms_table" class="table table-striped table-bordered" style="width:100%">
                                     <thead style="width: 100%!important">
                                         <tr class="text-center">
-                                            <th width="8%">Booking ID</th>
-                                            <th width="10%">Date Submitted</th>
-                                            <th width="14%">Company Name</th>
-                                            <th width="10%">Status</th>
-                                            <th width="10%">Check-in/out</th>
-                                            <th width="10%">Opener/Closer</th>
-                                            <th width="12%">Balance Due Date</th>
-                                            <th width="6%">Collected</th>
-                                            <th width="6%">Balance</th>
-                                            <th width="6%">Profit</th>
-                                            <th width="9%"></th>
+                                            <th width="10%">Booking ID</th>
+                                            <th width="15%">Event Name</th>
+                                            <th width="15%">Hotel Name</th>
+                                            <th width="15%">Total Rooms/Nights</th>
+                                            <th width="15%">Check-in/out</th>
+                                            <th width="25%">Price Per Night</th>
+                                            <th width="5%"></th>
                                         </tr>
                                         @*<tr class="text-center">
                                             <th>#</th>
@@ -1329,7 +1325,7 @@
                     ]
                });
 
-            @*var canceledreservationTable = $('#canceledReservationsTable')
+            var canceledreservationTable = $('#canceledReservationsTable')
                .DataTable({/* we added this from the other system to have same search and same pagination*/
                    "dom": "<'dt--top-section'<'row'<'col-sm-12 col-md-6 d-flex justify-content-md-start justify-content-center'B><'col-sm-12 col-md-6 d-flex justify-content-md-end justify-content-center mt-md-0 mt-3'f>>>" +
                        "<'table-responsive'tr>" +
@@ -1492,9 +1488,9 @@
                             }
                         },
                     ]
-               });*@
+               });
 
-            var canceledreservationTable = $('#canceledReservationsTable')
+            var canceledreservationTableOLD = $('#canceledReservationsTableOLD')
                .DataTable({/* we added this from the other system to have same search and same pagination*/
                    "dom": "<'dt--top-section'<'row'<'col-sm-12 col-md-6 d-flex justify-content-md-start justify-content-center'B><'col-sm-12 col-md-6 d-flex justify-content-md-end justify-content-center mt-md-0 mt-3'f>>>" +
                        "<'table-responsive'tr>" +
@@ -1618,18 +1614,13 @@
                             }
                         },
                         {
-                            "data": "created_at_string",
+                            "data": "event_name",
                             "searchable": true
                         },
                         {
-                            "data": "company_name", "searchable": true,
-                            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-
-                                var html = "<a href='/Reservation/View/" + oData.id + "'>" + oData.company_name + "</a>";
-
-                                $(nTd).html("<span class='action-column'>" + html + "</span>");
-                            }
-                        },
+                            "data": "hotel_name",
+                            "searchable": true
+                        },  
                         {
                             "data": "status", "searchable": true,
                             fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
@@ -1664,57 +1655,18 @@
                             }
                         },
                         {
-                            "data": "opener", "searchable": true,
+                            "data": "vendor_single_price", "searchable": true,
                             fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
                                 var html = "";
-                                if (oData.opener || oData.closer) {
-                                    if (oData.opener_name)
-                                        html += "<span style='font-weight:bold;' class='fw-bold'>" + oData.opener_name + "</span><br/>";
-                                    if (oData.closer_name)
-                                        html += "<span style='font-weight:bold;' class='fw-bold'" + oData.closer_name + "</span><br/>";
-
-                                } else {
-                                    html += "<span style='font-weight:bold;text-color:red;' class='bold'>Not Assigned</span>";
-                                }
-                                $(nTd).html("<span class='action-column'>" + html + "</span>");
-                            }
-                        },
-                        {
-                            "data": "financial_due_date",
-                            "searchable": true
-                        },
-                        {
-                            "data": "paid_amount", "searchable": true,
-                            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-                                var html = "";
-                                if (oData.paid_amount)
-                                    html += "<span style='font-weight:bold;' class='fw-bold'>" + addCommas(oData.paid_amount.toFixed(2)) + "</span><br/>";
-                                else
-                                    html += "<span style='font-weight:bold;text-color:red;' class='bold'>-</span>";
-
-                                $(nTd).html("<span class='action-column'>" + html + "</span>");
-                            }
-                        },
-                        {
-                            "data": "total_amount_after_tax", "searchable": true,
-                            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-                                var html = "";
-                                if (oData.total_amount_after_tax)
-                                    html += "<span style='font-weight:bold;' class='fw-bold'>" + addCommas((oData.total_amount_after_tax - oData.paid_amount).toFixed(2)) + "</span><br/>";
-                                else
-                                    html += "<span style='font-weight:bold;text-color:red;' class='bold'>-</span>";
-
-                                $(nTd).html("<span class='action-column'>" + html + "</span>");
-                            }
-                        },
-                        {
-                            "data": "total_amount_after_tax", "searchable": true,
-                            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-                                var html = "";
-                                if (oData.total_amount_after_tax)
-                                    html += "<span style='font-weight:bold;' class='fw-bold'>" + addCommas((oData.total_amount_after_tax).toFixed(2)) + "</span><br/>";
-                                else
-                                    html += "<span style='font-weight:bold;text-color:red;' class='bold'>-</span>";
+                                
+                                if (oData.vendor_single_price)
+                                    html += "<span style='font-weight:bold;' class='fw-bold'> Single: " + addCommas((oData.vendor_single_price).toFixed(2)) + "</span><br/>";
+                                if (oData.vendor_douple_price)
+                                    html += "<span style='font-weight:bold;' class='fw-bold'> Double: " + addCommas((oData.vendor_douple_price).toFixed(2)) + "</span><br/>";
+                                if (oData.vendor_triple_price)
+                                    html += "<span style='font-weight:bold;' class='fw-bold'> Triple: " + addCommas((oData.vendor_triple_price).toFixed(2)) + "</span><br/>";
+                                if (oData.vendor_quad_price)
+                                    html += "<span style='font-weight:bold;' class='fw-bold'> Quad: " + addCommas((oData.vendor_quad_price).toFixed(2)) + "</span><br/>";
 
                                 $(nTd).html("<span class='action-column'>" + html + "</span>");
                             }
@@ -1723,13 +1675,12 @@
                             "data": "id", "searchable": true,
                             fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
                                 var html = "";
-                                html += "<a class='editUnPaid' href='javascript:void(0)' title='Edit'><i class='far fa-edit'></i></a>&nbsp;|";
-
+                                //html += "<a class='editUnPaid' href='javascript:void(0)' title='Edit'><i class='far fa-edit'></i></a>&nbsp;|";
                                 //html += "<a class='details' href='/ReservationDetail/Index/" + oData.id + "' title='Details'><i class='far fa-eye'></i></a>&nbsp;|";
-                                html += "<a class='confMail' href='javascript:void(0)' title='Send Email'><i class='far fa-envelope-open'></i></a>&nbsp;|";
+                                //html += "<a class='confMail' href='javascript:void(0)' title='Send Email'><i class='far fa-envelope-open'></i></a>&nbsp;|";
                                 //html += "<a target='_blank' class='Itinirary' href='/ReservationDetail/Itinirary/" + oData.id + "' title='Itinirary'><i class='far fa-eye'></i></a>&nbsp;|";
                                 html += "<a target='_blank' class='view' href='/Reservation/ViewOurRooms/" + oData.id + "' title='View'><i class='far fa-eye'></i></a>";
-                                html += "<a class='cancelPaid' href='javascript:void(0);' title='Cancel'><i class='far fa-times-circle'></i></a>&nbsp;";
+                                // html += "<a class='cancelPaid' href='javascript:void(0);' title='Cancel'><i class='far fa-times-circle'></i></a>&nbsp;";
                                 $(nTd).html("<span class='action-column'>" + html + "</span>");
                             }
                         },

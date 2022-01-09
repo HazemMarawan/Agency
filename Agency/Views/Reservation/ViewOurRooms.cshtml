@@ -47,10 +47,10 @@
 <div class="page-header">
     <nav class="breadcrumb-one" aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="javascript:void(0);">City</a></li>
+            <li class="breadcrumb-item"><a href="javascript:void(0);">Our Rooms</a></li>
         </ol>
     </nav><!-- we commented old button and add new button with the id of add resrvation in old dropdown menu-->
-    <button class="special-btn" id="add_city"><a href="javascript:void(0);">Add City</a></button>
+    @*<button class="special-btn" id="add_city"><a href="javascript:void(0);">Add City</a></button>*@
     <!--
         <div class="dropdown filter custom-dropdown-icon">
         <a class="dropdown-toggle btn" href="#" role="button" id="filterDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="text">More</span> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
@@ -85,10 +85,13 @@
                 <thead>
                     <tr class="text-center">
                         <th>#</th>
-                        <th>Event</th>
-                        <th>Hotel</th>
-                        <th>Check in/out</th>
-                        <th>Price/Night</th>
+                        <th>Guest Name</th>
+                        <th>Check In/Out</th>
+                        <th>Room Type</th>
+                        <th>Vendor Code</th>
+                        <th>Cost</th>
+                        <th>Cancelation Policy</th>
+                        @*<th>Payment Deadline</th>*@
                         <th></th>
                     </tr>
                 </thead>
@@ -145,29 +148,80 @@
                             "searchable": true
                         },
                         {
-                            "data": "event_name",
-                            "searchable": true
-                        },
-                        {
-                            "data": "hotel_name",
-                            "searchable": true
-                        },
-                        {
-                            "data": "string_reservation_from", "searchable": true,
+                            "data": "client_id", "searchable": true,
                             fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-
                                 var html = "";
-                                if (oData.string_reservation_from)
-                                    html += "In: " + oData.string_reservation_from + "<br>";
-                                if (oData.string_reservation_to)
-                                    html += "In: " + oData.string_reservation_to;
+                                if (oData.client_first_name)
+                                    html += oData.client_first_name;
+                                if (oData.client_last_name)
+                                    html += " " + oData.client_last_name;
 
                                 $(nTd).html("<span class='action-column'>" + html + "</span>");
                             }
                         },
                         {
-                            "data": "price_per_night",
+                            "data": "string_reservation_from", "searchable": true,
+                            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                                var html = "";
+                                if (oData.string_reservation_from)
+                                    html += oData.string_reservation_from + "</br>";
+                                if (oData.string_reservation_to)
+                                    html += " " + oData.string_reservation_to;
+
+                                $(nTd).html("<span class='action-column'>" + html + "</span>");
+                            }
+                        },
+                        {
+                            "data": "room_type", "searchable": true,
+                            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                                var html = "";
+                                if (oData.room_type == 1)
+                                    html += "Single";
+                                else if (oData.room_type == 2)
+                                    html += "Double";
+                                else if (oData.room_type == 3)
+                                    html += "Triple";
+                                else if (oData.room_type == 4)
+                                    html += "Quad";
+
+                                $(nTd).html("<span class='action-column'>" + html + "</span>");
+                            }
+                        },
+                        {
+                            "data": "vendor_code",
                             "searchable": true
+                        },
+                        {
+                            "data": "amount", "searchable": true,
+                            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                                var html = "";
+                                if (oData.amount)
+                                    html += "<span style='font-weight:bold;' class='bold'>Amount:</span>" + addCommas(oData.amount.toFixed(2));
+                                //if (oData.currency) {
+                                //    html += "<span style='font-weight:bold;' class='bold'>";
+                                //    if (oData.currency == 1)
+                                //        html += " USD";
+                                //    if (oData.currency == 2)
+                                //        html += " GBP";
+                                //    if (oData.currency == 3)
+                                //        html += " EUR";
+                                //    html += "</span>";
+                                //}
+                                //html += "<br/>";
+                                //if (oData.tax)
+                                //    html += "<span style='font-weight:bold;' class='bold'>Tax:</span>" + addCommas(oData.tax.toFixed(2)) + "<br/>";
+
+                                $(nTd).html("<span class='action-column'>" + html + "</span>");
+                            },
+
+                        },
+                        {
+                            "data": "cancelation_policy", "searchable": true,
+                            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                                var html = "";
+                                $(nTd).html("<span class='action-column'>" + html + "</span>");
+                            },
+
                         },
                         {
                             "data": "id", "searchable": true,
