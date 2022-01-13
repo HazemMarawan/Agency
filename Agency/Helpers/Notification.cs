@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using Agency.ViewModel;
 using Agency.Models;
+using Agency.Enums;
 
 namespace Agency.Helpers
 {
@@ -83,7 +84,7 @@ namespace Agency.Helpers
                                                                          tax_amount = res.tax_amount,
                                                                          is_canceled = res.is_canceled,
                                                                          balance_due_date = (DateTime)res.balance_due_date,
-                                                                         countPaidToVendorRooms = db.ReservationDetails.Where(resDet=> resDet.reservation_id == res.id).Where(resDet=> resDet.paid_to_vendor ==1).Count()
+                                                                         countPaidToVendorRooms = db.ReservationDetails.Where(resDet => resDet.reservation_id == res.id).Where(resDet => resDet.paid_to_vendor == 1).Count()
                                                                          //profit = calculateProfit(res.id).profit
                                                                      }).Where(r => r.balance_due_date.Year == DateTime.Now.Year && r.balance_due_date.Month == DateTime.Now.Month && r.balance_due_date.Day == DateTime.Now.Day && r.is_canceled == null && r.countPaidToVendorRooms == 0).Take(2).ToList();
             return balanceDueDateReservations;
@@ -163,8 +164,51 @@ namespace Agency.Helpers
                                                                          balance_due_date = (DateTime)res.balance_due_date,
                                                                          countPaidToVendorRooms = db.ReservationDetails.Where(resDet => resDet.reservation_id == res.id).Where(resDet => resDet.paid_to_vendor == 1).Count()
                                                                          //profit = calculateProfit(res.id).profit
-                                                                     }).Where(r => r.balance_due_date.Year == DateTime.Now.Year && r.balance_due_date.Month == DateTime.Now.Month && r.balance_due_date.Day == DateTime.Now.Day && r.is_canceled == null && r.countPaidToVendorRooms == 0).ToList();
+                                                                     }).Where(r => r.balance_due_date.Year == DateTime.Now.Year && r.balance_due_date.Month == DateTime.Now.Month && r.balance_due_date.Day == DateTime.Now.Day && r.is_canceled == null && r.total_amount_after_tax != 0 && r.paid_amount < r.total_amount_after_tax).ToList();
             return balanceDueDateReservations;
+        }
+        public static List<ReservationDetailViewModel> payToVendorNotification()
+        {
+            List<ReservationDetailViewModel> payToVendorReservations = (from resDetail in db.ReservationDetails
+                                                                        join res in db.Reservations on resDetail.reservation_id equals res.id
+                                                                        join company in db.Companies on res.company_id equals company.id
+                                                                        join client in db.Clients on resDetail.client_id equals client.id
+                                                                        join event_hotel in db.EventHotels on res.event_hotel_id equals event_hotel.id
+                                                                        select new ReservationDetailViewModel
+                                                                        {
+                                                                            id = resDetail.id,
+                                                                            amount = resDetail.amount,
+                                                                            amount_after_tax = resDetail.amount_after_tax,
+                                                                            tax = resDetail.tax,
+                                                                            room_type = resDetail.room_type,
+                                                                            reservation_from = resDetail.reservation_from,
+                                                                            reservation_to = resDetail.reservation_to,
+                                                                            no_of_days = resDetail.no_of_days,
+                                                                            active = resDetail.active,
+                                                                            client_id = resDetail.client_id,
+                                                                            client_first_name = client.first_name,
+                                                                            client_last_name = client.last_name,
+                                                                            company_name = company.name,
+                                                                            string_currency = ((Currency)res.currency).ToString(),
+                                                                            reservation_id = resDetail.reservation_id,
+                                                                            currency = res.currency,
+                                                                            is_reservation_canceled = res.is_canceled,
+                                                                            string_reservation_from = resDetail.reservation_from.ToString(),
+                                                                            string_reservation_to = resDetail.reservation_to.ToString(),
+                                                                            vendor_code = resDetail.vendor_code,
+                                                                            vendor_cost = resDetail.vendor_cost,
+                                                                            notify = resDetail.notify,
+                                                                            is_canceled = resDetail.is_canceled,
+                                                                            paid_to_vendor = resDetail.paid_to_vendor,
+                                                                            payment_to_vendor_deadline = resDetail.payment_to_vendor_deadline,
+                                                                            payment_to_vendor_notification_date = resDetail.payment_to_vendor_notification_date,
+                                                                            paid_to_vendor_date = resDetail.paid_to_vendor_date,
+                                                                            amount_paid_to_vendor = resDetail.amount_paid_to_vendor,
+                                                                            cancelation_policy = resDetail.cancelation_policy,
+                                                                            confirmation_id = resDetail.confirmation_id,
+
+                                                                        }).Where(s=>s.paid_to_vendor != 1 && s.is_reservation_canceled != 1).ToList();
+            return payToVendorReservations;
         }
     }
 }

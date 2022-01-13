@@ -22,8 +22,11 @@ namespace Agency.ViewModel
         public string string_reservation_to { get; set; }
         public string event_name { get; set; }
         public string hotel_name { get; set; }
+        public string company_name { get; set; }
+        public string string_currency { get; set; }
         public string vendor_code { get; set; }
         public int? is_canceled { get; set; }
+        public int? is_reservation_canceled { get; set; }
         public double? price_per_night { get; set; }
         public string cancelation_policy { get; set; }
         public int? no_of_days { get; set; }
