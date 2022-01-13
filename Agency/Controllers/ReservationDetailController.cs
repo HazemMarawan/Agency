@@ -203,7 +203,7 @@ namespace Agency.Controllers
                     vendor_room_price = reservation.vendor_single_price;
                 }
                 int Days = (detailViewModel.reservation_to - detailViewModel.reservation_from).Days;
-                detail.no_of_days = Days;
+                detail.no_of_days = Days+1;
                 var amount = (room_price * Days); 
                 var vendor_amount = (vendor_room_price * Days) ;
                 detail.tax = amount * (reservation.tax/100);
@@ -233,16 +233,18 @@ namespace Agency.Controllers
 
                     reservation.check_in = minDate;
                     reservation.check_out = maxDate;
-                    reservation.balance_due_date = Convert.ToDateTime(reservation.check_in).AddDays(-21);
+                    reservation.balance_due_date = Convert.ToDateTime(reservation.check_in).AddDays(-30);
                 }
 
                 ReservationViewModel updatedTotals = ReservationService.calculateTotalandVendor(reservation.id);
-
+                reservation.total_rooms = updatedTotals.total_rooms;
                 reservation.total_amount = updatedTotals.total_amount;
                 reservation.total_amount_after_tax = updatedTotals.total_amount_after_tax;
                 reservation.total_amount_from_vendor = updatedTotals.total_amount_from_vendor;
                 reservation.tax_amount = updatedTotals.tax_amount;
                 reservation.total_nights = updatedTotals.total_nights;
+                reservation.reservation_avg_price = db.ReservationDetails.Where(resDet => resDet.reservation_id == reservation.id).Select(resDet => resDet.amount_after_tax).Sum() / reservation.total_nights;
+                reservation.vendor_avg_price = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id).Select(s => s.vendor_cost).Sum() / reservation.total_nights;
                 //reservation.tax_amount= reservation.tax_amount == null ? 0 : reservation.tax_amount;
                 //reservation.total_amount_from_vendor = reservation.total_amount_from_vendor == null ? 0 : reservation.total_amount_from_vendor;
                 //reservation.total_amount_from_vendor += vendor_amount;
@@ -336,7 +338,7 @@ namespace Agency.Controllers
 
                     reservation.check_in = minDate;
                     reservation.check_out = maxDate;
-                    reservation.balance_due_date = Convert.ToDateTime(reservation.check_in).AddDays(-21);
+                    reservation.balance_due_date = Convert.ToDateTime(reservation.check_in).AddDays(-30);
                 }
 
                 ReservationViewModel updatedTotals = ReservationService.calculateTotalandVendor(reservation.id);

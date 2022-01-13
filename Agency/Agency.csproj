@@ -384,6 +384,10 @@
     <Compile Include="Migrations\202112311732070_addInitialTable.Designer.cs">
       <DependentUpon>202112311732070_addInitialTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202201130023166_updateReservations1.cs" />
+    <Compile Include="Migrations\202201130023166_updateReservations1.Designer.cs">
+      <DependentUpon>202201130023166_updateReservations1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AgencyDbContext.cs" />
     <Compile Include="Models\Chat.cs" />
@@ -4149,6 +4153,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202112311732070_addInitialTable.resx">
       <DependentUpon>202112311732070_addInitialTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202201130023166_updateReservations1.resx">
+      <DependentUpon>202201130023166_updateReservations1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

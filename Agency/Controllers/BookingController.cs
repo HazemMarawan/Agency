@@ -248,7 +248,6 @@ namespace Agency.Controllers
                 detail.reservation_from = reservationViewModel.reservation_from[i];
                 detail.reservation_to = reservationViewModel.reservation_to[i];
                 detail.room_type = reservationViewModel.room_type[i];
-                //detail.created_by = Session["id"].ToString().ToInt();
                 detail.active = 1;
                 detail.payment_to_vendor_deadline = detail.paid_to_vendor_date = detail.payment_to_vendor_notification_date = detail.deleted_at = detail.updated_at = null;
                 detail.vendor_cost = vendor_room_price;
@@ -280,17 +279,19 @@ namespace Agency.Controllers
 
                 reservation.check_in = minDate;
                 reservation.check_out = maxDate;
-                reservation.balance_due_date = Convert.ToDateTime(reservation.check_in).AddDays(-21);
+                reservation.balance_due_date = Convert.ToDateTime(reservation.check_in).AddDays(-30);
                 reservation.total_rooms = reservationViewModel.first_name.Count;
 
                 ReservationViewModel updatedTotals = ReservationService.calculateTotalandVendor(reservation.id);
-
+                reservation.total_rooms = updatedTotals.total_rooms;
                 reservation.total_amount = updatedTotals.total_amount;
                 reservation.total_amount_after_tax = updatedTotals.total_amount_after_tax;
                 reservation.total_amount_from_vendor = updatedTotals.total_amount_from_vendor;
                 reservation.paid_amount = (c_event.advance_reservation_percentage / 100) * reservation.total_amount_after_tax;
                 reservation.tax_amount = updatedTotals.tax_amount;
                 reservation.total_nights = updatedTotals.total_nights;
+                reservation.reservation_avg_price = db.ReservationDetails.Where(resDet => resDet.reservation_id == reservation.id).Select(resDet => resDet.amount_after_tax).Sum() / reservation.total_nights;
+                reservation.vendor_avg_price = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id).Select(s => s.vendor_cost).Sum() / reservation.total_nights;
                 reservation.updated_at = DateTime.Now;
                 db.SaveChanges();
             }

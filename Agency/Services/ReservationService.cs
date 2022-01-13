@@ -58,7 +58,7 @@ namespace Agency.Services
             reservationViewModel.total_amount_from_vendor = total_amount_from_vendor;
             reservationViewModel.tax_amount = tax_amount;
             reservationViewModel.total_nights = total_nights;
-           
+            reservationViewModel.total_rooms = reservationDetails.Count();
             return reservationViewModel;
         }
     }

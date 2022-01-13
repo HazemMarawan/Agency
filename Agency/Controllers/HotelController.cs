@@ -106,7 +106,7 @@ namespace Agency.Controllers
                     }
                 }
 
-                if (hotelVM.images[1] != null)
+                if (hotelVM.images[0] != null)
                 {
                     foreach (var image in hotelVM.images)
                     {
