@@ -56,4 +56,11 @@ namespace Agency.Enums
         Follow = 2,
         Done = 3
     }
+    public enum RoomType
+    {
+        Single = 1,
+        Double = 2,
+        Trple = 3,
+        Quad = 4
+    }
 }

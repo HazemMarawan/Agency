@@ -15,6 +15,7 @@ namespace Agency.ViewModel
         public double? amount { get; set; }
         public double? amount_after_tax { get; set; }
         public double? tax { get; set; }
+        public double? room_price { get; set; }
         public int? room_type { get; set; }
         public DateTime reservation_from { get; set; }
         public DateTime reservation_to { get; set; }

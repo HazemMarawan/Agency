@@ -247,7 +247,11 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label>Room Price</label>
-                                <input required name="vendor_cost" id="vendor_cost" type="number" step="0.1" min="1" class="form-control radius-30" />
+                                <input required name="room_price" id="room_price" type="number" step="0.1" min="1" class="form-control radius-30" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Total Vendor</label>
+                                <input name="vendor_cost" id="vendor_cost" type="number" step="0.1" min="1" class="form-control radius-30" />
                             </div>
                         </div>
                     </div>
@@ -309,6 +313,10 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label>Room Price</label>
+                                <input required name="room_price" id="room_price" type="number" step="0.1" min="1" class="form-control radius-30" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Total Vendor</label>
                                 <input required name="vendor_cost" id="vendor_cost" type="number" step="0.1" min="1" class="form-control radius-30" />
                             </div>
                             <div class="form-group col-md-6">
@@ -600,7 +608,9 @@
                                             <p>Vend. Cost After Amend</p>
                                             <p>Status</p>
                                             <p>Initial Status</p>
+                                            <p>Collected</p>
                                             <p>Initial Collected</p>
+                                            <p>Balance</p>
                                             <p>Initial Balance</p>
                                             @if (Model.CurrentReservation.paid_amount == Model.CurrentReservation.total_amount_after_tax)
                                             {
@@ -611,7 +621,6 @@
                                                 <p>Initial Profit</p>
                                             }
                                             <p>Credit Card Information</p>
-                                            <p>Initial Credit Card Information</p>
                                         </div>
                                         <div class="col-lg-7 part-b">
                                             <p>@Model.CurrentReservation.event_name | <span style="color:red;">@Model.InitialReservation.event_name</span></p>
@@ -664,7 +673,7 @@
                                             }
                                             else
                                             {
-                                                <p>@Model.CurrentReservation.total_amount @Model.CurrentReservation.string_currency | <span style="color:red;">@Model.CurrentReservation.total_amount @Model.InitialReservation.string_currency</span></p>
+                                                <p>@Model.CurrentReservation.total_amount @Model.CurrentReservation.string_currency | <span style="color:red;">@Model.InitialReservation.total_amount @Model.InitialReservation.string_currency</span></p>
                                             }
                                             @if (Model.CurrentReservation.tax == null)
                                             {
@@ -1116,7 +1125,7 @@
                                 html += "<a class='edit' href='javascript:void(0);' title='Edit'><i class='far fa-edit'></i></a>&nbsp;";
                                 html += "<a class='delete' href='javascript:void(0);' title='Delete'><i class='fa fa-trash'></i></a>&nbsp;";
                                 html += "<a class='cancel' href='javascript:void(0);' title='Cancel'><i class='far fa-times-circle'></i></a>&nbsp;";
-                                html += "<a class='move_reservation_to_another_booking' href='javascript:void(0);' title='Transfer Reservation'><i class='fas fa-people-arrows'></i></a>&nbsp;";
+                                //html += "<a class='move_reservation_to_another_booking' href='javascript:void(0);' title='Transfer Reservation'><i class='fas fa-people-arrows'></i></a>&nbsp;";
 
                                 $(nTd).html("<span class='action-column'>" + html + "</span>");
                             }
@@ -1360,16 +1369,17 @@
                 }, function (response) {
 
                 }, function (dialog) {
-                    dialog.find('#vendor_cost').val('@Model.CurrentReservation.vendor_single_price');
+                    @*dialog.find('#vendor_cost').val('@Model.CurrentReservation.vendor_single_price');*@
+                        dialog.find('#room_price').val('@Model.CurrentReservation.single_price');
                     dialog.find('#room_type').change(function () {
                         if ($(this).val() == 1)
-                            dialog.find('#vendor_cost').val('@Model.CurrentReservation.vendor_single_price');
+                            dialog.find('#room_price').val('@Model.CurrentReservation.single_price');
                         else if ($(this).val() == 2)
-                            dialog.find('#vendor_cost').val('@Model.CurrentReservation.vendor_douple_price');
+                            dialog.find('#room_price').val('@Model.CurrentReservation.double_price');
                         else if ($(this).val() == 3)
-                            dialog.find('#vendor_cost').val('@Model.CurrentReservation.vendor_triple_price');
+                            dialog.find('#room_price').val('@Model.CurrentReservation.triple_price');
                         else if ($(this).val() == 4)
-                            dialog.find('#vendor_cost').val('@Model.CurrentReservation.vendor_quad_price');
+                            dialog.find('#room_price').val('@Model.CurrentReservation.quad_price');
 
                     })
 
@@ -1643,6 +1653,7 @@
                         dialog.find('#client_last_name').val(data.client_last_name);
                         dialog.find('#vendor_code').val(data.vendor_code);
                         dialog.find('#vendor_cost').val(data.vendor_cost);
+                        dialog.find('#room_price').val(data.room_price);
 
                         dialog.find('#paid_to_vendor').val(data.paid_to_vendor);
                         dialog.find('#amount_paid_to_vendor').val(data.amount_paid_to_vendor);

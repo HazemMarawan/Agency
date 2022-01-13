@@ -48,9 +48,9 @@ namespace Agency.Services
 
                 total_amount += resDetail.amount ;
                 total_amount_after_tax += resDetail.amount_after_tax;
-                total_amount_from_vendor += (vendor_room_price*resDetail.no_of_days);
+                total_amount_from_vendor += (vendor_room_price*(resDetail.no_of_days-1));
                 tax_amount += resDetail.tax;
-                total_nights += resDetail.no_of_days;
+                total_nights += resDetail.no_of_days-1;
             }
             ReservationViewModel reservationViewModel = new ReservationViewModel();
             reservationViewModel.total_amount = total_amount;
