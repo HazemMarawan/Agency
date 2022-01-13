@@ -86,7 +86,8 @@ namespace Agency.Helpers
                                                                          balance_due_date = (DateTime)res.balance_due_date,
                                                                          countPaidToVendorRooms = db.ReservationDetails.Where(resDet => resDet.reservation_id == res.id).Where(resDet => resDet.paid_to_vendor == 1).Count()
                                                                          //profit = calculateProfit(res.id).profit
-                                                                     }).Where(r => r.balance_due_date.Year == DateTime.Now.Year && r.balance_due_date.Month == DateTime.Now.Month && r.balance_due_date.Day == DateTime.Now.Day && r.is_canceled == null && r.countPaidToVendorRooms == 0).Take(2).ToList();
+                                                                         //}).Where(r => r.balance_due_date.Year == DateTime.Now.Year && r.balance_due_date.Month == DateTime.Now.Month && r.balance_due_date.Day == DateTime.Now.Day && r.is_canceled == null && r.countPaidToVendorRooms == 0).Take(2).ToList();
+                                                                     }).Where(r => r.balance_due_date <= DateTime.Now && r.is_canceled == null && r.total_amount_after_tax != 0 && r.paid_amount < r.total_amount_after_tax).ToList();
             return balanceDueDateReservations;
         }
         public static List<ReservationViewModel> balanceDueDateNotifications()
@@ -164,7 +165,8 @@ namespace Agency.Helpers
                                                                          balance_due_date = (DateTime)res.balance_due_date,
                                                                          countPaidToVendorRooms = db.ReservationDetails.Where(resDet => resDet.reservation_id == res.id).Where(resDet => resDet.paid_to_vendor == 1).Count()
                                                                          //profit = calculateProfit(res.id).profit
-                                                                     }).Where(r => r.balance_due_date.Year == DateTime.Now.Year && r.balance_due_date.Month == DateTime.Now.Month && r.balance_due_date.Day == DateTime.Now.Day && r.is_canceled == null && r.total_amount_after_tax != 0 && r.paid_amount < r.total_amount_after_tax).ToList();
+                                                                     //}).Where(r => r.balance_due_date.Year == DateTime.Now.Year && r.balance_due_date.Month == DateTime.Now.Month && r.balance_due_date.Day == DateTime.Now.Day && r.is_canceled == null && r.total_amount_after_tax != 0 && r.paid_amount < r.total_amount_after_tax).ToList();
+                                                                     }).Where(r => r.balance_due_date <= DateTime.Now && r.is_canceled == null && r.total_amount_after_tax != 0 && r.paid_amount < r.total_amount_after_tax).ToList();
             return balanceDueDateReservations;
         }
         public static List<ReservationDetailViewModel> payToVendorNotification()
