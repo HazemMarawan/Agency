@@ -705,7 +705,7 @@
                                             </p>
                                             <p>@Model.CurrentReservation.opener_name  | <span style="color:red;">@Model.InitialReservation.opener_name</span></p>
                                             <p>@Model.CurrentReservation.closer_name  | <span style="color:red;">@Model.InitialReservation.closer_name</span></p>
-                                            <p>@Model.CurrentReservation.id  | <span style="color:red;">@Model.InitialReservation.id</span></p>
+                                            <p>@Model.CurrentReservation.id  | <span style="color:red;">@Model.InitialReservation.reservation_id</span></p>
                                             <p>@Model.CurrentReservation.created_at_string  | <span style="color:red;">@Model.InitialReservation.created_at_string</span></p>
                                             @if (!String.IsNullOrEmpty(Model.CurrentReservation.check_in.ToString().Split(' ')[0]))
                                             {
