@@ -669,13 +669,20 @@
                                                  <p>Credit Card Information</p>
                                         </div>
                                         <div class="col-lg-7 part-b">
-                                            @if (!String.IsNullOrEmpty(Model.CurrentReservation.event_name))
+                                            @if (Model.CurrentReservation.is_special == 1)
                                             {
-                                                <p>@Model.CurrentReservation.event_name | <span style="color:red;">@Model.InitialReservation.event_name</span></p>
+                                                <p>Special | <span style="color:red;">@(Model.CurrentReservation.is_special==1?"Special": "-")</span></p>
                                             }
                                             else
-                                            {
-                                                <p>- | <span style="color:red;">-</span></p>
+                                            { 
+                                                if (!String.IsNullOrEmpty(Model.CurrentReservation.event_name))
+                                                {
+                                                    <p>@Model.CurrentReservation.event_name | <span style="color:red;">@Model.InitialReservation.event_name</span></p>
+                                                }
+                                                else
+                                                {
+                                                    <p>- | <span style="color:red;">-</span></p>
+                                                }
                                             }
                                             @if (!String.IsNullOrEmpty(Model.CurrentReservation.hotel_name))
                                             {
