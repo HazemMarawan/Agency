@@ -24,6 +24,7 @@ namespace Agency.Controllers
         public ActionResult Index()
         {
             ViewBag.Events = db.Events.Select(s => new { s.id, s.title, s.updated_at }).OrderByDescending(e => e.updated_at).ToList();
+            ViewBag.Hotels = db.Hotels.Select(s => new { s.id, s.name }).ToList();
 
             ViewBag.Opener = db.Users.Select(s => new { s.id, s.full_name }).ToList();
             ViewBag.Closer = db.Users.Select(s => new { s.id, s.full_name }).ToList();
@@ -239,7 +240,10 @@ namespace Agency.Controllers
                                security_code = reinitialRes.security_code
                                //profit = calculateProfit(res.id).profit
                            }).Where(r => r.reservation_id == id).FirstOrDefault();
-
+            if(initialResData == null)
+            {
+                initialResData = new ReservationViewModel();
+            }
             ReservationViewScreenViewModel reservationViewScreenViewModel = new ReservationViewScreenViewModel();
             reservationViewScreenViewModel.CurrentReservation = resData;
             reservationViewScreenViewModel.InitialReservation = initialResData;
@@ -338,6 +342,7 @@ namespace Agency.Controllers
                                total_amount = res.total_amount,
                                currency = res.currency,
                                tax = res.tax,
+                               is_special = even.is_special,
                                financial_advance = res.financial_advance,
                                financial_advance_date = res.financial_advance_date,
                                financial_due = res.financial_due,
@@ -449,6 +454,7 @@ namespace Agency.Controllers
                                financial_due = res.financial_due,
                                financial_due_date = res.financial_due_date,
                                status = res.status,
+                               is_special = even.is_special,
                                single_price = res.single_price,
                                double_price = res.double_price,
                                triple_price = res.triple_price,
@@ -555,6 +561,7 @@ namespace Agency.Controllers
                                financial_due = res.financial_due,
                                financial_due_date = res.financial_due_date,
                                financial_due_date_string = res.financial_due_date.ToString(),
+                               is_special = even.is_special,
                                status = res.status,
                                single_price = res.single_price,
                                double_price = res.double_price,
@@ -670,6 +677,7 @@ namespace Agency.Controllers
                                financial_due_date = res.financial_due_date,
                                financial_due_date_string = res.financial_due_date.ToString(),
                                status = res.status,
+                               is_special = even.is_special,
                                single_price = res.single_price,
                                double_price = res.double_price,
                                triple_price = res.triple_price,
@@ -878,6 +886,7 @@ namespace Agency.Controllers
                                financial_due = res.financial_due,
                                financial_due_date = res.financial_due_date,
                                status = res.status,
+                               is_special = even.is_special,
                                single_price = res.single_price,
                                double_price = res.double_price,
                                triple_price = res.triple_price,
@@ -1208,55 +1217,126 @@ namespace Agency.Controllers
         {
             if (reservationViewModel.id == 0)
             {
-                Reservation reservation = AutoMapper.Mapper.Map<ReservationViewModel, Reservation>(reservationViewModel);
-                EventHotel eventHotel = db.EventHotels.Find(reservation.event_hotel_id);
-                Event c_event = db.Events.Find(eventHotel.event_id);
+                if(reservationViewModel.is_special == 1)
+                {
+                    Event specialEvent = new Event();
+                    specialEvent.is_special = 1;
+                    specialEvent.event_from = DateTime.Now;
+                    specialEvent.to = DateTime.Now;
+                    specialEvent.due_date = DateTime.Now;
+                    specialEvent.created_at = DateTime.Now;
+                    specialEvent.created_by = Session["id"].ToString().ToInt(); 
+                    db.Events.Add(specialEvent);
+                    db.SaveChanges();
 
-                reservation.single_price = eventHotel.single_price;
-                reservation.vendor_single_price = eventHotel.vendor_single_price;
-                reservation.double_price = eventHotel.double_price;
-                reservation.vendor_douple_price = eventHotel.vendor_douple_price;
-                reservation.triple_price = eventHotel.triple_price;
-                reservation.vendor_triple_price = eventHotel.vendor_triple_price;
-                reservation.quad_price = eventHotel.quad_price;
-                reservation.vendor_quad_price = eventHotel.vendor_quad_price;
-                reservation.tax = db.Events.Find(eventHotel.event_id).tax;
-                reservation.currency = eventHotel.currency;
-                reservation.tax_amount = 0;
-                reservation.total_amount_after_tax = 0;
-                reservation.total_amount_from_vendor = 0;
-                reservation.total_amount = 0;
-                reservation.paid_amount = 0;
-                reservation.financial_advance = 0;
-                reservation.financial_due = 0;
-                reservation.advance_reservation_percentage = c_event.advance_reservation_percentage;
-                reservation.vendor_id = eventHotel.vendor_id;
-                reservation.created_at = DateTime.Now;
-                reservation.updated_at = DateTime.Now;
-                reservation.balance_due_date = DateTime.Now;
-                reservation.active = 1;
-                reservation.created_by = Session["id"].ToString().ToInt();
-                db.Reservations.Add(reservation);
-                db.SaveChanges();
+                    EventHotel specialEventHotel = new EventHotel();
+                    specialEventHotel.event_id = specialEvent.id;
+                    specialEventHotel.hotel_id = reservationViewModel.hotel_id;
+                    specialEventHotel.created_at = DateTime.Now;
+                    specialEventHotel.created_by = Session["id"].ToString().ToInt();
+                    db.EventHotels.Add(specialEventHotel);
+                    db.SaveChanges();
 
-                InitialReservation initialReservation = AutoMapper.Mapper.Map<Reservation, InitialReservation>(reservation);
-                initialReservation.id = 0;
-                initialReservation.reservation_id = reservation.id;
-                db.InitialReservations.Add(initialReservation);
-                db.SaveChanges();
+                    Reservation reservation = AutoMapper.Mapper.Map<ReservationViewModel, Reservation>(reservationViewModel);
+                    reservation.event_hotel_id = specialEventHotel.id;
+                    reservation.single_price = 0;
+                    reservation.vendor_single_price = 0;
+                    reservation.double_price = 0;
+                    reservation.vendor_douple_price = 0;
+                    reservation.triple_price = 0;
+                    reservation.vendor_triple_price = 0;
+                    reservation.quad_price = 0;
+                    reservation.vendor_quad_price = 0;
+                    reservation.tax = 0;
+                    reservation.currency = 0;
+                    reservation.tax_amount = 0;
+                    reservation.total_amount_after_tax = 0;
+                    reservation.total_amount_from_vendor = 0;
+                    reservation.total_amount = 0;
+                    reservation.paid_amount = 0;
+                    reservation.financial_advance = 0;
+                    reservation.financial_due = 0;
+                    reservation.advance_reservation_percentage = 0;
+                    reservation.created_at = DateTime.Now;
+                    reservation.updated_at = DateTime.Now;
+                    reservation.balance_due_date = DateTime.Now;
+                    reservation.active = 1;
+                    reservation.created_by = Session["id"].ToString().ToInt();
+                    db.Reservations.Add(reservation);
+                    db.SaveChanges();
 
-                Company company = new Company();
-                company.name = reservationViewModel.company_name;
-                company.created_at = DateTime.Now;
-                company.updated_at = DateTime.Now;
-                company.created_by = Session["id"].ToString().ToInt();
-                db.Companies.Add(company);
-                db.SaveChanges();
+                    InitialReservation initialReservation = AutoMapper.Mapper.Map<Reservation, InitialReservation>(reservation);
+                    initialReservation.id = 0;
+                    initialReservation.reservation_id = reservation.id;
+                    db.InitialReservations.Add(initialReservation);
+                    db.SaveChanges();
 
-                reservation.company_id = company.id;
-                db.SaveChanges();
+                    Company company = new Company();
+                    company.name = reservationViewModel.company_name;
+                    company.created_at = DateTime.Now;
+                    company.updated_at = DateTime.Now;
+                    company.created_by = Session["id"].ToString().ToInt();
+                    db.Companies.Add(company);
+                    db.SaveChanges();
 
-                Logs.ReservationActionLog(Session["id"].ToString().ToInt(), reservation.id, "Add", "Add Booking #" + reservation.id);
+                    reservation.company_id = company.id;
+                    db.SaveChanges();
+                    Logs.ReservationActionLog(Session["id"].ToString().ToInt(), reservation.id, "Add", "Add Booking #" + reservation.id);
+
+
+                }
+                else
+                { 
+                    Reservation reservation = AutoMapper.Mapper.Map<ReservationViewModel, Reservation>(reservationViewModel);
+                    EventHotel eventHotel = db.EventHotels.Find(reservation.event_hotel_id);
+                    Event c_event = db.Events.Find(eventHotel.event_id);
+
+                    reservation.single_price = eventHotel.single_price;
+                    reservation.vendor_single_price = eventHotel.vendor_single_price;
+                    reservation.double_price = eventHotel.double_price;
+                    reservation.vendor_douple_price = eventHotel.vendor_douple_price;
+                    reservation.triple_price = eventHotel.triple_price;
+                    reservation.vendor_triple_price = eventHotel.vendor_triple_price;
+                    reservation.quad_price = eventHotel.quad_price;
+                    reservation.vendor_quad_price = eventHotel.vendor_quad_price;
+                    reservation.tax = db.Events.Find(eventHotel.event_id).tax;
+                    reservation.currency = eventHotel.currency;
+                    reservation.tax_amount = 0;
+                    reservation.total_amount_after_tax = 0;
+                    reservation.total_amount_from_vendor = 0;
+                    reservation.total_amount = 0;
+                    reservation.paid_amount = 0;
+                    reservation.financial_advance = 0;
+                    reservation.financial_due = 0;
+                    reservation.advance_reservation_percentage = c_event.advance_reservation_percentage;
+                    reservation.vendor_id = eventHotel.vendor_id;
+                    reservation.created_at = DateTime.Now;
+                    reservation.updated_at = DateTime.Now;
+                    reservation.balance_due_date = DateTime.Now;
+                    reservation.active = 1;
+                    reservation.created_by = Session["id"].ToString().ToInt();
+                    db.Reservations.Add(reservation);
+                    db.SaveChanges();
+
+                    InitialReservation initialReservation = AutoMapper.Mapper.Map<Reservation, InitialReservation>(reservation);
+                    initialReservation.id = 0;
+                    initialReservation.reservation_id = reservation.id;
+                    db.InitialReservations.Add(initialReservation);
+                    db.SaveChanges();
+
+                    Company company = new Company();
+                    company.name = reservationViewModel.company_name;
+                    company.created_at = DateTime.Now;
+                    company.updated_at = DateTime.Now;
+                    company.created_by = Session["id"].ToString().ToInt();
+                    db.Companies.Add(company);
+                    db.SaveChanges();
+
+                    reservation.company_id = company.id;
+                    db.SaveChanges();
+                    Logs.ReservationActionLog(Session["id"].ToString().ToInt(), reservation.id, "Add", "Add Booking #" + reservation.id);
+
+                }
 
             } else
             {

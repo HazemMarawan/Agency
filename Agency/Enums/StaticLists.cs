@@ -29,6 +29,7 @@ namespace Agency.Enums
     }
     public enum Currency
     {
+        UnknownCurrency = 0,
         USD = 1,
         GBP = 2,
         EUR = 3,

@@ -41,6 +41,7 @@ namespace Agency
             Mapper.CreateMap<NoteViewModel, Note>();
             Mapper.CreateMap<TaskViewModel, Task>();
             Mapper.CreateMap<Reservation, InitialReservation>();
+            Mapper.CreateMap<Reservation, ReservationViewModel>();
 
         }
     }

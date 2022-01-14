@@ -58,6 +58,7 @@ namespace Agency.Controllers
                                     active = event_row.active,
                                     location_id = event_row.location_id,
                                     location_name = loc.name == null ? "No Location" : loc.name,
+                                    is_special = event_row.is_special,
                                     hotels = (from event_hotel in db.EventHotels
                                               join hotel in db.Hotels on event_hotel.hotel_id equals hotel.id
                                               join vendor in db.Vendors on event_hotel.vendor_id equals vendor.id into vendor_loc
@@ -84,7 +85,7 @@ namespace Agency.Controllers
                                                   
                                               }).Where(h=>h.event_id == event_row.id).ToList()
 
-                                });
+                                }).Where(e=>e.is_special != 1);
 
                 //Search    
                 if (!string.IsNullOrEmpty(searchValue))

@@ -229,17 +229,29 @@
                     <div class="form-body">
                         <div class="form-row">
                             <input type="hidden" name="id" id="id" value="0" />
+                            <div class="form-group col-md-12">
+                                <label>Special Event</label>
+                                <input name="is_special" id="is_special" value="1" type="checkbox" class="radius-30" />
 
-                            <div class="form-group col-md-6">
-                                <label>Event</label>
-                                @Html.DropDownList("event_id", new SelectList(ViewBag.Events, "id", "title"), "Select Event", new { @class = "form-control", @name = "event_id", @id = "event_id", required = "required" })
                             </div>
-                            <div class="form-group col-md-6">
-                                <label>Hotel</label>
-                                <div id="event_hotel_div">
-                                    <select required id="event_hotel" name="event_hotel_id" class="form-control">
-                                        <option value="">Select Hotel</option>
-                                    </select>
+                            <div id="main_event_reservation_div" class="row col-md-12">
+                                <div class="form-group col-md-6">
+                                    <label>Event</label>
+                                    @Html.DropDownList("event_id", new SelectList(ViewBag.Events, "id", "title"), "Select Event", new { @class = "form-control", @name = "event_id", @id = "event_id" })
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>Hotel</label>
+                                    <div id="event_hotel_div">
+                                        <select id="event_hotel" name="event_hotel_id" class="form-control">
+                                            <option value="">Select Hotel</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="special_event_reservation_div" style="display:none;" class="row col-md-12">
+                                <div class="form-group col-md-12">
+                                    <label>Hotels</label>
+                                    @Html.DropDownList("hotel_id", new SelectList(ViewBag.Hotels, "id", "name"), "Select Hotel", new { @class = "form-control", @name = "hotel_id", @id = "hotel_id"})
                                 </div>
                             </div>
                             <div class="form-group col-md-6">
@@ -258,19 +270,6 @@
                                 <label>Email</label>
                                 <input required name="reservations_officer_email" id="reservations_officer_email" type="email" class="form-control radius-30" />
                             </div>
-                            <div class="form-group col-md-12">
-                                <label>Credit Card Number</label>
-                                <input required name="credit_card_number" id="credit_card_number" type="text" class="form-control radius-30" />
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label>Security Code</label>
-                                <input required name="security_code" id="security_code" type="text" class="form-control radius-30" />
-                            </div>
-                            <div class="card_expiration_date-group col-md-6">
-                                <label>Expiration Date</label>
-                                <input required name="card_expiration_date" id="card_expiration_date" type="text" class="form-control radius-30" />
-                            </div>
-
                         </div>
                     </div>
                 </div>
@@ -611,13 +610,13 @@
                                             <th width="9%"></th>
                                         </tr>
                                         @*<tr class="text-center">
-                                            <th>#</th>
-                                            <th>Event</th>
-                                            <th>Hotel</th>
-                                            <th>Check in/out</th>
-                                            <th>Price/Night</th>
-                                            <th></th>
-                                        </tr>*@
+                                                <th>#</th>
+                                                <th>Event</th>
+                                                <th>Hotel</th>
+                                                <th>Check in/out</th>
+                                                <th>Price/Night</th>
+                                                <th></th>
+                                            </tr>*@
                                     </thead>
                                 </table>
                             </div>
@@ -643,13 +642,13 @@
                                             <th width="5%"></th>
                                         </tr>
                                         @*<tr class="text-center">
-                                            <th>#</th>
-                                            <th>Event</th>
-                                            <th>Hotel</th>
-                                            <th>Check in/out</th>
-                                            <th>Price/Night</th>
-                                            <th></th>
-                                        </tr>*@
+                                                <th>#</th>
+                                                <th>Event</th>
+                                                <th>Hotel</th>
+                                                <th>Check in/out</th>
+                                                <th>Price/Night</th>
+                                                <th></th>
+                                            </tr>*@
                                     </thead>
                                 </table>
                             </div>
@@ -725,6 +724,8 @@
                             }
                             if (oData.string_check_out)
                                 html += "<span style='font-weight:bold;' class='bold'>Check out:</span>" + oData.string_check_out + "<br/>";
+                            if (oData.is_special)
+                                html += "<span style='font-weight:bold;' class='badge badge-success'>Special</span><br/>";
 
                             $(nTd).html("<span class='action-column'>" + html + "</span>");
                         }
@@ -892,8 +893,11 @@
                         "data": "company_name", "searchable": true,
                         fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
 
-                            var html = "<a href='/Reservation/View/" + oData.id + "'>" + oData.company_name + "</a>";
-
+                            var html = "<a href='/Reservation/View/" + oData.id + "'>" + oData.company_name + "</a><br>";
+                            if (oData.is_special)
+                                html += "<span class='badge badge-primary'>Special</span>";
+                            else
+                                html += "<span class='badge badge-success'>Normal</span>";
                             $(nTd).html("<span class='action-column'>" + html + "</span>");
                         }
                     },
@@ -1058,8 +1062,11 @@
                             "data": "company_name", "searchable": true,
                             fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
 
-                                var html = "<a href='/Reservation/View/" + oData.id + "'>" + oData.company_name + "</a>";
-
+                                var html = "<a href='/Reservation/View/" + oData.id + "'>" + oData.company_name + "</a><br  >";
+                                if (oData.is_special)
+                                    html += "<span class='badge badge-primary'>Special</span>";
+                                else
+                                    html += "<span class='badge badge-success'>Normal</span>";
                                 $(nTd).html("<span class='action-column'>" + html + "</span>");
                             }
                         },
@@ -1225,8 +1232,11 @@
                             "data": "company_name", "searchable": true,
                             fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
 
-                                var html = "<a href='/Reservation/View/" + oData.id + "'>" + oData.company_name + "</a>";
-
+                                var html = "<a href='/Reservation/View/" + oData.id + "'>" + oData.company_name + "</a><br  >";
+                                if (oData.is_special)
+                                    html += "<span class='badge badge-primary'>Special</span>";
+                                else
+                                    html += "<span class='badge badge-success'>Normal</span>";
                                 $(nTd).html("<span class='action-column'>" + html + "</span>");
                             }
                         },
@@ -1390,8 +1400,11 @@
                             "data": "company_name", "searchable": true,
                             fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
 
-                                var html = "<a href='/Reservation/View/" + oData.id + "'>" + oData.company_name + "</a>";
-
+                                var html = "<a href='/Reservation/View/" + oData.id + "'>" + oData.company_name + "</a><br  >";
+                                if (oData.is_special)
+                                    html += "<span class='badge badge-primary'>Special</span>";
+                                else
+                                    html += "<span class='badge badge-success'>Normal</span>";
                                 $(nTd).html("<span class='action-column'>" + html + "</span>");
                             }
                         },
@@ -1543,8 +1556,16 @@
                             "searchable": true
                         },
                         {
-                            "data": "event_name",
-                            "searchable": true
+                            "data": "event_name", "searchable": true,
+                            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+
+                                var html = "<span>"+oData.event_name+"</span>";
+                                if (oData.is_special)
+                                    html += "<span class='badge badge-primary'>Special</span>";
+                                else
+                                    html += "<span class='badge badge-success'>Normal</span>";
+                                $(nTd).html("<span class='action-column'>" + html + "</span>");
+                            }
                         },
                         {
                             "data": "hotel_name",
@@ -1625,13 +1646,21 @@
                             }
                         },
                         {
-                            "data": "event_name",
-                            "searchable": true
+                            "data": "event_name", "searchable": true,
+                            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+
+                                var html = "<span>" + oData.event_name+"</span><br>";
+                                if (oData.is_special)
+                                    html += "<span class='badge badge-primary'>Special</span>";
+                                else
+                                    html += "<span class='badge badge-success'>Normal</span>";
+                                $(nTd).html("<span class='action-column'>" + html + "</span>");
+                            }
                         },
                         {
                             "data": "hotel_name",
                             "searchable": true
-                        },  
+                        },
                         {
                             "data": "status", "searchable": true,
                             fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
@@ -1669,7 +1698,7 @@
                             "data": "vendor_single_price", "searchable": true,
                             fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
                                 var html = "";
-                                
+
                                 if (oData.vendor_single_price)
                                     html += "<span style='font-weight:bold;' class='fw-bold'> Single: " + addCommas((oData.vendor_single_price).toFixed(2)) + "</span><br/>";
                                 if (oData.vendor_douple_price)
@@ -1751,6 +1780,17 @@
 
 
 
+                        });
+
+                        $(document).on('click', '#is_special', function () {
+                            if (dialog.find("#is_special").is(":checked")) {
+                                dialog.find("#main_event_reservation_div").hide();
+                                dialog.find("#special_event_reservation_div").show();
+                            }
+                            else {
+                                dialog.find("#main_event_reservation_div").show();
+                                dialog.find("#special_event_reservation_div").hide();
+                            }
                         });
 
                 });

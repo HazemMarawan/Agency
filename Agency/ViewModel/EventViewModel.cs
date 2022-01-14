@@ -17,6 +17,7 @@ namespace Agency.ViewModel
         public List<int> event_hotels_ids { get; set; }
         public double? tax { get; set; }
         public double? advance_reservation_percentage { get; set; }
+        public int? is_special { get; set; }
         public int? active { get; set; }
         public int? created_by { get; set; }
         public int? updated_by { get; set; }

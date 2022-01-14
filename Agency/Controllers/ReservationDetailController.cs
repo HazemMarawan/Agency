@@ -910,6 +910,18 @@ namespace Agency.Controllers
             var report = new Rotativa.ViewAsPdf("Invoice", resData);
             return report;
         }
+        public JsonResult saveCreditCard(ReservationViewModel reservationViewModel)
+        {
+            Reservation reservation = db.Reservations.Find(reservationViewModel.id);
+            reservation.credit_card_number = reservationViewModel.credit_card_number;
+            reservation.security_code = reservationViewModel.security_code;
+            reservation.card_expiration_date = reservationViewModel.card_expiration_date;
+            db.SaveChanges();
+
+            ReservationViewModel reservationAfterUpdate = AutoMapper.Mapper.Map<Reservation, ReservationViewModel>(reservation);
+
+            return Json(new { reservation = reservationAfterUpdate }, JsonRequestBehavior.AllowGet);
+        }
 
     }
 }

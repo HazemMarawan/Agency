@@ -48,6 +48,8 @@ namespace Agency.ViewModel
         public int? currency { get; set; }
         public string string_currency { get; set; }
         public double? profit { get; set; }
+        public int? is_special { get; set; }
+        public int? hotel_id { get; set; }
         public int? active { get; set; }
         public int? created_by { get; set; }
         public int? updated_by { get; set; }
@@ -102,7 +104,6 @@ namespace Agency.ViewModel
         public double? event_vendor_quad_price { get; set; }
         public string vendor_code { get; set; }
         public double? total_price { get; set; }
-        public int hotel_id { get; set; }
         public string hotel_address { get; set; }
         public int single_rooms { get; set; }
         public int double_rooms { get; set; }

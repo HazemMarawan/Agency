@@ -179,7 +179,6 @@ namespace Agency.Helpers
                                                                         select new ReservationDetailViewModel
                                                                         {
                                                                             id = resDetail.id,
-                                                                            amount = resDetail.amount,
                                                                             amount_after_tax = resDetail.amount_after_tax,
                                                                             tax = resDetail.tax,
                                                                             room_type = resDetail.room_type,
