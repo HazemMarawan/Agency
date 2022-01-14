@@ -208,7 +208,7 @@ namespace Agency.Helpers
                                                                             cancelation_policy = resDetail.cancelation_policy,
                                                                             confirmation_id = resDetail.confirmation_id,
 
-                                                                        }).Where(s=>s.paid_to_vendor != 1 && s.is_reservation_canceled != 1 && s.payment_to_vendor_deadline <= DateTime.Now).ToList();
+                                                                        }).Where(s=>s.paid_to_vendor != 1 && s.is_reservation_canceled != 1 && (s.payment_to_vendor_deadline <= DateTime.Now || s.payment_to_vendor_notification_date <= DateTime.Now)).ToList();
             return payToVendorReservations;
         }
     }
