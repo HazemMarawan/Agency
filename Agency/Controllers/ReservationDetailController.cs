@@ -380,7 +380,14 @@ namespace Agency.Controllers
                 db.SaveChanges();
 
                 Client client = db.Clients.Find(detail.client_id);
+                if (client.first_name != detailViewModel.client_first_name)
+                    editHtml += "First Name: " + client.first_name + @" | <span style=""color: red;"">" + detailViewModel.client_first_name + "</span><br>";
+
                 client.first_name = detailViewModel.client_first_name;
+
+                if (client.last_name != detailViewModel.client_last_name)
+                    editHtml += "Last Name: " + client.last_name + @" | <span style=""color: red;"">" + detailViewModel.client_last_name + "</span><br>";
+
                 client.last_name = detailViewModel.client_last_name;
                 client.updated_at = DateTime.Now;
                 client.updated_by = Session["id"].ToString().ToInt();
