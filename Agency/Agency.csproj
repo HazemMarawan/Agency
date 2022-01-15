@@ -396,6 +396,10 @@
     <Compile Include="Migrations\202201141741503_updateEvents.Designer.cs">
       <DependentUpon>202201141741503_updateEvents.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202201151633361_updateCreditCards.cs" />
+    <Compile Include="Migrations\202201151633361_updateCreditCards.Designer.cs">
+      <DependentUpon>202201151633361_updateCreditCards.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AgencyDbContext.cs" />
     <Compile Include="Models\Chat.cs" />
@@ -418,6 +422,7 @@
     <Compile Include="Models\PermissionGroup.cs" />
     <Compile Include="Models\Reservation.cs" />
     <Compile Include="Models\ReservationComment.cs" />
+    <Compile Include="Models\ReservationCreditCard.cs" />
     <Compile Include="Models\ReservationDetail.cs" />
     <Compile Include="Models\ReservationLog.cs" />
     <Compile Include="Models\ReservationTask.cs" />
@@ -451,6 +456,7 @@
     <Compile Include="ViewModel\PermissionGroupViewModel.cs" />
     <Compile Include="ViewModel\PermissionViewModel.cs" />
     <Compile Include="ViewModel\ReservationCommentViewModel.cs" />
+    <Compile Include="ViewModel\ReservationCreditCardViewModel.cs" />
     <Compile Include="ViewModel\ReservationDetailViewModel.cs" />
     <Compile Include="ViewModel\ReservationLogViewModel.cs" />
     <Compile Include="ViewModel\ReservationTaskViewModel.cs" />
@@ -3993,6 +3999,8 @@
     <Content Include="Views\Booking\Hotel.cshtml" />
     <Content Include="Views\Booking\makeReservation.cshtml" />
     <Content Include="Views\Reservation\ViewOurRooms.cshtml" />
+    <Content Include="Views\Reservation\balanceDueDate.cshtml" />
+    <Content Include="Views\Reservation\PayToVendor.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -4170,6 +4178,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202201141741503_updateEvents.resx">
       <DependentUpon>202201141741503_updateEvents.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202201151633361_updateCreditCards.resx">
+      <DependentUpon>202201151633361_updateCreditCards.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -73,6 +73,7 @@ namespace Agency.Models
         public virtual ICollection<ReservationDetail> ReservationDetail { get; set; }
         public virtual ICollection<ReservationComment> ReservationComments { get; set; }
         public virtual ICollection<ReservationTask> ReservationTasks { get; set; }
+        public virtual ICollection<ReservationCreditCard> ReservationCreditCards { get; set; }
 
     }
 }

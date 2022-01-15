@@ -56,6 +56,7 @@ namespace Agency.Models
         public virtual DbSet<UserRole> UserRoles { get; set; }
         public virtual DbSet<UserTask> UserTasks { get; set; }
         public virtual DbSet<InitialReservation> InitialReservations { get; set; }
+        public virtual DbSet<ReservationCreditCard> ReservationCreditCards { get; set; }
         
     }
 }

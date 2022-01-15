@@ -122,6 +122,7 @@ namespace Agency.ViewModel
         public double? vendor_cost { get; set; }
         public int countPaidToVendorRooms { get; set; }
         public int? countPaidToVendorNights { get; set; }
+        public List<ReservationCreditCardViewModel> reservationCreditCards { get; set; }
 
     }
 }

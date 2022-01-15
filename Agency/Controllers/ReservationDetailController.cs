@@ -919,15 +919,23 @@ namespace Agency.Controllers
         }
         public JsonResult saveCreditCard(ReservationViewModel reservationViewModel)
         {
-            Reservation reservation = db.Reservations.Find(reservationViewModel.id);
-            reservation.credit_card_number = reservationViewModel.credit_card_number;
-            reservation.security_code = reservationViewModel.security_code;
-            reservation.card_expiration_date = reservationViewModel.card_expiration_date;
+            ReservationCreditCard reservationCreditCard = new ReservationCreditCard();
+            reservationCreditCard.reservation_id = reservationViewModel.id;
+            reservationCreditCard.credit_card_number = reservationViewModel.credit_card_number;
+            reservationCreditCard.security_code = reservationViewModel.security_code;
+            reservationCreditCard.card_expiration_date = reservationViewModel.card_expiration_date;
+            db.ReservationCreditCards.Add(reservationCreditCard);
             db.SaveChanges();
 
-            ReservationViewModel reservationAfterUpdate = AutoMapper.Mapper.Map<Reservation, ReservationViewModel>(reservation);
+            List<ReservationCreditCardViewModel> reservationCreditCards = db.ReservationCreditCards.Where(resCre => resCre.reservation_id == reservationViewModel.id).Select(resCre => new ReservationCreditCardViewModel
+            {
+                id = resCre.id,
+                security_code = resCre.security_code,
+                credit_card_number = resCre.credit_card_number,
+                card_expiration_date = resCre.card_expiration_date
+            }).ToList();
 
-            return Json(new { reservation = reservationAfterUpdate }, JsonRequestBehavior.AllowGet);
+            return Json(new { reservationCreditCards = reservationCreditCards }, JsonRequestBehavior.AllowGet);
         }
 
     }

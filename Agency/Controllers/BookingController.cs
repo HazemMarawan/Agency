@@ -188,7 +188,17 @@ namespace Agency.Controllers
             db.Reservations.Add(reservation);
             db.SaveChanges();
 
-            
+
+            ReservationCreditCard reservationCreditCard = new ReservationCreditCard();
+            reservationCreditCard.reservation_id = reservation.id;
+            reservationCreditCard.credit_card_number = reservationViewModel.credit_card_number;
+            reservationCreditCard.security_code = reservationViewModel.security_code;
+            reservationCreditCard.card_expiration_date = reservationViewModel.security_code;
+            reservationCreditCard.created_at = DateTime.Now;
+            db.ReservationCreditCards.Add(reservationCreditCard);
+            db.SaveChanges();
+
+
 
             Company company = new Company();
             company.name = reservationViewModel.company_name;

@@ -228,24 +228,49 @@
                         <div class="notification-scroll">
                             @if (Agency.Helpers.Notification.balanceDueDateNotifications().Count != 0)
                             {
-                                foreach (var item in Agency.Helpers.Notification.balanceDueDateNotifications())
+                                <div class="dropdown-item">
+                                    <div class="media server-log">
+                                        <div class="media-body">
+                                            <div class="data-info">
+                                                <h6 class="">Balance Due Date Bookings</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                foreach (var item in Agency.Helpers.Notification.balanceDueDateNotifications().Take(5))
                                 {
-                                    <div class="dropdown-item">
-                                        <div class="media server-log">
-                                            <svg title="Balance Due Date Booking" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fas fa-calendar-week"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6" y2="6"></line><line x1="6" y1="18" x2="6" y2="18"></line></svg>
-                                            <div class="media-body">
-                                                <div class="data-info">
-                                                    <a target="_blank" href="@Url.Action("View","Reservation",new { id= item.id})">
+                                    <a target="_blank" href="@Url.Action("View","Reservation",new { id= item.id})">
+
+                                        <div class="dropdown-item">
+                                            <div class="media server-log">
+                                                <svg title="Balance Due Date Booking" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fas fa-calendar-week"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6" y2="6"></line><line x1="6" y1="18" x2="6" y2="18"></line></svg>
+                                                <div class="media-body">
+                                                    <div class="data-info">
                                                         <h6 class="">@item.company_name</h6>
                                                         <p>#@item.id @(item.total_amount_after_tax - item.paid_amount) @item.string_currency</p>
                                                         <p>@item.reservations_officer_name</p>
                                                         <p>@item.reservations_officer_phone</p>
-                                                    </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+
+                                }
+                                <a target="_blank" href="@Url.Action("balanceDueDate","Reservation")">
+
+                                    <div class="dropdown-item">
+                                        <div class="media server-log">
+                                            <svg title="Balance Due Date Booking" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fas fa-eye"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6" y2="6"></line><line x1="6" y1="18" x2="6" y2="18"></line></svg>
+                                            <div class="media-body">
+                                                <div class="data-info">
+                                                    <h6 class="">Show All</h6>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                }
+                                </a>
+
                             }
                             else
                             {
@@ -273,22 +298,48 @@
                         <div class="notification-scroll">
                             @if (Agency.Helpers.Notification.payToVendorNotification().Count != 0)
                             {
-                                foreach (var item in Agency.Helpers.Notification.payToVendorNotification())
+                                <div class="dropdown-item">
+                                    <div class="media server-log">
+                                        <div class="media-body">
+                                            <div class="data-info">
+                                                <h6 class="">Pay To Vendor</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                foreach (var item in Agency.Helpers.Notification.payToVendorNotification().Take(5))
                                 {
-                                    <div class="dropdown-item">
-                                        <div class="media server-log">
-                                            <svg title="Balance Due Date Booking" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fas fa-calendar-week"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6" y2="6"></line><line x1="6" y1="18" x2="6" y2="18"></line></svg>
-                                            <div class="media-body">
-                                                <div class="data-info">
-                                                    <a target="_blank" href="@Url.Action("View","Reservation",new { id= item.reservation_id})">
+                                    <a target="_blank" href="@Url.Action("PayToVendor","Reservation")">
+
+                                        <div class="dropdown-item">
+                                            <div class="media server-log">
+                                                <svg title="Balance Due Date Booking" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fas fa-calendar-week"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6" y2="6"></line><line x1="6" y1="18" x2="6" y2="18"></line></svg>
+                                                <div class="media-body">
+                                                    <div class="data-info">
                                                         <h6 class="">@item.company_name: @item.client_first_name @item.client_last_name</h6>
                                                         <p>#@item.id @item.vendor_cost @item.string_currency</p>
-                                                    </a>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                }
+
+                                <a target="_blank" href="@Url.Action("PayToVendor","Reservation")">
+
+                                    <div class="dropdown-item">
+                                        <div class="media server-log">
+                                            <svg title="Balance Due Date Booking" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fas fa-eye"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6" y2="6"></line><line x1="6" y1="18" x2="6" y2="18"></line></svg>
+                                            <div class="media-body">
+                                                <div class="data-info">
+                                                    <h6 class="">Show All</h6>
+
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                }
+                                </a>
                             }
                             else
                             {
