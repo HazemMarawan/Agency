@@ -1797,21 +1797,22 @@
                     progressText: 'progress_text',
                 }, function (response) {
 
-                        $("#credit_card_data_paragraph").empty();
-                        var html = `<div id="credit_card_form">
-                                                    <input type="password" id="password" name="password" placeholder="Password" />
-                                                    <button id="show" class="btn btn-primary btn-sm">Show</button>
-                                                </div>
-                                                <div id="credit_card_info" style="display: none;">
-                                                    <b>Credit Card Number: </b>${response.reservation.credit_card_number} <br />
-                                                    <b>Card Expiration Date: </b>${response.reservation.card_expiration_date} <br />
-                                                    <b>Security Code: </b>${response.reservation.security_code} <br />
-                                                    <hr />
-                                                    <b style="color:red;">Credit Card Number: </b>-<br />
-                                                    <b style="color:red;">Card Expiration Date: </b>- <br />
-                                                    <b style="color:red;">Security Code: </b>- <br />
-                                                </div>`;
-                        $("#credit_card_data_paragraph").append(html);
+                        //$("#credit_card_data_paragraph").empty();
+                        //var html = `<div id="credit_card_form">
+                        //                            <input type="password" id="password" name="password" placeholder="Password" />
+                        //                            <button id="show" class="btn btn-primary btn-sm">Show</button>
+                        //                        </div>
+                        //                        <div id="credit_card_info" style="display: none;">
+                        //                            <b>Credit Card Number: </b>${response.reservation.credit_card_number} <br />
+                        //                            <b>Card Expiration Date: </b>${response.reservation.card_expiration_date} <br />
+                        //                            <b>Security Code: </b>${response.reservation.security_code} <br />
+                        //                            <hr />
+                        //                            <b style="color:red;">Credit Card Number: </b>-<br />
+                        //                            <b style="color:red;">Card Expiration Date: </b>- <br />
+                        //                            <b style="color:red;">Security Code: </b>- <br />
+                        //                        </div>`;
+                        //$("#credit_card_data_paragraph").append(html);
+                        location.reload();
 
                 }, function (response) {
 
