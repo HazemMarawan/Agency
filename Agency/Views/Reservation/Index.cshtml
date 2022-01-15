@@ -251,7 +251,7 @@
                             <div id="special_event_reservation_div" style="display:none;" class="row col-md-12">
                                 <div class="form-group col-md-12">
                                     <label>Hotels</label>
-                                    @Html.DropDownList("hotel_id", new SelectList(ViewBag.Hotels, "id", "name"), "Select Hotel", new { @class = "form-control", @name = "hotel_id", @id = "hotel_id"})
+                                    @Html.DropDownList("hotel_id", new SelectList(ViewBag.Hotels, "id", "name"), "Select Hotel", new { @class = "selectize", @name = "hotel_id", @id = "hotel_id"})
                                 </div>
                             </div>
                             <div class="form-group col-md-6">
@@ -1791,6 +1791,10 @@
                                 dialog.find("#main_event_reservation_div").show();
                                 dialog.find("#special_event_reservation_div").hide();
                             }
+                        });
+                        
+                        dialog.find('#hotel_id').selectize({
+                            plugins: ['remove_button'],
                         });
 
                 });
