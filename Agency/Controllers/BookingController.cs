@@ -107,7 +107,10 @@ namespace Agency.Controllers
                                               event_location = location.name,
                                               hotel_location_distance = location_hotel.distance,
                                               location_id = location_hotel.location_id,
-                                              event_location_id = location.id
+                                              event_location_id = location.id,
+                                              single_price = event_hotel.single_price,
+                                              double_price = event_hotel.double_price,
+                                              currency = event_hotel.currency
                                           }).Where(s => s.event_hotel_id == id && s.location_id == s.event_location_id).FirstOrDefault();
             
             return View(selectedHotel);

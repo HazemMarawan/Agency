@@ -32,6 +32,36 @@
     </form>
 </div>
 
+<div class="modal fade" id="hotel_link_modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <form action="" method="post" enctype='multipart/form-data'>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal_title"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-body">
+                        <div class="form-row">
+                            <input type="hidden" name="id" id="id" value="0" />
+                            <div class="form-group col-md-12">
+                                <label><b>Link</b></label>
+                                <input autocomplete="off" name="link" id="hotelLink" type="text" class="form-control radius-30" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
 <div class="modal fade" id="manage_event_modal" tabindex="-1" role="dialog" aria-hidden="true">
     <form action="" method="post" enctype='multipart/form-data'>
         <div class="modal-dialog modal-lg">
@@ -117,9 +147,9 @@
                                 <select id="hotel_id" name="hotel_id" class="form-control"></select>
                             </div>
                             @*<div class="form-group col-md-6">
-                                <label>Vendor</label>
-                                @Html.DropDownList("vendor_id", new SelectList(ViewBag.Vendors, "id", "NamePlusCode"), "Select Vendor", new { @class = "form-control", @name = "vendor_id", @id = "vendor_id" })
-                            </div>*@
+                                    <label>Vendor</label>
+                                    @Html.DropDownList("vendor_id", new SelectList(ViewBag.Vendors, "id", "NamePlusCode"), "Select Vendor", new { @class = "form-control", @name = "vendor_id", @id = "vendor_id" })
+                                </div>*@
                             <div class="form-group col-md-6">
                                 <label>Single Price</label>
                                 <input name="single_price" id="single_price" type="number" min="0" step="0.1" class="form-control radius-30" />
@@ -304,6 +334,7 @@
                                         data-eventHotelBenefit='${JSON.stringify(value.eventHotelBenefit)}' data-currency='${value.currency}'
                                         title='Edit Hotel'><i class='fa fa-edit'></i></a>&nbsp;`;
                                         html += "<a class='deleteHotel' href='javascript:void(0)' data-id='" + value.id + "' data-name='" + value.name + "' title='Delete Child'><i class='fa fa-trash'></i></a><br/>";
+                                        html += "<a class='copyHotelLink' data-event-hotel-id='"+value.id+"' title='Copy Hotel Link'><i class='fas fa-copy'></i></a>"
                                         html += "</li>";
                                     });
                                     html += "</ul>";
@@ -627,6 +658,29 @@
                     var eventLink = '@Url.Action("Event","Booking",new { secret_key = "secret_key_value" })';
                     eventLink = eventLink.replace('secret_key_value', data.secret_key);
                         dialog.find('#link').val(window.location.origin+eventLink);
+                });
+           });
+
+           $(document).on("click", ".copyHotelLink", function () {
+               var id = $(this).attr('data-event-hotel-id');
+               //var eventLink = '/Booking/Show?secret_key=' + data.secret_key;
+               alert(id)
+               //navigator.clipboard.writeText(window.location.origin + eventLink);
+
+               var modal = $('#hotel_link_modal').clone();
+                modal.find('#modal_title').text('Share Hotel');
+                modal.execModal({
+                    progressBar: 'progress_bar',
+                    progressText: 'progress_text',
+                }, function (response) {
+
+                        //datatable.draw();
+
+                }, function (response) {
+
+                }, function (dialog) {
+                    var hotelLink = '/Booking/Hotel/'+id;
+                    dialog.find('#hotelLink').val(window.location.origin + hotelLink);
                 });
            });
 

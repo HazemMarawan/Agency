@@ -162,6 +162,10 @@
                                                                 <span class="edit-form-new-data col-6 offset-1" id="calculated_number_of_nights">0  nights</span>
                                                             </div>
                                                             <div class="form-row mb-2 col-11 offset-1">
+                                                                <span class="edit-form-new-dataSP col-4">Total</span>
+                                                                <span class="edit-form-new-data col-6 offset-1" id="calculated_total">$ 0</span>
+                                                            </div>
+                                                            <div class="form-row mb-2 col-11 offset-1">
                                                                 <span class="edit-form-new-dataSP col-4">Taxes</span>
                                                                 <span class="edit-form-new-data col-6 offset-1" id="calculated_tax">$ 0</span>
                                                             </div>
@@ -173,76 +177,73 @@
                                                                 <span class="edit-form-new-dataSP col-4">Deposit</span>
                                                                 <span class="edit-form-new-data col-6 offset-1" id="calculated_deposit">$ 0</span>
                                                             </div>
-                                                            <div class="form-row mb-2 col-11 offset-1">
-                                                                <span class="edit-form-new-dataSP col-4">Total</span>
-                                                                <span class="edit-form-new-data col-6 offset-1" id="calculated_total">$ 0</span>
-                                                            </div>
+
 
                                                             <!--
-                                                                                     <div class="form-row mb-4">
+                                                             <div class="form-row mb-4">
 
-                               <div class="col-3">
-                                <span class="edit-form-new-dataSP">Hotel Name</span>
-                                <p class="edit-form-new-data">
-                                    @Model.name
-                                </p>
-                            </div>
-                                                                               <div class="col-3 offset-1">
-                                <span class="edit-form-new-dataSP">Price per Night</span>
-                                <p class="edit-form-new-data">
-                                    $<span>S: @Model.single_price D: @Model.double_price T: @Model.triple_price Q: @Model.quad_price</span>
-                                </p>
-                            </div>
-                                                                                <div class="col-3 offset-1">
-                                                                                    <span class="edit-form-new-dataSP">Number of nights</span>
-                                                                                    <p class="edit-form-new-data">
-                                                                                        <span id="calculated_number_of_nights">0</span> nights
-                                                                                    </p>
-                                                                                </div>
+       <div class="col-3">
+        <span class="edit-form-new-dataSP">Hotel Name</span>
+        <p class="edit-form-new-data">
+            @Model.name
+        </p>
+    </div>
+                                                       <div class="col-3 offset-1">
+        <span class="edit-form-new-dataSP">Price per Night</span>
+        <p class="edit-form-new-data">
+            $<span>S: @Model.single_price D: @Model.double_price T: @Model.triple_price Q: @Model.quad_price</span>
+        </p>
+    </div>
+                                                        <div class="col-3 offset-1">
+                                                            <span class="edit-form-new-dataSP">Number of nights</span>
+                                                            <p class="edit-form-new-data">
+                                                                <span id="calculated_number_of_nights">0</span> nights
+                                                            </p>
+                                                        </div>
 
-                                                                            </div>
-                                                                            <div class="form-row mb-4">
-                                <div class="col-3">
-                                <span class="edit-form-new-dataSP">Check In Date</span>
-                                <p class="edit-form-new-data">
-                                    <span id="check_in_min">YYYY/MM/DD</span>
-                                </p>
-                            </div>
-
-
-                                                                                        <div class="col-3 offset-1">
-                                                                                            <span class="edit-form-new-dataSP">Check Out Date</span>
-                                                                                            <p class="edit-form-new-data">
-                                                                                                <span id="check_out_max">YYYY/MM/DD</span>
-                                                                                            </p>
-                                                                                        </div>
+                                                    </div>
+                                                    <div class="form-row mb-4">
+        <div class="col-3">
+        <span class="edit-form-new-dataSP">Check In Date</span>
+        <p class="edit-form-new-data">
+            <span id="check_in_min">YYYY/MM/DD</span>
+        </p>
+    </div>
 
 
+                                                                <div class="col-3 offset-1">
+                                                                    <span class="edit-form-new-dataSP">Check Out Date</span>
+                                                                    <p class="edit-form-new-data">
+                                                                        <span id="check_out_max">YYYY/MM/DD</span>
+                                                                    </p>
+                                                                </div>
 
-                                                                                <div class="col-3 offset-1">
-                                                                                    <span class="edit-form-new-dataSP">Taxes</span>
-                                                                                    <p class="edit-form-new-data">
-                                                                                        $<span id="calculated_tax">0</span>
-                                                                                    </p>
-                                                                                </div>
 
-                                                                            </div>
-                                                                            <div class="form-row mb-4">
-                                                                                <div class="col-3">
-                                                                                    <span class="edit-form-new-dataSP">Total after tax</span>
-                                                                                    <p class="edit-form-new-data">
-                                                                                        $<span id="calculated_total_after_tax">0</span>
-                                                                                    </p>
-                                                                                </div>
-                                                                                <div class="col-3  offset-1">
-                                                                                    <span class="edit-form-new-dataSP">Deposit</span>
-                                                                                    <p class="edit-form-new-data">
-                                                                                        $<span id="calculated_deposit">0</span>
-                                                                                    </p>
-                                                                                </div>
 
-                                                                            </div>
-                                                                            -->
+                                                        <div class="col-3 offset-1">
+                                                            <span class="edit-form-new-dataSP">Taxes</span>
+                                                            <p class="edit-form-new-data">
+                                                                $<span id="calculated_tax">0</span>
+                                                            </p>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="form-row mb-4">
+                                                        <div class="col-3">
+                                                            <span class="edit-form-new-dataSP">Total after tax</span>
+                                                            <p class="edit-form-new-data">
+                                                                $<span id="calculated_total_after_tax">0</span>
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-3  offset-1">
+                                                            <span class="edit-form-new-dataSP">Deposit</span>
+                                                            <p class="edit-form-new-data">
+                                                                $<span id="calculated_deposit">0</span>
+                                                            </p>
+                                                        </div>
+
+                                                    </div>
+                                                    -->
                                                             <!-- code before editing -->
 
                                                         </div>
@@ -672,6 +673,7 @@
                     }
                 });
 
+                $("#calculated_total").text(addCommas(calculated_total_after_tax.toFixed(2)));
 
                 calculated_tax = '@Model.tax' / 100 * calculated_total_after_tax;
                 calculated_total_after_tax += calculated_tax;

@@ -48,6 +48,7 @@ namespace Agency.ViewModel
         public List<HttpPostedFileBase> images { get; set; }
         public int total_nights { get; set; }
         public string path { get; set; }
+        public int? currency { get; set; }
 
     }
 }
