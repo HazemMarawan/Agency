@@ -336,36 +336,33 @@ input[type="date"] {
 
                         /* navbar*/
 
-.topbar-nav.header nav#topbar ul.menu-categories li.menu > a {
-    border: 1px solid #4361ee;
-    padding: 15px 14px;
-    border-radius: 25px;
+.topbar-nav.header nav#topbar ul.menu-categories li.menu:not(:last-child) > a {
+    padding: 0px 14px;
+    border-radius: 0px;
     color: #4361ee;
-    margin-right:18px;
+    margin:0px 9px;
+    position:relative;
 }
 
 .topbar-nav.header nav#topbar ul.menu-categories li.menu > a:hover {
-    border: 1px solid #4361ee;
-    padding: 15px 14px;
-    border-radius: 25px;
-    color: white;
-    background-color: #4361ee;
 }
 
 .topbar-nav.header nav#topbar ul.menu-categories li.menu a > div span {
-    color: #4361ee;
+    /* color: #4361ee; */
+    color: #fafafa;
 }
 
 .topbar-nav.header nav#topbar ul.menu-categories li.menu a:hover > div span {
-  color: white
+    color: #2aa2d9;
 }
 
 .topbar-nav.header nav#topbar ul.menu-categories li.menu a > div svg:not(.feather-chevron-down) {
-    color: #4361ee;
+    /*color: #4361ee;*/
+    color: #e0e6ed;
 }
 
-.topbar-nav.header nav#topbar ul.menu-categories li.menu a:hover > div svg:not(.feather-chevron-down){
-    color: white;
+.topbar-nav.header nav#topbar ul.menu-categories li.menu a:hover > div svg:not(.feather-chevron-down) {
+    color: #2aa2d9;
 }
 
 .topbar-nav.header nav#topbar ul.menu-categories li.menu > a svg.feather.feather-chevron-down {
@@ -378,6 +375,16 @@ input[type="date"] {
 
 .topbar-nav.header nav#topbar ul.menu-categories li.menu > a > div {
     margin-right: 0px;
+}
+.second-line-nav {
+    display: flex;
+    padding: 0px;
+   /* margin: 0px 20px;*/
+    width: 100%;
+    justify-content: flex-start;
+    border-radius: 8px;
+    background: #2f447d;
+    min-height: 51px;
 }
 /* end of navbar */
 /* mail box page */
@@ -1078,7 +1085,7 @@ font-size: 17px;
     flex-direction: column !important;
     width: 350px;
     position: fixed;
-    top: 80px;
+    top: 138px;
     width: 310px;
     right: 0;
     border-radius: 0;

@@ -1254,17 +1254,29 @@ code {
     .topbar-nav.header nav#topbar ul.menu-categories {
       display: flex;
       margin-bottom: 0; }
-      .topbar-nav.header nav#topbar ul.menu-categories li.menu {
-        position: relative;
-        padding: 9px 0 9px 0;
-        min-height: 59px; }
+        .topbar-nav.header nav#topbar ul.menu-categories li.menu {
+            position: relative;
+            padding: 0px;
+            min-height: 59px;
+        }
+            .topbar-nav.header nav#topbar ul.menu-categories li.menu:not(:first-child)::before {
+                content: "";
+                display: block;
+                width: 1px;
+                background-color: #e1e1e1; /*515365*/
+                height: 25px;
+                position: absolute;
+                top: 30%
+            }
         .topbar-nav.header nav#topbar ul.menu-categories li.menu:first-child {
-          padding: 9px 0 9px 0; }
-        .topbar-nav.header nav#topbar ul.menu-categories li.menu.active {
-          padding: 9px 0 9px 0; }
-          .topbar-nav.header nav#topbar ul.menu-categories li.menu.active > a {
-            background: #4361ee;
-            border-radius: 6px; }
+            padding: 0px;
+        }
+            .topbar-nav.header nav#topbar ul.menu-categories li.menu.active {
+                padding: 0px;
+            }
+            .topbar-nav.header nav#topbar ul.menu-categories li.menu.active > a {
+                color: #2aa2d9;
+            }
         .topbar-nav.header nav#topbar ul.menu-categories li.menu:not(:last-child) {
           margin-right: 5px; }
         .topbar-nav.header nav#topbar ul.menu-categories li.menu.menu-extras {
@@ -1290,13 +1302,13 @@ code {
           .topbar-nav.header nav#topbar ul.menu-categories li.menu > a:hover svg:not(.feather-chevron-down), .topbar-nav.header nav#topbar ul.menu-categories li.menu > a:hover div span {
             color: #4361ee; }
           .topbar-nav.header nav#topbar ul.menu-categories li.menu > a[aria-expanded="true"] {
-            background: #eaf1ff;
-            border-radius: 6px; }
+            color:white
+              }
             .topbar-nav.header nav#topbar ul.menu-categories li.menu > a[aria-expanded="true"] svg:not(.feather-chevron-down) {
-              color: #4361ee;
+              color: white;
               stroke-width: 1.6px; }
             .topbar-nav.header nav#topbar ul.menu-categories li.menu > a[aria-expanded="true"] div span {
-              color: #4361ee; }
+              color: white; }
         .topbar-nav.header nav#topbar ul.menu-categories li.menu.active > a[aria-expanded="true"] {
           background: #4361ee;
           border-radius: 6px; }
@@ -1320,9 +1332,10 @@ code {
           color: #3b3f5c; }
         .topbar-nav.header nav#topbar ul.menu-categories li.menu > .dropdown-toggle svg.feather-chevron-down {
           display: none; }
-        .topbar-nav.header nav#topbar ul.menu-categories li.menu.active > a > div svg:not(.feather-chevron-down) {
-          color: #fff;
-          stroke-width: 1.6px; }
+            .topbar-nav.header nav#topbar ul.menu-categories li.menu.active > a > div svg:not(.feather-chevron-down) {
+                color: #4361ee;
+                stroke-width: 1.6px;
+            }
         .topbar-nav.header nav#topbar ul.menu-categories li.menu.active > a > div svg.feather.feather-chevron-down {
           color: #e0e6ed; }
         .topbar-nav.header nav#topbar ul.menu-categories li.menu.active > a > div span {
