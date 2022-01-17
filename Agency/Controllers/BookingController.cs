@@ -276,8 +276,6 @@ namespace Agency.Controllers
                 db.Clients.Add(client);
                 db.SaveChanges();
 
-               
-
                 detail.client_id = client.id;
                 db.SaveChanges();
 
@@ -300,7 +298,8 @@ namespace Agency.Controllers
                 reservation.total_amount = updatedTotals.total_amount;
                 reservation.total_amount_after_tax = updatedTotals.total_amount_after_tax;
                 reservation.total_amount_from_vendor = updatedTotals.total_amount_from_vendor;
-                reservation.paid_amount = (c_event.advance_reservation_percentage / 100) * reservation.total_amount_after_tax;
+                //reservation.paid_amount = (c_event.advance_reservation_percentage / 100) * reservation.total_amount_after_tax;
+                reservation.paid_amount = 0;
                 reservation.tax_amount = updatedTotals.tax_amount;
                 reservation.total_nights = updatedTotals.total_nights;
                 reservation.reservation_avg_price = db.ReservationDetails.Where(resDet => resDet.reservation_id == reservation.id).Select(resDet => resDet.amount_after_tax).Sum() / reservation.total_nights;
