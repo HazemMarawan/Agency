@@ -752,7 +752,7 @@ namespace Agency.Controllers
             {
                 collected = db.Reservations.Where(t=>t.is_canceled == null).Select(t => t.paid_amount).Sum();
                 balance = db.Reservations.Where(t => t.is_canceled == null).Select(t => t.total_amount_after_tax).Sum() - collected;
-                profit = resData.ToList().Select(t => t.total_amount_after_tax).Sum() - resData.ToList().Select(t => t.total_amount_from_vendor).Sum();
+                profit = resData.ToList().Where(r => r.is_refund == 0).Select(t => t.total_amount_after_tax).Sum() - resData.ToList().Select(t => t.total_amount_from_vendor).Sum();
                 refund = db.Reservations.Where(r => r.is_refund == 1).Select(t => t.paid_amount).Sum();
                 total_nights = db.Reservations.Where(t => t.is_canceled == null).Select(n => n.total_nights).Sum();
             }
