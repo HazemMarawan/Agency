@@ -58,6 +58,8 @@ namespace Agency.Controllers
                                    is_canceled = resDetail.is_canceled,
                                    paid_to_vendor = resDetail.paid_to_vendor,
                                    payment_to_vendor_deadline = (DateTime)resDetail.payment_to_vendor_deadline,
+                                   string_payment_to_vendor_deadline = resDetail.payment_to_vendor_deadline.ToString(),
+                                   string_spayment_to_vendor_notification_date = resDetail.payment_to_vendor_notification_date.ToString(),
                                    payment_to_vendor_notification_date = resDetail.payment_to_vendor_notification_date,
                                    paid_to_vendor_date = resDetail.paid_to_vendor_date,
                                    amount_paid_to_vendor = resDetail.amount_paid_to_vendor,
@@ -245,8 +247,9 @@ namespace Agency.Controllers
                 reservation.total_amount_from_vendor = updatedTotals.total_amount_from_vendor;
                 reservation.tax_amount = updatedTotals.tax_amount;
                 reservation.total_nights = updatedTotals.total_nights;
-                reservation.reservation_avg_price = db.ReservationDetails.Where(resDet => resDet.reservation_id == reservation.id).Select(resDet => resDet.amount_after_tax).Sum() / reservation.total_nights;
-                reservation.vendor_avg_price = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id).Select(s => s.vendor_cost).Sum() / reservation.total_nights;
+                //reservation.reservation_avg_price = db.ReservationDetails.Where(resDet => resDet.reservation_id == reservation.id && reservation.is_canceled != 1).Select(resDet => resDet.amount_after_tax).Sum() / reservation.total_nights;
+                reservation.reservation_avg_price = db.ReservationDetails.Where(resDet => resDet.reservation_id == reservation.id && reservation.is_canceled != 1).Select(resDet => resDet.amount_after_tax).Sum() / reservation.total_nights;
+                reservation.vendor_avg_price = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id && reservation.is_canceled != 1).Select(s => s.vendor_cost).Sum() / reservation.total_nights;
                 //reservation.tax_amount= reservation.tax_amount == null ? 0 : reservation.tax_amount;
                 //reservation.total_amount_from_vendor = reservation.total_amount_from_vendor == null ? 0 : reservation.total_amount_from_vendor;
                 //reservation.total_amount_from_vendor += vendor_amount;

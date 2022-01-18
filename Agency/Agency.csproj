@@ -404,6 +404,10 @@
     <Compile Include="Migrations\202201180845116_add_is_refunf.Designer.cs">
       <DependentUpon>202201180845116_add_is_refunf.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202201182108422_updateReservation.cs" />
+    <Compile Include="Migrations\202201182108422_updateReservation.Designer.cs">
+      <DependentUpon>202201182108422_updateReservation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AgencyDbContext.cs" />
     <Compile Include="Models\Chat.cs" />
@@ -4188,6 +4192,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202201180845116_add_is_refunf.resx">
       <DependentUpon>202201180845116_add_is_refunf.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202201182108422_updateReservation.resx">
+      <DependentUpon>202201182108422_updateReservation.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
