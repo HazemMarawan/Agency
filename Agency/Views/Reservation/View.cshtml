@@ -109,10 +109,10 @@
                                 <label>Email</label>
                                 <input name="reservations_officer_email" id="reservations_officer_email" type="email" value="@Model.CurrentReservation.reservations_officer_email" class="form-control radius-30" />
                             </div>
-                            <div class="form-group col-md-6">
+                            @*<div class="form-group col-md-6">
                                 <label>Vendor</label>
                                 @Html.DropDownListFor(m => m.CurrentReservation.vendor_id, new SelectList(ViewBag.Vendors, "id", "NamePlusCode"), "Select Vendor", new { @class = "form-control", @name = "vendor_id", @id = "vendor_id" })
-                            </div>
+                            </div>*@
                             <div class="form-group col-md-6">
                                 <label>Advance Reservation Percentage</label>
                                 <input name="advance_reservation_percentage" id="advance_reservation_percentage" value="@Model.CurrentReservation.advance_reservation_percentage" type="number" min="0" step="0.1" class="form-control radius-30" />
@@ -121,34 +121,34 @@
                                 <label>Single Price</label>
                                 <input name="single_price" id="single_price" type="number" min="0" step="0.1" value="@Model.CurrentReservation.single_price" class="form-control radius-30" />
                             </div>
-                            <div class="form-group col-md-6">
+                            @*<div class="form-group col-md-6">
                                 <label>Vendor Single Price</label>
                                 <input name="vendor_single_price" id="vendor_single_price" type="number" min="0" step="0.1" value="@Model.CurrentReservation.vendor_single_price" class="form-control radius-30" />
-                            </div>
+                            </div>*@
                             <div class="form-group col-md-6">
                                 <label>Double Price</label>
                                 <input name="double_price" id="double_price" type="number" min="0" step="0.1" value="@Model.CurrentReservation.double_price" class="form-control radius-30" />
                             </div>
-                            <div class="form-group col-md-6">
+                            @*<div class="form-group col-md-6">
                                 <label>Vendor Double Price</label>
                                 <input name="vendor_douple_price" id="vendor_douple_price" type="number" min="0" step="0.1" value="@Model.CurrentReservation.vendor_douple_price" class="form-control radius-30" />
-                            </div>
+                            </div>*@
                             <div class="form-group col-md-6">
                                 <label>Triple Price</label>
                                 <input name="triple_price" id="triple_price" type="number" min="0" step="0.1" value="@Model.CurrentReservation.triple_price" class="form-control radius-30" />
                             </div>
-                            <div class="form-group col-md-6">
+                            @*<div class="form-group col-md-6">
                                 <label>Vendor Triple Price</label>
                                 <input name="vendor_triple_price" id="vendor_triple_price" type="number" min="0" step="0.1" value="@Model.CurrentReservation.vendor_douple_price" class="form-control radius-30" />
-                            </div>
+                            </div>*@
                             <div class="form-group col-md-6">
                                 <label>Quad Price</label>
                                 <input name="quad_price" id="quad_price" type="number" min="0" step="0.1" value="@Model.CurrentReservation.quad_price" class="form-control radius-30" />
                             </div>
-                            <div class="form-group col-md-6">
+                            @*<div class="form-group col-md-6">
                                 <label>Vendor Quad Price</label>
                                 <input name="vendor_quad_price" id="vendor_quad_price" type="number" min="0" step="0.1" value="@Model.CurrentReservation.vendor_quad_price" class="form-control radius-30" />
-                            </div>
+                            </div>*@
                             <div class="form-group col-md-6">
                                 <label>Tax</label>
                                 <input name="tax" id="tax" type="number" min="0" step="0.1" value="@Model.CurrentReservation.tax" class="form-control radius-30" />
@@ -284,7 +284,7 @@
                                 </select>
                             </div>
                             <div class="form-group col-md-6">
-                                <label>Room Price</label>
+                                <label>Customer Room Price/Night</label>
                                 <input required name="room_price" id="room_price" type="number" step="0.1" min="1" class="form-control radius-30" />
                             </div>
                             <div class="form-group col-md-6">
@@ -355,15 +355,7 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label>Total Vendor</label>
-                                <input required name="vendor_cost" id="vendor_cost" type="number" step="0.1" min="1" class="form-control radius-30" />
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label>Payment to Vendor Deadline</label>
-                                <input required name="payment_to_vendor_deadline" id="payment_to_vendor_deadline" type="date" class="form-control radius-30" />
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label>payment to Vendor Notification Date</label>
-                                <input required name="payment_to_vendor_notification_date" id="payment_to_vendor_notification_date" type="date" class="form-control radius-30" />
+                                <input name="vendor_cost" id="vendor_cost" type="number" step="0.1" min="1" class="form-control radius-30" />
                             </div>
                             <div class="form-group col-md-6">
                                 <label>Paid to Vendor (Credit)</label>
@@ -373,9 +365,18 @@
                                 </select>
                             </div>
                             <div class="form-group col-md-6">
-                                <label>Amount Paid to Vendor</label>
-                                <input name="amount_paid_to_vendor" id="amount_paid_to_vendor" type="number" class="form-control radius-30" />
+                                <label>Payment to Vendor Deadline</label>
+                                <input name="payment_to_vendor_deadline" id="payment_to_vendor_deadline" type="date" class="form-control radius-30" />
                             </div>
+                            <div class="form-group col-md-6">
+                                <label>payment to Vendor Notification Date</label>
+                                <input name="payment_to_vendor_notification_date" id="payment_to_vendor_notification_date" type="date" class="form-control radius-30" />
+                            </div>
+
+                            @*<div class="form-group col-md-6">
+            <label>Amount Paid to Vendor</label>
+            <input name="amount_paid_to_vendor" id="amount_paid_to_vendor" type="number" class="form-control radius-30" />
+        </div>*@
                             <div class="form-group col-md-6">
                                 <label>Confirmation #</label>
                                 <input name="confirmation_id" id="confirmation_id" type="number" class="form-control radius-30" />
@@ -395,13 +396,13 @@
                                     <option value="1">Yes</option>
                                 </select>
                             </div>
-                            <div class="form-group col-md-6">
+                            @*<div class="form-group col-md-6">
                                 <label>Notify</label>
                                 <select id="notify" name="notify" class="form-control radius-30">
                                     <option value="0" selected>No</option>
                                     <option value="1">Yes</option>
                                 </select>
-                            </div>
+                            </div>*@
                         </div>
                     </div>
                 </div>
@@ -625,11 +626,11 @@
                                             <p>Contact Name</p>
                                             <p>Phone number</p>
                                             <p>e-mail </p>
-                                            <p>Vendor </p>
                                             <p>Total Rooms </p>
                                             <p>Total Nights </p>
                                             <p>Location</p>
                                             <p>City</p>
+                                            <p>Customer/Night Rate (-Tax)</p>
                                             <p>Total Customer Cost (-Tax)</p>
                                             <p>Tax</p>
                                             <p>Final Customer Cost</p>
@@ -719,7 +720,7 @@
                                             <p>@Model.CurrentReservation.created_at_string  | <span style="color:red;">@(Model.InitialReservation.created_at_string!= Model.CurrentReservation.created_at_string? Model.InitialReservation.created_at_string:"-") </span></p>
                                             @if (!String.IsNullOrEmpty(Model.CurrentReservation.check_in.ToString().Split(' ')[0]))
                                             {
-                                                <p>@Model.CurrentReservation.check_in.ToString().Split(' ')[0]  | <span style="color:red;">@(Model.InitialReservation.check_in.ToString().Split(' ')[0]!= Model.CurrentReservation.check_in.ToString().Split(' ')[0]? Model.InitialReservation.check_in.ToString().Split(' ')[0] : "-")</span></p>
+                                                <p>@Model.CurrentReservation.check_in.ToString().Split(' ')[0]</p>
                                             }
                                             else
                                             {
@@ -727,7 +728,7 @@
                                             }
                                             @if (!String.IsNullOrEmpty(Model.CurrentReservation.check_out.ToString().Split(' ')[0]))
                                             {
-                                                <p>@Model.CurrentReservation.check_out.ToString().Split(' ')[0]  | <span style="color:red;">@(Model.InitialReservation.check_out.ToString().Split(' ')[0]!= Model.CurrentReservation.check_out.ToString().Split(' ')[0]? Model.InitialReservation.check_out.ToString().Split(' ')[0] : "-")</span></p>
+                                                <p>@Model.CurrentReservation.check_out.ToString().Split(' ')[0] </p>
                                             }
                                             else
                                             {
@@ -773,14 +774,14 @@
                                             {
                                                 <p>- | <span style="color:red;">-</span></p>
                                             }
-                                            @if (String.IsNullOrEmpty(Model.CurrentReservation.vendor_code))
-                                            {
-                                                <p>- | <span style="color:red;">-</span></p>
-                                            }
-                                            else
-                                            {
-                                                <p>@Model.CurrentReservation.vendor_code | <span style="color:red;">@Model.InitialReservation.vendor_code</span></p>
-                                            }
+                                            @*@if (String.IsNullOrEmpty(Model.CurrentReservation.vendor_code))
+        {
+            <p>- | <span style="color:red;">-</span></p>
+        }
+        else
+        {
+            <p>@Model.CurrentReservation.vendor_code | <span style="color:red;">@Model.InitialReservation.vendor_code</span></p>
+        }*@
                                             @if (Model.CurrentReservation.total_rooms != null)
                                             {
                                                 <p>@Model.CurrentReservation.total_rooms | <span style="color:red;">@(Model.InitialReservation.total_rooms.ToString()!= Model.CurrentReservation.total_rooms.ToString() ? Model.InitialReservation.total_rooms.ToString() : "-") </span></p>
@@ -808,6 +809,14 @@
                                             @if (!String.IsNullOrEmpty(Model.CurrentReservation.city_name))
                                             {
                                                 <p>@Model.CurrentReservation.city_name | <span style="color:red;">@(Model.InitialReservation.city_name!= Model.CurrentReservation.city_name?Model.InitialReservation.city_name:"-") </span></p>
+                                            }
+                                            else
+                                            {
+                                                <p>- | <span style="color:red;">-</span></p>
+                                            }
+                                            @if (Model.CurrentReservation.reservation_avg_price_before_tax != null)
+                                            {
+                                                <p>@Model.CurrentReservation.reservation_avg_price_before_tax</p>
                                             }
                                             else
                                             {
@@ -1041,9 +1050,9 @@
                                             {
                                                 <p style="color:red;">@(Model.InitialReservation.total_amount_after_tax - Model.InitialReservation.total_amount_from_vendor) </p>
                                             }
-                                        <p id="credit_card_data_paragraph">
-                                            <input type="button" id="add_credit_card_info" value="Add" class="btn btn-primary" />
-                                            @*  @if (!String.IsNullOrEmpty(Model.CurrentReservation.credit_card_number) && !String.IsNullOrEmpty(Model.CurrentReservation.card_expiration_date) && !String.IsNullOrEmpty(Model.CurrentReservation.security_code))*@
+                                            <p id="credit_card_data_paragraph">
+                                                <input type="button" id="add_credit_card_info" value="Add" class="btn btn-primary" />
+                                                @*  @if (!String.IsNullOrEmpty(Model.CurrentReservation.credit_card_number) && !String.IsNullOrEmpty(Model.CurrentReservation.card_expiration_date) && !String.IsNullOrEmpty(Model.CurrentReservation.security_code))*@
 
                                                 @if (Model.CurrentReservation.reservationCreditCards.Count != 0)
                                                 {
@@ -1093,8 +1102,10 @@
                                                             <th>Room Type</th>
                                                             <th>Vendor Code</th>
                                                             <th>Cost</th>
+                                                            <th>Payment Deadline</th>
+                                                            <th>Notification Date</th>
+                                                            <th>Paid To Vendor</th>
                                                             <th>Cancelation Policy</th>
-                                                            @*<th>Payment Deadline</th>*@
                                                             <th></th>
                                                         </tr>
                                                     </thead>
@@ -1307,25 +1318,43 @@
                             "searchable": true
                         },
                         {
-                            "data": "amount", "searchable": true,
+                            "data": "vendor_cost", "searchable": true,
                             fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
                                 var html = "";
-                                if (oData.amount)
-                                    html += "<span style='font-weight:bold;' class='bold'>Amount:</span>" + addCommas(oData.amount.toFixed(2));
-                                //if (oData.currency) {
-                                //    html += "<span style='font-weight:bold;' class='bold'>";
-                                //    if (oData.currency == 1)
-                                //        html += " USD";
-                                //    if (oData.currency == 2)
-                                //        html += " GBP";
-                                //    if (oData.currency == 3)
-                                //        html += " EUR";
-                                //    html += "</span>";
-                                //}
-                                //html += "<br/>";
-                                //if (oData.tax)
-                                //    html += "<span style='font-weight:bold;' class='bold'>Tax:</span>" + addCommas(oData.tax.toFixed(2)) + "<br/>";
+                                if (oData.vendor_cost)
+                                    html += "<span style='font-weight:bold;' class='bold'>Amount:</span>" + addCommas(oData.vendor_cost.toFixed(2));
+                                $(nTd).html("<span class='action-column'>" + html + "</span>");
+                            },
 
+                        },
+                        {
+                            "data": "string_payment_to_vendor_deadline", "searchable": true,
+                            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                                var html = "";
+                                if (oData.string_payment_to_vendor_deadline)
+                                    html += oData.string_payment_to_vendor_deadline;
+                                $(nTd).html("<span class='action-column'>" + html + "</span>");
+                            },
+
+                        },
+                        {
+                            "data": "string_spayment_to_vendor_notification_date", "searchable": true,
+                            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                                var html = "";
+                                if (oData.string_spayment_to_vendor_notification_date)
+                                    html += oData.string_spayment_to_vendor_notification_date;
+                                $(nTd).html("<span class='action-column'>" + html + "</span>");
+                            },
+
+                        },
+                        {
+                            "data": "paid_to_vendor", "searchable": true,
+                            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                                var html = "";
+                                if (oData.paid_to_vendor == 1)
+                                    html += "<span class='badge badge-primary'>Yes</span>";
+                                else
+                                    html += "<span class='badge badge-danger'>No</span>";
                                 $(nTd).html("<span class='action-column'>" + html + "</span>");
                             },
 
@@ -1338,43 +1367,6 @@
                             },
 
                         },
-                        //{
-                        //    "data": "no_of_days", "searchable": true,
-                        //    fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-                        //        var html = "";
-                        //        if (oData.no_of_days)
-                        //            html += "<span style='font-weight:bold;' class='bold'>Days:</span>" + oData.no_of_days + "<br/>";
-                        //        if (oData.room_type) {
-                        //            if (oData.room_type == 1)
-                        //                html += "<span style='font-weight:bold;' class='bold'>Room:</span> Single";
-                        //            if (oData.room_type == 2)
-                        //                html += "<span style='font-weight:bold;' class='bold'>Room:</span> Double";
-                        //            if (oData.room_type == 3)
-                        //                html += "<span style='font-weight:bold;' class='bold'>Room:</span> Triple";
-                        //            if (oData.room_type == 4)
-                        //                html += "<span style='font-weight:bold;' class='bold'>Room:</span> Quad";
-                        //            html += "<br/>";
-                        //        }
-                        //        if (oData.from)
-                        //            html += "<span style='font-weight:bold;' class='bold'>From:</span>" + oData.from + "<br/>";
-                        //        if (oData.to)
-                        //            html += "<span style='font-weight:bold;' class='bold'>To:</span>" + oData.to + "<br/>";
-
-                        //        $(nTd).html("<span class='action-column'>" + html + "</span>");
-                        //    }
-                        //},
-                        //,
-                        //{
-                        //    "data": "active", "searchable": true,
-                        //    fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-                        //        var html = "";
-                        //        if (oData.active == 1)
-                        //            html += "<span class='badge badge-primary'>Yes</span>";
-                        //        else
-                        //            html += "<span class='badge badge-danger'>No</span>";
-                        //        $(nTd).html("<span class='action-column'>" + html + "</span>");
-                        //    }
-                        //},
                         {
                             "data": "id", "searchable": true,
                             fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
@@ -1383,7 +1375,6 @@
                                 html += "<a class='edit' href='javascript:void(0);' title='Edit'><i class='far fa-edit'></i></a>&nbsp;";
                                 html += "<a class='delete' href='javascript:void(0);' title='Delete'><i class='fa fa-trash'></i></a>&nbsp;";
                                 html += "<a class='cancel' href='javascript:void(0);' title='Cancel'><i class='far fa-times-circle'></i></a>&nbsp;";
-                                //html += "<a class='move_reservation_to_another_booking' href='javascript:void(0);' title='Transfer Reservation'><i class='fas fa-people-arrows'></i></a>&nbsp;";
 
                                 $(nTd).html("<span class='action-column'>" + html + "</span>");
                             }

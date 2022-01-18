@@ -92,6 +92,7 @@ namespace Agency.ViewModel
         public string shift_name { get; set; }
         public string event_name { get; set; }
         public double? event_tax { get; set; }
+        public double? reservation_avg_price_before_tax { get; set; }
         public double? reservation_avg_price { get; set; }
         public double? vendor_avg_price { get; set; }
         public double? event_single_price { get; set; }
