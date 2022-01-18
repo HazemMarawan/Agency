@@ -746,12 +746,14 @@ namespace Agency.Controllers
             double? collected = 0.0;
             double? balance = 0.0;
             double? profit = 0.0;
+            double? refund = 0.0;
             int? total_nights = 0;
             if (reservation != null)
             {
                 collected = db.Reservations.Where(t=>t.is_canceled == null).Select(t => t.paid_amount).Sum();
                 balance = db.Reservations.Where(t => t.is_canceled == null).Select(t => t.total_amount_after_tax).Sum() - collected;
                 profit = resData.ToList().Select(t => t.total_amount_after_tax).Sum() - resData.ToList().Select(t => t.total_amount_from_vendor).Sum();
+                refund = db.Reservations.Where(r => r.is_refund == 1).Select(t => t.paid_amount).Sum();
                 total_nights = db.Reservations.Where(t => t.is_canceled == null).Select(n => n.total_nights).Sum();
             }
             var displayResult = resData.OrderByDescending(u => u.id).Skip(skip)
@@ -767,8 +769,8 @@ namespace Agency.Controllers
                 collected = collected,
                 balance = balance,
                 profit = profit,
-                total_nights = total_nights
-
+                total_nights = total_nights,
+                refund = refund
             }, JsonRequestBehavior.AllowGet);
         }
 
@@ -854,8 +856,8 @@ namespace Agency.Controllers
                                tax_amount = res.tax_amount,
                                is_canceled = res.is_canceled,
                                //profit = calculateProfit(res.id).profit
-
-                           }).Where(r => r.is_canceled == 1);
+                               is_refund = res.is_refund
+                           }).Where(r => r.is_canceled == 1 && r.is_refund == 0);
             //Where(r => r.status == (int)PaymentStatus.Paid).ToList();
             var reservation = db.Reservations;
             double? collected = 0.0;

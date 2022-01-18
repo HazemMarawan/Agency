@@ -535,6 +535,21 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-12 col-lg-2 animate__animated animate__bounce">
+                    <div class="card radius-15 bg-info">
+                        <div class="card-body">
+                            <div class="media align-items-center">
+                                <div class="media-body">
+                                    <p class="mb-0 font-weight-bold text-white">$<span id="refunded">0.00</span></p>
+                                    <p class="mb-0 text-white">Refund</p>
+                                </div>
+                                <div class="font-35 text-white">
+                                    <i class='bx bx-wallet'></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="widget-content widget-content-area icon-pill">
@@ -1286,7 +1301,7 @@
                             html += "<a target='_blank' class='view' href='/Reservation/View/" + oData.id + "' title='View'><i class='far fa-eye'></i></a>";
                             html += "<a class='cancelUnpaid' href='javascript:void(0);' title='Cancel'><i class='far fa-times-circle'></i></a>&nbsp;|";
                             html += "<a class='payUnPaidAmountToReservation' href='javascript:void(0);' title='Pay'><i class='fas fa-money-bill-alt'></i></a>&nbsp;|";
-                            html += "<a class='refundPaid' href='javascript:void(0);' title='Refund'><i class='far fa-times-circle'></i></a>&nbsp;";
+                            //html += "<a class='refundPaid' href='javascript:void(0);' title='Refund'><i class='far fa-times-circle'></i></a>&nbsp;";
 
                             $(nTd).html("<span class='action-column'>" + html + "</span>");
                         }
@@ -1457,7 +1472,7 @@
                                 html += "<a target='_blank' class='view' href='/Reservation/View/" + oData.id + "' title='View'><i class='far fa-eye'></i></a>";
                                 html += "<a class='cancelPartiallyPaid' href='javascript:void(0);' title='Cancel'><i class='far fa-times-circle'></i></a>&nbsp;|";
                                 html += "<a class='payPartiallPaidAmountToReservation' href='javascript:void(0);' title='Pay'><i class='fas fa-money-bill-alt'></i></a>&nbsp;|";
-                                html += "<a class='refundPaid' href='javascript:void(0);' title='Refund'><i class='far fa-times-circle'></i></a>&nbsp;";
+                                //html += "<a class='refundPaid' href='javascript:void(0);' title='Refund'><i class='far fa-times-circle'></i></a>&nbsp;";
 
                                 $(nTd).html("<span class='action-column'>" + html + "</span>");
                             }
@@ -1628,7 +1643,7 @@
                                 //html += "<a target='_blank' class='Itinirary' href='/ReservationDetail/Itinirary/" + oData.id + "' title='Itinirary'><i class='far fa-eye'></i></a>&nbsp;|";
                                 html += "<a target='_blank' class='view' href='/Reservation/View/" + oData.id + "' title='View'><i class='far fa-eye'></i></a>";
                                 html += "<a class='cancelPaid' href='javascript:void(0);' title='Cancel'><i class='far fa-times-circle'></i></a>&nbsp;|";
-                                html += "<a class='refundPaid' href='javascript:void(0);' title='Refund'><i class='far fa-times-circle'></i></a>&nbsp;";
+                                //html += "<a class='refundPaid' href='javascript:void(0);' title='Refund'><i class='far fa-times-circle'></i></a>&nbsp;";
 
                                 $(nTd).html("<span class='action-column'>" + html + "</span>");
                             }
@@ -1796,9 +1811,11 @@
                                 //html += "<a class='details' href='/ReservationDetail/Index/" + oData.id + "' title='Details'><i class='far fa-eye'></i></a>&nbsp;|";
                                 html += "<a class='confMail' href='javascript:void(0)' title='Send Email'><i class='far fa-envelope-open'></i></a>&nbsp;|";
                                 //html += "<a target='_blank' class='Itinirary' href='/ReservationDetail/Itinirary/" + oData.id + "' title='Itinirary'><i class='far fa-eye'></i></a>&nbsp;|";
-                                html += "<a target='_blank' class='view' href='/Reservation/View/" + oData.id + "' title='View'><i class='far fa-eye'></i></a>";
+                                html += "<a target='_blank' class='view' href='/Reservation/View/" + oData.id + "' title='View'><i class='far fa-eye'></i></a>&nbsp;|";
                                 html += "<a class='cancelPaid' href='javascript:void(0);' title='Cancel'><i class='far fa-times-circle'></i></a>&nbsp;|";
-                                html += "<a class='refundPaid' href='javascript:void(0);' title='Refund'><i class='far fa-times-circle'></i></a>&nbsp;";
+                                if (oData.paid_amount > 0)
+                                    html += "<a class='refundPaid' href='javascript:void(0);' title='Refund'><i class='fas fa-undo-alt'></i></a>&nbsp;";
+
                                 $(nTd).html("<span class='action-column'>" + html + "</span>");
                             }
                         },
@@ -2189,6 +2206,7 @@
                 $('#profit').text(addCommas(json.profit.toFixed(2)));
                 $('#balance').text(addCommas(json.balance.toFixed(2)));
                 $('#collected').text(addCommas(json.collected.toFixed(2)));
+                $('#refunded').text(addCommas(json.refund.toFixed(2)));
                 $('#total_nights').text(addCommas(json.total_nights));
 
             });
@@ -2722,7 +2740,7 @@
                 });
             });
             $(document).on("click", ".refundPaid", function () {
-                var data = partiallyReservationTable.row($(this).closest('tr')).data();
+                var data = canceledreservationTable.row($(this).closest('tr')).data();
                 warningBox("Are you sure you want to refund this reservation (<b>" + data.id + "</b>) with amount (<b>" + data.paid_amount +"</b>) ?", function () {
                     $.ajax({
                         type: "GET",
@@ -2731,12 +2749,9 @@
                         data: { "id": data.id },
                         datatype: "json",
                         success: function (data) {
-                            partiallyReservationTable.draw();
                             canceledreservationTable.draw();
-                            ourRoomsTable.draw();
-                            paidreservationTable.draw();
                             refundTable.draw();
-
+                            paidreservationTable.draw();
                         },
                         error: function () {
                             alert("Dynamic content load failed.");
