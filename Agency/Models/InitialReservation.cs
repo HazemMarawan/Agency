@@ -39,6 +39,7 @@ namespace Agency.Models
         public double? vendor_douple_price { get; set; }
         public double? vendor_triple_price { get; set; }
         public double? vendor_quad_price { get; set; }
+        public double? reservation_avg_price_before_tax { get; set; }
         public double? reservation_avg_price { get; set; }
         public double? vendor_avg_price { get; set; }
         public double? total_price { get; set; }

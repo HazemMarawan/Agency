@@ -408,6 +408,14 @@
     <Compile Include="Migrations\202201182108422_updateReservation.Designer.cs">
       <DependentUpon>202201182108422_updateReservation.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202201182143481_updateInitialRes.cs" />
+    <Compile Include="Migrations\202201182143481_updateInitialRes.Designer.cs">
+      <DependentUpon>202201182143481_updateInitialRes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202201182144347_updateResDet.cs" />
+    <Compile Include="Migrations\202201182144347_updateResDet.Designer.cs">
+      <DependentUpon>202201182144347_updateResDet.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AgencyDbContext.cs" />
     <Compile Include="Models\Chat.cs" />
@@ -4195,6 +4203,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202201182108422_updateReservation.resx">
       <DependentUpon>202201182108422_updateReservation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202201182143481_updateInitialRes.resx">
+      <DependentUpon>202201182143481_updateInitialRes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202201182144347_updateResDet.resx">
+      <DependentUpon>202201182144347_updateResDet.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
