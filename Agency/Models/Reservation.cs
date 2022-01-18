@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -49,6 +50,8 @@ namespace Agency.Models
         public double? profit { get; set; }
         public int? shift { get; set; }
         public int? is_canceled { get; set; }
+        [DefaultValue(0)]
+        public int is_refund { get; set; }
         public int? active { get; set; }
         public DateTime? financial_advance_date { get; set; }
         public DateTime? financial_due_date { get; set; }

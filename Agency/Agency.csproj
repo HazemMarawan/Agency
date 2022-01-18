@@ -400,6 +400,10 @@
     <Compile Include="Migrations\202201151633361_updateCreditCards.Designer.cs">
       <DependentUpon>202201151633361_updateCreditCards.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202201180845116_add_is_refunf.cs" />
+    <Compile Include="Migrations\202201180845116_add_is_refunf.Designer.cs">
+      <DependentUpon>202201180845116_add_is_refunf.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AgencyDbContext.cs" />
     <Compile Include="Models\Chat.cs" />
@@ -4181,6 +4185,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202201151633361_updateCreditCards.resx">
       <DependentUpon>202201151633361_updateCreditCards.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202201180845116_add_is_refunf.resx">
+      <DependentUpon>202201180845116_add_is_refunf.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
