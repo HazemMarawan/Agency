@@ -284,7 +284,7 @@
                                         <div class="t-dot" data-original-title="" title="">
                                         </div>
                                         <div class="t-text">
-                                            <p>@log.description <a href="javascript:void(0);">By</a>@log.full_name</p>
+                                            <p>@Html.Raw(HttpUtility.HtmlDecode(log.description)) <a href="javascript:void(0);">By</a>@log.full_name</p>
                                             <span class="badge">@log.action</span>
                                             <p class="t-time">@log.created_at.ToString()</p>
                                         </div>
