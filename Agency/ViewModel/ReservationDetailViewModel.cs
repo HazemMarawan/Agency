@@ -11,6 +11,7 @@ namespace Agency.ViewModel
     public class ReservationDetailViewModel
     {
         public int id { get; set; }
+        public int? parent_id { get; set; }
         public int res_id { get; set; }
         public double? amount { get; set; }
         public double? amount_after_tax { get; set; }

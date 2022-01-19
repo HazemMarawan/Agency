@@ -416,6 +416,14 @@
     <Compile Include="Migrations\202201182144347_updateResDet.Designer.cs">
       <DependentUpon>202201182144347_updateResDet.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202201182348175_updateResDet1.cs" />
+    <Compile Include="Migrations\202201182348175_updateResDet1.Designer.cs">
+      <DependentUpon>202201182348175_updateResDet1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202201190005211_updateReseration.cs" />
+    <Compile Include="Migrations\202201190005211_updateReseration.Designer.cs">
+      <DependentUpon>202201190005211_updateReseration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AgencyDbContext.cs" />
     <Compile Include="Models\Chat.cs" />
@@ -4209,6 +4217,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202201182144347_updateResDet.resx">
       <DependentUpon>202201182144347_updateResDet.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202201182348175_updateResDet1.resx">
+      <DependentUpon>202201182348175_updateResDet1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202201190005211_updateReseration.resx">
+      <DependentUpon>202201190005211_updateReseration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

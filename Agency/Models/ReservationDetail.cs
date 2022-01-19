@@ -11,7 +11,7 @@ namespace Agency.Models
     {
         [Key]
         public int id { get; set; }
-        public double? parent_id { get; set; }
+        public int? parent_id { get; set; }
         public double? amount { get; set; }
         public double? amount_after_tax { get; set; }
         public double? tax { get; set; }

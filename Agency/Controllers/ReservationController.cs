@@ -23,7 +23,7 @@ namespace Agency.Controllers
         // GET: Reservation
         public ActionResult Index()
         {
-            ViewBag.Events = db.Events.Select(s => new { s.id, s.title, s.updated_at }).OrderByDescending(e => e.updated_at).ToList();
+            ViewBag.Events = db.Events.Where(s => s.is_special != 1).Select(s => new { s.id, s.title, s.updated_at }).OrderByDescending(e => e.updated_at).ToList();
             ViewBag.Hotels = db.Hotels.Select(s => new { s.id, s.name }).ToList();
 
             ViewBag.Opener = db.Users.Select(s => new { s.id, s.full_name }).ToList();
@@ -248,7 +248,6 @@ namespace Agency.Controllers
                                card_expiration_date = reinitialRes.card_expiration_date,
                                credit_card_number = reinitialRes.credit_card_number,
                                security_code = reinitialRes.security_code
-                               //profit = calculateProfit(res.id).profit
                            }).Where(r => r.reservation_id == id).FirstOrDefault();
             if(initialResData == null)
             {
@@ -261,7 +260,7 @@ namespace Agency.Controllers
 
             ViewBag.id = id;
             ViewBag.Users = db.Users.Select(s => new { s.id, s.full_name }).ToList();
-            ViewBag.Events = db.Events.Select(s => new { s.id, s.title, s.updated_at }).OrderByDescending(e => e.updated_at).ToList();
+            ViewBag.Events = db.Events.Where(s=>s.is_special != 1).Select(s => new { s.id, s.title, s.updated_at }).OrderByDescending(e => e.updated_at).ToList();
 
             //ViewBag.Opener = db.Users.Select(s => new { s.id, s.full_name }).ToList();
             ViewBag.Opener = db.Users.Select(s => new UserViewModel { id = s.id, full_name = s.full_name }).ToList();

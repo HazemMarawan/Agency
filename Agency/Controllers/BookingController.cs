@@ -294,17 +294,17 @@ namespace Agency.Controllers
                 reservation.total_rooms = reservationViewModel.first_name.Count;
 
                 ReservationViewModel updatedTotals = ReservationService.calculateTotalandVendor(reservation.id);
-                reservation.total_rooms = updatedTotals.total_rooms;
-                reservation.total_amount = updatedTotals.total_amount;
-                reservation.total_amount_after_tax = updatedTotals.total_amount_after_tax;
-                reservation.total_amount_from_vendor = updatedTotals.total_amount_from_vendor;
+                reservation.total_rooms = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id && reservation.is_canceled != 1).Count();
+                reservation.total_amount = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id && reservation.is_canceled != 1).Select(s => s.amount).Sum();
+                reservation.total_amount_after_tax = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id && reservation.is_canceled != 1).Select(s => s.amount_after_tax).Sum();
+                reservation.total_amount_from_vendor = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id && reservation.is_canceled != 1).Select(s => s.vendor_cost).Sum();
                 //reservation.paid_amount = (c_event.advance_reservation_percentage / 100) * reservation.total_amount_after_tax;
                 reservation.paid_amount = 0;
-                reservation.tax_amount = updatedTotals.tax_amount;
-                reservation.total_nights = updatedTotals.total_nights;
+                reservation.tax_amount = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id && reservation.is_canceled != 1).Select(s => s.tax).Sum();
+                reservation.total_nights = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id && reservation.is_canceled != 1).Select(s => s.no_of_days - 1).Sum();
                 reservation.reservation_avg_price_before_tax = db.ReservationDetails.Where(resDet => resDet.reservation_id == reservation.id && reservation.is_canceled != 1).Select(resDet => resDet.amount).Sum() / reservation.total_nights;
-                reservation.reservation_avg_price = db.ReservationDetails.Where(resDet => resDet.reservation_id == reservation.id).Select(resDet => resDet.amount_after_tax).Sum() / reservation.total_nights;
-                reservation.vendor_avg_price = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id).Select(s => s.vendor_cost).Sum() / reservation.total_nights;
+                reservation.reservation_avg_price = db.ReservationDetails.Where(resDet => resDet.reservation_id == reservation.id && reservation.is_canceled != 1).Select(resDet => resDet.amount_after_tax).Sum() / reservation.total_nights;
+                reservation.vendor_avg_price = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id && reservation.is_canceled != 1).Select(s => s.vendor_cost).Sum() / reservation.total_nights;
                 reservation.updated_at = DateTime.Now;
                 db.SaveChanges();
             }

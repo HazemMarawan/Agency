@@ -44,6 +44,8 @@ namespace Agency.Models
         public double? reservation_avg_price { get; set; }
         public double? vendor_avg_price { get; set; }
         public double? total_price { get; set; }
+        public double? credit { get; set; }
+        public double? refud { get; set; }
         public int? total_rooms { get; set; }
         public int? total_nights { get; set; }
         public DateTime? check_in { get; set; }

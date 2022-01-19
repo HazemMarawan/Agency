@@ -43,16 +43,17 @@ namespace Agency.Controllers
                                    reservation_from = resDetail.reservation_from,
                                    reservation_to = resDetail.reservation_to,
                                    no_of_days = resDetail.no_of_days,
+                                   parent_id = resDetail.parent_id,
                                    active = resDetail.active,
                                    client_id = resDetail.client_id,
                                    client_first_name = client.first_name,
                                    client_last_name = client.last_name,
                                    reservation_id = resDetail.reservation_id,
                                    currency = res.currency,
-                                   string_reservation_from = resDetail.reservation_from.ToString(),
-                                   string_reservation_to = resDetail.reservation_to.ToString(),
+                                   string_reservation_from = db.ReservationDetails.Where(rsd=>rsd.parent_id == resDetail.id).Select(rsd=>rsd.reservation_from).Min().ToString(),
+                                   string_reservation_to = db.ReservationDetails.Where(rsd => rsd.parent_id == resDetail.id).Select(rsd => rsd.reservation_to).Max().ToString(),
                                    vendor_code = resDetail.vendor_code,
-                                   vendor_cost = resDetail.vendor_cost,
+                                   vendor_cost = db.ReservationDetails.Where(rsd => rsd.parent_id == resDetail.id).Select(rsd => rsd.vendor_cost).Sum(),
                                    room_price = resDetail.room_price,
                                    notify = resDetail.notify,
                                    is_canceled = resDetail.is_canceled,
@@ -66,7 +67,7 @@ namespace Agency.Controllers
                                    cancelation_policy = resDetail.cancelation_policy,
                                    confirmation_id = resDetail.confirmation_id,
 
-                               }).Where(d => d.reservation_id == id);
+                               }).Where(d => d.reservation_id == id && d.parent_id == d.id);
 
                 //Search    
                 if (!string.IsNullOrEmpty(searchValue))
@@ -219,6 +220,9 @@ namespace Agency.Controllers
                 db.ReservationDetails.Add(detail);
                 db.SaveChanges();
 
+                detail.parent_id = detail.id;
+                db.SaveChanges();
+
                 Client client = new Client();
                 client.first_name = detailViewModel.client_first_name;
                 client.last_name = detailViewModel.client_last_name;
@@ -240,16 +244,29 @@ namespace Agency.Controllers
                     reservation.balance_due_date = Convert.ToDateTime(reservation.check_in).AddDays(-30);
                 }
 
-                ReservationViewModel updatedTotals = ReservationService.calculateTotalandVendor(reservation.id);
-                reservation.total_rooms = updatedTotals.total_rooms;
-                reservation.total_amount = updatedTotals.total_amount;
-                reservation.total_amount_after_tax = updatedTotals.total_amount_after_tax;
-                reservation.total_amount_from_vendor = updatedTotals.total_amount_from_vendor;
-                reservation.tax_amount = updatedTotals.tax_amount;
-                reservation.total_nights = updatedTotals.total_nights;
+                //ReservationViewModel updatedTotals = ReservationService.calculateTotalandVendor(reservation.id);
+                //reservation.total_rooms = updatedTotals.total_rooms;
+                //reservation.total_amount = updatedTotals.total_amount;
+                //reservation.total_amount_after_tax = updatedTotals.total_amount_after_tax;
+                //reservation.total_amount_from_vendor = updatedTotals.total_amount_from_vendor;
+                //reservation.tax_amount = updatedTotals.tax_amount;
+                //reservation.total_nights = updatedTotals.total_nights;
+                //reservation.reservation_avg_price_before_tax = db.ReservationDetails.Where(resDet => resDet.reservation_id == reservation.id && reservation.is_canceled != 1).Select(resDet => resDet.amount).Sum() / reservation.total_nights;
+                //reservation.reservation_avg_price = db.ReservationDetails.Where(resDet => resDet.reservation_id == reservation.id && reservation.is_canceled != 1).Select(resDet => resDet.amount_after_tax).Sum() / reservation.total_nights;
+                //reservation.vendor_avg_price = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id && reservation.is_canceled != 1).Select(s => s.vendor_cost).Sum() / reservation.total_nights;
+
+                reservation.total_rooms = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id && reservation.is_canceled != 1).Count();
+                reservation.total_amount = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id && reservation.is_canceled != 1).Select(s => s.amount).Sum();
+                reservation.total_amount_after_tax = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id && reservation.is_canceled != 1).Select(s => s.amount_after_tax).Sum();
+                reservation.tax_amount = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id && reservation.is_canceled != 1).Select(s => s.tax).Sum();
+                reservation.total_nights = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id && reservation.is_canceled != 1).Select(s => s.no_of_days - 1).Sum();
                 reservation.reservation_avg_price_before_tax = db.ReservationDetails.Where(resDet => resDet.reservation_id == reservation.id && reservation.is_canceled != 1).Select(resDet => resDet.amount).Sum() / reservation.total_nights;
                 reservation.reservation_avg_price = db.ReservationDetails.Where(resDet => resDet.reservation_id == reservation.id && reservation.is_canceled != 1).Select(resDet => resDet.amount_after_tax).Sum() / reservation.total_nights;
                 reservation.vendor_avg_price = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id && reservation.is_canceled != 1).Select(s => s.vendor_cost).Sum() / reservation.total_nights;
+                reservation.total_amount_from_vendor = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id && reservation.is_canceled != 1).Select(s => s.vendor_cost).Sum();
+
+
+
                 //reservation.tax_amount= reservation.tax_amount == null ? 0 : reservation.tax_amount;
                 //reservation.total_amount_from_vendor = reservation.total_amount_from_vendor == null ? 0 : reservation.total_amount_from_vendor;
                 //reservation.total_amount_from_vendor += vendor_amount;
@@ -396,7 +413,7 @@ namespace Agency.Controllers
                 client.updated_by = Session["id"].ToString().ToInt();
                 db.SaveChanges();
 
-                List<ReservationDetail> reservationDetails = db.ReservationDetails.Where(r => r.reservation_id == detailViewModel.reservation_id).ToList();
+                List<ReservationDetail> reservationDetails = db.ReservationDetails.Where(r => r.reservation_id == detailViewModel.reservation_id && reservation.is_canceled != 1).ToList();
                 if (reservationDetails.Count() != 0)
                 {
                     DateTime minDate = reservationDetails.Select(s => s.reservation_from).Min();
@@ -407,16 +424,17 @@ namespace Agency.Controllers
                     reservation.balance_due_date = Convert.ToDateTime(reservation.check_in).AddDays(-30);
                 }
 
-                ReservationViewModel updatedTotals = ReservationService.calculateTotalandVendor(reservation.id);
+                //ReservationViewModel updatedTotals = ReservationService.calculateTotalandVendor(reservation.id);
 
-                reservation.total_amount = updatedTotals.total_amount;
-                reservation.total_amount_after_tax = updatedTotals.total_amount_after_tax;
-                reservation.total_amount_from_vendor = updatedTotals.total_amount_from_vendor;
-                reservation.tax_amount = updatedTotals.tax_amount;
-                reservation.total_nights = updatedTotals.total_nights;
+                reservation.total_rooms = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id && reservation.is_canceled != 1).Count();
+                reservation.total_amount = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id && reservation.is_canceled != 1).Select(s => s.amount).Sum();
+                reservation.total_amount_after_tax = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id && reservation.is_canceled != 1).Select(s => s.amount_after_tax).Sum();
+                reservation.tax_amount = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id && reservation.is_canceled != 1).Select(s => s.tax).Sum();
+                reservation.total_nights = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id && reservation.is_canceled != 1).Select(s => s.no_of_days-1).Sum();
                 reservation.reservation_avg_price_before_tax = db.ReservationDetails.Where(resDet => resDet.reservation_id == reservation.id && reservation.is_canceled != 1).Select(resDet => resDet.amount).Sum() / reservation.total_nights;
                 reservation.reservation_avg_price = db.ReservationDetails.Where(resDet => resDet.reservation_id == reservation.id && reservation.is_canceled != 1).Select(resDet => resDet.amount_after_tax).Sum() / reservation.total_nights;
                 reservation.vendor_avg_price = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id && reservation.is_canceled != 1).Select(s => s.vendor_cost).Sum() / reservation.total_nights;
+                reservation.total_amount_from_vendor = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id && reservation.is_canceled != 1).Select(s => s.vendor_cost).Sum();
                 
                 //reservation.tax += detail.tax;
                 //reservation.total_amount += detail.amount;
@@ -945,5 +963,55 @@ namespace Agency.Controllers
             return Json(new { reservationCreditCards = reservationCreditCards }, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult addNight(ReservationDetailViewModel detailViewModel)
+        {
+            ReservationDetail detail = AutoMapper.Mapper.Map<ReservationDetailViewModel, ReservationDetail>(detailViewModel);
+            Reservation reservation = db.Reservations.Find(detail.reservation_id);
+
+            int Days = (detailViewModel.reservation_to - detailViewModel.reservation_from).Days;
+            detail.no_of_days = Days + 1;
+            var amount = (detailViewModel.room_price * Days);
+            detail.tax = amount * (reservation.tax / 100);
+            detail.amount = amount;
+            detail.amount_after_tax = amount + detail.tax;
+            detail.created_at = DateTime.Now;
+            detail.created_by = Session["id"].ToString().ToInt();
+            detail.active = 1;
+            db.ReservationDetails.Add(detail);
+            db.SaveChanges();
+
+            detail.parent_id = detailViewModel.parent_id;
+            db.SaveChanges();
+
+            List<ReservationDetail> reservationDetails = db.ReservationDetails.Where(r => r.reservation_id == detailViewModel.reservation_id).ToList();
+            if (reservationDetails.Count() != 0)
+            {
+                DateTime minDate = reservationDetails.Select(s => s.reservation_from).Min();
+                DateTime maxDate = reservationDetails.Select(s => s.reservation_to).Max();
+
+                reservation.check_in = minDate;
+                reservation.check_out = maxDate;
+                reservation.balance_due_date = Convert.ToDateTime(reservation.check_in).AddDays(-30);
+            }
+
+            reservation.total_rooms = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id && reservation.is_canceled != 1).Count();
+            reservation.total_amount = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id && reservation.is_canceled != 1).Select(s => s.amount).Sum();
+            reservation.total_amount_after_tax = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id && reservation.is_canceled != 1).Select(s => s.amount_after_tax).Sum();
+            reservation.tax_amount = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id && reservation.is_canceled != 1).Select(s => s.tax).Sum();
+            reservation.total_nights = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id && reservation.is_canceled != 1).Select(s => s.no_of_days - 1).Sum();
+            reservation.reservation_avg_price_before_tax = db.ReservationDetails.Where(resDet => resDet.reservation_id == reservation.id && reservation.is_canceled != 1).Select(resDet => resDet.amount).Sum() / reservation.total_nights;
+            reservation.reservation_avg_price = db.ReservationDetails.Where(resDet => resDet.reservation_id == reservation.id && reservation.is_canceled != 1).Select(resDet => resDet.amount_after_tax).Sum() / reservation.total_nights;
+            reservation.vendor_avg_price = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id && reservation.is_canceled != 1).Select(s => s.vendor_cost).Sum() / reservation.total_nights;
+            reservation.total_amount_from_vendor = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id && reservation.is_canceled != 1).Select(s => s.vendor_cost).Sum();
+
+            reservation.updated_at = DateTime.Now;
+            reservation.updated_by = Session["id"].ToString().ToInt();
+            db.SaveChanges();
+
+            detail.client_id = db.ReservationDetails.Find(detailViewModel.parent_id).client_id;
+            db.SaveChanges();
+
+            return Json(new { msg = "done" }, JsonRequestBehavior.AllowGet);
+        }
     }
 }
