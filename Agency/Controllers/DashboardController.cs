@@ -178,28 +178,28 @@ namespace Agency.Controllers
                 xAxis.Add(reader["date"].ToString());
             }
             reader.Close();
-            List<double?> total_amount_after_tax_reservations = db.Reservations.Where(p => p.is_canceled == null).Select(p => p.total_amount_after_tax).ToList();
+            List<double?> total_amount_after_tax_reservations = db.Reservations.Where(p => p.is_canceled != 1).Select(p => p.total_amount_after_tax).ToList();
             double? total_amount_after_tax = 0;
             if (total_amount_after_tax_reservations != null)
             {
                 total_amount_after_tax = total_amount_after_tax_reservations.Sum();
             }
 
-            List<double?> total_amount_from_vendor_reservations = db.Reservations.Where(p => p.is_canceled == null).Select(p => p.total_amount_from_vendor).ToList();
+            List<double?> total_amount_from_vendor_reservations = db.Reservations.Where(p => p.is_canceled != 1).Select(p => p.total_amount_from_vendor).ToList();
             double? total_amount_from_vendor = 0;
             if (total_amount_from_vendor_reservations != null)
             {
                 total_amount_from_vendor = total_amount_from_vendor_reservations.Sum();
             }
 
-            List<double?> paid_amount_reservations = db.Reservations.Where(p => p.is_canceled == null).Select(p => p.paid_amount).ToList();
+            List<double?> paid_amount_reservations = db.Reservations.Where(p => p.is_canceled != 1).Select(p => p.paid_amount).ToList();
             double? paid_amount = 0;
             if (paid_amount_reservations != null)
             {
                 paid_amount = paid_amount_reservations.Sum();
             }
 
-            List<double?> total_amount_from_vendor_finished_reservations = db.Reservations.Where(p => p.paid_amount == p.total_amount_after_tax && p.is_canceled == null).Select(p => p.total_amount_from_vendor).ToList();
+            List<double?> total_amount_from_vendor_finished_reservations = db.Reservations.Where(p => p.paid_amount == p.total_amount_after_tax && p.is_canceled != 1).Select(p => p.total_amount_from_vendor).ToList();
             double? total_amount_from_vendor_finished = 0;
             if (total_amount_from_vendor_finished_reservations != null)
             {
@@ -207,7 +207,7 @@ namespace Agency.Controllers
             }
 
 
-            List<double?> ttotal_amount_after_tax_finished_reservations = db.Reservations.Where(p => p.paid_amount == p.total_amount_after_tax && p.is_canceled == null).Select(p => p.total_amount_after_tax).ToList();
+            List<double?> ttotal_amount_after_tax_finished_reservations = db.Reservations.Where(p => p.paid_amount == p.total_amount_after_tax && p.is_canceled != 1).Select(p => p.total_amount_after_tax).ToList();
             double? total_amount_after_tax_finished = 0;
             if (total_amount_from_vendor_finished_reservations != null)
             {
