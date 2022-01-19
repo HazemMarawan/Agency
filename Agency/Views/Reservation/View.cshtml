@@ -157,9 +157,9 @@
                                 <input name="reservations_officer_email" id="reservations_officer_email" type="email" value="@Model.CurrentReservation.reservations_officer_email" class="form-control radius-30" />
                             </div>
                             @*<div class="form-group col-md-6">
-                                <label>Vendor</label>
-                                @Html.DropDownListFor(m => m.CurrentReservation.vendor_id, new SelectList(ViewBag.Vendors, "id", "NamePlusCode"), "Select Vendor", new { @class = "form-control", @name = "vendor_id", @id = "vendor_id" })
-                            </div>*@
+                                    <label>Vendor</label>
+                                    @Html.DropDownListFor(m => m.CurrentReservation.vendor_id, new SelectList(ViewBag.Vendors, "id", "NamePlusCode"), "Select Vendor", new { @class = "form-control", @name = "vendor_id", @id = "vendor_id" })
+                                </div>*@
                             <div class="form-group col-md-6">
                                 <label>Advance Reservation Percentage</label>
                                 <input name="advance_reservation_percentage" id="advance_reservation_percentage" value="@Model.CurrentReservation.advance_reservation_percentage" type="number" min="0" step="0.1" class="form-control radius-30" />
@@ -169,33 +169,33 @@
                                 <input name="single_price" id="single_price" type="number" min="0" step="0.1" value="@Model.CurrentReservation.single_price" class="form-control radius-30" />
                             </div>
                             @*<div class="form-group col-md-6">
-                                <label>Vendor Single Price</label>
-                                <input name="vendor_single_price" id="vendor_single_price" type="number" min="0" step="0.1" value="@Model.CurrentReservation.vendor_single_price" class="form-control radius-30" />
-                            </div>*@
+                                    <label>Vendor Single Price</label>
+                                    <input name="vendor_single_price" id="vendor_single_price" type="number" min="0" step="0.1" value="@Model.CurrentReservation.vendor_single_price" class="form-control radius-30" />
+                                </div>*@
                             <div class="form-group col-md-6">
                                 <label>Double Price</label>
                                 <input name="double_price" id="double_price" type="number" min="0" step="0.1" value="@Model.CurrentReservation.double_price" class="form-control radius-30" />
                             </div>
                             @*<div class="form-group col-md-6">
-                                <label>Vendor Double Price</label>
-                                <input name="vendor_douple_price" id="vendor_douple_price" type="number" min="0" step="0.1" value="@Model.CurrentReservation.vendor_douple_price" class="form-control radius-30" />
-                            </div>*@
+                                    <label>Vendor Double Price</label>
+                                    <input name="vendor_douple_price" id="vendor_douple_price" type="number" min="0" step="0.1" value="@Model.CurrentReservation.vendor_douple_price" class="form-control radius-30" />
+                                </div>*@
                             <div class="form-group col-md-6">
                                 <label>Triple Price</label>
                                 <input name="triple_price" id="triple_price" type="number" min="0" step="0.1" value="@Model.CurrentReservation.triple_price" class="form-control radius-30" />
                             </div>
                             @*<div class="form-group col-md-6">
-                                <label>Vendor Triple Price</label>
-                                <input name="vendor_triple_price" id="vendor_triple_price" type="number" min="0" step="0.1" value="@Model.CurrentReservation.vendor_douple_price" class="form-control radius-30" />
-                            </div>*@
+                                    <label>Vendor Triple Price</label>
+                                    <input name="vendor_triple_price" id="vendor_triple_price" type="number" min="0" step="0.1" value="@Model.CurrentReservation.vendor_douple_price" class="form-control radius-30" />
+                                </div>*@
                             <div class="form-group col-md-6">
                                 <label>Quad Price</label>
                                 <input name="quad_price" id="quad_price" type="number" min="0" step="0.1" value="@Model.CurrentReservation.quad_price" class="form-control radius-30" />
                             </div>
                             @*<div class="form-group col-md-6">
-                                <label>Vendor Quad Price</label>
-                                <input name="vendor_quad_price" id="vendor_quad_price" type="number" min="0" step="0.1" value="@Model.CurrentReservation.vendor_quad_price" class="form-control radius-30" />
-                            </div>*@
+                                    <label>Vendor Quad Price</label>
+                                    <input name="vendor_quad_price" id="vendor_quad_price" type="number" min="0" step="0.1" value="@Model.CurrentReservation.vendor_quad_price" class="form-control radius-30" />
+                                </div>*@
                             <div class="form-group col-md-6">
                                 <label>Tax</label>
                                 <input name="tax" id="tax" type="number" min="0" step="0.1" value="@Model.CurrentReservation.tax" class="form-control radius-30" />
@@ -421,9 +421,9 @@
                             </div>
 
                             @*<div class="form-group col-md-6">
-            <label>Amount Paid to Vendor</label>
-            <input name="amount_paid_to_vendor" id="amount_paid_to_vendor" type="number" class="form-control radius-30" />
-        </div>*@
+                                    <label>Amount Paid to Vendor</label>
+                                    <input name="amount_paid_to_vendor" id="amount_paid_to_vendor" type="number" class="form-control radius-30" />
+                                </div>*@
                             <div class="form-group col-md-6">
                                 <label>Confirmation #</label>
                                 <input name="confirmation_id" id="confirmation_id" type="number" class="form-control radius-30" />
@@ -444,12 +444,12 @@
                                 </select>
                             </div>
                             @*<div class="form-group col-md-6">
-                                <label>Notify</label>
-                                <select id="notify" name="notify" class="form-control radius-30">
-                                    <option value="0" selected>No</option>
-                                    <option value="1">Yes</option>
-                                </select>
-                            </div>*@
+                                    <label>Notify</label>
+                                    <select id="notify" name="notify" class="form-control radius-30">
+                                        <option value="0" selected>No</option>
+                                        <option value="1">Yes</option>
+                                    </select>
+                                </div>*@
                         </div>
                     </div>
                 </div>
@@ -462,7 +462,7 @@
     </form>
 </div>
 
-<div class="modal fade" id="manage_comments" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="manage_credit_modal" tabindex="-1" role="dialog" aria-hidden="true">
     <form action="" method="post" enctype='multipart/form-data'>
         <div class="modal-dialog">
             <div class="modal-content">
@@ -475,12 +475,41 @@
                 <div class="modal-body">
                     <div class="form-body">
                         <div class="form-row">
-                            <input type="hidden" name="id" id="id" value="0" />
-                            <input type="hidden" name="reservation_id" id="reservation_id" value="@ViewBag.id" />
-
+                            <input type="hidden" name="id" id="id" value="@Model.CurrentReservation.id" />
                             <div class="form-group col-md-12">
-                                <label>Comment</label>
-                                <textarea name="comment" id="comment" class="form-control radius-30"></textarea>
+                                <label>Credit</label>
+                                <input type="number" step=".1" name="credit" id="credit" value="@Model.CurrentReservation.credit" class="form-control radius-30"/>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="modal fade" id="manage_refund_modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <form action="" method="post" enctype='multipart/form-data'>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal_title"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-body">
+                        <div class="form-row">
+                            <input type="hidden" name="id" id="id" value="@Model.CurrentReservation.id" />
+                            <div class="form-group col-md-12">
+                                <label>Refund</label>
+                                <input type="number" step=".1" name="refund" id="refund" value="@Model.CurrentReservation.refund" class="form-control radius-30"/>
                             </div>
 
                         </div>
@@ -550,6 +579,40 @@
         </div>
     </form>
 </div>
+
+<div class="modal fade" id="manage_comments" tabindex="-1" role="dialog" aria-hidden="true">
+    <form action="" method="post" enctype='multipart/form-data'>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal_title"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-body">
+                        <div class="form-row">
+                            <input type="hidden" name="id" id="id" value="0" />
+                            <input type="hidden" name="reservation_id" id="reservation_id" value="@ViewBag.id" />
+
+                            <div class="form-group col-md-12">
+                                <label>Comment</label>
+                                <textarea name="comment" id="comment" class="form-control radius-30"></textarea>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
 
 <!--need to make this site map work -->
 <div class="page-header">
@@ -697,16 +760,18 @@
                                             <p>Status</p>
                                             <p>Collected</p>
                                             <p>Balance</p>
-                                           
+
 
                                             @if (Model.CurrentReservation.paid_amount == Model.CurrentReservation.total_amount_after_tax)
                                             {
                                                 <p>Profit</p>
                                             }
                                             @*@if (Model.InitialReservation.paid_amount == Model.InitialReservation.total_amount_after_tax)
-                                            {
-                                                <p>Initial Profit</p>
-                                            }*@
+                                                {
+                                                    <p>Initial Profit</p>
+                                                }*@
+                                            <p>Credit</p>
+                                            <p>Refund</p>
                                             <p>Credit Card Information</p>
                                         </div>
                                         <div class="col-lg-7 part-b">
@@ -812,13 +877,13 @@
                                                 <p>- | <span style="color:red;">-</span></p>
                                             }
                                             @*@if (String.IsNullOrEmpty(Model.CurrentReservation.vendor_code))
-        {
-            <p>- | <span style="color:red;">-</span></p>
-        }
-        else
-        {
-            <p>@Model.CurrentReservation.vendor_code | <span style="color:red;">@Model.InitialReservation.vendor_code</span></p>
-        }*@
+                                                {
+                                                    <p>- | <span style="color:red;">-</span></p>
+                                                }
+                                                else
+                                                {
+                                                    <p>@Model.CurrentReservation.vendor_code | <span style="color:red;">@Model.InitialReservation.vendor_code</span></p>
+                                                }*@
                                             @if (Model.InitialReservation.total_rooms != null)
                                             {
                                                 <p>@Model.InitialReservation.total_rooms @*| <span style="color:red;">@(Model.InitialReservation.total_rooms.ToString()!= Model.CurrentReservation.total_rooms.ToString() ? Model.InitialReservation.total_rooms.ToString() : "-") </span>*@</p>
@@ -996,99 +1061,101 @@
                                             @*<hr />*@
                                             <!--Initial Block-->
                                             @*@if (!String.IsNullOrEmpty(Model.InitialReservation.check_in.ToString().Split(' ')[0]))
-                                            {
-                                                <p style="color:red;">@Model.InitialReservation.check_in.ToString().Split(' ')[0]</p>
-                                            }
-                                            else
-                                            {
-                                                <p style="color:red;">-</p>
-                                            }
-
-                                            @if (!String.IsNullOrEmpty(Model.InitialReservation.check_out.ToString().Split(' ')[0]))
-                                            {
-                                                <p style="color:red;">@Model.InitialReservation.check_out.ToString().Split(' ')[0]</p>
-                                            }
-                                            else
-                                            {
-                                                <p style="color:red;">-</p>
-                                            }
-
-                                            @if (Model.InitialReservation.total_rooms != null)
-                                            {
-                                                <p style="color:red;">@Model.InitialReservation.total_rooms</p>
-                                            }
-                                            else
-                                            {
-                                                <p style="color:red;">-</p>
-                                            }
-
-                                            @if (Model.InitialReservation.total_nights != null)
-                                            {
-                                                <p style="color:red;">@Model.InitialReservation.total_nights</p>
-                                            }
-                                            else
-                                            {
-                                                <p style="color:red;">-</p>
-                                            }
-
-                                            @if (Model.InitialReservation.reservation_avg_price == null)
-                                            {
-                                                <p><span style="color:red;">-</span></p>
-                                            }
-                                            else
-                                            {
-                                                <p><span style="color:red;">@Model.InitialReservation.reservation_avg_price @Model.InitialReservation.string_currency</span></p>
-                                            }
-
-                                            @if (Model.InitialReservation.tax == null)
-                                            {
-                                                <p><span style="color:red;">-</span></p>
-                                            }
-                                            else
-                                            {
-                                                <p><span style="color:red;">@Model.InitialReservation.tax %</span></p>
-                                            }
-
-                                            @if (Model.InitialReservation.total_amount == null)
-                                            {
-                                                <p><span style="color:red;">-</span></p>
-                                            }
-                                            else
-                                            {
-                                                <p><span style="color:red;">@Model.InitialReservation.total_amount @Model.InitialReservation.string_currency</span></p>
-                                            }
-
-                                            @if (Model.InitialReservation.total_amount_from_vendor == null)
-                                            {
-                                                <p><span style="color:red;">-</span></p>
-                                            }
-                                            else
-                                            {
-                                                <p><span style="color:red;">@Model.InitialReservation.total_amount_from_vendor @Model.CurrentReservation.string_currency</span></p>
-                                            }
-
-                                            <p style="color:red;">
-                                                @if (Model.InitialReservation.paid_amount == 0)
                                                 {
-                                                    <span>Un Paid</span>
-                                                }
-                                                else if (Model.InitialReservation.paid_amount < Model.InitialReservation.total_amount_after_tax)
-                                                {
-                                                    <span>Partially Paid</span>
+                                                    <p style="color:red;">@Model.InitialReservation.check_in.ToString().Split(' ')[0]</p>
                                                 }
                                                 else
                                                 {
-                                                    <span>Paid</span>
+                                                    <p style="color:red;">-</p>
                                                 }
-                                            </p>
 
-                                            <p style="color:red;">@Model.InitialReservation.paid_amount</p>
-                                            <p style="color:red;">@(Model.InitialReservation.total_amount_after_tax - Model.InitialReservation.paid_amount) </p>
+                                                @if (!String.IsNullOrEmpty(Model.InitialReservation.check_out.ToString().Split(' ')[0]))
+                                                {
+                                                    <p style="color:red;">@Model.InitialReservation.check_out.ToString().Split(' ')[0]</p>
+                                                }
+                                                else
+                                                {
+                                                    <p style="color:red;">-</p>
+                                                }
 
-                                            @if (Model.InitialReservation.paid_amount == Model.InitialReservation.total_amount_after_tax)
-                                            {
-                                                <p style="color:red;">@(Model.InitialReservation.total_amount_after_tax - Model.InitialReservation.total_amount_from_vendor) </p>
-                                            }*@
+                                                @if (Model.InitialReservation.total_rooms != null)
+                                                {
+                                                    <p style="color:red;">@Model.InitialReservation.total_rooms</p>
+                                                }
+                                                else
+                                                {
+                                                    <p style="color:red;">-</p>
+                                                }
+
+                                                @if (Model.InitialReservation.total_nights != null)
+                                                {
+                                                    <p style="color:red;">@Model.InitialReservation.total_nights</p>
+                                                }
+                                                else
+                                                {
+                                                    <p style="color:red;">-</p>
+                                                }
+
+                                                @if (Model.InitialReservation.reservation_avg_price == null)
+                                                {
+                                                    <p><span style="color:red;">-</span></p>
+                                                }
+                                                else
+                                                {
+                                                    <p><span style="color:red;">@Model.InitialReservation.reservation_avg_price @Model.InitialReservation.string_currency</span></p>
+                                                }
+
+                                                @if (Model.InitialReservation.tax == null)
+                                                {
+                                                    <p><span style="color:red;">-</span></p>
+                                                }
+                                                else
+                                                {
+                                                    <p><span style="color:red;">@Model.InitialReservation.tax %</span></p>
+                                                }
+
+                                                @if (Model.InitialReservation.total_amount == null)
+                                                {
+                                                    <p><span style="color:red;">-</span></p>
+                                                }
+                                                else
+                                                {
+                                                    <p><span style="color:red;">@Model.InitialReservation.total_amount @Model.InitialReservation.string_currency</span></p>
+                                                }
+
+                                                @if (Model.InitialReservation.total_amount_from_vendor == null)
+                                                {
+                                                    <p><span style="color:red;">-</span></p>
+                                                }
+                                                else
+                                                {
+                                                    <p><span style="color:red;">@Model.InitialReservation.total_amount_from_vendor @Model.CurrentReservation.string_currency</span></p>
+                                                }
+
+                                                <p style="color:red;">
+                                                    @if (Model.InitialReservation.paid_amount == 0)
+                                                    {
+                                                        <span>Un Paid</span>
+                                                    }
+                                                    else if (Model.InitialReservation.paid_amount < Model.InitialReservation.total_amount_after_tax)
+                                                    {
+                                                        <span>Partially Paid</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span>Paid</span>
+                                                    }
+                                                </p>
+
+                                                <p style="color:red;">@Model.InitialReservation.paid_amount</p>
+                                                <p style="color:red;">@(Model.InitialReservation.total_amount_after_tax - Model.InitialReservation.paid_amount) </p>
+
+                                                @if (Model.InitialReservation.paid_amount == Model.InitialReservation.total_amount_after_tax)
+                                                {
+                                                    <p style="color:red;">@(Model.InitialReservation.total_amount_after_tax - Model.InitialReservation.total_amount_from_vendor) </p>
+                                                }*@
+                                            <p><input type="button" id="add_reservation_credit" value="Add" class="btn btn-primary" /></p>
+                                            <p><input type="button" id="add_reservation_refund" value="Add" class="btn btn-primary" /></p>
                                             <p id="credit_card_data_paragraph">
                                                 <input type="button" id="add_credit_card_info" value="Add" class="btn btn-primary" />
                                                 @*  @if (!String.IsNullOrEmpty(Model.CurrentReservation.credit_card_number) && !String.IsNullOrEmpty(Model.CurrentReservation.card_expiration_date) && !String.IsNullOrEmpty(Model.CurrentReservation.security_code))*@
@@ -1320,7 +1387,8 @@
                                     html += oData.client_first_name;
                                 if (oData.client_last_name)
                                     html += " " + oData.client_last_name;
-
+                                if (oData.is_canceled == 1)
+                                    html += "<br><span class='badge badge-danger'>Canceled</span>";
                                 $(nTd).html("<span class='action-column'>" + html + "</span>");
                             }
                         },
@@ -1675,10 +1743,48 @@
                 });
            });
 
+            $(document).on("click", "#add_reservation_credit", function () {
+                var modal = $('#manage_credit_modal').clone();
+                var action = '@Url.Action("saveCredit", "Reservation")';
+                modal.find('form').attr('action', action);
+                modal.find('#modal_title').text('Add Credit');
+                modal.execModal({
+                    progressBar: 'progress_bar',
+                    progressText: 'progress_text',
+                }, function (response) {
+
+                        location.reload();
+
+                }, function (response) {
+
+                }, function (dialog) {
+                      
+                    })
+
+            });
+
+            $(document).on("click", "#add_reservation_refund", function () {
+                var modal = $('#manage_refund_modal').clone();
+                var action = '@Url.Action("saveRefund", "Reservation")';
+                modal.find('form').attr('action', action);
+                modal.find('#modal_title').text('Add Refund');
+                modal.execModal({
+                    progressBar: 'progress_bar',
+                    progressText: 'progress_text',
+                }, function (response) {
+
+                        location.reload();
+
+                }, function (response) {
+
+                }, function (dialog) {
+                        
+                    })
+
+            });
+
            $(document).on("click", "#edit_reservation", function () {
 
-                //var data = unPaidReservationTable.row($(this).closest('tr')).data();
-                //console.log(data);
                 var modal = $('#edit_reservation_modal').clone();
                 var action = '@Url.Action("saveReservation", "Reservation")';
                 modal.find('form').attr('action', action);
@@ -1692,65 +1798,6 @@
                 }, function (response) {
 
                 }, function (dialog) {
-
-                        //dialog.find('#id').val(data.id);
-                        //dialog.find('#company_id').val(data.company_id);
-                        //dialog.find('#company_name').val(data.company_name);
-                        //dialog.find('#reservations_officer_name').val(data.reservations_officer_name);
-                        //dialog.find('#reservations_officer_email').val(data.reservations_officer_email);
-                        //dialog.find('#reservations_officer_phone').val(data.reservations_officer_phone);
-
-                        //if(data.single_price > 0)
-                        //    dialog.find('#single_price').val(data.single_price);
-                        //else
-                        //    dialog.find('#single_price').val(data.event_single_price);
-                        //---------------------------------------
-                        //if(data.double_price > 0)
-                        //    dialog.find('#double_price').val(data.double_price);
-                        //else
-                        //    dialog.find('#double_price').val(data.event_double_price);
-                        //---------------------------------------
-                        //if(data.triple_price > 0)
-                        //    dialog.find('#triple_price').val(data.triple_price);
-                        //else
-                        //    dialog.find('#triple_price').val(data.event_triple_price);
-                        //---------------------------------------
-                        //if(data.quad_price > 0)
-                        //    dialog.find('#quad_price').val(data.quad_price);
-                        //else
-                        //    dialog.find('#quad_price').val(data.event_quad_price);
-                        //---------------------------------------
-                        //if(data.vendor_single_price > 0)
-                        //    dialog.find('#vendor_single_price').val(data.vendor_single_price);
-                        //else
-                        //    dialog.find('#vendor_single_price').val(data.event_vendor_single_price);
-                        //---------------------------------------
-                        // if(data.vendor_douple_price > 0)
-                        //     dialog.find('#vendor_douple_price').val(data.vendor_douple_price);
-                        //else
-                        //    dialog.find('#vendor_douple_price').val(data.event_vendor_double_price);
-                        //---------------------------------------
-                        // if(data.vendor_triple_price > 0)
-                        //    dialog.find('#vendor_triple_price').val(data.vendor_triple_price);
-                        //else
-                        //    dialog.find('#vendor_triple_price').val(data.event_vendor_triple_price);
-                        //---------------------------------------
-                        // if(data.vendor_quad_price > 0)
-                        //    dialog.find('#vendor_quad_price').val(data.vendor_quad_price);
-                        //else
-                        //    dialog.find('#vendor_quad_price').val(data.event_vendor_quad_price);
-                        //---------------------------------------
-                       //if(data.tax > 0)
-                       //     dialog.find('#tax').val(data.tax);
-                       // else
-                       //     dialog.find('#tax').val(data.event_tax);
-
-                       // dialog.find("#advance_reservation_percentage").val(data.advance_reservation_percentage);
-                       // dialog.find("#currency").val(data.currency);
-                       // dialog.find('#opener option[value=' + data.opener + ']').attr('selected', 'selected');
-                       // dialog.find('#closer option[value=' + data.closer + ']').attr('selected', 'selected');
-                       // dialog.find('#shift option[value=' + data.shift + ']').attr('selected', 'selected');
-                       // dialog.find('#vendor_id option[value=' + data.vendor_id + ']').attr('selected', 'selected');
 
 
                 });
@@ -1920,7 +1967,7 @@
                         dialog.find('#parent_id').val(data.id);
                         dialog.find('#reservation_id').val(data.reservation_id);
                         dialog.find('#room_price').val(data.room_price);
-                        
+
 
                 });
 
@@ -1986,7 +2033,7 @@
                 var modal = $('#edit_reservation_detail_modal').clone();
                 var action = '@Url.Action("saveReservation", "ReservationDetail")';
                 modal.find('form').attr('action', action);
-                modal.find('#modal_title').text('Edit User');
+                modal.find('#modal_title').text('Edit Reservation');
                 modal.execModal({
                     progressBar: 'progress_bar',
                     progressText: 'progress_text',

@@ -424,6 +424,10 @@
     <Compile Include="Migrations\202201190005211_updateReseration.Designer.cs">
       <DependentUpon>202201190005211_updateReseration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202201190049293_updateRefund.cs" />
+    <Compile Include="Migrations\202201190049293_updateRefund.Designer.cs">
+      <DependentUpon>202201190049293_updateRefund.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AgencyDbContext.cs" />
     <Compile Include="Models\Chat.cs" />
@@ -4223,6 +4227,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202201190005211_updateReseration.resx">
       <DependentUpon>202201190005211_updateReseration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202201190049293_updateRefund.resx">
+      <DependentUpon>202201190049293_updateRefund.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

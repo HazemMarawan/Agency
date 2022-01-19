@@ -410,11 +410,11 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label>Deposit</label>
-                                <input name="deposit" id="deposit" readonly type="text" class="form-control radius-30" />
+                                <input name="deposit" id="deposit" type="text" class="form-control radius-30" style="font-weight:bold;" />
                             </div>
                             <div class="form-group col-md-6">
-                                <label>Percentage</label>
-                                <input name="percentage" id="percentage" readonly type="text" class="form-control radius-30" />
+                                <label>Percentage %</label>
+                                <input required name="percentage" id="percentage" type="number" max="100" min="1" class="form-control radius-30" />
                             </div>
                             <div class="form-group col-md-6">
                                 <label>Balance</label>
@@ -426,7 +426,7 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label>Amount</label>
-                                <input name="paid_amount" id="paid_amount" required type="number" class="form-control radius-30" />
+                                <input name="paid_amount" id="paid_amount" step=".1" required type="number" class="form-control radius-30" />
                             </div>
                         </div>
                     </div>
@@ -2602,17 +2602,25 @@
                 }, function (dialog) {
 
                         dialog.find('#id').val(data.id);
-                        dialog.find('#total_after_tax').val(addCommas(data.total_amount_after_tax.toFixed(2)) +" "+ data.string_currency);
+                        dialog.find('#total_after_tax').val(addCommas(data.total_amount_after_tax.toFixed(2)) + " " + data.string_currency);
                         dialog.find('#tax').val(data.tax + "%");
-                        dialog.find('#paid').val(addCommas(data.paid_amount.toFixed(2)) + " " + data.string_currency);
-                        dialog.find('#balance_pay_modal').val(addCommas((data.total_amount_after_tax - data.paid_amount).toFixed(2)) + " " + data.string_currency);
 
-                        var deposit = (data.tax / 100) * data.total_amount_after_tax;
+                        var deposit = (data.advance_reservation_percentage / 100) * data.total_amount_after_tax;
                         dialog.find('#deposit').val(addCommas(deposit.toFixed(2)) + " " + data.string_currency);
-                        dialog.find('#percentage').val(data.advance_reservation_percentage + "%");
+                        dialog.find('#percentage').val(data.advance_reservation_percentage);
                         var remainAmount = data.total_amount_after_tax - data.paid_amount;
                         dialog.find('#paid_amount').attr('max', remainAmount)
                         dialog.find('#paid_amount').attr('min', 1)
+
+                        dialog.find('#paid').val(addCommas(data.paid_amount.toFixed(2)) + " " + data.string_currency);
+
+                        var balance = data.total_amount_after_tax - data.paid_amount;
+                        dialog.find('#balance_pay_modal').val(addCommas(balance.toFixed(2)) + " " + data.string_currency);
+
+                        dialog.find('#percentage').keyup(function () {
+                            var deposit = (dialog.find('#percentage').val() / 100) * data.total_amount_after_tax;
+                            dialog.find('#deposit').val(addCommas(deposit.toFixed(2)) + " " + data.string_currency);
+                        });
 
 
                 });
@@ -2641,15 +2649,25 @@
                 }, function (dialog) {
 
                         dialog.find('#id').val(data.id);
-                        dialog.find('#total_after_tax').val(addCommas(data.total_amount_after_tax.toFixed(2)) +" "+ data.string_currency);
+                        dialog.find('#total_after_tax').val(addCommas(data.total_amount_after_tax.toFixed(2)) + " " + data.string_currency);
                         dialog.find('#tax').val(data.tax + "%");
 
-                        var deposit = (data.tax / 100) * data.total_amount_after_tax;
+                        var deposit = (data.advance_reservation_percentage / 100) * data.total_amount_after_tax;
                         dialog.find('#deposit').val(addCommas(deposit.toFixed(2)) + " " + data.string_currency);
-                        dialog.find('#percentage').val(data.advance_reservation_percentage + "%");
+                        dialog.find('#percentage').val(data.advance_reservation_percentage);
                         var remainAmount = data.total_amount_after_tax - data.paid_amount;
                         dialog.find('#paid_amount').attr('max', remainAmount)
                         dialog.find('#paid_amount').attr('min', 1)
+
+                        dialog.find('#paid').val(addCommas(data.paid_amount.toFixed(2)) + " " + data.string_currency);
+
+                        var balance = data.total_amount_after_tax - data.paid_amount;
+                        dialog.find('#balance_pay_modal').val(addCommas(balance.toFixed(2)) + " " + data.string_currency);
+
+                        dialog.find('#percentage').keyup(function () {
+                            var deposit = (dialog.find('#percentage').val() / 100) * data.total_amount_after_tax;
+                            dialog.find('#deposit').val(addCommas(deposit.toFixed(2)) + " " + data.string_currency);
+                        });
 
 
                 });
@@ -2681,14 +2699,22 @@
                         dialog.find('#total_after_tax').val(addCommas(data.total_amount_after_tax.toFixed(2)) +" "+ data.string_currency);
                         dialog.find('#tax').val(data.tax + "%");
 
-                        var deposit = (data.tax / 100) * data.total_amount_after_tax;
+                        var deposit = (data.advance_reservation_percentage / 100) * data.total_amount_after_tax;
                         dialog.find('#deposit').val(addCommas(deposit.toFixed(2)) + " " + data.string_currency);
-                        dialog.find('#percentage').val(data.advance_reservation_percentage + "%");
+                        dialog.find('#percentage').val(data.advance_reservation_percentage);
                         var remainAmount = data.total_amount_after_tax - data.paid_amount;
                         dialog.find('#paid_amount').attr('max', remainAmount)
                         dialog.find('#paid_amount').attr('min', 1)
 
+                        dialog.find('#paid').val(addCommas(data.paid_amount.toFixed(2)) + " " + data.string_currency);
 
+                        var balance = data.total_amount_after_tax - data.paid_amount;
+                        dialog.find('#balance_pay_modal').val(addCommas(balance.toFixed(2)) + " " + data.string_currency);
+
+                        dialog.find('#percentage').keyup(function () {
+                            var deposit = (dialog.find('#percentage').val() / 100) * data.total_amount_after_tax;
+                            dialog.find('#deposit').val(addCommas(deposit.toFixed(2)) + " " + data.string_currency);
+                        });
 
                 });
 

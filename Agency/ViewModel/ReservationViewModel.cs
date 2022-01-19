@@ -35,7 +35,7 @@ namespace Agency.ViewModel
         public double? tax { get; set; }
         public double? tax_amount { get; set; }
         public double? credit { get; set; }
-        public double? refud { get; set; }
+        public double? refund { get; set; }
         public double? advance_reservation_percentage { get; set; }
         public double? financial_advance { get; set; }
         public double? financial_due { get; set; }
