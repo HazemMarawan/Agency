@@ -413,7 +413,8 @@ namespace Agency.Controllers
                                advance_reservation_percentage = res.advance_reservation_percentage,
                                tax_amount = res.tax_amount,
                                is_canceled = res.is_canceled,
-                               is_refund = res.is_refund
+                               is_refund = res.is_refund,
+                               created_at = res.created_at
                                //profit = calculateProfit(res.id).profit
                            }).Where(r => r.paid_amount == 0 && r.is_canceled == null && r.created_by == null);
             //var reservation = resData.ToList();
@@ -524,7 +525,8 @@ namespace Agency.Controllers
                                advance_reservation_percentage = res.advance_reservation_percentage,
                                tax_amount = res.tax_amount,
                                is_canceled = res.is_canceled,
-                               is_refund = res.is_refund
+                               is_refund = res.is_refund,
+                               created_at = res.created_at
                                //profit = calculateProfit(res.id).profit
                            }).Where(r => r.paid_amount == 0 && r.is_canceled == null && r.created_by != null);
             //var reservation = resData.ToList();
@@ -632,10 +634,11 @@ namespace Agency.Controllers
                                advance_reservation_percentage = res.advance_reservation_percentage,
                                tax_amount = res.tax_amount,
                                is_canceled = res.is_canceled,
-                               is_refund = res.is_refund
+                               is_refund = res.is_refund,
+                               created_at = res.created_at
                                //profit = calculateProfit(res.id).profit
 
-                           }).Where(r => r.paid_amount < r.total_amount_after_tax && r.paid_amount != 0 && r.is_canceled == null && r.is_refund == 0);
+                           }).Where(r => r.paid_amount < r.total_amount_after_tax && r.paid_amount != 0 && r.is_canceled == null);
             //var reservation = resData.ToList();
             //double? collected = 0.0;
             //double? balance = 0.0;
@@ -658,6 +661,7 @@ namespace Agency.Controllers
                 recordsFiltered = totalRecords,
                 data = displayResult,
             }, JsonRequestBehavior.AllowGet);
+
         }
 
         public JsonResult PaidReservations()
@@ -684,14 +688,14 @@ namespace Agency.Controllers
                                id = res.id,
                                total_amount = res.total_amount,
                                currency = res.currency,
+                               string_currency = res.currency != null ? ((Currency)res.currency).ToString() : ((Currency)0).ToString(),
                                tax = res.tax,
                                financial_advance = res.financial_advance,
                                financial_advance_date = res.financial_advance_date,
                                financial_due = res.financial_due,
                                financial_due_date = res.financial_due_date,
-                               financial_due_date_string = res.financial_due_date.ToString(),
-                               is_special = even.is_special,
                                status = res.status,
+                               is_special = even.is_special,
                                single_price = res.single_price,
                                double_price = res.double_price,
                                triple_price = res.triple_price,
@@ -741,10 +745,11 @@ namespace Agency.Controllers
                                advance_reservation_percentage = res.advance_reservation_percentage,
                                tax_amount = res.tax_amount,
                                is_canceled = res.is_canceled,
-                               is_refund = res.is_refund
+                               is_refund = res.is_refund,
+                               created_at = res.created_at
                                //profit = calculateProfit(res.id).profit
 
-                           }).Where(r => r.paid_amount == r.total_amount_after_tax && r.paid_amount != 0 && r.is_canceled == null && r.is_refund == 0);
+                           }).Where(r => r.paid_amount == r.total_amount_after_tax && r.paid_amount != 0 && r.is_canceled == null);
             //Where(r=>r.status == (int)PaymentStatus.Paid).ToList();
             var reservation = db.Reservations;
             double? collected = 0.0;
@@ -754,11 +759,11 @@ namespace Agency.Controllers
             int? total_nights = 0;
             if (reservation != null)
             {
-                collected = db.Reservations.Where(t => t.is_canceled == null).Select(t => t.paid_amount).Sum();
-                balance = db.Reservations.Where(t => t.is_canceled == null).Select(t => t.total_amount_after_tax).Sum() - collected;
-                profit = resData.ToList().Where(r => r.is_refund == 0).Select(t => t.total_amount_after_tax).Sum() - resData.ToList().Select(t => t.total_amount_from_vendor).Sum();
-                refund = db.Reservations.Where(r => r.is_refund == 1).Select(t => t.paid_amount).Sum();
-                total_nights = db.Reservations.Where(t => t.is_canceled == null).Select(n => n.total_nights).Sum();
+                collected = db.Reservations.Where(t => t.is_canceled != 1).Select(t => t.paid_amount).Sum();
+                balance = db.Reservations.Where(t => t.is_canceled != 1).Select(t => t.total_amount_after_tax).Sum() - collected;
+                profit = resData.ToList().Select(t => t.total_amount_after_tax).Sum() - resData.ToList().Select(t => t.total_amount_from_vendor).Sum();
+                refund = db.Reservations.Select(t => t.refund).Sum();
+                total_nights = db.Reservations.Where(t => t.is_canceled != 1).Select(n => n.total_nights).Sum();
             }
             var displayResult = resData.OrderByDescending(u => u.id).Skip(skip)
                  .Take(pageSize).ToList();
@@ -860,8 +865,9 @@ namespace Agency.Controllers
                                tax_amount = res.tax_amount,
                                is_canceled = res.is_canceled,
                                //profit = calculateProfit(res.id).profit
-                               is_refund = res.is_refund
-                           }).Where(r => r.is_canceled == 1 && r.is_refund == 0);
+                               is_refund = res.is_refund,
+                               created_at = res.created_at
+                           }).Where(r => r.is_canceled == 1);
             //Where(r => r.status == (int)PaymentStatus.Paid).ToList();
             var reservation = db.Reservations;
             double? collected = 0.0;
@@ -1070,6 +1076,7 @@ namespace Agency.Controllers
                                tax_amount = res.tax_amount,
                                is_canceled = res.is_canceled,
                                is_refund = res.is_refund,
+                               created_at = res.created_at,
                                countPaidToVendorRooms = db.ReservationDetails.Where(r => r.paid_to_vendor == 1 && r.reservation_id == res.id).Count(),
                                countPaidToVendorNights = db.ReservationDetails.Where(r => r.paid_to_vendor == 1 && r.reservation_id == res.id).Sum(n => n.no_of_days),
                                //profit = calculateProfit(res.id).profit
@@ -1181,6 +1188,7 @@ namespace Agency.Controllers
                                tax_amount = res.tax_amount,
                                is_canceled = res.is_canceled,
                                is_refund = res.is_refund,
+                               created_at = res.created_at,
                                countPaidToVendorRooms = db.ReservationDetails.Where(r => r.paid_to_vendor == 1 && r.reservation_id == res.id).Count(),
                                countPaidToVendorNights = db.ReservationDetails.Where(r => r.paid_to_vendor == 1 && r.reservation_id == res.id).Sum(n => n.no_of_days),
                                //profit = calculateProfit(res.id).profit

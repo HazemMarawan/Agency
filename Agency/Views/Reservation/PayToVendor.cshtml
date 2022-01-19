@@ -154,13 +154,13 @@
                             }
                         },
                         {
-                            "data": "string_reservation_from", "searchable": true,
+                            "data": "reservation_from", "searchable": true,
                             fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
                                 var html = "";
-                                if (oData.string_reservation_from)
-                                    html += oData.string_reservation_from + "</br>";
-                                if (oData.string_reservation_to)
-                                    html += " " + oData.string_reservation_to;
+                                if (oData.reservation_from)
+                                    html += "In: "+fixDate(oData.reservation_from) + "</br>";
+                                if (oData.reservation_to)
+                                    html += "Out: " + fixDate(oData.reservation_to) + "</br>";
 
                                 $(nTd).html("<span class='action-column'>" + html + "</span>");
                             }
@@ -190,7 +190,7 @@
                             fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
                                 var html = "";
                                 if (oData.amount)
-                                    html += "<span style='font-weight:bold;' class='bold'>Amount:</span>" + addCommas(oData.amount.toFixed(2));
+                                    html += addCommas(oData.vendor_cost.toFixed(2));
                                 //if (oData.currency) {
                                 //    html += "<span style='font-weight:bold;' class='bold'>";
                                 //    if (oData.currency == 1)

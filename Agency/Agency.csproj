@@ -164,6 +164,7 @@
     <Compile Include="Controllers\CityController.cs" />
     <Compile Include="Controllers\CommentController.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
+    <Compile Include="Controllers\CreditController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\GroupController.cs" />
@@ -172,6 +173,7 @@
     <Compile Include="Controllers\MailController.cs" />
     <Compile Include="Controllers\NoteController.cs" />
     <Compile Include="Controllers\PermissionController.cs" />
+    <Compile Include="Controllers\RefundController.cs" />
     <Compile Include="Controllers\ReservationController.cs" />
     <Compile Include="Controllers\ReservationDetailController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
@@ -4029,6 +4031,8 @@
     <Content Include="Views\Reservation\ViewOurRooms.cshtml" />
     <Content Include="Views\Reservation\balanceDueDate.cshtml" />
     <Content Include="Views\Reservation\PayToVendor.cshtml" />
+    <Content Include="Views\Credit\Index.cshtml" />
+    <Content Include="Views\Refund\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

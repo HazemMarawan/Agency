@@ -1393,13 +1393,13 @@
                             }
                         },
                         {
-                            "data": "string_reservation_from", "searchable": true,
+                            "data": "reservation_from", "searchable": true,
                             fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
                                 var html = "";
-                                if (oData.string_reservation_from)
-                                    html += oData.string_reservation_from + "</br>";
-                                if (oData.string_reservation_to)
-                                    html += " " + oData.string_reservation_to;
+                                if (oData.reservation_from)
+                                    html += "In: " + fixDate(oData.reservation_from) + "</br>";
+                                if (oData.reservation_to)
+                                    html += "Out: " + fixDate(oData.reservation_to) + "</br>";
 
                                 $(nTd).html("<span class='action-column'>" + html + "</span>");
                             }
@@ -1435,11 +1435,11 @@
 
                         },
                         {
-                            "data": "string_payment_to_vendor_deadline", "searchable": true,
+                            "data": "payment_to_vendor_deadline", "searchable": true,
                             fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
                                 var html = "";
-                                if (oData.string_payment_to_vendor_deadline)
-                                    html += oData.string_payment_to_vendor_deadline;
+                                if (oData.payment_to_vendor_deadline)
+                                    html += fixDate(oData.payment_to_vendor_deadline);
                                 $(nTd).html("<span class='action-column'>" + html + "</span>");
                             },
 
@@ -1448,8 +1448,8 @@
                             "data": "string_spayment_to_vendor_notification_date", "searchable": true,
                             fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
                                 var html = "";
-                                if (oData.string_spayment_to_vendor_notification_date)
-                                    html += oData.string_spayment_to_vendor_notification_date;
+                                if (oData.payment_to_vendor_notification_date)
+                                    html += fixDate(oData.payment_to_vendor_notification_date);
                                 $(nTd).html("<span class='action-column'>" + html + "</span>");
                             },
 

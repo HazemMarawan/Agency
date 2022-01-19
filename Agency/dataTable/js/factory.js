@@ -286,7 +286,19 @@ function safeInt(value) {
     if(value==null||value=='') return 0;
     return parseInt(value);
 }
-
+function fixDate(input_date) {
+    var value = new Date
+        (
+            parseInt(input_date.replace(/(^.*\()|([+-].*$)/g, ''))
+        );
+    var output_date = value.getFullYear() +
+        "-" +
+        ("0" + (value.getMonth() + 1)).slice(-2) +
+        "-" +
+        ("0" + value.getDate()).slice(-2)
+        ;
+    return output_date;
+}
 function formatDate(date, language) {
     var weekDays = [];
     if(language=='en') {
