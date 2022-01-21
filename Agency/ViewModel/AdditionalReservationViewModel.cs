@@ -8,7 +8,7 @@ using System.Web;
 
 namespace Agency.ViewModel
 {
-    public class ReservationDetailViewModel
+    public class AdditionalReservationViewModel
     {
         public int id { get; set; }
         public int? parent_id { get; set; }
@@ -58,7 +58,7 @@ namespace Agency.ViewModel
         public string string_spayment_to_vendor_notification_date { get; set; }
         public int? confirmation_id { get; set; }
 
-        public List<AdditionalReservationViewModel> guestReservations { get; set; }
+        public List<ReservationDetailViewModel> guestReservations { get; set; }
         public List<DateTime> reservationsFrom { get; set; }
         public List<DateTime> reservationsTo { get; set; }
         public List<string> vendorCodes { get; set; }

@@ -250,7 +250,9 @@ namespace Agency.Controllers
                                       vendor_code = vendor.code,
                                       card_expiration_date = reinitialRes.card_expiration_date,
                                       credit_card_number = reinitialRes.credit_card_number,
-                                      security_code = reinitialRes.security_code
+                                      security_code = reinitialRes.security_code,
+                                      credit = resData.credit
+
                                   }).Where(r => r.reservation_id == id).FirstOrDefault();
             if (initialResData == null)
             {

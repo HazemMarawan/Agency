@@ -66,7 +66,19 @@ namespace Agency.Controllers
                                    amount_paid_to_vendor = resDetail.amount_paid_to_vendor,
                                    cancelation_policy = resDetail.cancelation_policy,
                                    confirmation_id = resDetail.confirmation_id,
-
+                                   guestReservations = db.ReservationDetails.Where(r => r.reservation_id == id && r.parent_id == resDetail.id && r.id != resDetail.id).Select(guestRes => new AdditionalReservationViewModel
+                                   {
+                                       id = guestRes.id,
+                                       reservation_id = guestRes.reservation_id,
+                                       parent_id = guestRes.parent_id,
+                                       reservation_from = guestRes.reservation_from,
+                                       reservation_to = guestRes.reservation_to,
+                                       vendor_code = guestRes.vendor_code,
+                                       vendor_cost = guestRes.vendor_cost,
+                                       room_price = guestRes.room_price,
+                                       string_reservation_from = guestRes.reservation_from.ToString(),
+                                       string_reservation_to = guestRes.reservation_to.ToString(),
+                                   }).ToList(),
                                }).Where(d => d.reservation_id == id && d.parent_id == d.id);
 
                 //Search    
@@ -412,6 +424,22 @@ namespace Agency.Controllers
                 client.updated_at = DateTime.Now;
                 client.updated_by = Session["id"].ToString().ToInt();
                 db.SaveChanges();
+
+                if(detailViewModel.roomPrices.Count > 0)
+                {
+                    for(var resDet = 0; resDet < detailViewModel.roomPrices.Count; resDet++)
+                    {
+                        ReservationDetail additionalReservationDetails = db.ReservationDetails.Find(detailViewModel.ids[resDet]);
+                        additionalReservationDetails.reservation_id = detailViewModel.reservationIds[resDet];
+                        additionalReservationDetails.parent_id = detailViewModel.parentIds[resDet];
+                        additionalReservationDetails.vendor_code = detailViewModel.vendorCodes[resDet];
+                        additionalReservationDetails.vendor_cost = detailViewModel.vendorCosts[resDet];
+                        additionalReservationDetails.room_price = detailViewModel.roomPrices[resDet];
+                        additionalReservationDetails.reservation_from = detailViewModel.reservationsFrom[resDet];
+                        additionalReservationDetails.reservation_to = detailViewModel.reservationsTo[resDet];
+                        db.SaveChanges();
+                    }
+                }
 
                 List<ReservationDetail> reservationDetails = db.ReservationDetails.Where(r => r.reservation_id == detailViewModel.reservation_id && reservation.is_canceled != 1).ToList();
                 if (reservationDetails.Count() != 0)

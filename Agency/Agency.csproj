@@ -487,6 +487,7 @@
     <Compile Include="ViewModel\PermissionViewModel.cs" />
     <Compile Include="ViewModel\ReservationCommentViewModel.cs" />
     <Compile Include="ViewModel\ReservationCreditCardViewModel.cs" />
+    <Compile Include="ViewModel\AdditionalReservationViewModel.cs" />
     <Compile Include="ViewModel\ReservationDetailViewModel.cs" />
     <Compile Include="ViewModel\ReservationLogViewModel.cs" />
     <Compile Include="ViewModel\ReservationTaskViewModel.cs" />

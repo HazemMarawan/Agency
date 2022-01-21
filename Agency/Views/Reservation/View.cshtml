@@ -436,7 +436,7 @@
                                 <label>Cancelation Policy</label>
                                 <textarea id="cancelation_policy" name="cancelation_policy" class="form-control radius-30"></textarea>
                             </div>
-                            <div class="form-group col-md-6">
+                            <div class="form-group col-md-12">
                                 <label>Canceled</label>
                                 <select id="is_canceled" name="is_canceled" class="form-control radius-30">
                                     <option value="0" selected>No</option>
@@ -450,6 +450,9 @@
                                         <option value="1">Yes</option>
                                     </select>
                                 </div>*@
+                            <div id="additionalReservations">
+
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -770,6 +773,7 @@
                                                 {
                                                     <p>Initial Profit</p>
                                                 }*@
+                                            <p>Credit Amount</p>
                                             <p>Credit</p>
                                             <p>Refund</p>
                                             <p>Credit Card Information</p>
@@ -1154,7 +1158,8 @@
                                                 {
                                                     <p style="color:red;">@(Model.InitialReservation.total_amount_after_tax - Model.InitialReservation.total_amount_from_vendor) </p>
                                                 }*@
-                                            <p><input type="button" id="add_reservation_credit" value="Add" class="btn btn-primary" /></p>
+                                            <p>@Model.CurrentReservation.credit</p>
+                                            <p><input type="button" id="add_reservation_credit" value="Edit" class="btn btn-primary" /></p>
                                             <p><input type="button" id="add_reservation_refund" value="Add" class="btn btn-primary" /></p>
                                             <p id="credit_card_data_paragraph">
                                                 <input type="button" id="add_credit_card_info" value="Add" class="btn btn-primary" />
@@ -2129,6 +2134,69 @@
                         dialog.find('#room_type option[value=' + data.room_type + ']').attr('selected', 'selected');
                         dialog.find('#notify option[value=' + data.notify + ']').attr('selected', 'selected');
                         dialog.find('#is_canceled option[value=' + data.is_canceled + ']').attr('selected', 'selected');
+                       
+                        var html = "";
+                    
+                        if (data.guestReservations.length > 0) {
+                            
+                            data.guestReservations.forEach(function(value){
+                                //console.log(value)
+                                if (value.reservation_from) {
+                                    date = new Date
+                                        (
+                                            parseInt(value.reservation_from.replace(/(^.*\()|([+-].*$)/g, ''))
+                                        );
+                                    reservation_from = date.getFullYear() +
+                                        "-" +
+                                        ("0" + (date.getMonth() + 1)).slice(-2) +
+                                        "-" +
+                                        ("0" + date.getDate()).slice(-2)
+                                        ;
+                                  
+                                }
+                                if (value.reservation_to) {
+                                    date = new Date
+                                        (
+                                            parseInt(value.reservation_to.replace(/(^.*\()|([+-].*$)/g, ''))
+                                        );
+                                    reservation_to = date.getFullYear() +
+                                        "-" +
+                                        ("0" + (date.getMonth() + 1)).slice(-2) +
+                                        "-" +
+                                        ("0" + date.getDate()).slice(-2)
+                                        ;
+                                    
+                                }
+
+                                html += "<hr/> <br/>";
+                                html += `<div class="row"><input type="hidden" name="ids[]" value="${value.id}" />
+                                <input type="hidden" name="reservationIds[]"  value="${value.reservation_id}" />
+                                <input type="hidden" name="parentIds[]" value="${value.parent_id}" />
+
+                                <div class="form-group col-md-6">
+                                    <label>Date From</label>
+                                    <input required name="reservationsFrom[]"  type="date" value="${reservation_from}" class="form-control radius-30" />
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>Date To</label>
+                                    <input required name="reservationsTo[]" type="date" value="${reservation_to}" class="form-control radius-30" />
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label>Vendor Code</label>
+                                    <input required name="vendorCodes[]" type="text" value="${value.vendor_code}" class="form-control radius-30" />
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>Total Vendor</label>
+                                    <input required name="vendorCosts[]" type="number" value="${value.vendor_cost}" step="0.1" min="1" class="form-control radius-30" />
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>Customer Room Price/night</label>
+                                    <input required name="roomPrices[]" type="number" value="${value.room_price}" step="0.1" min="1" class="form-control radius-30" />
+                                </div></div>`;
+                            })
+                            dialog.find('#additionalReservations').append(html)
+                        }
+                        
 
                 });
 
