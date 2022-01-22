@@ -511,8 +511,12 @@
                         <div class="form-row">
                             <input type="hidden" name="id" id="id" value="@Model.CurrentReservation.id" />
                             <div class="form-group col-md-12">
+                                <label>Refund ID</label>
+                                <input type="text" name="refund_id" id="refund_id" value="@Model.CurrentReservation.refund_id" class="form-control radius-30" />
+                            </div>
+                            <div class="form-group col-md-12">
                                 <label>Refund</label>
-                                <input type="number" step=".1" name="refund" id="refund" value="@Model.CurrentReservation.refund" class="form-control radius-30"/>
+                                <input type="number" step=".1" name="refund" id="refund" value="@Model.CurrentReservation.refund" class="form-control radius-30" />
                             </div>
 
                         </div>
@@ -763,6 +767,7 @@
                                             <p>Status</p>
                                             <p>Collected</p>
                                             <p>Balance</p>
+                                            <p>Transaction Fees</p>
 
 
                                             @if (Model.CurrentReservation.paid_amount == Model.CurrentReservation.total_amount_after_tax)
@@ -773,7 +778,6 @@
                                                 {
                                                     <p>Initial Profit</p>
                                                 }*@
-                                            <p>Credit Amount</p>
                                             <p>Credit</p>
                                             <p>Refund</p>
                                             <p>Credit Card Information</p>
@@ -881,13 +885,13 @@
                                                 <p>- | <span style="color:red;">-</span></p>
                                             }
                                             @*@if (String.IsNullOrEmpty(Model.CurrentReservation.vendor_code))
-                                                {
-                                                    <p>- | <span style="color:red;">-</span></p>
-                                                }
-                                                else
-                                                {
-                                                    <p>@Model.CurrentReservation.vendor_code | <span style="color:red;">@Model.InitialReservation.vendor_code</span></p>
-                                                }*@
+        {
+            <p>- | <span style="color:red;">-</span></p>
+        }
+        else
+        {
+            <p>@Model.CurrentReservation.vendor_code | <span style="color:red;">@Model.InitialReservation.vendor_code</span></p>
+        }*@
                                             @if (Model.InitialReservation.total_rooms != null)
                                             {
                                                 <p>@Model.InitialReservation.total_rooms @*| <span style="color:red;">@(Model.InitialReservation.total_rooms.ToString()!= Model.CurrentReservation.total_rooms.ToString() ? Model.InitialReservation.total_rooms.ToString() : "-") </span>*@</p>
@@ -1058,135 +1062,162 @@
                                             </p>
                                             <p>@Model.CurrentReservation.paid_amount</p>
                                             <p>@(Model.CurrentReservation.total_amount_after_tax - Model.CurrentReservation.paid_amount) </p>
-                                            @if (Model.CurrentReservation.paid_amount == Model.CurrentReservation.total_amount_after_tax)
-                                            {
-                                                <p>@(Model.CurrentReservation.total_amount_after_tax - Model.CurrentReservation.total_amount_from_vendor) </p>
-                                            }
-                                            @*<hr />*@
-                                            <!--Initial Block-->
-                                            @*@if (!String.IsNullOrEmpty(Model.InitialReservation.check_in.ToString().Split(' ')[0]))
+                                            <p>
+                                                @if (Model.CurrentReservation.paid_amount == Model.CurrentReservation.total_amount_after_tax)
                                                 {
-                                                    <p style="color:red;">@Model.InitialReservation.check_in.ToString().Split(' ')[0]</p>
+                                                    @(Model.CurrentReservation.total_amount_after_tax - Model.CurrentReservation.total_amount_from_vendor)
+                                                }
+                                            </p>
+                                            <p>
+                                                @if (Model.CurrentReservation.total_amount_after_tax == null)
+                                                {
+                                                    <span>-</span>
                                                 }
                                                 else
                                                 {
-                                                    <p style="color:red;">-</p>
+                                                    <span>@(Model.CurrentReservation.total_amount_after_tax*0.03) @Model.CurrentReservation.string_currency</span>
                                                 }
+                                                </p>
+                                                @*<hr />*@
+                                                <!--Initial Block-->
+                                                @*@if (!String.IsNullOrEmpty(Model.InitialReservation.check_in.ToString().Split(' ')[0]))
+            {
+                <p style="color:red;">@Model.InitialReservation.check_in.ToString().Split(' ')[0]</p>
+            }
+            else
+            {
+                <p style="color:red;">-</p>
+            }
 
-                                                @if (!String.IsNullOrEmpty(Model.InitialReservation.check_out.ToString().Split(' ')[0]))
-                                                {
-                                                    <p style="color:red;">@Model.InitialReservation.check_out.ToString().Split(' ')[0]</p>
-                                                }
-                                                else
-                                                {
-                                                    <p style="color:red;">-</p>
-                                                }
+            @if (!String.IsNullOrEmpty(Model.InitialReservation.check_out.ToString().Split(' ')[0]))
+            {
+                <p style="color:red;">@Model.InitialReservation.check_out.ToString().Split(' ')[0]</p>
+            }
+            else
+            {
+                <p style="color:red;">-</p>
+            }
 
-                                                @if (Model.InitialReservation.total_rooms != null)
-                                                {
-                                                    <p style="color:red;">@Model.InitialReservation.total_rooms</p>
-                                                }
-                                                else
-                                                {
-                                                    <p style="color:red;">-</p>
-                                                }
+            @if (Model.InitialReservation.total_rooms != null)
+            {
+                <p style="color:red;">@Model.InitialReservation.total_rooms</p>
+            }
+            else
+            {
+                <p style="color:red;">-</p>
+            }
 
-                                                @if (Model.InitialReservation.total_nights != null)
-                                                {
-                                                    <p style="color:red;">@Model.InitialReservation.total_nights</p>
-                                                }
-                                                else
-                                                {
-                                                    <p style="color:red;">-</p>
-                                                }
+            @if (Model.InitialReservation.total_nights != null)
+            {
+                <p style="color:red;">@Model.InitialReservation.total_nights</p>
+            }
+            else
+            {
+                <p style="color:red;">-</p>
+            }
 
-                                                @if (Model.InitialReservation.reservation_avg_price == null)
-                                                {
-                                                    <p><span style="color:red;">-</span></p>
-                                                }
-                                                else
-                                                {
-                                                    <p><span style="color:red;">@Model.InitialReservation.reservation_avg_price @Model.InitialReservation.string_currency</span></p>
-                                                }
+            @if (Model.InitialReservation.reservation_avg_price == null)
+            {
+                <p><span style="color:red;">-</span></p>
+            }
+            else
+            {
+                <p><span style="color:red;">@Model.InitialReservation.reservation_avg_price @Model.InitialReservation.string_currency</span></p>
+            }
 
-                                                @if (Model.InitialReservation.tax == null)
-                                                {
-                                                    <p><span style="color:red;">-</span></p>
-                                                }
-                                                else
-                                                {
-                                                    <p><span style="color:red;">@Model.InitialReservation.tax %</span></p>
-                                                }
+            @if (Model.InitialReservation.tax == null)
+            {
+                <p><span style="color:red;">-</span></p>
+            }
+            else
+            {
+                <p><span style="color:red;">@Model.InitialReservation.tax %</span></p>
+            }
 
-                                                @if (Model.InitialReservation.total_amount == null)
-                                                {
-                                                    <p><span style="color:red;">-</span></p>
-                                                }
-                                                else
-                                                {
-                                                    <p><span style="color:red;">@Model.InitialReservation.total_amount @Model.InitialReservation.string_currency</span></p>
-                                                }
+            @if (Model.InitialReservation.total_amount == null)
+            {
+                <p><span style="color:red;">-</span></p>
+            }
+            else
+            {
+                <p><span style="color:red;">@Model.InitialReservation.total_amount @Model.InitialReservation.string_currency</span></p>
+            }
 
-                                                @if (Model.InitialReservation.total_amount_from_vendor == null)
-                                                {
-                                                    <p><span style="color:red;">-</span></p>
-                                                }
-                                                else
-                                                {
-                                                    <p><span style="color:red;">@Model.InitialReservation.total_amount_from_vendor @Model.CurrentReservation.string_currency</span></p>
-                                                }
+            @if (Model.InitialReservation.total_amount_from_vendor == null)
+            {
+                <p><span style="color:red;">-</span></p>
+            }
+            else
+            {
+                <p><span style="color:red;">@Model.InitialReservation.total_amount_from_vendor @Model.CurrentReservation.string_currency</span></p>
+            }
 
-                                                <p style="color:red;">
-                                                    @if (Model.InitialReservation.paid_amount == 0)
+            <p style="color:red;">
+                @if (Model.InitialReservation.paid_amount == 0)
+                {
+                    <span>Un Paid</span>
+                }
+                else if (Model.InitialReservation.paid_amount < Model.InitialReservation.total_amount_after_tax)
+                {
+                    <span>Partially Paid</span>
+                }
+                else
+                {
+                    <span>Paid</span>
+                }
+            </p>
+
+            <p style="color:red;">@Model.InitialReservation.paid_amount</p>
+            <p style="color:red;">@(Model.InitialReservation.total_amount_after_tax - Model.InitialReservation.paid_amount) </p>
+
+            @if (Model.InitialReservation.paid_amount == Model.InitialReservation.total_amount_after_tax)
+            {
+                <p style="color:red;">@(Model.InitialReservation.total_amount_after_tax - Model.InitialReservation.total_amount_from_vendor) </p>
+            }*@
+                                                <p>
+                                                    @Model.CurrentReservation.credit &nbsp;
+                                                    <a href="javascript:void(0)" id="add_reservation_credit" value="Edit" > <i class="fa fa-edit"></i> </a>
+                                                </p>
+                                                <p>
+                                                    @if (Model.CurrentReservation.refund_id != null && Model.CurrentReservation.refund != null )
                                                     {
-                                                        <span>Un Paid</span>
-                                                    }
-                                                    else if (Model.InitialReservation.paid_amount < Model.InitialReservation.total_amount_after_tax)
-                                                    {
-                                                        <span>Partially Paid</span>
+                                                        <span>ID: @Model.CurrentReservation.refund_id ,</span>
+                                                        <span>Amount: @Model.CurrentReservation.refund &nbsp;</span> 
+                                                        <a href="javascript:void(0)" id="add_reservation_refund" value="Edit"> <i class="fa fa-edit"></i> </a>
+
                                                     }
                                                     else
                                                     {
-                                                        <span>Paid</span>
+                                                        <input type="button" id="add_reservation_refund" value="Add" class="btn btn-primary" />
                                                     }
                                                 </p>
+                                                <p id="credit_card_data_paragraph">
+                                                   
+                                                    <input type="button" id="add_credit_card_info" value="Add" class="btn btn-primary" />
+                                                    @*  @if (!String.IsNullOrEmpty(Model.CurrentReservation.credit_card_number) && !String.IsNullOrEmpty(Model.CurrentReservation.card_expiration_date) && !String.IsNullOrEmpty(Model.CurrentReservation.security_code))*@
 
-                                                <p style="color:red;">@Model.InitialReservation.paid_amount</p>
-                                                <p style="color:red;">@(Model.InitialReservation.total_amount_after_tax - Model.InitialReservation.paid_amount) </p>
-
-                                                @if (Model.InitialReservation.paid_amount == Model.InitialReservation.total_amount_after_tax)
-                                                {
-                                                    <p style="color:red;">@(Model.InitialReservation.total_amount_after_tax - Model.InitialReservation.total_amount_from_vendor) </p>
-                                                }*@
-                                            <p>@Model.CurrentReservation.credit</p>
-                                            <p><input type="button" id="add_reservation_credit" value="Edit" class="btn btn-primary" /></p>
-                                            <p><input type="button" id="add_reservation_refund" value="Add" class="btn btn-primary" /></p>
-                                            <p id="credit_card_data_paragraph">
-                                                <input type="button" id="add_credit_card_info" value="Add" class="btn btn-primary" />
-                                                @*  @if (!String.IsNullOrEmpty(Model.CurrentReservation.credit_card_number) && !String.IsNullOrEmpty(Model.CurrentReservation.card_expiration_date) && !String.IsNullOrEmpty(Model.CurrentReservation.security_code))*@
-
-                                                @if (Model.CurrentReservation.reservationCreditCards.Count != 0)
-                                                {
+                                                    @if (Model.CurrentReservation.reservationCreditCards.Count != 0)
+                                                    {
 
 
-                                                    <div id="credit_card_form">
-                                                        <input type="password" id="password" name="password" placeholder="Password" />
-                                                        <button id="show" class="btn btn-primary btn-sm">Show</button>
-                                                    </div>
-                                                    <div id="credit_card_info" style="display: none;">
-                                                        @foreach (var creditCard in Model.CurrentReservation.reservationCreditCards)
-                                                        {
-                                                            <b>Credit Card Number: </b>@creditCard.credit_card_number <br />
-                                                            <b>Card Expiration Date: </b>@creditCard.card_expiration_date <br />
-                                                            <b>Security Code: </b>@creditCard.security_code <br />
-                                                            <hr />
-                                                        }
-                                                    </div>
+                                                        <div id="credit_card_form">
+                                                            <input type="password" id="password" name="password" placeholder="Password" />
+                                                            <button id="show" class="btn btn-primary btn-sm">Show</button>
+                                                        </div>
+                                                        <div id="credit_card_info" style="display: none;">
+                                                            @foreach (var creditCard in Model.CurrentReservation.reservationCreditCards)
+                                                            {
+                                                                <b>Credit Card Number: </b>@creditCard.credit_card_number <br />
+                                                                <b>Card Expiration Date: </b>@creditCard.card_expiration_date <br />
+                                                                <b>Security Code: </b>@creditCard.security_code <br />
+                                                                <hr />
+                                                            }
+                                                        </div>
 
-                                                }
+                                                    }
 
-                                            </p>
-                                        </div>
+                                                </p>
+                                            </div>
                                     </div>
 
                                 </div>

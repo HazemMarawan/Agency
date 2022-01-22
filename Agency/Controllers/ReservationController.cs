@@ -149,7 +149,8 @@ namespace Agency.Controllers
                                    security_code = resCre.security_code,
                                    credit_card_number = resCre.credit_card_number,
                                    card_expiration_date = resCre.card_expiration_date
-                               }).ToList()
+                               }).ToList(),
+                               refund_id = res.refund_id
                                //profit = calculateProfit(res.id).profit
                            }).Where(r => r.id == id).FirstOrDefault();
 
@@ -251,7 +252,7 @@ namespace Agency.Controllers
                                       card_expiration_date = reinitialRes.card_expiration_date,
                                       credit_card_number = reinitialRes.credit_card_number,
                                       security_code = reinitialRes.security_code,
-                                      credit = resData.credit
+                                      credit = resData.credit,
 
                                   }).Where(r => r.reservation_id == id).FirstOrDefault();
             if (initialResData == null)
@@ -1917,6 +1918,7 @@ namespace Agency.Controllers
         {
             Reservation reservation = db.Reservations.Find(reservationViewModel.id);
             reservation.refund = reservationViewModel.refund;
+            reservation.refund_id = reservationViewModel.refund_id;
             db.SaveChanges();
 
             return Json(new { msg = "done" }, JsonRequestBehavior.AllowGet);
