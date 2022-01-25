@@ -782,20 +782,8 @@ namespace Agency.Controllers
 
                            }).Where(r => r.paid_amount == r.total_amount_after_tax && r.paid_amount != 0 && r.is_canceled == null);
             //Where(r=>r.status == (int)PaymentStatus.Paid).ToList();
-            var reservation = db.Reservations;
-            double? collected = 0.0;
-            double? balance = 0.0;
-            double? profit = 0.0;
-            double? refund = 0.0;
-            int? total_nights = 0;
-            if (reservation != null)
-            {
-                collected = db.Reservations.Where(t => t.is_canceled != 1).Select(t => t.paid_amount).Sum();
-                balance = db.Reservations.Where(t => t.is_canceled != 1).Select(t => t.total_amount_after_tax).Sum() - collected;
-                profit = resData.ToList().Where(t=> t.is_canceled != 1).Select(t => t.total_amount_after_tax).Sum() - resData.ToList().Where(t=> t.is_canceled != 1).Select(t => t.total_amount_from_vendor).Sum();
-                refund = db.Reservations.Where(t=> t.is_canceled != 1).Select(t => t.refund).Sum();
-                total_nights = db.Reservations.Where(t => t.is_canceled != 1).Select(n => n.total_nights).Sum();
-            }
+            
+            StatisticsViewModel statisticsViewModel = ReservationService.calculateStatistics();
             var displayResult = resData.OrderByDescending(u => u.id).Skip(skip)
                  .Take(pageSize).ToList();
             var totalRecords = resData.Count();
@@ -806,11 +794,11 @@ namespace Agency.Controllers
                 recordsTotal = totalRecords,
                 recordsFiltered = totalRecords,
                 data = displayResult,
-                collected = collected,
-                balance = balance,
-                profit = profit,
-                total_nights = total_nights,
-                refund = refund
+                collected = statisticsViewModel.collected,
+                balance = statisticsViewModel.balance,
+                profit = statisticsViewModel.profit,
+                total_nights = statisticsViewModel.total_nights,
+                refund = statisticsViewModel.refund
             }, JsonRequestBehavior.AllowGet);
         }
 
@@ -1841,7 +1829,14 @@ namespace Agency.Controllers
                                                       tax_amount = res.tax_amount,
                                                       is_canceled = res.is_canceled,
                                                       balance_due_date = (DateTime)res.balance_due_date,
-                                                      countPaidToVendorRooms = db.ReservationDetails.Where(resDet => resDet.reservation_id == res.id).Where(resDet => resDet.paid_to_vendor == 1).Count()
+                                                      countPaidToVendorRooms = db.ReservationDetails.Where(resDet => resDet.reservation_id == res.id).Where(resDet => resDet.paid_to_vendor == 1).Count(),
+                                                      reservationCreditCards = db.ReservationCreditCards.Where(resCre => resCre.reservation_id == res.id).Select(resCre => new ReservationCreditCardViewModel
+                                                      {
+                                                          id = resCre.id,
+                                                          security_code = resCre.security_code,
+                                                          credit_card_number = resCre.credit_card_number,
+                                                          card_expiration_date = resCre.card_expiration_date
+                                                      }).ToList()
                                                       //profit = calculateProfit(res.id).profit
                                                       //}).Where(r => r.balance_due_date.Year == DateTime.Now.Year && r.balance_due_date.Month == DateTime.Now.Month && r.balance_due_date.Day == DateTime.Now.Day && r.is_canceled == null && r.total_amount_after_tax != 0 && r.paid_amount < r.total_amount_after_tax).ToList();
                                                   }).Where(r => r.balance_due_date <= DateTime.Now && r.is_canceled == null && r.total_amount_after_tax != 0 && r.paid_amount < r.total_amount_after_tax);

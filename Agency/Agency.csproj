@@ -498,6 +498,7 @@
     <Compile Include="ViewModel\ReservationViewModel.cs" />
     <Compile Include="ViewModel\ReservationViewScreenViewModel.cs" />
     <Compile Include="ViewModel\RoleViewModel.cs" />
+    <Compile Include="ViewModel\StatisticsViewModel.cs" />
     <Compile Include="ViewModel\TaskViewModel.cs" />
     <Compile Include="ViewModel\UserTaskViewModel.cs" />
     <Compile Include="ViewModel\UserViewModel.cs" />

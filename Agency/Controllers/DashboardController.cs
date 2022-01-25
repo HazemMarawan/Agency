@@ -1,6 +1,7 @@
 ﻿using Agency.Auth;
 using Agency.Helpers;
 using Agency.Models;
+using Agency.Services;
 using Agency.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -163,7 +164,12 @@ namespace Agency.Controllers
             SqlConnection sql = new SqlConnection(cs);
             sql.Open();
 
-            SqlCommand comm = new SqlCommand(@"select SUM(paid_amount) as collected,SUM(total_amount_after_tax-paid_amount) as balance , SUM(total_amount_after_tax -total_amount_from_vendor) as profit,CONCAT( YEAR(created_at),'-' ,MONTH(created_at)) as date from Reservations where Reservations.is_canceled is null group by YEAR(created_at),MONTH(created_at)", sql);
+            SqlCommand comm = new SqlCommand(@"select SUM(mainReservation.paid_amount) as collected,SUM(mainReservation.total_amount_after_tax-mainReservation.paid_amount) as balance ,
+                                            (select SUM(pr.total_amount_after_tax -pr.total_amount_from_vendor)  from Reservations pr where pr.paid_amount = pr.total_amount_after_tax and YEAR(pr.created_at) = YEAR(mainReservation.created_at) and Month(pr.created_at) = Month(mainReservation.created_at))  as profit
+                                            ,CONCAT( YEAR(created_at),'-' ,MONTH(created_at)) as date
+                                            from Reservations mainReservation where mainReservation.is_canceled is null
+                                            group by YEAR(mainReservation.created_at),MONTH(mainReservation.created_at)
+                                            ", sql);
             SqlDataReader reader = comm.ExecuteReader();
             List<double> yAxisCollected = new List<double>();
             List<double> yAxisBalance = new List<double>();
@@ -178,58 +184,22 @@ namespace Agency.Controllers
                 xAxis.Add(reader["date"].ToString());
             }
             reader.Close();
-            List<double?> total_amount_after_tax_reservations = db.Reservations.Where(p => p.is_canceled != 1).Select(p => p.total_amount_after_tax).ToList();
-            double? total_amount_after_tax = 0;
-            if (total_amount_after_tax_reservations != null)
-            {
-                total_amount_after_tax = total_amount_after_tax_reservations.Sum();
-            }
 
-            List<double?> total_amount_from_vendor_reservations = db.Reservations.Where(p => p.is_canceled != 1).Select(p => p.total_amount_from_vendor).ToList();
-            double? total_amount_from_vendor = 0;
-            if (total_amount_from_vendor_reservations != null)
-            {
-                total_amount_from_vendor = total_amount_from_vendor_reservations.Sum();
-            }
+            StatisticsViewModel statisticsViewModel = ReservationService.calculateStatistics();
 
-            List<double?> paid_amount_reservations = db.Reservations.Where(p => p.is_canceled != 1).Select(p => p.paid_amount).ToList();
-            double? paid_amount = 0;
-            if (paid_amount_reservations != null)
-            {
-                paid_amount = paid_amount_reservations.Sum();
-            }
+            double? profit = statisticsViewModel.profit;
+            double? refund = statisticsViewModel.refund;
 
-            List<double?> total_amount_from_vendor_finished_reservations = db.Reservations.Where(p => p.paid_amount == p.total_amount_after_tax && p.is_canceled != 1).Select(p => p.total_amount_from_vendor).ToList();
-            double? total_amount_from_vendor_finished = 0;
-            if (total_amount_from_vendor_finished_reservations != null)
-            {
-                total_amount_from_vendor_finished = total_amount_from_vendor_finished_reservations.Sum();
-            }
+            double? collected = statisticsViewModel.collected;
+            double? balance = statisticsViewModel.balance;
 
 
-            List<double?> ttotal_amount_after_tax_finished_reservations = db.Reservations.Where(p => p.paid_amount == p.total_amount_after_tax && p.is_canceled != 1).Select(p => p.total_amount_after_tax).ToList();
-            double? total_amount_after_tax_finished = 0;
-            if (total_amount_from_vendor_finished_reservations != null)
-            {
-                total_amount_after_tax_finished = ttotal_amount_after_tax_finished_reservations.Sum();
-            }
+            double? profitPercentage = statisticsViewModel.profit_percentage;
+            double? refundPercentage = statisticsViewModel.refund_percentage; ;
 
 
-            double? profit = total_amount_after_tax - total_amount_from_vendor;
-            double? actualProfit = total_amount_after_tax_finished - total_amount_from_vendor_finished;
-
-            double? collected = paid_amount;
-            double? balance = total_amount_after_tax - paid_amount;
-            
-            double? profitPercentage = (profit / total_amount_after_tax) * 100;
-            double? actualProfitPercentage = 0;
-            if(actualProfit != 0 && total_amount_after_tax_finished != 0)
-            {
-                actualProfitPercentage = (actualProfit / total_amount_after_tax_finished) * 100;
-            }
-
-            double? collectedPercentage = (collected / total_amount_after_tax) * 100;
-            double? balancePercentage = (balance / total_amount_after_tax) * 100;
+            double? collectedPercentage = statisticsViewModel.collected_percentage ;
+            double? balancePercentage = statisticsViewModel.balance_percentage ;
 
             return Json(new { 
                 xAxis = xAxis,
@@ -237,11 +207,11 @@ namespace Agency.Controllers
                 yAxisBalance = yAxisBalance,
                 yAxisProfit = yAxisProfit,
                 profit = profit,
-                actualProfit = actualProfit,
+                refund = refund,
                 collected = collected,
                 balance = balance,
                 profitPercentage = profitPercentage,
-                actualProfitPercentage = actualProfitPercentage,
+                refundPercentage = refundPercentage,
                 collectedPercentage = collectedPercentage,
                 balancePercentage = balancePercentage
            }, JsonRequestBehavior.AllowGet);

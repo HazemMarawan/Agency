@@ -105,8 +105,8 @@
                                     <div class="w-summary-details">
 
                                         <div class="w-summary-info">
-                                            <h6>Profit <span class="summary-count" id="profitCard"></span></h6>
-                                            <p class="summary-average" id="profitPercentage">%</p>
+                                            <h6>Refund <span class="summary-count" id="refundCard"></span></h6>
+                                            <p class="summary-average" id="refundPercentage">%</p>
                                         </div>
 
                                     </div>
@@ -124,8 +124,8 @@
                                     <div class="w-summary-details">
 
                                         <div class="w-summary-info">
-                                            <h6>Actual Profit <span class="summary-count" id="actualProfitCard"></span></h6>
-                                            <p class="summary-average" id="actualProfitPercentage">%</p>
+                                            <h6>Profit <span class="summary-count" id="profitCard"></span></h6>
+                                            <p class="summary-average" id="profitPercentage">%</p>
                                         </div>
 
                                     </div>
@@ -133,6 +133,7 @@
                                 </div>
 
                             </div>
+
                         </div>
 
                     </div>
@@ -487,13 +488,13 @@
                 $("#collectedCard").text(addCommas(data.collected.toFixed(2)));
                 $("#balanceCard").text(addCommas(data.balance.toFixed(2)));
                 $("#profitCard").text(addCommas(data.profit.toFixed(2)));
-                $("#actualProfitCard").text(addCommas(data.actualProfit.toFixed(2)));
+                $("#refundCard").text(addCommas(data.refund.toFixed(2)));
                 
                 //percentage
                 $("#collectedPercentage").text(addCommas(data.collectedPercentage.toFixed(2))+'%');
                 $("#balancePercentage").text(addCommas(data.balancePercentage.toFixed(2)) + '%');
                 $("#profitPercentage").text(addCommas(data.profitPercentage.toFixed(2)) + '%');
-                $("#actualProfitPercentage").text(addCommas(data.actualProfitPercentage.toFixed(2)) + '%');
+                $("#refundPercentage").text(addCommas(data.refundPercentage.toFixed(2)) + '%');
 
                     var options1 = {
                         chart: {
