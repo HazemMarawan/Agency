@@ -4,6 +4,59 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div class="modal fade" id="pay_amount_to_reservation_modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <form action="" method="post" enctype='multipart/form-data'>
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal_title"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-body">
+                        <div class="form-row">
+                            <input type="hidden" name="id" id="id" value="0" />
+                            <div class="form-group col-md-6">
+                                <label>Total After Tax</label>
+                                <input name="total_after_tax" id="total_after_tax" readonly type="text" class="form-control radius-30" />
+                            </div>
+                            @*<div class="form-group col-md-6">
+                                    <label>Tax</label>
+                                    <input name="tax" id="tax" type="text" readonly class="form-control radius-30" />
+                                </div>*@
+                            @*<div class="form-group col-md-6" id="deposit_percentage_div">
+                                <label>Percentage %</label>
+                                <input name="percentage" id="percentage" type="number" max="100" min="1" class="form-control radius-30" />
+                            </div>
+                            <div class="form-group col-md-6" id="deposit_div">
+                                <label>Deposit</label>
+                                <input name="deposit" id="deposit" type="text" class="form-control radius-30" style="font-weight:bold;" />
+                            </div>*@
+                            <div class="form-group col-md-6">
+                                <label>Balance</label>
+                                <input name="balance" id="balance_pay_modal" readonly type="text" class="form-control radius-30" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Paid Amount</label>
+                                <input name="paid" id="paid" readonly type="text" class="form-control radius-30" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Amount</label>
+                                <input name="paid_amount" id="paid_amount" step=".1" required type="number" class="form-control radius-30" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
 
 
 <div class="page-header">
@@ -227,9 +280,7 @@
                         "data": "id", "searchable": true,
                         fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
                             var html = "";
-                            html += "<a class='confMail' href='javascript:void(0)' title='Send Email'><i class='far fa-envelope-open'></i></a><br>";
-                            html += "<a target='_blank' class='view' href='/Reservation/View/" + oData.id + "' title='View'><i class='far fa-eye'></i></a><br>";
-                            html += "<a class='cancelUnpaid' href='javascript:void(0);' title='Cancel'><i class='far fa-times-circle'></i></a>";
+                            html += "<a class='pay' href='javascript:void(0);' title='Pay'><i class='fas fa-money-bill-alt'></i></a>";
 
                             $(nTd).html("<span class='action-column'>" + html + "</span>");
                         }
@@ -253,6 +304,51 @@
                 $('#search').trigger('click');
 
             });
+
+           $(document).on("click", ".pay", function () {
+
+                var data = datatable.row($(this).closest('tr')).data();
+
+                var modal = $('#pay_amount_to_reservation_modal').clone();
+                var action = '@Url.Action("payAmountToReservation", "Reservation")';
+                modal.find('form').attr('action', action);
+                modal.find('#modal_title').text('Pay');
+                modal.execModal({
+                    progressBar: 'progress_bar',
+                    progressText: 'progress_text',
+                }, function (response) {
+                        datatable.draw();
+                }, function (response) {
+
+                }, function (dialog) {
+
+                        dialog.find('#id').val(data.id);
+                        dialog.find('#total_after_tax').val(addCommas(data.total_amount_after_tax.toFixed(2)) + " " + data.string_currency);
+                        //dialog.find('#tax').val(data.tax + "%");
+
+                        //var deposit = (data.advance_reservation_percentage / 100) * data.total_amount_after_tax;
+                        //dialog.find('#deposit').val(addCommas(deposit.toFixed(2)) + " " + data.string_currency);
+                        //dialog.find('#percentage').val(data.advance_reservation_percentage);
+
+                        var remainAmount = data.total_amount_after_tax - data.paid_amount;
+                        dialog.find('#paid_amount').attr('max', remainAmount)
+                        dialog.find('#paid_amount').attr('min', 1)
+
+                        dialog.find('#paid').val(addCommas(data.paid_amount.toFixed(2)) + " " + data.string_currency);
+
+                        var balance = data.total_amount_after_tax - data.paid_amount;
+                        dialog.find('#balance_pay_modal').val(addCommas(balance.toFixed(2)) + " " + data.string_currency);
+
+                        //dialog.find('#percentage').keyup(function () {
+                        //    var deposit = (dialog.find('#percentage').val() / 100) * data.total_amount_after_tax;
+                        //    dialog.find('#deposit').val(addCommas(deposit.toFixed(2)) + " " + data.string_currency);
+                        //});
+
+
+                });
+
+            });
+
         });
 
     </script>

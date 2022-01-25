@@ -417,7 +417,14 @@ namespace Agency.Controllers
                                tax_amount = res.tax_amount,
                                is_canceled = res.is_canceled,
                                is_refund = res.is_refund,
-                               created_at = res.created_at
+                               created_at = res.created_at,
+                               reservationCreditCards = db.ReservationCreditCards.Where(resCre => resCre.reservation_id == res.id).Select(resCre => new ReservationCreditCardViewModel
+                               {
+                                   id = resCre.id,
+                                   security_code = resCre.security_code,
+                                   credit_card_number = resCre.credit_card_number,
+                                   card_expiration_date = resCre.card_expiration_date
+                               }).ToList()
                                //profit = calculateProfit(res.id).profit
                            }).Where(r => r.paid_amount == 0 && r.is_canceled == null && r.created_by == null);
             //var reservation = resData.ToList();
@@ -529,7 +536,14 @@ namespace Agency.Controllers
                                tax_amount = res.tax_amount,
                                is_canceled = res.is_canceled,
                                is_refund = res.is_refund,
-                               created_at = res.created_at
+                               created_at = res.created_at,
+                               reservationCreditCards = db.ReservationCreditCards.Where(resCre => resCre.reservation_id == res.id).Select(resCre => new ReservationCreditCardViewModel
+                               {
+                                   id = resCre.id,
+                                   security_code = resCre.security_code,
+                                   credit_card_number = resCre.credit_card_number,
+                                   card_expiration_date = resCre.card_expiration_date
+                               }).ToList()
                                //profit = calculateProfit(res.id).profit
                            }).Where(r => r.paid_amount == 0 && r.is_canceled == null && r.created_by != null);
             //var reservation = resData.ToList();
@@ -638,7 +652,14 @@ namespace Agency.Controllers
                                tax_amount = res.tax_amount,
                                is_canceled = res.is_canceled,
                                is_refund = res.is_refund,
-                               created_at = res.created_at
+                               created_at = res.created_at,
+                               reservationCreditCards = db.ReservationCreditCards.Where(resCre => resCre.reservation_id == res.id).Select(resCre => new ReservationCreditCardViewModel
+                               {
+                                   id = resCre.id,
+                                   security_code = resCre.security_code,
+                                   credit_card_number = resCre.credit_card_number,
+                                   card_expiration_date = resCre.card_expiration_date
+                               }).ToList()
                                //profit = calculateProfit(res.id).profit
 
                            }).Where(r => r.paid_amount < r.total_amount_after_tax && r.paid_amount != 0 && r.is_canceled == null);
@@ -749,7 +770,14 @@ namespace Agency.Controllers
                                tax_amount = res.tax_amount,
                                is_canceled = res.is_canceled,
                                is_refund = res.is_refund,
-                               created_at = res.created_at
+                               created_at = res.created_at,
+                               reservationCreditCards = db.ReservationCreditCards.Where(resCre => resCre.reservation_id == res.id).Select(resCre => new ReservationCreditCardViewModel
+                               {
+                                   id = resCre.id,
+                                   security_code = resCre.security_code,
+                                   credit_card_number = resCre.credit_card_number,
+                                   card_expiration_date = resCre.card_expiration_date
+                               }).ToList()
                                //profit = calculateProfit(res.id).profit
 
                            }).Where(r => r.paid_amount == r.total_amount_after_tax && r.paid_amount != 0 && r.is_canceled == null);
@@ -869,7 +897,14 @@ namespace Agency.Controllers
                                is_canceled = res.is_canceled,
                                //profit = calculateProfit(res.id).profit
                                is_refund = res.is_refund,
-                               created_at = res.created_at
+                               created_at = res.created_at,
+                               reservationCreditCards = db.ReservationCreditCards.Where(resCre => resCre.reservation_id == res.id).Select(resCre => new ReservationCreditCardViewModel
+                               {
+                                   id = resCre.id,
+                                   security_code = resCre.security_code,
+                                   credit_card_number = resCre.credit_card_number,
+                                   card_expiration_date = resCre.card_expiration_date
+                               }).ToList()
                            }).Where(r => r.is_canceled == 1);
             //Where(r => r.status == (int)PaymentStatus.Paid).ToList();
             var reservation = db.Reservations;
@@ -1082,6 +1117,13 @@ namespace Agency.Controllers
                                created_at = res.created_at,
                                countPaidToVendorRooms = db.ReservationDetails.Where(r => r.paid_to_vendor == 1 && r.reservation_id == res.id).Count(),
                                countPaidToVendorNights = db.ReservationDetails.Where(r => r.paid_to_vendor == 1 && r.reservation_id == res.id).Sum(n => n.no_of_days),
+                               reservationCreditCards = db.ReservationCreditCards.Where(resCre => resCre.reservation_id == res.id).Select(resCre => new ReservationCreditCardViewModel
+                               {
+                                   id = resCre.id,
+                                   security_code = resCre.security_code,
+                                   credit_card_number = resCre.credit_card_number,
+                                   card_expiration_date = resCre.card_expiration_date
+                               }).ToList()
                                //profit = calculateProfit(res.id).profit
                            }).Where(r => r.is_canceled == 1 && r.countPaidToVendorRooms > 0);
             //var reservation = resData.ToList();
@@ -1518,6 +1560,7 @@ namespace Agency.Controllers
                     reservation.balance_due_date = DateTime.Now;
                     reservation.active = 1;
                     reservation.created_by = Session["id"].ToString().ToInt();
+                    reservation.total_nights = ((DateTime)reservationViewModel.check_out - (DateTime)reservationViewModel.check_in).Days;
                     db.Reservations.Add(reservation);
                     db.SaveChanges();
 
@@ -1537,6 +1580,24 @@ namespace Agency.Controllers
 
                     reservation.company_id = company.id;
                     db.SaveChanges();
+
+                    for(int i=1;i<= reservationViewModel.total_rooms;i++)
+                    {
+                        ReservationDetail reservationDetail = new ReservationDetail();
+                        reservationDetail.reservation_id = reservation.id;
+                        reservationDetail.reservation_from = (DateTime)reservationViewModel.check_in;
+                        reservationDetail.reservation_to = (DateTime)reservationViewModel.check_out;
+                        reservationDetail.no_of_days = reservation.total_nights + 1;
+                        reservationDetail.room_price = 0;
+                        reservationDetail.amount = 0;
+                        reservationDetail.tax = 0;
+                        reservationDetail.amount_after_tax = 0;
+                        db.ReservationDetails.Add(reservationDetail);
+                        db.SaveChanges();
+
+                        reservationDetail.parent_id = reservationDetail.id;
+                        db.SaveChanges();
+                    }
                     Logs.ReservationActionLog(Session["id"].ToString().ToInt(), reservation.id, "Add", "Add Booking #" + reservation.id);
 
 
@@ -1571,6 +1632,8 @@ namespace Agency.Controllers
                     reservation.balance_due_date = DateTime.Now;
                     reservation.active = 1;
                     reservation.created_by = Session["id"].ToString().ToInt();
+                    reservation.total_nights = ((DateTime)reservationViewModel.check_out - (DateTime)reservationViewModel.check_in).Days;
+
                     db.Reservations.Add(reservation);
                     db.SaveChanges();
 
@@ -1592,7 +1655,29 @@ namespace Agency.Controllers
                     db.SaveChanges();
                     Logs.ReservationActionLog(Session["id"].ToString().ToInt(), reservation.id, "Add", "Add Booking #" + reservation.id);
 
+                    for (int i = 1; i <= reservationViewModel.total_rooms; i++)
+                    {
+                        ReservationDetail reservationDetail = new ReservationDetail();
+                        reservationDetail.reservation_id = reservation.id;
+                        reservationDetail.reservation_from = (DateTime)reservationViewModel.check_in;
+                        reservationDetail.reservation_to = (DateTime)reservationViewModel.check_out;
+                        reservationDetail.no_of_days = reservation.total_nights + 1;
+                        reservationDetail.room_type = 1;
+                        reservationDetail.room_price = reservation.single_price;
+                        reservationDetail.amount = reservation.single_price;
+                        reservationDetail.tax = reservation.single_price * (reservation.tax / 100);
+                        reservationDetail.amount_after_tax = reservationDetail.tax * reservationDetail.room_price;
+                        db.ReservationDetails.Add(reservationDetail);
+                        db.SaveChanges();
+
+                        reservationDetail.parent_id = reservationDetail.id;
+                        db.SaveChanges();
+
+                    }
+                    ReservationService.UpdateTotals(reservation.id);
                 }
+
+                
 
             }
             else
@@ -1631,18 +1716,7 @@ namespace Agency.Controllers
                     reservation.check_out = maxDate;
                 }
 
-                ReservationViewModel updatedTotals = ReservationService.calculateTotalandVendor(reservation.id);
-
-                reservation.total_amount = updatedTotals.total_amount;
-                reservation.total_amount_after_tax = updatedTotals.total_amount_after_tax;
-                reservation.total_amount_from_vendor = updatedTotals.total_amount_from_vendor;
-                reservation.tax_amount = updatedTotals.tax_amount;
-                reservation.total_nights = updatedTotals.total_nights;
-                reservation.active = 1;
-                reservation.updated_at = DateTime.Now;
-                reservation.updated_by = Session["id"].ToString().ToInt();
-                db.Entry(reservation).State = System.Data.Entity.EntityState.Modified;
-                db.SaveChanges();
+                ReservationService.UpdateTotals(reservation.id);
 
                 Company company = db.Companies.Find(reservation.company_id);
                 company.name = reservationViewModel.company_name;
@@ -1709,6 +1783,7 @@ namespace Agency.Controllers
                                                       id = res.id,
                                                       total_amount = res.total_amount,
                                                       currency = res.currency,
+                                                      string_currency = res.currency != null ? ((Currency)res.currency).ToString() : ((Currency)0).ToString(),
                                                       tax = res.tax,
                                                       financial_advance = res.financial_advance,
                                                       financial_advance_date = res.financial_advance_date,

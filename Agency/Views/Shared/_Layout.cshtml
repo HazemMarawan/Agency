@@ -93,73 +93,75 @@
 
                 <ul class="navbar-item flex-row nav-dropdowns">
                     <li class="nav-item dropdown notification-dropdown">
-                        <a href="javascript:void(0);" class="nav-link dropdown-toggle" id="notificationDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a href="@Url.Action("balanceDueDate","Reservation")" class="nav-link" id="notificationDropdown" aria-haspopup="true" aria-expanded="false">
                             <svg class="red-notification" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
                             <span class="badge badge-success counter">@Agency.Helpers.Notification.balanceDueDateNotifications().Count</span>
                         </a>
-                        <div class="dropdown-menu position-absolute" aria-labelledby="notificationDropdown" title="Balance Due Date Booking">
+                        @*<div class="dropdown-menu position-absolute" aria-labelledby="notificationDropdown" title="Balance Due Date Booking">
                             <div class="notification-scroll">
                                 @if (Agency.Helpers.Notification.balanceDueDateNotifications().Count != 0)
-                                {
-                                <div class="dropdown-item">
-                                    <div class="media server-log">
-                                        <div class="media-body">
-                                            <div class="data-info">
-                                                <h6 class="">Balance Due Date Bookings</h6>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                    foreach (var item in Agency.Helpers.Notification.balanceDueDateNotifications().Take(5))
-                                    {
-                                <a target="_blank" href="@Url.Action("View","Reservation",new { id= item.id})">
+        {
+        <div class="dropdown-item">
+            <div class="media server-log">
+                <div class="media-body">
+                    <div class="data-info">
+                        <h6 class="">Balance Due Date Bookings</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+            foreach (var item in Agency.Helpers.Notification.balanceDueDateNotifications().Take(5))
+            {
+        <a target="_blank" href="@Url.Action("View","Reservation",new { id= item.id})">
 
-                                    <div class="dropdown-item">
-                                        <div class="media server-log">
-                                            <svg title="Balance Due Date Booking" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fas fa-calendar-week"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6" y2="6"></line><line x1="6" y1="18" x2="6" y2="18"></line></svg>
-                                            <div class="media-body">
-                                                <div class="data-info">
-                                                    <h6 class="">@item.company_name</h6>
-                                                    <p>#@item.id @(item.total_amount_after_tax - item.paid_amount) @item.string_currency</p>
-                                                    <p>@item.reservations_officer_name</p>
-                                                    <p>@item.reservations_officer_phone</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
+            <div class="dropdown-item">
+                <div class="media server-log">
+                    <svg title="Balance Due Date Booking" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fas fa-calendar-week"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6" y2="6"></line><line x1="6" y1="18" x2="6" y2="18"></line></svg>
+                    <div class="media-body">
+                        <div class="data-info">
+                            <h6 class="">@item.company_name</h6>
+                            <p>#@item.id @(item.total_amount_after_tax - item.paid_amount) @item.string_currency</p>
+                            <p>@item.reservations_officer_name</p>
+                            <p>@item.reservations_officer_phone</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
 
-                                    }
+            }
+
                                 <a target="_blank" href="@Url.Action("balanceDueDate","Reservation")">
 
-                                    <div class="dropdown-item">
-                                        <div class="media server-log">
-                                            <svg title="Balance Due Date Booking" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fas fa-eye"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6" y2="6"></line><line x1="6" y1="18" x2="6" y2="18"></line></svg>
-                                            <div class="media-body">
-                                                <div class="data-info">
-                                                    <h6 class="">Show All</h6>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-
-                                }
-                                else
-                                {
-                                <div class="dropdown-item">
-                                    <div class="media server-log">
-                                        <i class="fas fa-check"></i>
-                                        <div class="media-body">
-                                            <div class="data-info">
-                                                <h6 class="">No overdue bookings</h6>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                }
-                            </div>
+            <div class="dropdown-item">
+                <div class="media server-log">
+                    <svg title="Balance Due Date Booking" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fas fa-eye"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6" y2="6"></line><line x1="6" y1="18" x2="6" y2="18"></line></svg>
+                    <div class="media-body">
+                        <div class="data-info">
+                            <h6 class="">Show All</h6>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+
+        }
+        else
+        {
+        <div class="dropdown-item">
+            <div class="media server-log">
+                <i class="fas fa-check"></i>
+                <div class="media-body">
+                    <div class="data-info">
+                        <h6 class="">No overdue bookings</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+        }
+                                
+                            </div>
+                        </div>*@
                     </li>
                     <li class="nav-item dropdown notification-dropdown">
                         <a href="javascript:void(0);" class="nav-link dropdown-toggle" id="notificationDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

@@ -31,10 +31,11 @@ namespace Agency.Controllers
 
                 // Getting all data    
                 var resDetailData = (from resDetail in db.ReservationDetails
-                               join res in db.Reservations on resDetail.reservation_id equals res.id
-                               join client in db.Clients on resDetail.client_id equals client.id
-                               join event_hotel in db.EventHotels on res.event_hotel_id equals event_hotel.id
-                               select new ReservationDetailViewModel
+                                     join reserv in db.Reservations on resDetail.reservation_id equals reserv.id into rs
+                               from res in rs.DefaultIfEmpty()
+                               join cli in db.Clients on resDetail.client_id equals cli.id into cl
+                               from client in cl.DefaultIfEmpty()
+                                     select new ReservationDetailViewModel
                                {
                                    id = resDetail.id,
                                    amount = resDetail.amount,
@@ -66,7 +67,7 @@ namespace Agency.Controllers
                                    amount_paid_to_vendor = resDetail.amount_paid_to_vendor,
                                    cancelation_policy = resDetail.cancelation_policy,
                                    confirmation_id = resDetail.confirmation_id,
-                                   guestReservations = db.ReservationDetails.Where(r => r.reservation_id == id && r.parent_id == resDetail.id && r.id != resDetail.id).Select(guestRes => new AdditionalReservationViewModel
+                                   guestReservations = db.ReservationDetails.Where(r => r.parent_id == resDetail.id && r.id != resDetail.id).Select(guestRes => new AdditionalReservationViewModel
                                    {
                                        id = guestRes.id,
                                        reservation_id = guestRes.reservation_id,
@@ -256,38 +257,7 @@ namespace Agency.Controllers
                     reservation.balance_due_date = Convert.ToDateTime(reservation.check_in).AddDays(-30);
                 }
 
-                //ReservationViewModel updatedTotals = ReservationService.calculateTotalandVendor(reservation.id);
-                //reservation.total_rooms = updatedTotals.total_rooms;
-                //reservation.total_amount = updatedTotals.total_amount;
-                //reservation.total_amount_after_tax = updatedTotals.total_amount_after_tax;
-                //reservation.total_amount_from_vendor = updatedTotals.total_amount_from_vendor;
-                //reservation.tax_amount = updatedTotals.tax_amount;
-                //reservation.total_nights = updatedTotals.total_nights;
-                //reservation.reservation_avg_price_before_tax = db.ReservationDetails.Where(resDet => resDet.reservation_id == reservation.id && reservation.is_canceled != 1).Select(resDet => resDet.amount).Sum() / reservation.total_nights;
-                //reservation.reservation_avg_price = db.ReservationDetails.Where(resDet => resDet.reservation_id == reservation.id && reservation.is_canceled != 1).Select(resDet => resDet.amount_after_tax).Sum() / reservation.total_nights;
-                //reservation.vendor_avg_price = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id && reservation.is_canceled != 1).Select(s => s.vendor_cost).Sum() / reservation.total_nights;
-
-                reservation.total_rooms = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id && reservation.is_canceled != 1).Count();
-                reservation.total_amount = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id && reservation.is_canceled != 1).Select(s => s.amount).Sum();
-                reservation.total_amount_after_tax = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id && reservation.is_canceled != 1).Select(s => s.amount_after_tax).Sum();
-                reservation.tax_amount = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id && reservation.is_canceled != 1).Select(s => s.tax).Sum();
-                reservation.total_nights = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id && reservation.is_canceled != 1).Select(s => s.no_of_days - 1).Sum();
-                reservation.reservation_avg_price_before_tax = db.ReservationDetails.Where(resDet => resDet.reservation_id == reservation.id && reservation.is_canceled != 1).Select(resDet => resDet.amount).Sum() / reservation.total_nights;
-                reservation.reservation_avg_price = db.ReservationDetails.Where(resDet => resDet.reservation_id == reservation.id && reservation.is_canceled != 1).Select(resDet => resDet.amount_after_tax).Sum() / reservation.total_nights;
-                reservation.vendor_avg_price = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id && reservation.is_canceled != 1).Select(s => s.vendor_cost).Sum() / reservation.total_nights;
-                reservation.total_amount_from_vendor = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id && reservation.is_canceled != 1).Select(s => s.vendor_cost).Sum();
-
-
-
-                //reservation.tax_amount= reservation.tax_amount == null ? 0 : reservation.tax_amount;
-                //reservation.total_amount_from_vendor = reservation.total_amount_from_vendor == null ? 0 : reservation.total_amount_from_vendor;
-                //reservation.total_amount_from_vendor += vendor_amount;
-                //reservation.tax_amount += detail.tax;
-                //reservation.total_amount_after_tax += detail.amount_after_tax;
-                //reservation.total_amount += detail.amount;
-                reservation.updated_at = DateTime.Now;
-                reservation.updated_by = Session["id"].ToString().ToInt();
-                db.SaveChanges();
+                ReservationService.UpdateTotals(reservation.id);
 
                 detail.client_id = client.id;
                 db.SaveChanges();
@@ -315,63 +285,131 @@ namespace Agency.Controllers
 
                 detail.reservation_to = detailViewModel.reservation_to;
 
+                if(detail.room_type!= null)
+                { 
                 if (detail.room_type != detailViewModel.room_type)
                     editHtml += "Room Type: " + ((RoomType)detail.room_type).ToString() + @" | <span style = ""color:red;"">" + ((RoomType)detailViewModel.room_type).ToString() + "</span><br>";
+                }
+                else
+                {
+                    if(detailViewModel.room_type != null)
+                        editHtml += @"Room Type: <span style = ""color:red;"">" + ((RoomType)detailViewModel.room_type).ToString() + "</span><br>";
 
-                if (detail.room_price != detailViewModel.room_price)
-                    editHtml += "Room Price: " + detail.room_price.ToString() + @" | <span style=""color: red;"">" + detailViewModel.room_price.ToString() + "</span><br>";
-
-                detail.room_price = detailViewModel.room_price;
-
+                }
                 detail.room_type = detailViewModel.room_type;
 
-                if (detail.vendor_code != detailViewModel.vendor_code)
-                    editHtml += "Vendor Code: " + detail.vendor_code + @" | <span style = ""color:red; "">" + detailViewModel.vendor_code + "</span><br>";
+                if (detail.room_price != null)
+                {
+                    if (detail.room_price != detailViewModel.room_price)
+                        editHtml += "Room Price: " + detail.room_price.ToString() + @" | <span style=""color: red;"">" + detailViewModel.room_price.ToString() + "</span><br>";
+                }
+                else
+                {
+                    if(detailViewModel.room_price != null)
+                        editHtml += @"Room Price: <span style=""color: red;"">" + detailViewModel.room_price.ToString() + "</span><br>";
+                }
+                detail.room_price = detailViewModel.room_price;
 
+                
+                if(detail.vendor_code != null)
+                { 
+                    if (detail.vendor_code != detailViewModel.vendor_code)
+                        editHtml += "Vendor Code: " + detail.vendor_code + @" | <span style = ""color:red; "">" + detailViewModel.vendor_code + "</span><br>";
+                }
+                else
+                {
+                    if(detailViewModel.vendor_code != null)
+                        editHtml += @"Vendor Code: <span style = ""color:red; "">" + detailViewModel.vendor_code + "</span><br>";
+                }
                 detail.vendor_code = detailViewModel.vendor_code;
 
-                if (detail.vendor_cost != detailViewModel.vendor_cost)
-                    editHtml += "Total Vendor: " + detail.vendor_cost + @" | <span style =""color:red; "">" + detailViewModel.vendor_cost + "</span><br>";
-
+                if(detail.vendor_cost != null)
+                { 
+                    if (detail.vendor_cost != detailViewModel.vendor_cost)
+                        editHtml += "Total Vendor: " + detail.vendor_cost + @" | <span style =""color:red; "">" + detailViewModel.vendor_cost + "</span><br>";
+                }
+                else
+                {
+                    if(detailViewModel.vendor_cost != null)
+                        editHtml += @"Total Vendor: <span style =""color:red; "">" + detailViewModel.vendor_cost + "</span><br>";
+                }
                 detail.vendor_cost = detailViewModel.vendor_cost;
 
-                if (detail.cancelation_policy != detailViewModel.cancelation_policy)
-                    editHtml += "Cancelation Policy: " + detail.cancelation_policy + @" | <span style=""color:red;"">" + detailViewModel.cancelation_policy + "</span><br>";
-
+                if(detail.cancelation_policy !=null)
+                { 
+                    if (detail.cancelation_policy != detailViewModel.cancelation_policy)
+                        editHtml += "Cancelation Policy: " + detail.cancelation_policy + @" | <span style=""color:red;"">" + detailViewModel.cancelation_policy + "</span><br>";
+                }
+                else
+                {
+                    if(detailViewModel.cancelation_policy != null)
+                        editHtml += @"Cancelation Policy: <span style=""color:red;"">" + detailViewModel.cancelation_policy + "</span><br>";
+                }
                 detail.cancelation_policy = detailViewModel.cancelation_policy;
 
               
                 detail.notify = detailViewModel.notify;
 
-                if (detail.paid_to_vendor_date != detailViewModel.paid_to_vendor_date)
-                    editHtml += "Paid To Vendor Date: " + detail.paid_to_vendor_date.ToString().Split(' ')[0] + @" | <span style=""color: red;"">" + detailViewModel.paid_to_vendor_date.ToString().Split(' ')[0] + "</span><br>";
-
+                if (detail.paid_to_vendor_date != null)
+                {
+                    if (detail.paid_to_vendor_date != detailViewModel.paid_to_vendor_date)
+                        editHtml += "Paid To Vendor Date: " + detail.paid_to_vendor_date.ToString().Split(' ')[0] + @" | <span style=""color: red;"">" + detailViewModel.paid_to_vendor_date.ToString().Split(' ')[0] + "</span><br>";
+                }
+                else
+                {
+                    if(detailViewModel.paid_to_vendor_date != null)
+                        editHtml += @"Paid To Vendor Date: <span style=""color: red;"">" + detailViewModel.paid_to_vendor_date.ToString().Split(' ')[0] + "</span><br>";
+                }
                 detail.payment_to_vendor_deadline = detailViewModel.payment_to_vendor_deadline;
 
-                if (detail.paid_to_vendor_date != detailViewModel.paid_to_vendor_date)
-                    editHtml += "Paid To Vendor Deadline: " + detail.payment_to_vendor_deadline.ToString().Split(' ')[0] + @" | <span style=""color: red;"">" + detailViewModel.payment_to_vendor_deadline.ToString().Split(' ')[0] + "</span><br>";
-
-                detail.payment_to_vendor_deadline = detailViewModel.payment_to_vendor_deadline;
-
-                if (detail.paid_to_vendor != detailViewModel.paid_to_vendor)
-                    editHtml += "Paid To Vendor: " + (detail.paid_to_vendor == 1?"Yes":"No") + @" | <span style=""color: red;"">" + (detailViewModel.paid_to_vendor == 1 ? "Yes" : "No") + "</span><br>";
-
+                if(detail.paid_to_vendor!=null)
+                { 
+                    if (detail.paid_to_vendor != detailViewModel.paid_to_vendor)
+                        editHtml += "Paid To Vendor: " + (detail.paid_to_vendor == 1?"Yes":"No") + @" | <span style=""color: red;"">" + (detailViewModel.paid_to_vendor == 1 ? "Yes" : "No") + "</span><br>";
+                }
+                else
+                {
+                    if(detailViewModel.paid_to_vendor != null)
+                        editHtml += @"Paid To Vendor: <span style=""color: red;"">" + (detailViewModel.paid_to_vendor == 1 ? "Yes" : "No") + "</span><br>";
+                }
                 detail.paid_to_vendor = detailViewModel.paid_to_vendor;
 
-                if (detail.amount_paid_to_vendor != detailViewModel.amount_paid_to_vendor)
-                    editHtml += "Amount Paid To Vendor: " + detail.amount_paid_to_vendor.ToString()+ @" | <span style=""color: red;"">" + detailViewModel.amount_paid_to_vendor.ToString() + "</span><br>";
-
+                if(detail.amount_paid_to_vendor != null)
+                { 
+                    if (detail.amount_paid_to_vendor != detailViewModel.amount_paid_to_vendor)
+                        editHtml += "Amount Paid To Vendor: " + detail.amount_paid_to_vendor.ToString()+ @" | <span style=""color: red;"">" + detailViewModel.amount_paid_to_vendor.ToString() + "</span><br>";
+                }
+                else
+                {
+                    if(detailViewModel.amount_paid_to_vendor !=null)
+                        editHtml += @"Amount Paid To Vendor: <span style=""color: red;"">" + detailViewModel.amount_paid_to_vendor.ToString() + "</span><br>";
+                }
                 detail.amount_paid_to_vendor = detailViewModel.amount_paid_to_vendor;
 
-                if (detail.payment_to_vendor_notification_date != detailViewModel.payment_to_vendor_notification_date)
-                    editHtml += "Payment To Vendor Notification Date: " + detail.payment_to_vendor_notification_date.ToString().Split(' ')[0] + @" | <span style=""color: red;"">" + detailViewModel.payment_to_vendor_notification_date.ToString().Split(' ')[0] + "</span><br>";
-
+                if(detail.payment_to_vendor_notification_date != null)
+                { 
+                    if (detail.payment_to_vendor_notification_date != detailViewModel.payment_to_vendor_notification_date)
+                        editHtml += "Payment To Vendor Notification Date: " + detail.payment_to_vendor_notification_date.ToString().Split(' ')[0] + @" | <span style=""color: red;"">" + detailViewModel.payment_to_vendor_notification_date.ToString().Split(' ')[0] + "</span><br>";
+                }
+                else
+                {
+                    if (detailViewModel.payment_to_vendor_notification_date != null)
+                        editHtml += @"Payment To Vendor Notification Date: <span style=""color: red;"">" + detailViewModel.payment_to_vendor_notification_date.ToString().Split(' ')[0] + "</span><br>";
+                }
                 detail.payment_to_vendor_notification_date = detailViewModel.payment_to_vendor_notification_date;
+                
                 detail.is_canceled = detailViewModel.is_canceled;
 
-                if (detail.confirmation_id != detailViewModel.confirmation_id)
-                    editHtml += "Confirmation Id: " + detail.confirmation_id + @" | <span style=""color: red;"">" + detailViewModel.confirmation_id + "</span><br>";
-
+                if(detail.confirmation_id != null)
+                { 
+                    if (detail.confirmation_id != detailViewModel.confirmation_id)
+                        editHtml += "Confirmation Id: " + detail.confirmation_id + @" | <span style=""color: red;"">" + detailViewModel.confirmation_id + "</span><br>";
+                }
+                else
+                {
+                    if(detailViewModel.confirmation_id != null)
+                        editHtml += @"Confirmation Id: <span style=""color: red;"">" + detailViewModel.confirmation_id + "</span><br>";
+                }
                 detail.confirmation_id = detailViewModel.confirmation_id;
 
                 //double? room_price = 0;
@@ -411,21 +449,43 @@ namespace Agency.Controllers
                 detail.updated_by = Session["id"].ToString().ToInt();
                 db.SaveChanges();
 
-                Client client = db.Clients.Find(detail.client_id);
-                if (client.first_name != detailViewModel.client_first_name)
-                    editHtml += "First Name: " + client.first_name + @" | <span style=""color: red;"">" + detailViewModel.client_first_name + "</span><br>";
+                if (detail.client_id != null)
+                {
+                    Client client = db.Clients.Find(detail.client_id);
+                    if (client.first_name != detailViewModel.client_first_name)
+                        editHtml += "First Name: " + client.first_name + @" | <span style=""color: red;"">" + detailViewModel.client_first_name + "</span><br>";
 
-                client.first_name = detailViewModel.client_first_name;
+                    client.first_name = detailViewModel.client_first_name;
 
-                if (client.last_name != detailViewModel.client_last_name)
-                    editHtml += "Last Name: " + client.last_name + @" | <span style=""color: red;"">" + detailViewModel.client_last_name + "</span><br>";
+                    if (client.last_name != detailViewModel.client_last_name)
+                        editHtml += "Last Name: " + client.last_name + @" | <span style=""color: red;"">" + detailViewModel.client_last_name + "</span><br>";
 
-                client.last_name = detailViewModel.client_last_name;
-                client.updated_at = DateTime.Now;
-                client.updated_by = Session["id"].ToString().ToInt();
-                db.SaveChanges();
+                    client.last_name = detailViewModel.client_last_name;
+                    client.updated_at = DateTime.Now;
+                    client.updated_by = Session["id"].ToString().ToInt();
+                    db.SaveChanges();
+                }
+                else
+                {
+                    Client client = new Client();
+                        editHtml += @" | <span style=""color: red;"">" + detailViewModel.client_first_name + "</span><br>";
 
-                if(detailViewModel.roomPrices.Count > 0)
+                    client.first_name = detailViewModel.client_first_name;
+
+                        editHtml +=@" | <span style=""color: red;"">" + detailViewModel.client_last_name + "</span><br>";
+
+                    client.last_name = detailViewModel.client_last_name;
+                    client.updated_at = DateTime.Now;
+                    client.updated_by = Session["id"].ToString().ToInt();
+
+                    db.Clients.Add(client);
+                    db.SaveChanges();
+
+                    detail.client_id = client.id;
+                    db.SaveChanges();
+                }
+
+                if(detailViewModel.roomPrices != null)
                 {
                     for(var resDet = 0; resDet < detailViewModel.roomPrices.Count; resDet++)
                     {
@@ -452,23 +512,8 @@ namespace Agency.Controllers
                     reservation.balance_due_date = Convert.ToDateTime(reservation.check_in).AddDays(-30);
                 }
 
-                //ReservationViewModel updatedTotals = ReservationService.calculateTotalandVendor(reservation.id);
+                ReservationService.UpdateTotals(reservation.id);
 
-                reservation.total_rooms = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id && reservation.is_canceled != 1).Count();
-                reservation.total_amount = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id && reservation.is_canceled != 1).Select(s => s.amount).Sum();
-                reservation.total_amount_after_tax = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id && reservation.is_canceled != 1).Select(s => s.amount_after_tax).Sum();
-                reservation.tax_amount = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id && reservation.is_canceled != 1).Select(s => s.tax).Sum();
-                reservation.total_nights = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id && reservation.is_canceled != 1).Select(s => s.no_of_days-1).Sum();
-                reservation.reservation_avg_price_before_tax = db.ReservationDetails.Where(resDet => resDet.reservation_id == reservation.id && reservation.is_canceled != 1).Select(resDet => resDet.amount).Sum() / reservation.total_nights;
-                reservation.reservation_avg_price = db.ReservationDetails.Where(resDet => resDet.reservation_id == reservation.id && reservation.is_canceled != 1).Select(resDet => resDet.amount_after_tax).Sum() / reservation.total_nights;
-                reservation.vendor_avg_price = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id && reservation.is_canceled != 1).Select(s => s.vendor_cost).Sum() / reservation.total_nights;
-                reservation.total_amount_from_vendor = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id && reservation.is_canceled != 1).Select(s => s.vendor_cost).Sum();
-                
-                //reservation.tax += detail.tax;
-                //reservation.total_amount += detail.amount;
-                reservation.updated_at = DateTime.Now;
-                reservation.updated_by = Session["id"].ToString().ToInt();
-                db.SaveChanges();
                 Logs.ReservationActionLog(Session["id"].ToString().ToInt(), detail.reservation_id, "Edit", editHtml);
 
             }
@@ -1022,7 +1067,7 @@ namespace Agency.Controllers
                 reservation.balance_due_date = Convert.ToDateTime(reservation.check_in).AddDays(-30);
             }
 
-            reservation.total_rooms = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id && reservation.is_canceled != 1).Count();
+            reservation.total_rooms = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id && rsd.parent_id == rsd.id && reservation.is_canceled != 1).Count();
             reservation.total_amount = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id && reservation.is_canceled != 1).Select(s => s.amount).Sum();
             reservation.total_amount_after_tax = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id && reservation.is_canceled != 1).Select(s => s.amount_after_tax).Sum();
             reservation.tax_amount = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id && reservation.is_canceled != 1).Select(s => s.tax).Sum();

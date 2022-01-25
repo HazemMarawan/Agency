@@ -251,7 +251,7 @@
                             <div id="special_event_reservation_div" style="display:none;" class="row col-md-12">
                                 <div class="form-group col-md-12">
                                     <label>Hotels</label>
-                                    @Html.DropDownList("hotel_id", new SelectList(ViewBag.Hotels, "id", "name"), "Select Hotel", new { @class = "selectize", @name = "hotel_id", @id = "hotel_id"})
+                                    @Html.DropDownList("hotel_id", new SelectList(ViewBag.Hotels, "id", "name"), "Select Hotel", new { @class = "selectize", @name = "hotel_id", @id = "hotel_id" })
                                 </div>
                             </div>
                             <div class="form-group col-md-6">
@@ -269,6 +269,18 @@
                             <div class="form-group col-md-6">
                                 <label>Email</label>
                                 <input required name="reservations_officer_email" id="reservations_officer_email" type="email" class="form-control radius-30" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Check In</label>
+                                <input required name="check_in" id="check_in" type="date" class="form-control radius-30" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Check Out</label>
+                                <input required name="check_out" id="check_out" type="date" class="form-control radius-30" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Number Of Rooms</label>
+                                <input required name="total_rooms" id="total_rooms" type="number" min="1" class="form-control radius-30" />
                             </div>
                         </div>
                     </div>
@@ -315,9 +327,9 @@
                                 <input name="reservations_officer_email" id="reservations_officer_email" type="email" class="form-control radius-30" />
                             </div>
                             @*<div class="form-group col-md-6">
-                                <label>Vendor</label>
-                                @Html.DropDownList("vendor_id", new SelectList(ViewBag.Vendors, "id", "NamePlusCode"), "Select Vendor", new { @class = "form-control", @name = "vendor_id", @id = "vendor_id" })
-                            </div>*@
+                                    <label>Vendor</label>
+                                    @Html.DropDownList("vendor_id", new SelectList(ViewBag.Vendors, "id", "NamePlusCode"), "Select Vendor", new { @class = "form-control", @name = "vendor_id", @id = "vendor_id" })
+                                </div>*@
                             <div class="form-group col-md-6">
                                 <label>Advance Reservation Percentage</label>
                                 <input name="advance_reservation_percentage" id="advance_reservation_percentage" type="number" min="0" step="0.1" class="form-control radius-30" />
@@ -327,33 +339,33 @@
                                 <input name="single_price" id="single_price" type="number" min="0" step="0.1" class="form-control radius-30" />
                             </div>
                             @*<div class="form-group col-md-6">
-                                <label>Vendor Single Price</label>
-                                <input name="vendor_single_price" id="vendor_single_price" type="number" min="0" step="0.1" class="form-control radius-30" />
-                            </div>*@
+                                    <label>Vendor Single Price</label>
+                                    <input name="vendor_single_price" id="vendor_single_price" type="number" min="0" step="0.1" class="form-control radius-30" />
+                                </div>*@
                             <div class="form-group col-md-6">
                                 <label>Double Price</label>
                                 <input name="double_price" id="double_price" type="number" min="0" step="0.1" class="form-control radius-30" />
                             </div>
                             @*<div class="form-group col-md-6">
-                                <label>Vendor Double Price</label>
-                                <input name="vendor_douple_price" id="vendor_douple_price" type="number" min="0" step="0.1" class="form-control radius-30" />
-                            </div>*@
+                                    <label>Vendor Double Price</label>
+                                    <input name="vendor_douple_price" id="vendor_douple_price" type="number" min="0" step="0.1" class="form-control radius-30" />
+                                </div>*@
                             <div class="form-group col-md-6">
                                 <label>Triple Price</label>
                                 <input name="triple_price" id="triple_price" type="number" min="0" step="0.1" class="form-control radius-30" />
                             </div>
                             @*<div class="form-group col-md-6">
-                                <label>Vendor Triple Price</label>
-                                <input name="vendor_triple_price" id="vendor_triple_price" type="number" min="0" step="0.1" class="form-control radius-30" />
-                            </div>*@
+                                    <label>Vendor Triple Price</label>
+                                    <input name="vendor_triple_price" id="vendor_triple_price" type="number" min="0" step="0.1" class="form-control radius-30" />
+                                </div>*@
                             <div class="form-group col-md-6">
                                 <label>Quad Price</label>
                                 <input name="quad_price" id="quad_price" type="number" min="0" step="0.1" class="form-control radius-30" />
                             </div>
                             @*<div class="form-group col-md-6">
-                                <label>Vendor Quad Price</label>
-                                <input name="vendor_quad_price" id="vendor_quad_price" type="number" min="0" step="0.1" class="form-control radius-30" />
-                            </div>*@
+                                    <label>Vendor Quad Price</label>
+                                    <input name="vendor_quad_price" id="vendor_quad_price" type="number" min="0" step="0.1" class="form-control radius-30" />
+                                </div>*@
                             <div class="form-group col-md-6">
                                 <label>Tax</label>
                                 <input name="tax" id="tax" type="number" min="0" step="0.1" class="form-control radius-30" />
@@ -404,17 +416,17 @@
                                 <label>Total After Tax</label>
                                 <input name="total_after_tax" id="total_after_tax" readonly type="text" class="form-control radius-30" />
                             </div>
-                            <div class="form-group col-md-6">
-                                <label>Tax</label>
-                                <input name="tax" id="tax" type="text" readonly class="form-control radius-30" />
+                            @*<div class="form-group col-md-6">
+                                    <label>Tax</label>
+                                    <input name="tax" id="tax" type="text" readonly class="form-control radius-30" />
+                                </div>*@
+                            <div class="form-group col-md-6" id="deposit_percentage_div">
+                                <label>Percentage %</label>
+                                <input name="percentage" id="percentage" type="number" max="100" min="1" class="form-control radius-30" />
                             </div>
-                            <div class="form-group col-md-6">
+                            <div class="form-group col-md-6" id="deposit_div">
                                 <label>Deposit</label>
                                 <input name="deposit" id="deposit" type="text" class="form-control radius-30" style="font-weight:bold;" />
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label>Percentage %</label>
-                                <input required name="percentage" id="percentage" type="number" max="100" min="1" class="form-control radius-30" />
                             </div>
                             <div class="form-group col-md-6">
                                 <label>Balance</label>
@@ -428,6 +440,42 @@
                                 <label>Amount</label>
                                 <input name="paid_amount" id="paid_amount" step=".1" required type="number" class="form-control radius-30" />
                             </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="modal fade" id="credit_cards_modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <form action="" method="post" enctype='multipart/form-data'>
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal_title"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-body">
+                        <div class="form-row">
+                            <table class="table table-striped">
+                                <tr>
+                                    <th>Card Number</th>
+                                    <th>Expire Date</th>
+                                    <th>Security Code</th>
+                                </tr>
+
+                                <tbody id="credit_cards_body">
+
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -573,8 +621,8 @@
                     <a class="nav-link" id="icon-our-rooms-reservations-tab" data-toggle="pill" href="#icon-our-rooms-reservations" role="tab" aria-controls="icon-our-rooms-reservations" aria-selected="false"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fas fa-bed"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg> Our Rooms</a>
                 </li>
                 @*<li class="nav-item">
-                    <a class="nav-link" id="icon-refund-tab" data-toggle="pill" href="#icon-refund" role="tab" aria-controls="icon-refund" aria-selected="false"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg> Refund</a>
-                </li>*@
+                        <a class="nav-link" id="icon-refund-tab" data-toggle="pill" href="#icon-refund" role="tab" aria-controls="icon-refund" aria-selected="false"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg> Refund</a>
+                    </li>*@
             </ul>
             <div class="tab-content" id="icon-pills-tabContent">
                 <div class="tab-pane fade show active" id="icon-from-website" role="tabpanel" aria-labelledby="icon-from-website">
@@ -712,13 +760,13 @@
                                             <th width="9%"></th>
                                         </tr>
                                         @*<tr class="text-center">
-                                    <th>#</th>
-                                    <th>Event</th>
-                                    <th>Hotel</th>
-                                    <th>Check in/out</th>
-                                    <th>Price/Night</th>
-                                    <th></th>
-                                </tr>*@
+                                                <th>#</th>
+                                                <th>Event</th>
+                                                <th>Hotel</th>
+                                                <th>Check in/out</th>
+                                                <th>Price/Night</th>
+                                                <th></th>
+                                            </tr>*@
                                     </thead>
                                 </table>
                             </div>
@@ -744,13 +792,13 @@
                                             <th width="5%"></th>
                                         </tr>
                                         @*<tr class="text-center">
-                                    <th>#</th>
-                                    <th>Event</th>
-                                    <th>Hotel</th>
-                                    <th>Check in/out</th>
-                                    <th>Price/Night</th>
-                                    <th></th>
-                                </tr>*@
+                                                <th>#</th>
+                                                <th>Event</th>
+                                                <th>Hotel</th>
+                                                <th>Check in/out</th>
+                                                <th>Price/Night</th>
+                                                <th></th>
+                                            </tr>*@
                                     </thead>
                                 </table>
                             </div>
@@ -759,12 +807,11 @@
                 </div>
                 <!--<div class="tab-pane fade" id="icon-refund" role="tabpanel" aria-labelledby="icon-refund">
                     <div class="row " id="cancel-row">-->
-                        <!--layout-top-spacing got deleted-->
-
-                        <!--<div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
-                            <div class="widget-content widget-content-area widget-content-area-edit br-6">-->
-                                <!--  widget-content-area-edit added class manually -->
-                                <!--<table id="refund_table" class="table table-striped table-bordered" style="width:100%">
+                <!--layout-top-spacing got deleted-->
+                <!--<div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
+                    <div class="widget-content widget-content-area widget-content-area-edit br-6">-->
+                <!--  widget-content-area-edit added class manually -->
+                <!--<table id="refund_table" class="table table-striped table-bordered" style="width:100%">
                                     <thead style="width: 100%!important">
                                         <tr class="text-center">
                                             <th width="8%">Booking ID</th>
@@ -1058,12 +1105,16 @@
                         fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
                             var html = "";
                             if (oData.check_in || oData.check_out) {
-                                if (oData.string_check_in)
-                                    html += "<span style='font-weight:bold;' class='fw-bold'>" + oData.string_check_in + "</span><br/>";
-                                if (oData.string_check_out)
-                                    html += "<span style='font-weight:bold;' class='fw-bold'" + oData.string_check_in + "</span><br/>";
+                                if (oData.check_in) {
+                                    html += "<span style='font-weight:bold;' class='fw-bold'>In: " + fixDate(oData.check_in) + "</span><br/>";
+                                }
 
-                            } else {
+                                if (oData.check_out) {
+                                    html += "<span style='font-weight:bold;' class='fw-bold'>Out: " + fixDate(oData.check_out) + "</span><br/>";
+                                }
+
+                            }
+                            else {
                                 html += "<span style='font-weight:bold;text-color:red;' class='bold'>Not Assigned</span>";
                             }
                             $(nTd).html("<span class='action-column'>" + html + "</span>");
@@ -1137,6 +1188,7 @@
                             html += "<a target='_blank' class='view' href='/Reservation/View/" + oData.id + "' title='View'><i class='far fa-eye'></i></a>";
                             html += "<a class='cancelUnpaid' href='javascript:void(0);' title='Cancel'><i class='far fa-times-circle'></i></a>&nbsp;";
                             html += "<a class='payAmountToReservation' href='javascript:void(0);' title='Pay'><i class='fas fa-money-bill-alt'></i></a>&nbsp;";
+                            html += "<a class='creditCardsFromWebSite' href='javascript:void(0);' title='Credit Cards'><i class='fas fa-credit-card'></i></a>&nbsp;";
 
                             $(nTd).html("<span class='action-column'>" + html + "</span>");
                         }
@@ -1316,6 +1368,7 @@
                             html += "<a class='cancelUnpaid' href='javascript:void(0);' title='Cancel'><i class='far fa-times-circle'></i></a>&nbsp;|";
                             html += "<a class='payUnPaidAmountToReservation' href='javascript:void(0);' title='Pay'><i class='fas fa-money-bill-alt'></i></a>&nbsp;|";
                             //html += "<a class='refundPaid' href='javascript:void(0);' title='Refund'><i class='far fa-times-circle'></i></a>&nbsp;";
+                            html += "<a class='creditCardsUnPaid' href='javascript:void(0);' title='Credit Cards'><i class='fas fa-credit-card'></i></a>&nbsp;";
 
                             $(nTd).html("<span class='action-column'>" + html + "</span>");
                         }
@@ -1496,7 +1549,7 @@
                                 html += "<a class='cancelPartiallyPaid' href='javascript:void(0);' title='Cancel'><i class='far fa-times-circle'></i></a>&nbsp;|";
                                 html += "<a class='payPartiallPaidAmountToReservation' href='javascript:void(0);' title='Pay'><i class='fas fa-money-bill-alt'></i></a>&nbsp;|";
                                 //html += "<a class='refundPaid' href='javascript:void(0);' title='Refund'><i class='far fa-times-circle'></i></a>&nbsp;";
-
+                                html += "<a class='creditCardsPartiallyPaid' href='javascript:void(0);' title='Credit Cards'><i class='fas fa-credit-card'></i></a>&nbsp;";
                                 $(nTd).html("<span class='action-column'>" + html + "</span>");
                             }
                         },
@@ -1676,6 +1729,7 @@
                                 html += "<a target='_blank' class='view' href='/Reservation/View/" + oData.id + "' title='View'><i class='far fa-eye'></i></a>";
                                 html += "<a class='cancelPaid' href='javascript:void(0);' title='Cancel'><i class='far fa-times-circle'></i></a>&nbsp;|";
                                 //html += "<a class='refundPaid' href='javascript:void(0);' title='Refund'><i class='far fa-times-circle'></i></a>&nbsp;";
+                                html += "<a class='creditCardsPaid' href='javascript:void(0);' title='Credit Cards'><i class='fas fa-credit-card'></i></a>&nbsp;";
 
                                 $(nTd).html("<span class='action-column'>" + html + "</span>");
                             }
@@ -1856,6 +1910,7 @@
                                 html += "<a class='cancelPaid' href='javascript:void(0);' title='Cancel'><i class='far fa-times-circle'></i></a>&nbsp;|";
                                 //if (oData.paid_amount > 0)
                                 //    html += "<a class='refundPaid' href='javascript:void(0);' title='Refund'><i class='fas fa-undo-alt'></i></a>&nbsp;";
+                                html += "<a class='creditCardsCanceled' href='javascript:void(0);' title='Credit Cards'><i class='fas fa-credit-card'></i></a>&nbsp;";
 
                                 $(nTd).html("<span class='action-column'>" + html + "</span>");
                             }
@@ -2072,8 +2127,10 @@
                                 //html += "<a class='details' href='/ReservationDetail/Index/" + oData.id + "' title='Details'><i class='far fa-eye'></i></a>&nbsp;|";
                                 //html += "<a class='confMail' href='javascript:void(0)' title='Send Email'><i class='far fa-envelope-open'></i></a>&nbsp;|";
                                 //html += "<a target='_blank' class='Itinirary' href='/ReservationDetail/Itinirary/" + oData.id + "' title='Itinirary'><i class='far fa-eye'></i></a>&nbsp;|";
-                                html += "<a target='_blank' class='view' href='/Reservation/ViewOurRooms/" + oData.id + "' title='View'><i class='far fa-eye'></i></a>";
+                                html += "<a target='_blank' class='view' href='/Reservation/ViewOurRooms/" + oData.id + "' title='View'><i class='far fa-eye'></i></a>&nbsp; | ";
                                 // html += "<a class='cancelPaid' href='javascript:void(0);' title='Cancel'><i class='far fa-times-circle'></i></a>&nbsp;";
+                                html += "<a class='creditCardsOurRoom' href='javascript:void(0);' title='Credit Cards'><i class='fas fa-credit-card'></i></a>&nbsp;";
+
                                 $(nTd).html("<span class='action-column'>" + html + "</span>");
                             }
                         },
@@ -2625,6 +2682,235 @@
 
             });
 
+
+            $(document).on("click", ".creditCardsFromWebSite", function () { //Hazem
+
+                var data = fromWebsiteTable.row($(this).closest('tr')).data();
+
+                var modal = $('#credit_cards_modal').clone();
+                modal.find('#modal_title').text('Credit Cards');
+                modal.execModal({
+                    progressBar: 'progress_bar',
+                    progressText: 'progress_text',
+                }, function (response) {
+                        
+                        
+                }, function (response) {
+
+                }, function (dialog) {
+
+                        if (data.reservationCreditCards.length != 0) {
+                        var html = "";
+                        data.reservationCreditCards.forEach(function (value) {
+                            html += `<tr>
+                                         <td>${value.credit_card_number}</td>
+                                         <td>${value.card_expiration_date}</td>
+                                         <td>${value.security_code}</td>
+                                        </tr>`;
+                        });
+                        dialog.find("#credit_cards_body").append(html);
+                    }
+                    else {
+                        html += `<tr>
+                                         <td colspan='3'>No Credit Cards</td>
+                                        </tr>`;
+                            dialog.find("#credit_cards_body").append(html);
+                    }
+
+                });
+
+            });
+
+            $(document).on("click", ".creditCardsUnPaid", function () { //Hazem
+
+                var data = unPaidReservationTable.row($(this).closest('tr')).data();
+
+                var modal = $('#credit_cards_modal').clone();
+                modal.find('#modal_title').text('Credit Cards');
+                modal.execModal({
+                    progressBar: 'progress_bar',
+                    progressText: 'progress_text',
+                }, function (response) {
+
+
+                }, function (response) {
+
+                }, function (dialog) {
+
+                        if (data.reservationCreditCards.length != 0) {
+                        var html = "";
+                        data.reservationCreditCards.forEach(function (value) {
+                            html += `<tr>
+                                         <td>${value.credit_card_number}</td>
+                                         <td>${value.card_expiration_date}</td>
+                                         <td>${value.security_code}</td>
+                                        </tr>`;
+                        });
+                        dialog.find("#credit_cards_body").append(html);
+                    }
+                    else {
+                        html += `<tr>
+                                         <td colspan='3'>No Credit Cards</td>
+                                        </tr>`;
+                            dialog.find("#credit_cards_body").append(html);
+                    }
+
+                });
+
+            });
+
+            $(document).on("click", ".creditCardsPartiallyPaid", function () {
+
+                var data = partiallyReservationTable.row($(this).closest('tr')).data();
+
+                var modal = $('#credit_cards_modal').clone();
+                modal.find('#modal_title').text('Credit Cards');
+                modal.execModal({
+                    progressBar: 'progress_bar',
+                    progressText: 'progress_text',
+                }, function (response) {
+
+
+                }, function (response) {
+
+                }, function (dialog) {
+
+                    if (data.reservationCreditCards.length != 0) {
+                        var html = "";
+                        data.reservationCreditCards.forEach(function (value) {
+                            html += `<tr>
+                                         <td>${value.credit_card_number}</td>
+                                         <td>${value.card_expiration_date}</td>
+                                         <td>${value.security_code}</td>
+                                        </tr>`;
+                        });
+                        dialog.find("#credit_cards_body").append(html);
+                    }
+                    else {
+                        html += `<tr>
+                                         <td colspan='3'>No Credit Cards</td>
+                                        </tr>`;
+                        dialog.find("#credit_cards_body").append(html);
+                    }
+
+                });
+
+            });
+
+            $(document).on("click", ".creditCardsPaid", function () {
+
+                var data = paidreservationTable.row($(this).closest('tr')).data();
+
+                var modal = $('#credit_cards_modal').clone();
+                modal.find('#modal_title').text('Credit Cards');
+                modal.execModal({
+                    progressBar: 'progress_bar',
+                    progressText: 'progress_text',
+                }, function (response) {
+
+
+                }, function (response) {
+
+                }, function (dialog) {
+
+                    if (data.reservationCreditCards.length != 0) {
+                        var html = "";
+                        data.reservationCreditCards.forEach(function (value) {
+                            html += `<tr>
+                                         <td>${value.credit_card_number}</td>
+                                         <td>${value.card_expiration_date}</td>
+                                         <td>${value.security_code}</td>
+                                        </tr>`;
+                        });
+                        dialog.find("#credit_cards_body").append(html);
+                    }
+                    else {
+                        html += `<tr>
+                                         <td colspan='3'>No Credit Cards</td>
+                                        </tr>`;
+                        dialog.find("#credit_cards_body").append(html);
+                    }
+
+                });
+
+            });
+
+            $(document).on("click", ".creditCardsCanceled", function () {
+
+                var data = canceledreservationTable.row($(this).closest('tr')).data();
+
+                var modal = $('#credit_cards_modal').clone();
+                modal.find('#modal_title').text('Credit Cards');
+                modal.execModal({
+                    progressBar: 'progress_bar',
+                    progressText: 'progress_text',
+                }, function (response) {
+
+
+                }, function (response) {
+
+                }, function (dialog) {
+
+                    if (data.reservationCreditCards.length != 0) {
+                        var html = "";
+                        data.reservationCreditCards.forEach(function (value) {
+                            html += `<tr>
+                                         <td>${value.credit_card_number}</td>
+                                         <td>${value.card_expiration_date}</td>
+                                         <td>${value.security_code}</td>
+                                        </tr>`;
+                        });
+                        dialog.find("#credit_cards_body").append(html);
+                    }
+                    else {
+                        html += `<tr>
+                                         <td colspan='3'>No Credit Cards</td>
+                                        </tr>`;
+                        dialog.find("#credit_cards_body").append(html);
+                    }
+
+                });
+
+            });
+
+            $(document).on("click", ".creditCardsOurRoom", function () {
+
+                var data = ourRoomsTable.row($(this).closest('tr')).data();
+
+                var modal = $('#credit_cards_modal').clone();
+                modal.find('#modal_title').text('Credit Cards');
+                modal.execModal({
+                    progressBar: 'progress_bar',
+                    progressText: 'progress_text',
+                }, function (response) {
+
+
+                }, function (response) {
+
+                }, function (dialog) {
+
+                    if (data.reservationCreditCards.length != 0) {
+                        var html = "";
+                        data.reservationCreditCards.forEach(function (value) {
+                            html += `<tr>
+                                         <td>${value.credit_card_number}</td>
+                                         <td>${value.card_expiration_date}</td>
+                                         <td>${value.security_code}</td>
+                                        </tr>`;
+                        });
+                        dialog.find("#credit_cards_body").append(html);
+                    }
+                    else {
+                        html += `<tr>
+                                         <td colspan='3'>No Credit Cards</td>
+                                        </tr>`;
+                        dialog.find("#credit_cards_body").append(html);
+                    }
+
+                });
+
+            });
+
             $(document).on("click", ".payAmountToReservation", function () {
 
                 var data = fromWebsiteTable.row($(this).closest('tr')).data();
@@ -2648,7 +2934,7 @@
 
                         dialog.find('#id').val(data.id);
                         dialog.find('#total_after_tax').val(addCommas(data.total_amount_after_tax.toFixed(2)) + " " + data.string_currency);
-                        dialog.find('#tax').val(data.tax + "%");
+                        //dialog.find('#tax').val(data.tax + "%");
 
                         var deposit = (data.advance_reservation_percentage / 100) * data.total_amount_after_tax;
                         dialog.find('#deposit').val(addCommas(deposit.toFixed(2)) + " " + data.string_currency);
@@ -2695,7 +2981,7 @@
 
                         dialog.find('#id').val(data.id);
                         dialog.find('#total_after_tax').val(addCommas(data.total_amount_after_tax.toFixed(2)) + " " + data.string_currency);
-                        dialog.find('#tax').val(data.tax + "%");
+                        //dialog.find('#tax').val(data.tax + "%");
 
                         var deposit = (data.advance_reservation_percentage / 100) * data.total_amount_after_tax;
                         dialog.find('#deposit').val(addCommas(deposit.toFixed(2)) + " " + data.string_currency);
@@ -2742,11 +3028,11 @@
 
                         dialog.find('#id').val(data.id);
                         dialog.find('#total_after_tax').val(addCommas(data.total_amount_after_tax.toFixed(2)) +" "+ data.string_currency);
-                        dialog.find('#tax').val(data.tax + "%");
+                        //dialog.find('#tax').val(data.tax + "%");
 
-                        var deposit = (data.advance_reservation_percentage / 100) * data.total_amount_after_tax;
-                        dialog.find('#deposit').val(addCommas(deposit.toFixed(2)) + " " + data.string_currency);
-                        dialog.find('#percentage').val(data.advance_reservation_percentage);
+                        //var deposit = (data.advance_reservation_percentage / 100) * data.total_amount_after_tax;
+                        //dialog.find('#deposit').val(addCommas(deposit.toFixed(2)) + " " + data.string_currency);
+                        //dialog.find('#percentage').val(data.advance_reservation_percentage);
                         var remainAmount = data.total_amount_after_tax - data.paid_amount;
                         dialog.find('#paid_amount').attr('max', remainAmount)
                         dialog.find('#paid_amount').attr('min', 1)
@@ -2756,10 +3042,12 @@
                         var balance = data.total_amount_after_tax - data.paid_amount;
                         dialog.find('#balance_pay_modal').val(addCommas(balance.toFixed(2)) + " " + data.string_currency);
 
-                        dialog.find('#percentage').keyup(function () {
-                            var deposit = (dialog.find('#percentage').val() / 100) * data.total_amount_after_tax;
-                            dialog.find('#deposit').val(addCommas(deposit.toFixed(2)) + " " + data.string_currency);
-                        });
+                        //dialog.find('#percentage').keyup(function () {
+                        //    var deposit = (dialog.find('#percentage').val() / 100) * data.total_amount_after_tax;
+                        //    dialog.find('#deposit').val(addCommas(deposit.toFixed(2)) + " " + data.string_currency);
+                        //});
+                        dialog.find("#deposit_percentage_div").hide();
+                        dialog.find("#deposit_div").hide();
 
                 });
 

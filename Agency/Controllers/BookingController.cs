@@ -267,6 +267,9 @@ namespace Agency.Controllers
                 db.ReservationDetails.Add(detail);
                 db.SaveChanges();
 
+                detail.parent_id = detail.id;
+                db.SaveChanges();
+
                 Client client = new Client();
                 client.first_name = reservationViewModel.first_name[i];
                 client.last_name = reservationViewModel.last_name[i];
@@ -293,20 +296,7 @@ namespace Agency.Controllers
                 reservation.balance_due_date = Convert.ToDateTime(reservation.check_in).AddDays(-30);
                 reservation.total_rooms = reservationViewModel.first_name.Count;
 
-                ReservationViewModel updatedTotals = ReservationService.calculateTotalandVendor(reservation.id);
-                reservation.total_rooms = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id && reservation.is_canceled != 1).Count();
-                reservation.total_amount = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id && reservation.is_canceled != 1).Select(s => s.amount).Sum();
-                reservation.total_amount_after_tax = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id && reservation.is_canceled != 1).Select(s => s.amount_after_tax).Sum();
-                reservation.total_amount_from_vendor = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id && reservation.is_canceled != 1).Select(s => s.vendor_cost).Sum();
-                //reservation.paid_amount = (c_event.advance_reservation_percentage / 100) * reservation.total_amount_after_tax;
-                reservation.paid_amount = 0;
-                reservation.tax_amount = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id && reservation.is_canceled != 1).Select(s => s.tax).Sum();
-                reservation.total_nights = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id && reservation.is_canceled != 1).Select(s => s.no_of_days - 1).Sum();
-                reservation.reservation_avg_price_before_tax = db.ReservationDetails.Where(resDet => resDet.reservation_id == reservation.id && reservation.is_canceled != 1).Select(resDet => resDet.amount).Sum() / reservation.total_nights;
-                reservation.reservation_avg_price = db.ReservationDetails.Where(resDet => resDet.reservation_id == reservation.id && reservation.is_canceled != 1).Select(resDet => resDet.amount_after_tax).Sum() / reservation.total_nights;
-                reservation.vendor_avg_price = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id && reservation.is_canceled != 1).Select(s => s.vendor_cost).Sum() / reservation.total_nights;
-                reservation.updated_at = DateTime.Now;
-                db.SaveChanges();
+                ReservationService.UpdateTotals(reservation.id,true);
             }
 
             InitialReservation initialReservation = AutoMapper.Mapper.Map<Reservation, InitialReservation>(reservation);
