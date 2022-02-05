@@ -96,7 +96,17 @@ namespace Agency.Services
                 statisticsViewModel.balance = db.Reservations.Where(t => t.is_canceled != 1).Select(t => t.total_amount_after_tax).Sum() - statisticsViewModel.collected;
                 statisticsViewModel.balance_percentage = (statisticsViewModel.balance / statisticsViewModel.total_amount_after_tax_sum)*100;
 
+                double? reservation_cancelation_fees = 0.0;
+                List<Reservation> reservations = db.Reservations.Where(c => c.is_canceled == 1 && c.cancelation_fees != null).ToList();
+
+                if (reservations.Count() > 0)
+                {
+                    reservation_cancelation_fees = db.Reservations.Where(c => c.is_canceled == 1 && c.cancelation_fees != null).Select(c => c.cancelation_fees).Sum();
+                }
+
                 statisticsViewModel.profit = db.Reservations.Where(r => r.paid_amount == r.total_amount_after_tax && r.paid_amount != 0 && r.is_canceled != 1).Select(t => t.total_amount_after_tax).Sum() - db.Reservations.Where(r => r.paid_amount == r.total_amount_after_tax && r.paid_amount != 0 && r.is_canceled != 1).Where(t => t.is_canceled != 1).Select(t => t.total_amount_from_vendor).Sum();
+                statisticsViewModel.profit += reservation_cancelation_fees;
+
                 statisticsViewModel.total_amount_after_tax_sum_for_profit = db.Reservations.Where(r => r.paid_amount == r.total_amount_after_tax && r.paid_amount != 0 && r.is_canceled != 1).Where(t => t.is_canceled != 1).Select(t => t.total_amount_after_tax).Sum();
                 statisticsViewModel.profit_percentage = (statisticsViewModel.profit / statisticsViewModel.total_amount_after_tax_sum_for_profit) *100;
 

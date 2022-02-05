@@ -442,6 +442,10 @@
     <Compile Include="Migrations\202202050020332_add_hotel_name.Designer.cs">
       <DependentUpon>202202050020332_add_hotel_name.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202202050203096_add_cancelation_fees.cs" />
+    <Compile Include="Migrations\202202050203096_add_cancelation_fees.Designer.cs">
+      <DependentUpon>202202050203096_add_cancelation_fees.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AgencyDbContext.cs" />
     <Compile Include="Models\Chat.cs" />
@@ -509,6 +513,7 @@
     <Compile Include="ViewModel\RoleViewModel.cs" />
     <Compile Include="ViewModel\StatisticsViewModel.cs" />
     <Compile Include="ViewModel\TaskViewModel.cs" />
+    <Compile Include="ViewModel\TransactionViewModel.cs" />
     <Compile Include="ViewModel\UserTaskViewModel.cs" />
     <Compile Include="ViewModel\UserViewModel.cs" />
     <Compile Include="ViewModel\VendorViewModel.cs" />
@@ -4258,6 +4263,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202202050020332_add_hotel_name.resx">
       <DependentUpon>202202050020332_add_hotel_name.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202202050203096_add_cancelation_fees.resx">
+      <DependentUpon>202202050203096_add_cancelation_fees.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

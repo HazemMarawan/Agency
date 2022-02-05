@@ -135,6 +135,38 @@
     </style>
 
 }
+<div class="modal fade" id="cancel_reservation_modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <form action="" method="post" enctype='multipart/form-data'>
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal_title"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-body">
+                        <div class="form-row">
+                            <input type="hidden" name="id" id="id" />
+
+                            <div class="form-group col-md-12">
+                                <label>Cancelation Fees</label>
+                                <input required name="cancelation_fees" id="cancelation_fees" type="number" step="0.1" class="form-control radius-30" />
+                            </div>
+                           
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
 <div class="modal fade" id="move_reservation_to_another_booking_modal" tabindex="-1" role="dialog" aria-hidden="true">
     <form action="" method="post" enctype='multipart/form-data'>
         <div class="modal-dialog modal-lg">
@@ -424,9 +456,20 @@
                                 <tbody id="credit_cards_body">
                                 </tbody>
                             </table>
-                        </div>
-                        <br/>
-                        <div class="form-row">
+                            <br />
+                            <br />
+                            <table class="table table-secondary">
+                                <tr>
+                                    <th>Invoice ID</th>
+                                    <th>Paid Amount</th>
+                                </tr>
+
+                                <tbody id="transactions_body">
+                                </tbody>
+                            </table>
+                            <br />
+                            <br />
+
                             @*<input type="hidden" name="id" id="id" value="0" />*@
                             <div class="form-group col-md-6">
                                 <label>Booking ID</label>
@@ -2344,6 +2387,7 @@
                 $('#total_nights').text(addCommas(json.total_nights));
 
             });
+
            $(document).on("click", "#add_reservation", function () {
                 var data = unPaidReservationTable.row($(this).closest('tr')).data();
                 console.log(data);
@@ -2387,8 +2431,6 @@
                                     alert("Dynamic content load failed.");
                                 }
                             });
-
-
 
                         });
 
@@ -2699,19 +2741,18 @@
                             )
                         }
                         else
-                            {
-                                Swal.fire(
-                                    'Error!',
-                                    'Destination Booking Id Not Found!',
-                                    'error'
-                                )
-                            }
+                        {
+                            Swal.fire(
+                                'Error!',
+                                'Destination Booking Id Not Found!',
+                                'error'
+                            )
+                        }
                 }, function (response) {
 
                 }, function (dialog) {
 
                         dialog.find('#id').val(data.id);
-
 
                 });
 
@@ -2728,8 +2769,8 @@
                     progressBar: 'progress_bar',
                     progressText: 'progress_text',
                 }, function (response) {
-                        
-                        
+
+
                 }, function (response) {
 
                 }, function (dialog) {
@@ -2784,10 +2825,10 @@
                         dialog.find("#credit_cards_body").append(html);
                     }
                     else {
-                        html += `<tr>
+                         html += `<tr>
                                          <td colspan='3'>No Credit Cards</td>
                                         </tr>`;
-                            dialog.find("#credit_cards_body").append(html);
+                        dialog.find("#credit_cards_body").append(html);
                     }
 
                 });
@@ -2980,7 +3021,7 @@
                         var remainAmount = data.total_amount_after_tax - data.paid_amount;
                         dialog.find('#paid_amount').attr('max', remainAmount)
                         dialog.find('#paid_amount').attr('min', 1)
-                        
+
                         dialog.find('#paid').val(addCommas(data.paid_amount.toFixed(2)) + " " + data.string_currency);
 
                         var balance = data.total_amount_after_tax - data.paid_amount;
@@ -3007,6 +3048,23 @@
                                              <td colspan='3'>No Credit Cards</td>
                                             </tr>`;
                             dialog.find("#credit_cards_body").append(html);
+                        }
+
+                        if (data.transactions.length != 0) {
+                            var html = "";
+                            data.transactions.forEach(function (value) {
+                                html += `<tr>
+                                            <td>${value.transaction_id}</td>
+                                            <td>${addCommas(value.amount.toFixed(2))}</td>
+                                        </tr>`;
+                            });
+                            dialog.find("#transactions_body").append(html);
+                        }
+                        else {
+                            html += `<tr>
+                                        <td colspan='2'>No Transaction</td>
+                                    </tr>`;
+                            dialog.find("#transactions_body").append(html);
                         }
                 });
 
@@ -3073,6 +3131,23 @@
                                                  <td colspan='3'>No Credit Cards</td>
                                                 </tr>`;
                             dialog.find("#credit_cards_body").append(html);
+                        }
+
+                        if (data.transactions.length != 0) {
+                            var html = "";
+                            data.transactions.forEach(function (value) {
+                                html += `<tr>
+                                                <td>${value.transaction_id}</td>
+                                                <td>${addCommas(value.amount.toFixed(2))}</td>
+                                            </tr>`;
+                            });
+                            dialog.find("#transactions_body").append(html);
+                        }
+                        else {
+                            html += `<tr>
+                                            <td colspan='2'>No Transaction</td>
+                                        </tr>`;
+                            dialog.find("#transactions_body").append(html);
                         }
 
                 });
@@ -3144,14 +3219,51 @@
                             dialog.find("#credit_cards_body").append(html);
                         }
 
+                        if (data.transactions.length != 0) {
+                            var html = "";
+                            data.transactions.forEach(function (value) {
+                                html += `<tr>
+                                                <td>${value.transaction_id}</td>
+                                                <td>${addCommas(value.amount.toFixed(2))}</td>
+                                            </tr>`;
+                            });
+                            dialog.find("#transactions_body").append(html);
+                        }
+                        else {
+                            html += `<tr>
+                                            <td colspan='2'>No Transaction</td>
+                                        </tr>`;
+                            dialog.find("#transactions_body").append(html);
+                        }
                 });
 
             });
 
             $(document).on("click", ".cancelUnpaid", function () {
                 var data = unPaidReservationTable.row($(this).closest('tr')).data();
-                console.log(data)
-                warningBox("Are you sure you want to cancel this reservation (<b>" + data.id +"</b>) ?", function () {
+
+                var modal = $('#cancel_reservation_modal').clone();
+                var action = '@Url.Action("cancelReservation", "Reservation")';
+                modal.find('form').attr('action', action);
+                modal.find('#modal_title').text('Cancel Reservation #' + data.id);
+                modal.execModal({
+                    progressBar: 'progress_bar',
+                    progressText: 'progress_text',
+                }, function (response) {
+                        unPaidReservationTable.draw();
+                        //fromWebsiteTable.draw();
+                        //partiallyReservationTable.draw();
+                        canceledreservationTable.draw();
+                        paidreservationTable.draw();
+                }, function (response) {
+
+                }, function (dialog) {
+
+                        dialog.find('#id').val(data.id);
+
+                });
+
+                @*warningBox("Are you sure you want to cancel this reservation (<b>" + data.id +"</b>) ?", function () {
                     $.ajax({
                         type: "GET",
                         url: '@Url.Action("cancelReservation", "Reservation")',
@@ -3169,11 +3281,33 @@
                             alert("Dynamic content load failed.");
                         }
                     });
-                });
+                });*@
             });
             $(document).on("click", ".cancelPartiallyPaid", function () {
                 var data = partiallyReservationTable.row($(this).closest('tr')).data();
-                warningBox("Are you sure you want to cancel this reservation (<b>" + data.id +"</b>) ?", function () {
+
+                var modal = $('#cancel_reservation_modal').clone();
+                var action = '@Url.Action("cancelReservation", "Reservation")';
+                modal.find('form').attr('action', action);
+                modal.find('#modal_title').text('Cancel Reservation #'+data.id);
+                modal.execModal({
+                    progressBar: 'progress_bar',
+                    progressText: 'progress_text',
+                }, function (response) {
+                        //unPaidReservationTable.draw();
+                        //fromWebsiteTable.draw();
+                        partiallyReservationTable.draw();
+                        canceledreservationTable.draw();
+                        paidreservationTable.draw();
+                }, function (response) {
+
+                }, function (dialog) {
+
+                        dialog.find('#id').val(data.id);
+
+                });
+
+                @*warningBox("Are you sure you want to cancel this reservation (<b>" + data.id +"</b>) ?", function () {
                     $.ajax({
                         type: "GET",
                         url: '@Url.Action("cancelReservation", "Reservation")',
@@ -3191,7 +3325,7 @@
                             alert("Dynamic content load failed.");
                         }
                     });
-                });
+                });*@
             });
             $(document).on("click", ".refundPaid", function () {
                 var data = canceledreservationTable.row($(this).closest('tr')).data();
@@ -3215,7 +3349,28 @@
             });
             $(document).on("click", ".cancelPaid", function () {
                 var data = paidreservationTable.row($(this).closest('tr')).data();
-                warningBox("Are you sure you want to cancel this reservation (<b>" + data.id +"</b>) ?", function () {
+
+                var modal = $('#cancel_reservation_modal').clone();
+                var action = '@Url.Action("cancelReservation", "Reservation")';
+                modal.find('form').attr('action', action);
+                modal.find('#modal_title').text('Cancel Reservation #'+data.id);
+                modal.execModal({
+                    progressBar: 'progress_bar',
+                    progressText: 'progress_text',
+                }, function (response) {
+                        //unPaidReservationTable.draw();
+                        //fromWebsiteTable.draw();
+                        //partiallyReservationTable.draw();
+                        canceledreservationTable.draw();
+                        paidreservationTable.draw();
+                }, function (response) {
+
+                }, function (dialog) {
+
+                        dialog.find('#id').val(data.id);
+
+                });
+                @*warningBox("Are you sure you want to cancel this reservation (<b>" + data.id +"</b>) ?", function () {
                     $.ajax({
                         type: "GET",
                         url: '@Url.Action("cancelReservation", "Reservation")',
@@ -3233,7 +3388,7 @@
                             alert("Dynamic content load failed.");
                         }
                     });
-                });
+                });*@
             });
 
 

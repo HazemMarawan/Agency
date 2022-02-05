@@ -151,7 +151,15 @@ namespace Agency.Controllers
                                    card_expiration_date = resCre.card_expiration_date
                                }).ToList(),
                                refund_id = res.refund_id,
-                               hotel_name_special = res.hotel_name
+                               hotel_name_special = res.hotel_name,
+                               transactions = db.Transactions.Where( t => t.reservation_id == res.id).Select(tr => new TransactionViewModel
+                               {
+                                   id = tr.id,
+                                   reservation_id = tr.reservation_id,
+                                   amount = tr.amount,
+                                   transaction_id = tr.transaction_id
+                               }).ToList(),
+                               cancelation_fees = res.cancelation_fees
                                //profit = calculateProfit(res.id).profit
                            }).Where(r => r.id == id).FirstOrDefault();
 
@@ -254,16 +262,25 @@ namespace Agency.Controllers
                                       credit_card_number = reinitialRes.credit_card_number,
                                       security_code = reinitialRes.security_code,
                                       credit = resData.credit,
-                                      hotel_name_special = resData.hotel_name
+                                      hotel_name_special = resData.hotel_name,
+                                      transactions = db.Transactions.Where(t => t.reservation_id == resData.id).Select(tr => new TransactionViewModel
+                                      {
+                                          id = tr.id,
+                                          reservation_id = tr.reservation_id,
+                                          amount = tr.amount,
+                                          transaction_id = tr.transaction_id
+                                      }).ToList(),
+                                      cancelation_fees = resData.cancelation_fees
                                   }).Where(r => r.reservation_id == id).FirstOrDefault();
+
             if (initialResData == null)
             {
                 initialResData = new ReservationViewModel();
             }
+
             ReservationViewScreenViewModel reservationViewScreenViewModel = new ReservationViewScreenViewModel();
             reservationViewScreenViewModel.CurrentReservation = resData;
             reservationViewScreenViewModel.InitialReservation = initialResData;
-
 
             ViewBag.id = id;
             ViewBag.Users = db.Users.Select(s => new { s.id, s.full_name }).ToList();
@@ -426,7 +443,15 @@ namespace Agency.Controllers
                                    credit_card_number = resCre.credit_card_number,
                                    card_expiration_date = resCre.card_expiration_date
                                }).ToList(),
-                               hotel_name_special = res.hotel_name
+                               hotel_name_special = res.hotel_name,
+                               transactions = db.Transactions.Where(t => t.reservation_id == res.id).Select(tr => new TransactionViewModel
+                               {
+                                   id = tr.id,
+                                   reservation_id = tr.reservation_id,
+                                   amount = tr.amount,
+                                   transaction_id = tr.transaction_id
+                               }).ToList(),
+                               cancelation_fees = res.cancelation_fees
                                //profit = calculateProfit(res.id).profit
                            }).Where(r => r.paid_amount == 0 && r.is_canceled == null && r.created_by == null);
             //var reservation = resData.ToList();
@@ -546,7 +571,15 @@ namespace Agency.Controllers
                                    credit_card_number = resCre.credit_card_number,
                                    card_expiration_date = resCre.card_expiration_date
                                }).ToList(),
-                               hotel_name_special = res.hotel_name
+                               hotel_name_special = res.hotel_name,
+                               transactions = db.Transactions.Where(t => t.reservation_id == res.id).Select(tr => new TransactionViewModel
+                               {
+                                   id = tr.id,
+                                   reservation_id = tr.reservation_id,
+                                   amount = tr.amount,
+                                   transaction_id = tr.transaction_id
+                               }).ToList(),
+                               cancelation_fees = res.cancelation_fees
                                //profit = calculateProfit(res.id).profit
                            }).Where(r => r.paid_amount == 0 && r.is_canceled == null && r.created_by != null);
             //var reservation = resData.ToList();
@@ -663,7 +696,15 @@ namespace Agency.Controllers
                                    credit_card_number = resCre.credit_card_number,
                                    card_expiration_date = resCre.card_expiration_date
                                }).ToList(),
-                               hotel_name_special = res.hotel_name
+                               hotel_name_special = res.hotel_name,
+                               transactions = db.Transactions.Where(t => t.reservation_id == res.id).Select(tr => new TransactionViewModel
+                               {
+                                   id = tr.id,
+                                   reservation_id = tr.reservation_id,
+                                   amount = tr.amount,
+                                   transaction_id = tr.transaction_id
+                               }).ToList(),
+                               cancelation_fees = res.cancelation_fees
                                //profit = calculateProfit(res.id).profit
 
                            }).Where(r => r.paid_amount < r.total_amount_after_tax && r.paid_amount != 0 && r.is_canceled == null);
@@ -782,7 +823,15 @@ namespace Agency.Controllers
                                    credit_card_number = resCre.credit_card_number,
                                    card_expiration_date = resCre.card_expiration_date
                                }).ToList(),
-                               hotel_name_special = res.hotel_name
+                               hotel_name_special = res.hotel_name,
+                               transactions = db.Transactions.Where(t => t.reservation_id == res.id).Select(tr => new TransactionViewModel
+                               {
+                                   id = tr.id,
+                                   reservation_id = tr.reservation_id,
+                                   amount = tr.amount,
+                                   transaction_id = tr.transaction_id
+                               }).ToList(),
+                               cancelation_fees = res.cancelation_fees
                                //profit = calculateProfit(res.id).profit
 
                            }).Where(r => r.paid_amount == r.total_amount_after_tax && r.paid_amount != 0 && r.is_canceled == null);
@@ -898,7 +947,15 @@ namespace Agency.Controllers
                                    credit_card_number = resCre.credit_card_number,
                                    card_expiration_date = resCre.card_expiration_date
                                }).ToList(),
-                               hotel_name_special = res.hotel_name
+                               hotel_name_special = res.hotel_name,
+                               transactions = db.Transactions.Where(t => t.reservation_id == res.id).Select(tr => new TransactionViewModel
+                               {
+                                   id = tr.id,
+                                   reservation_id = tr.reservation_id,
+                                   amount = tr.amount,
+                                   transaction_id = tr.transaction_id
+                               }).ToList(),
+                               cancelation_fees = res.cancelation_fees
                            }).Where(r => r.is_canceled == 1);
             //Where(r => r.status == (int)PaymentStatus.Paid).ToList();
             var reservation = db.Reservations;
@@ -1118,7 +1175,15 @@ namespace Agency.Controllers
                                    credit_card_number = resCre.credit_card_number,
                                    card_expiration_date = resCre.card_expiration_date
                                }).ToList(),
-                               hotel_name_special = res.hotel_name
+                               hotel_name_special = res.hotel_name,
+                               transactions = db.Transactions.Where(t => t.reservation_id == res.id).Select(tr => new TransactionViewModel
+                               {
+                                   id = tr.id,
+                                   reservation_id = tr.reservation_id,
+                                   amount = tr.amount,
+                                   transaction_id = tr.transaction_id
+                               }).ToList(),
+                               cancelation_fees = res.cancelation_fees
                                //profit = calculateProfit(res.id).profit
                            }).Where(r => r.is_canceled == 1 && r.countPaidToVendorRooms > 0);
             //var reservation = resData.ToList();
@@ -1231,7 +1296,15 @@ namespace Agency.Controllers
                                created_at = res.created_at,
                                countPaidToVendorRooms = db.ReservationDetails.Where(r => r.paid_to_vendor == 1 && r.reservation_id == res.id).Count(),
                                countPaidToVendorNights = db.ReservationDetails.Where(r => r.paid_to_vendor == 1 && r.reservation_id == res.id).Sum(n => n.no_of_days),
-                               hotel_name_special = res.hotel_name
+                               hotel_name_special = res.hotel_name,
+                               transactions = db.Transactions.Where(t => t.reservation_id == res.id).Select(tr => new TransactionViewModel
+                               {
+                                   id = tr.id,
+                                   reservation_id = tr.reservation_id,
+                                   amount = tr.amount,
+                                   transaction_id = tr.transaction_id
+                               }).ToList(),
+                               cancelation_fees = res.cancelation_fees
                                //profit = calculateProfit(res.id).profit
                            }).Where(r => r.is_refund == 1);
             //var reservation = resData.ToList();
@@ -1749,13 +1822,14 @@ namespace Agency.Controllers
 
         }
 
-        public JsonResult cancelReservation(int id)
+        public JsonResult cancelReservation(ReservationViewModel reservationViewModel)
         {
-            Reservation reservation = db.Reservations.Find(id);
+            Reservation reservation = db.Reservations.Find(reservationViewModel.id);
             reservation.is_canceled = 1;
+            reservation.cancelation_fees = reservationViewModel.cancelation_fees;
             db.SaveChanges();
 
-            Logs.ReservationActionLog(Session["id"].ToString().ToInt(), id, "Cancel", "Cancel Reservation #" + id);
+            Logs.ReservationActionLog(Session["id"].ToString().ToInt(), reservationViewModel.id, "Cancel", "Cancel Reservation #" + reservationViewModel.id);
 
             return Json(new { message = "done" }, JsonRequestBehavior.AllowGet);
 

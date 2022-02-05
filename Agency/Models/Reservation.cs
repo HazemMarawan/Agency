@@ -53,6 +53,7 @@ namespace Agency.Models
         public DateTime? check_in { get; set; }
         public DateTime? check_out { get; set; }
         public double? profit { get; set; }
+        public double? cancelation_fees { get; set; }
         public int? shift { get; set; }
         public int? is_canceled { get; set; }
         [DefaultValue(0)]
