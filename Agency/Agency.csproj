@@ -438,6 +438,10 @@
     <Compile Include="Migrations\202202042348548_add_transaction.Designer.cs">
       <DependentUpon>202202042348548_add_transaction.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202202050020332_add_hotel_name.cs" />
+    <Compile Include="Migrations\202202050020332_add_hotel_name.Designer.cs">
+      <DependentUpon>202202050020332_add_hotel_name.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AgencyDbContext.cs" />
     <Compile Include="Models\Chat.cs" />
@@ -4251,6 +4255,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202202042348548_add_transaction.resx">
       <DependentUpon>202202042348548_add_transaction.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202202050020332_add_hotel_name.resx">
+      <DependentUpon>202202050020332_add_hotel_name.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

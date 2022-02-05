@@ -128,6 +128,7 @@ namespace Agency.ViewModel
         public int is_refund { get; set; }
         public int? countPaidToVendorNights { get; set; }
         public int? transaction_id { get; set; }
+        public string hotel_name_special { get; set; }
         public List<ReservationCreditCardViewModel> reservationCreditCards { get; set; }
 
     }

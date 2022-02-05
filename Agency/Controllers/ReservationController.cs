@@ -150,7 +150,8 @@ namespace Agency.Controllers
                                    credit_card_number = resCre.credit_card_number,
                                    card_expiration_date = resCre.card_expiration_date
                                }).ToList(),
-                               refund_id = res.refund_id
+                               refund_id = res.refund_id,
+                               hotel_name_special = res.hotel_name
                                //profit = calculateProfit(res.id).profit
                            }).Where(r => r.id == id).FirstOrDefault();
 
@@ -253,7 +254,7 @@ namespace Agency.Controllers
                                       credit_card_number = reinitialRes.credit_card_number,
                                       security_code = reinitialRes.security_code,
                                       credit = resData.credit,
-
+                                      hotel_name_special = resData.hotel_name
                                   }).Where(r => r.reservation_id == id).FirstOrDefault();
             if (initialResData == null)
             {
@@ -424,7 +425,8 @@ namespace Agency.Controllers
                                    security_code = resCre.security_code,
                                    credit_card_number = resCre.credit_card_number,
                                    card_expiration_date = resCre.card_expiration_date
-                               }).ToList()
+                               }).ToList(),
+                               hotel_name_special = res.hotel_name
                                //profit = calculateProfit(res.id).profit
                            }).Where(r => r.paid_amount == 0 && r.is_canceled == null && r.created_by == null);
             //var reservation = resData.ToList();
@@ -543,7 +545,8 @@ namespace Agency.Controllers
                                    security_code = resCre.security_code,
                                    credit_card_number = resCre.credit_card_number,
                                    card_expiration_date = resCre.card_expiration_date
-                               }).ToList()
+                               }).ToList(),
+                               hotel_name_special = res.hotel_name
                                //profit = calculateProfit(res.id).profit
                            }).Where(r => r.paid_amount == 0 && r.is_canceled == null && r.created_by != null);
             //var reservation = resData.ToList();
@@ -659,7 +662,8 @@ namespace Agency.Controllers
                                    security_code = resCre.security_code,
                                    credit_card_number = resCre.credit_card_number,
                                    card_expiration_date = resCre.card_expiration_date
-                               }).ToList()
+                               }).ToList(),
+                               hotel_name_special = res.hotel_name
                                //profit = calculateProfit(res.id).profit
 
                            }).Where(r => r.paid_amount < r.total_amount_after_tax && r.paid_amount != 0 && r.is_canceled == null);
@@ -777,7 +781,8 @@ namespace Agency.Controllers
                                    security_code = resCre.security_code,
                                    credit_card_number = resCre.credit_card_number,
                                    card_expiration_date = resCre.card_expiration_date
-                               }).ToList()
+                               }).ToList(),
+                               hotel_name_special = res.hotel_name
                                //profit = calculateProfit(res.id).profit
 
                            }).Where(r => r.paid_amount == r.total_amount_after_tax && r.paid_amount != 0 && r.is_canceled == null);
@@ -892,7 +897,8 @@ namespace Agency.Controllers
                                    security_code = resCre.security_code,
                                    credit_card_number = resCre.credit_card_number,
                                    card_expiration_date = resCre.card_expiration_date
-                               }).ToList()
+                               }).ToList(),
+                               hotel_name_special = res.hotel_name
                            }).Where(r => r.is_canceled == 1);
             //Where(r => r.status == (int)PaymentStatus.Paid).ToList();
             var reservation = db.Reservations;
@@ -1111,7 +1117,8 @@ namespace Agency.Controllers
                                    security_code = resCre.security_code,
                                    credit_card_number = resCre.credit_card_number,
                                    card_expiration_date = resCre.card_expiration_date
-                               }).ToList()
+                               }).ToList(),
+                               hotel_name_special = res.hotel_name
                                //profit = calculateProfit(res.id).profit
                            }).Where(r => r.is_canceled == 1 && r.countPaidToVendorRooms > 0);
             //var reservation = resData.ToList();
@@ -1224,6 +1231,7 @@ namespace Agency.Controllers
                                created_at = res.created_at,
                                countPaidToVendorRooms = db.ReservationDetails.Where(r => r.paid_to_vendor == 1 && r.reservation_id == res.id).Count(),
                                countPaidToVendorNights = db.ReservationDetails.Where(r => r.paid_to_vendor == 1 && r.reservation_id == res.id).Sum(n => n.no_of_days),
+                               hotel_name_special = res.hotel_name
                                //profit = calculateProfit(res.id).profit
                            }).Where(r => r.is_refund == 1);
             //var reservation = resData.ToList();
@@ -1384,7 +1392,7 @@ namespace Agency.Controllers
                                                            reservations_officer_email = res.reservations_officer_email,
                                                            reservations_officer_phone = res.reservations_officer_phone,
                                                            paid_amount = res.financial_advance + res.financial_due
-
+                                                           
                                                        }).Where(r => r.status == (int)PaymentStatus.Partially).ToList();
 
             int row = 2;
@@ -1503,6 +1511,7 @@ namespace Agency.Controllers
         {
             if (reservationViewModel.id == 0)
             {
+
                 if (reservationViewModel.is_special == 1)
                 {
                     Event specialEvent = new Event();
@@ -1523,7 +1532,11 @@ namespace Agency.Controllers
                     db.EventHotels.Add(specialEventHotel);
                     db.SaveChanges();
 
+                    Hotel hotel = db.Hotels.Find(reservationViewModel.hotel_id);
+
                     Reservation reservation = AutoMapper.Mapper.Map<ReservationViewModel, Reservation>(reservationViewModel);
+
+                    reservation.hotel_name = reservationViewModel.hotel_name;
                     reservation.event_hotel_id = specialEventHotel.id;
                     reservation.single_price = 0;
                     reservation.vendor_single_price = 0;
@@ -1596,6 +1609,9 @@ namespace Agency.Controllers
                     EventHotel eventHotel = db.EventHotels.Find(reservation.event_hotel_id);
                     Event c_event = db.Events.Find(eventHotel.event_id);
 
+                    Hotel hotel = db.Hotels.Find(eventHotel.hotel_id);
+
+                    reservation.hotel_name = hotel.name;
                     reservation.single_price = eventHotel.single_price;
                     reservation.vendor_single_price = eventHotel.vendor_single_price;
                     reservation.double_price = eventHotel.double_price;
@@ -1665,12 +1681,12 @@ namespace Agency.Controllers
                     ReservationService.UpdateTotals(reservation.id);
                 }
 
-                
-
             }
             else
             {
                 Reservation reservation = db.Reservations.Find(reservationViewModel.id);
+
+                reservation.hotel_name = reservationViewModel.hotel_name;
                 reservation.reservations_officer_name = reservationViewModel.reservations_officer_name;
                 reservation.reservations_officer_email = reservationViewModel.reservations_officer_email;
                 reservation.reservations_officer_phone = reservationViewModel.reservations_officer_phone;

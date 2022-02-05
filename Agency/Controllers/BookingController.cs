@@ -164,7 +164,9 @@ namespace Agency.Controllers
             Reservation reservation = AutoMapper.Mapper.Map<ReservationViewModel, Reservation>(reservationViewModel);
             EventHotel eventHotel = db.EventHotels.Find(reservation.event_hotel_id);
             Event c_event = db.Events.Find(eventHotel.event_id);
+            Hotel hotel = db.Hotels.Find(eventHotel.hotel_id);
 
+            reservation.hotel_name = hotel.name;
             reservation.single_price = eventHotel.single_price;
             reservation.vendor_single_price = eventHotel.vendor_single_price;
             reservation.double_price = eventHotel.double_price;

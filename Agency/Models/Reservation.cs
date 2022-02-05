@@ -12,6 +12,7 @@ namespace Agency.Models
     {
         [Key]
         public int id { get; set; }
+        public string hotel_name { get; set; }
         public string reservations_officer_name { get; set; }
         public string reservations_officer_phone { get; set; }
         public string reservations_officer_email { get; set; }
