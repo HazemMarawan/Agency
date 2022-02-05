@@ -1,17 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
 namespace Agency.Models
 {
-    public class Vendor
+    public class Transaction
     {
-        [Key]
         public int id { get; set; }
-        public string code { get; set; }
-        public string name { get; set; }
+        public double? amount { get; set; }
+        public int? transaction_id { get; set; }
+
+        [ForeignKey("Reservation")]
+        public int? reservation_id { get; set; }
+        public Reservation Reservation { get; set; }
+
         public int? active { get; set; }
         public int? created_by { get; set; }
         public int? updated_by { get; set; }
@@ -19,8 +23,5 @@ namespace Agency.Models
         public DateTime? created_at { get; set; }
         public DateTime? updated_at { get; set; }
         public DateTime? deleted_at { get; set; }
-        public virtual ICollection<EventHotel> EventHotels { get; set; }
-        public virtual ICollection<Reservation> Reservations { get; set; }
-
     }
 }

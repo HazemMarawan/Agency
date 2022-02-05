@@ -411,15 +411,28 @@
                 <div class="modal-body">
                     <div class="form-body">
                         <div class="form-row">
+                            <table class="table table-striped">
+                                <tr>
+                                    <th>Card Number</th>
+                                    <th>Expire Date</th>
+                                    <th>Security Code</th>
+                                </tr>
+
+                                <tbody id="credit_cards_body">
+                                </tbody>
+                            </table>
+                        </div>
+                        <br/>
+                        <div class="form-row">
                             <input type="hidden" name="id" id="id" value="0" />
                             <div class="form-group col-md-6">
                                 <label>Total After Tax</label>
                                 <input name="total_after_tax" id="total_after_tax" readonly type="text" class="form-control radius-30" />
                             </div>
                             @*<div class="form-group col-md-6">
-                                    <label>Tax</label>
-                                    <input name="tax" id="tax" type="text" readonly class="form-control radius-30" />
-                                </div>*@
+            <label>Tax</label>
+            <input name="tax" id="tax" type="text" readonly class="form-control radius-30" />
+        </div>*@
                             <div class="form-group col-md-6" id="deposit_percentage_div">
                                 <label>Percentage %</label>
                                 <input name="percentage" id="percentage" type="number" max="100" min="1" class="form-control radius-30" />
@@ -439,6 +452,10 @@
                             <div class="form-group col-md-6">
                                 <label>Amount</label>
                                 <input name="paid_amount" id="paid_amount" step=".1" required type="number" class="form-control radius-30" />
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label>Transaction ID</label>
+                                <input name="transaction_id" id="transaction_id" step=".1" required type="number" class="form-control radius-30" />
                             </div>
                         </div>
                     </div>
@@ -2933,6 +2950,7 @@
                 }, function (dialog) {
 
                         dialog.find('#id').val(data.id);
+                        dialog.find('#transaction_id').val(data.transaction_id);
                         dialog.find('#total_after_tax').val(addCommas(data.total_amount_after_tax.toFixed(2)) + " " + data.string_currency);
                         //dialog.find('#tax').val(data.tax + "%");
 
@@ -2953,7 +2971,23 @@
                             dialog.find('#deposit').val(addCommas(deposit.toFixed(2)) + " " + data.string_currency);
                         });
 
-
+                        if (data.reservationCreditCards.length != 0) {
+                            var html = "";
+                            data.reservationCreditCards.forEach(function (value) {
+                                html += `<tr>
+                                             <td>${value.credit_card_number}</td>
+                                             <td>${value.card_expiration_date}</td>
+                                             <td>${value.security_code}</td>
+                                            </tr>`;
+                            });
+                            dialog.find("#credit_cards_body").append(html);
+                        }
+                        else {
+                            html += `<tr>
+                                             <td colspan='3'>No Credit Cards</td>
+                                            </tr>`;
+                            dialog.find("#credit_cards_body").append(html);
+                        }
                 });
 
             });
@@ -2980,6 +3014,7 @@
                 }, function (dialog) {
 
                         dialog.find('#id').val(data.id);
+                        dialog.find('#transaction_id').val(data.transaction_id);
                         dialog.find('#total_after_tax').val(addCommas(data.total_amount_after_tax.toFixed(2)) + " " + data.string_currency);
                         //dialog.find('#tax').val(data.tax + "%");
 
@@ -3000,6 +3035,23 @@
                             dialog.find('#deposit').val(addCommas(deposit.toFixed(2)) + " " + data.string_currency);
                         });
 
+                        if (data.reservationCreditCards.length != 0) {
+                            var html = "";
+                            data.reservationCreditCards.forEach(function (value) {
+                                html += `<tr>
+                                                 <td>${value.credit_card_number}</td>
+                                                 <td>${value.card_expiration_date}</td>
+                                                 <td>${value.security_code}</td>
+                                                </tr>`;
+                            });
+                            dialog.find("#credit_cards_body").append(html);
+                        }
+                        else {
+                            html += `<tr>
+                                                 <td colspan='3'>No Credit Cards</td>
+                                                </tr>`;
+                            dialog.find("#credit_cards_body").append(html);
+                        }
 
                 });
 
@@ -3027,6 +3079,7 @@
                 }, function (dialog) {
 
                         dialog.find('#id').val(data.id);
+                        dialog.find('#transaction_id').val(data.transaction_id);
                         dialog.find('#total_after_tax').val(addCommas(data.total_amount_after_tax.toFixed(2)) +" "+ data.string_currency);
                         //dialog.find('#tax').val(data.tax + "%");
 
@@ -3048,6 +3101,24 @@
                         //});
                         dialog.find("#deposit_percentage_div").hide();
                         dialog.find("#deposit_div").hide();
+
+                        if (data.reservationCreditCards.length != 0) {
+                            var html = "";
+                            data.reservationCreditCards.forEach(function (value) {
+                                html += `<tr>
+                                                 <td>${value.credit_card_number}</td>
+                                                 <td>${value.card_expiration_date}</td>
+                                                 <td>${value.security_code}</td>
+                                                </tr>`;
+                            });
+                            dialog.find("#credit_cards_body").append(html);
+                        }
+                        else {
+                            html += `<tr>
+                                                 <td colspan='3'>No Credit Cards</td>
+                                                </tr>`;
+                            dialog.find("#credit_cards_body").append(html);
+                        }
 
                 });
 

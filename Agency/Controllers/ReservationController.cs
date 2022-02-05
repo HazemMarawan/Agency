@@ -1836,7 +1836,8 @@ namespace Agency.Controllers
                                                           security_code = resCre.security_code,
                                                           credit_card_number = resCre.credit_card_number,
                                                           card_expiration_date = resCre.card_expiration_date
-                                                      }).ToList()
+                                                      }).ToList(),
+                                                      
                                                       //profit = calculateProfit(res.id).profit
                                                       //}).Where(r => r.balance_due_date.Year == DateTime.Now.Year && r.balance_due_date.Month == DateTime.Now.Month && r.balance_due_date.Day == DateTime.Now.Day && r.is_canceled == null && r.total_amount_after_tax != 0 && r.paid_amount < r.total_amount_after_tax).ToList();
                                                   }).Where(r => r.balance_due_date <= DateTime.Now && r.is_canceled == null && r.total_amount_after_tax != 0 && r.paid_amount < r.total_amount_after_tax);
@@ -1915,7 +1916,7 @@ namespace Agency.Controllers
                                                    amount_paid_to_vendor = resDetail.amount_paid_to_vendor,
                                                    cancelation_policy = resDetail.cancelation_policy,
                                                    confirmation_id = resDetail.confirmation_id,
-
+                                                   
                                                }).Where(s => s.paid_to_vendor != 1 && s.is_reservation_canceled != 1 && (s.payment_to_vendor_deadline <= DateTime.Now || s.payment_to_vendor_notification_date <= DateTime.Now));
                 //Search    
                 if (!string.IsNullOrEmpty(searchValue))
@@ -1960,6 +1961,19 @@ namespace Agency.Controllers
         {
             Reservation reservation = db.Reservations.Find(reservationViewModel.id);
             reservation.paid_amount += reservationViewModel.paid_amount;
+            db.SaveChanges();
+
+            Logs.ReservationActionLog(Session["id"].ToString().ToInt(), reservation.id, "Pay", "Paid for Reservation " + reservation.id + " Amount : "+ reservationViewModel.paid_amount);
+
+            Transaction transaction = new Transaction();
+            transaction.amount = reservationViewModel.paid_amount;
+            transaction.reservation_id = reservation.id;
+            transaction.transaction_id = reservationViewModel.transaction_id;
+            transaction.active = 1;
+            transaction.created_at = DateTime.Now;
+            transaction.created_by = Session["id"].ToString().ToInt();
+
+            db.Transactions.Add(transaction);
             db.SaveChanges();
 
             return Json(new { msg = "done" }, JsonRequestBehavior.AllowGet);

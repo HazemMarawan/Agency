@@ -434,6 +434,10 @@
     <Compile Include="Migrations\202201221225059_add-refund-id.Designer.cs">
       <DependentUpon>202201221225059_add-refund-id.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202202042348548_add_transaction.cs" />
+    <Compile Include="Migrations\202202042348548_add_transaction.Designer.cs">
+      <DependentUpon>202202042348548_add_transaction.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AgencyDbContext.cs" />
     <Compile Include="Models\Chat.cs" />
@@ -463,6 +467,7 @@
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\RolePermission.cs" />
     <Compile Include="Models\Task.cs" />
+    <Compile Include="Models\Transaction.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserRole.cs" />
     <Compile Include="Models\UserTask.cs" />
@@ -4243,6 +4248,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202201221225059_add-refund-id.resx">
       <DependentUpon>202201221225059_add-refund-id.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202202042348548_add_transaction.resx">
+      <DependentUpon>202202042348548_add_transaction.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
