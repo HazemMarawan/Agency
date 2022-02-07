@@ -86,4 +86,6 @@ namespace Agency.Models
         public virtual ICollection<Transaction> Transactions { get; set; }
 
     }
+
+
 }

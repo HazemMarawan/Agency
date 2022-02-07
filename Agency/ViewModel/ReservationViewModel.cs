@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Web;
 
 namespace Agency.ViewModel
@@ -132,6 +134,30 @@ namespace Agency.ViewModel
         public double? cancelation_fees { get; set; }
         public List<ReservationCreditCardViewModel> reservationCreditCards { get; set; }
         public List<TransactionViewModel> transactions { get; set; }
+
+        public void sendMail(string email,string message)//
+        {
+            //this.email
+            MailMessage mail =
+                 new MailMessage(
+                     "agencysoftware@outlook.com",
+                     email,
+                     "Agency Confimation",
+                     message
+                     );
+            mail.IsBodyHtml = true;
+            SmtpClient client = new SmtpClient("smtp-mail.outlook.com", 587);
+            client.UseDefaultCredentials = true;
+
+            NetworkCredential credentials = new NetworkCredential("agencysoftware@outlook.com", "P@ssw0rd@1234");
+
+            client.Credentials = credentials;
+            client.EnableSsl = true;
+            client.DeliveryMethod = SmtpDeliveryMethod.Network;
+
+            client.Send(mail);
+
+        }
 
     }
 }

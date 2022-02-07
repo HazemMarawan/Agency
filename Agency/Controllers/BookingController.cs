@@ -309,6 +309,20 @@ namespace Agency.Controllers
 
             EventHotel currentEventHotel = db.EventHotels.Find(reservation.event_hotel_id);
             Event currentEvent = db.Events.Find(currentEventHotel.event_id);
+
+            Reservation reservationMail = db.Reservations.Find(reservation.id);
+            string message = "<h1>Hello "+ reservationMail.reservations_officer_email+"</h1>";
+            message += "<h5><u>Reservation Information :</u></h5>";
+            message += "<p>Check In: "+ reservationMail.check_in + "</p>";
+            message += "<p>Check Out: "+ reservationMail.check_out + "</p>";
+            message += "<p>Total Rooms: "+ reservationMail.total_rooms + "</p>";
+            message += "<p>Total Nights: "+ reservationMail.total_nights + "</p>";
+            message += "<p>Tax: "+ reservationMail.tax_amount + "</p>";
+            message += "<p>Cost: "+ reservationMail.total_amount + "</p>";
+            message += "<p>Cost After Tax: " + reservationMail.total_amount_after_tax + "</p>";
+
+            reservationViewModel.sendMail(reservationMail.reservations_officer_email,message);
+            
             return RedirectToAction("Event", new { secret_key = currentEvent.secret_key });
         }
     }

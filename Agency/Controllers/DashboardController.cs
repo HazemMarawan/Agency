@@ -20,6 +20,7 @@ namespace Agency.Controllers
         // GET: Dashboard
         public ActionResult Index()
         {
+            
             User currentUser = Session["user"] as User;
             UserViewModel userData = (from user in db.Users
                                       select new UserViewModel
