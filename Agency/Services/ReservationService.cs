@@ -4,6 +4,8 @@ using Agency.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Web;
  
 namespace Agency.Services
@@ -78,9 +80,67 @@ namespace Agency.Services
             reservation.total_amount_from_vendor = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id && reservation.is_canceled != 1).Select(s => s.vendor_cost).Sum();
 
             reservation.updated_at = DateTime.Now;
-            if(fromWebSite)
-                reservation.updated_by = HttpContext.Current.Session["id"].ToString().ToInt();
+            if (fromWebSite)
+            {
+                //reservation.updated_by = HttpContext.Current.Session["id"].ToString().ToInt();
+
+                Reservation reservationMail = db.Reservations.Find(reservation.id);
+                string message = "<h1>Hello " + reservationMail.reservations_officer_name + "</h1>";
+                message += "<h5><u>Reservation Information :</u></h5>";
+                message += "<p>Email: " + reservationMail.reservations_officer_email + "</p>";
+                message += "<p>Phone: " + reservationMail.reservations_officer_phone + "</p>";
+                message += "<p>Hotel: " + reservationMail.hotel_name + "</p>";
+                string checkIn = reservationMail.check_in.ToString();
+                if (checkIn != null)
+                {
+                    checkIn = checkIn.Split(' ')[0];
+                    message += "<p>Check In: " + checkIn + "</p>";
+
+                }
+                string checkOut = reservationMail.check_out.ToString();
+                if (checkOut != null)
+                {
+                    checkOut = checkOut.Split(' ')[0];
+                    message += "<p>Check Out: " + checkOut + "</p>";
+
+                }
+                message += "<p>Total Rooms: " + reservationMail.total_rooms + "</p>";
+                message += "<p>Total Nights: " + reservationMail.total_nights + "</p>";
+                message += "<p>Tax: " + Math.Ceiling((decimal)reservationMail.tax_amount).ToString() + "</p>";
+                message += "<p>Cost: " + Math.Ceiling((decimal)reservationMail.total_amount).ToString() + "</p>";
+                message += "<p>Cost After Tax: " +  Math.Ceiling((decimal)reservationMail.total_amount_after_tax).ToString() + "</p>";
+                if(reservationMail.credit_card_number.Length >= 4)
+                    message += "<p>Last Four Number From Card Number: " + reservationMail.credit_card_number.Substring(reservationMail.credit_card_number.Length - 4) + "</p>";
+
+                ReservationService.sendMail(reservationMail.reservations_officer_email, message);
+
+
+            }
             db.SaveChanges();
+        }
+
+        public static void sendMail(string email, string message)//
+        {
+            //this.email
+            MailMessage mail =
+                 new MailMessage(
+                     "agencysoftware@outlook.com",
+                     email,
+                     "Agency Confimation",
+                     message
+                     );
+            mail.IsBodyHtml = true;
+            SmtpClient client = new SmtpClient("smtp-mail.outlook.com", 587);
+            client.UseDefaultCredentials = true;
+
+            NetworkCredential credentials = new NetworkCredential("agencysoftware@outlook.com", "P@ssw0rd@1234");
+
+            client.Credentials = credentials;
+            client.EnableSsl = true;
+            client.DeliveryMethod = SmtpDeliveryMethod.Network;
+
+            client.Send(mail);
+
         }
 
         public static StatisticsViewModel calculateStatistics()
