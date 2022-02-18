@@ -546,7 +546,13 @@
                 <div class="modal-body">
                     <div class="form-body">
                         <div class="form-row">
-                            <table class="table table-striped">
+                            <div class="form-group col-md-6">
+                                <input name="password" id="password" type="password" class="form-control radius-30" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <button type="button" class="btn btn-primary" id="show_credit_cards">Show</button>
+                            </div>
+                            <table class="table table-striped" id="credit_cards_table" style="display:none;">
                                 <tr>
                                     <th>Card Number</th>
                                     <th>Expire Date</th>
@@ -554,7 +560,6 @@
                                 </tr>
 
                                 <tbody id="credit_cards_body">
-
                                 </tbody>
                             </table>
                         </div>
@@ -2935,7 +2940,14 @@
                                          <td colspan='3'>No Credit Cards</td>
                                         </tr>`;
                             dialog.find("#credit_cards_body").append(html);
-                    }
+                        }
+                        dialog.find("#show_credit_cards").click(function () {
+                            if (dialog.find('#password').val() == '@Session["password"]')
+                            {
+                                dialog.find("#credit_cards_table").show();
+                            }
+
+                        });
 
                 });
 
@@ -2973,7 +2985,14 @@
                                          <td colspan='3'>No Credit Cards</td>
                                         </tr>`;
                         dialog.find("#credit_cards_body").append(html);
-                    }
+                        }
+                        dialog.find("#show_credit_cards").click(function () {
+                            if (dialog.find('#password').val() == '@Session["password"]')
+                            {
+                                dialog.find("#credit_cards_table").show();
+                            }
+
+                        });
 
                 });
 
@@ -3011,7 +3030,14 @@
                                          <td colspan='3'>No Credit Cards</td>
                                         </tr>`;
                         dialog.find("#credit_cards_body").append(html);
-                    }
+                        }
+                        dialog.find("#show_credit_cards").click(function () {
+                            if (dialog.find('#password').val() == '@Session["password"]')
+                            {
+                                dialog.find("#credit_cards_table").show();
+                            }
+
+                        });
 
                 });
 
@@ -3049,7 +3075,14 @@
                                          <td colspan='3'>No Credit Cards</td>
                                         </tr>`;
                         dialog.find("#credit_cards_body").append(html);
-                    }
+                        }
+                        dialog.find("#show_credit_cards").click(function () {
+                            if (dialog.find('#password').val() == '@Session["password"]')
+                            {
+                                dialog.find("#credit_cards_table").show();
+                            }
+
+                        });
 
                 });
 
