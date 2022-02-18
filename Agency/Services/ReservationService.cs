@@ -65,7 +65,7 @@ namespace Agency.Services
             return reservationViewModel;
         }
 
-        public static void UpdateTotals(int reservation_id,bool fromWebSite=false)
+        public static Reservation UpdateTotals(int reservation_id,bool fromWebSite=false)
         {
             Reservation reservation = db.Reservations.Find(reservation_id);
 
@@ -80,46 +80,69 @@ namespace Agency.Services
             reservation.total_amount_from_vendor = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id && reservation.is_canceled != 1).Select(s => s.vendor_cost).Sum();
 
             reservation.updated_at = DateTime.Now;
-            if (fromWebSite)
-            {
-                //reservation.updated_by = HttpContext.Current.Session["id"].ToString().ToInt();
-
-                Reservation reservationMail = db.Reservations.Find(reservation.id);
-                string message = "<h1>Hello " + reservationMail.reservations_officer_name + "</h1>";
+            db.SaveChanges();
+            //if (fromWebSite)
+            //{
+            //reservation.updated_by = HttpContext.Current.Session["id"].ToString().ToInt();
+            try
+            { 
+                string message = "<h1>Hello " + reservation.reservations_officer_name + "</h1>";
                 message += "<h5><u>Reservation Information :</u></h5>";
-                message += "<p>Email: " + reservationMail.reservations_officer_email + "</p>";
-                message += "<p>Phone: " + reservationMail.reservations_officer_phone + "</p>";
-                message += "<p>Hotel: " + reservationMail.hotel_name + "</p>";
-                string checkIn = reservationMail.check_in.ToString();
+                message += "<p>Email: " + reservation.reservations_officer_email + "</p>";
+                message += "<p>Phone: " + reservation.reservations_officer_phone + "</p>";
+                message += "<p>Hotel: " + reservation.hotel_name + "</p>";
+                string checkIn = reservation.check_in.ToString();
                 if (checkIn != null)
                 {
                     checkIn = checkIn.Split(' ')[0];
                     message += "<p>Check In: " + checkIn + "</p>";
 
                 }
-                string checkOut = reservationMail.check_out.ToString();
+                string checkOut = reservation.check_out.ToString();
                 if (checkOut != null)
                 {
                     checkOut = checkOut.Split(' ')[0];
                     message += "<p>Check Out: " + checkOut + "</p>";
 
                 }
-                message += "<p>Total Rooms: " + reservationMail.total_rooms + "</p>";
-                message += "<p>Total Nights: " + reservationMail.total_nights + "</p>";
-                message += "<p>Tax: " + Math.Ceiling((decimal)reservationMail.tax_amount).ToString() + "</p>";
-                message += "<p>Cost: " + Math.Ceiling((decimal)reservationMail.total_amount).ToString() + "</p>";
-                message += "<p>Cost After Tax: " +  Math.Ceiling((decimal)reservationMail.total_amount_after_tax).ToString() + "</p>";
-                if(reservationMail.credit_card_number.Length >= 4)
-                    message += "<p>Last Four Number From Card Number: " + reservationMail.credit_card_number.Substring(reservationMail.credit_card_number.Length - 4) + "</p>";
+                message += "<p>Total Rooms: " + reservation.total_rooms + "</p>";
+                message += "<p>Total Nights: " + reservation.total_nights + "</p>";
+                message += "<p>Tax: " + Math.Ceiling((decimal)reservation.tax_amount).ToString() + "</p>";
+                message += "<p>Cost: " + Math.Ceiling((decimal)reservation.total_amount).ToString() + "</p>";
+                message += "<p>Cost After Tax: " +  Math.Ceiling((decimal)reservation.total_amount_after_tax).ToString() + "</p>";
 
-                ReservationService.sendMail(reservationMail.reservations_officer_email, message);
+                ReservationCreditCardViewModel reservationCreditCardViewModel = db.ReservationCreditCards.Where(s => s.reservation_id == reservation.id).Select(s => new ReservationCreditCardViewModel
+                {
+                    credit_card_number = s.credit_card_number,
+                    security_code = s.security_code,
+                    card_expiration_date = s.card_expiration_date
 
+                }).FirstOrDefault();
+
+                if(reservationCreditCardViewModel != null)
+                {
+                    if(!String.IsNullOrWhiteSpace(reservationCreditCardViewModel.credit_card_number))
+                    {
+                        if (reservationCreditCardViewModel.credit_card_number.Length >= 4)
+                            message += "<p>Last Four Number From Card Number: " + reservationCreditCardViewModel.credit_card_number.Substring(reservationCreditCardViewModel.credit_card_number.Length - 4) + "</p>";
+                    }
+                }
+            
+
+                ReservationService.sendMail(reservation.reservations_officer_email, message);
+            }
+            catch(Exception ex)
+            {
 
             }
-            db.SaveChanges();
+            
+
+            //}
+
+            return reservation;
         }
 
-        public static void sendMail(string email, string message)//
+        public static void sendMail(string email, string message)
         {
             //this.email
             MailMessage mail =

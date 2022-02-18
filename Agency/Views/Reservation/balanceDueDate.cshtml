@@ -4,6 +4,7 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 <div class="modal fade" id="pay_amount_to_reservation_modal" tabindex="-1" role="dialog" aria-hidden="true">
     <form action="" method="post" enctype='multipart/form-data'>
         <div class="modal-dialog modal-lg">
@@ -17,7 +18,43 @@
                 <div class="modal-body">
                     <div class="form-body">
                         <div class="form-row">
-                            <input type="hidden" name="id" id="id" value="0" />
+                            <table class="table table-striped">
+                                <tr>
+                                    <th>Card Number</th>
+                                    <th>Expire Date</th>
+                                    <th>Security Code</th>
+                                </tr>
+
+                                <tbody id="credit_cards_body">
+                                </tbody>
+                            </table>
+                            <br />
+                            <br />
+                            <table class="table table-secondary">
+                                <tr>
+                                    <th>Transaction ID</th>
+                                    <th>Paid Amount</th>
+                                </tr>
+
+                                <tbody id="transactions_body">
+                                </tbody>
+                            </table>
+                            <br />
+                            <br />
+
+                            @*<input type="hidden" name="id" id="id" value="0" />*@
+                            <div class="form-group col-md-6">
+                                <label>Booking ID</label>
+                                <input name="id" id="id" readonly type="text" class="form-control radius-30" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Hotel Name</label>
+                                <input name="hotel_name" id="hotel_name" readonly type="text" class="form-control radius-30" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Email</label>
+                                <input name="reservations_officer_email" id="reservations_officer_email" readonly type="text" class="form-control radius-30" />
+                            </div>
                             <div class="form-group col-md-6">
                                 <label>Total After Tax</label>
                                 <input name="total_after_tax" id="total_after_tax" readonly type="text" class="form-control radius-30" />
@@ -26,14 +63,14 @@
                                     <label>Tax</label>
                                     <input name="tax" id="tax" type="text" readonly class="form-control radius-30" />
                                 </div>*@
-                            @*<div class="form-group col-md-6" id="deposit_percentage_div">
-                                    <label>Percentage %</label>
-                                    <input name="percentage" id="percentage" type="number" max="100" min="1" class="form-control radius-30" />
-                                </div>
-                                <div class="form-group col-md-6" id="deposit_div">
-                                    <label>Deposit</label>
-                                    <input name="deposit" id="deposit" type="text" class="form-control radius-30" style="font-weight:bold;" />
-                                </div>*@
+                            <div class="form-group col-md-6" id="deposit_percentage_div">
+                                <label>Percentage %</label>
+                                <input name="percentage" id="percentage" type="number" max="100" min="1" class="form-control radius-30" />
+                            </div>
+                            <div class="form-group col-md-6" id="deposit_div">
+                                <label>Deposit</label>
+                                <input name="deposit" id="deposit" type="text" class="form-control radius-30" style="font-weight:bold;" />
+                            </div>
                             <div class="form-group col-md-6">
                                 <label>Balance</label>
                                 <input name="balance" id="balance_pay_modal" readonly type="text" class="form-control radius-30" />
@@ -45,6 +82,10 @@
                             <div class="form-group col-md-6">
                                 <label>Amount</label>
                                 <input name="paid_amount" id="paid_amount" step=".1" required type="number" class="form-control radius-30" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Transaction ID</label>
+                                <input name="transaction_id" id="transaction_id" required type="text" class="form-control radius-30" />
                             </div>
                         </div>
                     </div>
@@ -272,8 +313,13 @@
                         }
                     },
                     {
-                        "data": "financial_due_date",
-                        "searchable": true
+                        "data": "balance_due_date", "searchable": true,
+                        fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                            var html = '';
+                            if (oData.balance_due_date)
+                                html = fixDate(oData.balance_due_date);
+                            $(nTd).html("<span class='action-column'>" + html + "</span>");
+                        }
                     },
                     {
                         "data": "paid_amount", "searchable": true,
@@ -341,7 +387,8 @@
 
             });
 
-           $(document).on("click", ".pay", function () {
+
+            $(document).on("click", ".pay", function () {
 
                 var data = datatable.row($(this).closest('tr')).data();
 
@@ -359,13 +406,15 @@
                 }, function (dialog) {
 
                         dialog.find('#id').val(data.id);
+                        dialog.find('#hotel_name').val(data.hotel_name);
+                        dialog.find('#reservations_officer_email').val(data.reservations_officer_email);
+                        dialog.find('#transaction_id').val(data.transaction_id);
                         dialog.find('#total_after_tax').val(addCommas(data.total_amount_after_tax.toFixed(2)) + " " + data.string_currency);
                         //dialog.find('#tax').val(data.tax + "%");
 
-                        //var deposit = (data.advance_reservation_percentage / 100) * data.total_amount_after_tax;
-                        //dialog.find('#deposit').val(addCommas(deposit.toFixed(2)) + " " + data.string_currency);
-                        //dialog.find('#percentage').val(data.advance_reservation_percentage);
-
+                        var deposit = (data.advance_reservation_percentage / 100) * data.total_amount_after_tax;
+                        dialog.find('#deposit').val(addCommas(deposit.toFixed(2)) + " " + data.string_currency);
+                        dialog.find('#percentage').val(data.advance_reservation_percentage);
                         var remainAmount = data.total_amount_after_tax - data.paid_amount;
                         dialog.find('#paid_amount').attr('max', remainAmount)
                         dialog.find('#paid_amount').attr('min', 1)
@@ -375,15 +424,48 @@
                         var balance = data.total_amount_after_tax - data.paid_amount;
                         dialog.find('#balance_pay_modal').val(addCommas(balance.toFixed(2)) + " " + data.string_currency);
 
-                        //dialog.find('#percentage').keyup(function () {
-                        //    var deposit = (dialog.find('#percentage').val() / 100) * data.total_amount_after_tax;
-                        //    dialog.find('#deposit').val(addCommas(deposit.toFixed(2)) + " " + data.string_currency);
-                        //});
+                        dialog.find('#percentage').keyup(function () {
+                            var deposit = (dialog.find('#percentage').val() / 100) * data.total_amount_after_tax;
+                            dialog.find('#deposit').val(addCommas(deposit.toFixed(2)) + " " + data.string_currency);
+                        });
 
-
+                        if (data.reservationCreditCards.length != 0) {
+                            var html = "";
+                            data.reservationCreditCards.forEach(function (value) {
+                                html += `<tr>
+                                             <td>${value.credit_card_number}</td>
+                                             <td>${value.card_expiration_date}</td>
+                                             <td>${value.security_code}</td>
+                                            </tr>`;
+                            });
+                            dialog.find("#credit_cards_body").append(html);
+                        }
+                        else {
+                            html += `<tr>
+                                             <td colspan='3'>No Credit Cards</td>
+                                            </tr>`;
+                            dialog.find("#credit_cards_body").append(html);
+                        }
+                        html = "";
+                        if (data.transactions.length != 0) {
+                            data.transactions.forEach(function (value) {
+                                html += `<tr>
+                                            <td>${value.transaction_id}</td>
+                                            <td>${addCommas(value.amount.toFixed(2))}</td>
+                                        </tr>`;
+                            });
+                            dialog.find("#transactions_body").append(html);
+                        }
+                        else {
+                            html += `<tr>
+                                        <td colspan='2'>No Transaction</td>
+                                    </tr>`;
+                            dialog.find("#transactions_body").append(html);
+                        }
                 });
 
             });
+
 
            $(document).on("click", ".creditCards", function () {
 

@@ -253,8 +253,8 @@ namespace Agency.Controllers
                 int Days = (reservationViewModel.reservation_to[i] - reservationViewModel.reservation_from[i]).Days;
                 detail.no_of_days = Days+1;
 
-                var amount = (room_price * Days);
-                var vendor_amount = (vendor_room_price * Days);
+                var amount = (room_price * (detail.no_of_days - 1));
+                var vendor_amount = (vendor_room_price * (detail.no_of_days - 1));
                 detail.reservation_id = reservation.id;
                 detail.tax = amount * (reservation.tax / 100);
                 detail.amount = amount;
@@ -288,23 +288,79 @@ namespace Agency.Controllers
             }
 
             List<ReservationDetail> reservationDetails = db.ReservationDetails.Where(r => r.reservation_id == reservation.id).ToList();
-            if (reservationDetails.Count() != 0)
-            {
-                DateTime minDate = reservationDetails.Select(s => s.reservation_from).Min();
-                DateTime maxDate = reservationDetails.Select(s => s.reservation_to).Max();
+            
+            DateTime minDate = reservationDetails.Select(s => s.reservation_from).Min();
+            DateTime maxDate = reservationDetails.Select(s => s.reservation_to).Max();
 
-                reservation.check_in = minDate;
-                reservation.check_out = maxDate;
-                reservation.balance_due_date = Convert.ToDateTime(reservation.check_in).AddDays(-30);
-                reservation.total_rooms = reservationViewModel.first_name.Count;
-                db.SaveChanges();
+            reservation.check_in = minDate;
+            reservation.check_out = maxDate;
+            reservation.balance_due_date = Convert.ToDateTime(reservation.check_in).AddDays(-30);
+            reservation.total_rooms = reservationViewModel.first_name.Count;
+            db.SaveChanges();
 
-                ReservationService.UpdateTotals(reservation.id,true);
-            }
-
-            InitialReservation initialReservation = AutoMapper.Mapper.Map<Reservation, InitialReservation>(reservation);
-            initialReservation.id = 0;
+            Reservation currentReservation = ReservationService.UpdateTotals(reservation.id,true);
+            
+            InitialReservation initialReservation = new InitialReservation();
             initialReservation.reservation_id = reservation.id;
+            initialReservation.hotel_name = currentReservation.hotel_name;
+            initialReservation.reservations_officer_name = currentReservation.reservations_officer_name;
+            initialReservation.reservations_officer_phone = currentReservation.reservations_officer_phone;
+            initialReservation.reservations_officer_email = currentReservation.reservations_officer_email;
+            initialReservation.payment_type = currentReservation.payment_type;
+            initialReservation.credit_card_number = currentReservation.credit_card_number;
+            initialReservation.security_code = currentReservation.security_code;
+            initialReservation.card_expiration_date = currentReservation.card_expiration_date;
+            initialReservation.total_amount = currentReservation.total_amount;
+            initialReservation.total_amount_after_tax = currentReservation.total_amount_after_tax;
+            initialReservation.paid_amount = currentReservation.paid_amount;
+            initialReservation.total_amount_from_vendor = currentReservation.total_amount_from_vendor;
+            initialReservation.advance_reservation_percentage = currentReservation.advance_reservation_percentage;
+            initialReservation.tax = currentReservation.tax;
+            initialReservation.tax_amount = currentReservation.tax_amount;
+            initialReservation.financial_advance = currentReservation.financial_advance;
+            initialReservation.financial_due = currentReservation.financial_due;
+            initialReservation.status = currentReservation.status; //paid or partially
+            initialReservation.single_price = currentReservation.single_price;
+            initialReservation.double_price = currentReservation.double_price;
+            initialReservation.triple_price  = currentReservation.triple_price;
+            initialReservation.quad_price = currentReservation.quad_price;
+            initialReservation.currency = currentReservation.currency;
+            initialReservation.opener = currentReservation.opener;
+            initialReservation.closer = currentReservation.closer;
+            initialReservation.vendor_single_price = currentReservation.vendor_single_price;
+            initialReservation.vendor_douple_price = currentReservation.vendor_douple_price;
+            initialReservation.vendor_triple_price = currentReservation.vendor_triple_price;
+            initialReservation.vendor_quad_price = currentReservation.vendor_quad_price;
+            initialReservation.reservation_avg_price_before_tax = currentReservation.reservation_avg_price_before_tax;
+            initialReservation.reservation_avg_price = currentReservation.reservation_avg_price;
+            initialReservation.vendor_avg_price = currentReservation.vendor_avg_price;
+            initialReservation.total_price = currentReservation.total_price;
+            initialReservation.credit = currentReservation.credit;
+            initialReservation.refund = currentReservation.refund;
+            initialReservation.refund_id = currentReservation.refund_id;
+            initialReservation.total_rooms = currentReservation.total_rooms;
+            initialReservation.total_nights = currentReservation.total_nights;
+            initialReservation.check_in = currentReservation.check_in;
+            initialReservation.check_out = currentReservation.check_out;
+            initialReservation.profit = currentReservation.profit;
+            initialReservation.cancelation_fees = currentReservation.cancelation_fees;
+            initialReservation.shift = currentReservation.shift;
+            initialReservation.is_canceled = currentReservation.is_canceled;
+            initialReservation.is_refund = currentReservation.is_refund;
+            initialReservation.active = currentReservation.active;
+            initialReservation.financial_advance_date = currentReservation.financial_advance_date;
+            initialReservation.financial_due_date = currentReservation.financial_due_date;
+            initialReservation.balance_due_date = currentReservation.balance_due_date;
+            initialReservation.created_by = currentReservation.created_by;
+            initialReservation.updated_by = currentReservation.updated_by;
+            initialReservation.deleted_by = currentReservation.deleted_by;
+            initialReservation.created_at = currentReservation.created_at;
+            initialReservation.updated_at = currentReservation.updated_at;
+            initialReservation.deleted_at = currentReservation.deleted_at;
+            initialReservation.company_id = currentReservation.company_id;
+            initialReservation.vendor_id = currentReservation.vendor_id;
+            initialReservation.event_hotel_id = currentReservation.event_hotel_id;
+
             db.InitialReservations.Add(initialReservation);
             db.SaveChanges();
 

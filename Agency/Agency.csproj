@@ -446,6 +446,14 @@
     <Compile Include="Migrations\202202050203096_add_cancelation_fees.Designer.cs">
       <DependentUpon>202202050203096_add_cancelation_fees.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202202181809251_updates.cs" />
+    <Compile Include="Migrations\202202181809251_updates.Designer.cs">
+      <DependentUpon>202202181809251_updates.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202202182141507_updates1.cs" />
+    <Compile Include="Migrations\202202182141507_updates1.Designer.cs">
+      <DependentUpon>202202182141507_updates1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AgencyDbContext.cs" />
     <Compile Include="Models\Chat.cs" />
@@ -4266,6 +4274,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202202050203096_add_cancelation_fees.resx">
       <DependentUpon>202202050203096_add_cancelation_fees.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202202181809251_updates.resx">
+      <DependentUpon>202202181809251_updates.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202202182141507_updates1.resx">
+      <DependentUpon>202202182141507_updates1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -10,7 +10,7 @@ namespace Agency.Models
     {
         public int id { get; set; }
         public double? amount { get; set; }
-        public int? transaction_id { get; set; }
+        public string transaction_id { get; set; }
 
         [ForeignKey("Reservation")]
         public int? reservation_id { get; set; }

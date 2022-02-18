@@ -214,7 +214,7 @@ namespace Agency.Controllers
                                       email = company.email,
                                       company_id = reinitialRes.company_id,
                                       event_hotel_id = event_hotel.id,
-                                      hotel_name = hotel.name,
+                                      hotel_name = reinitialRes.hotel_name,
                                       hotel_rate = hotel.rate,
                                       reservations_officer_name = reinitialRes.reservations_officer_name,
                                       reservations_officer_email = reinitialRes.reservations_officer_email,
@@ -1035,7 +1035,7 @@ namespace Agency.Controllers
                 data = displayResult
             }, JsonRequestBehavior.AllowGet);
         }
-        public JsonResult ourRoomsOLD()
+        public JsonResult ourRooms()
         {
             var draw = Request.Form.GetValues("draw").FirstOrDefault();
             var start = Request.Form.GetValues("start").FirstOrDefault();
@@ -1055,8 +1055,9 @@ namespace Agency.Controllers
                            select new ReservationDetailViewModel
                            {
                                id = resDet.id,
+                               reservation_id = resDet.reservation_id,
                                event_name = even.title,
-                               hotel_name = hotel.name,
+                               hotel_name = res.hotel_name,
                                reservation_from = resDet.reservation_from,
                                reservation_to = resDet.reservation_to,
                                string_reservation_from = resDet.reservation_from.ToString(),
@@ -1065,10 +1066,14 @@ namespace Agency.Controllers
                                paid_to_vendor = resDet.paid_to_vendor,
                                client_first_name = client.first_name,
                                client_last_name = client.last_name,
+                               client_id = client.id,
+                               room_type = resDet.room_type,
+                               vendor_code = resDet.vendor_code,
+                               vendor_cost= resDet.vendor_cost,
                                no_of_days = resDet.no_of_days,
                                is_canceled = res.is_canceled
 
-                           }).Where(r => r.paid_to_vendor == 1 && r.is_canceled == 1);
+                           }).Where(r => r.is_canceled == 1);
 
             var displayResult = resData.OrderByDescending(u => u.id).Skip(skip)
                  .Take(pageSize).ToList();
@@ -1083,133 +1088,133 @@ namespace Agency.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult ourRooms()
-        {
-            var draw = Request.Form.GetValues("draw").FirstOrDefault();
-            var start = Request.Form.GetValues("start").FirstOrDefault();
-            var length = Request.Form.GetValues("length").FirstOrDefault();
-            var searchValue = Request.Form.GetValues("search[value]").FirstOrDefault();
-            var from_date = Request.Form.GetValues("columns[0][search][value]")[0];
-            var to_date = Request.Form.GetValues("columns[1][search][value]")[0];
-            int pageSize = length != null ? Convert.ToInt32(length) : 0;
-            int skip = start != null ? Convert.ToInt32(start) : 0;
-            var resData = (from res in db.Reservations
-                           join company in db.Companies on res.company_id equals company.id
-                           join event_hotel in db.EventHotels on res.event_hotel_id equals event_hotel.id
-                           join even in db.Events on event_hotel.event_id equals even.id
-                           join hotel in db.Hotels on event_hotel.hotel_id equals hotel.id
-                           join oU in db.Users on res.opener equals oU.id into us
-                           from opener in us.DefaultIfEmpty()
-                           join cU in db.Users on res.closer equals cU.id into use
-                           from closer in use.DefaultIfEmpty()
-                           select new ReservationViewModel
-                           {
-                               id = res.id,
-                               total_amount = res.total_amount,
-                               currency = res.currency,
-                               tax = res.tax,
-                               financial_advance = res.financial_advance,
-                               financial_advance_date = res.financial_advance_date,
-                               financial_due = res.financial_due,
-                               financial_due_date = res.financial_due_date,
-                               status = res.status,
-                               is_special = even.is_special,
-                               single_price = res.single_price,
-                               double_price = res.double_price,
-                               triple_price = res.triple_price,
-                               quad_price = res.quad_price,
-                               vendor_single_price = res.vendor_single_price,
-                               vendor_douple_price = res.vendor_douple_price,
-                               vendor_triple_price = res.vendor_triple_price,
-                               vendor_quad_price = res.vendor_quad_price,
-                               vendor_id = res.vendor_id,
-                               active = res.active,
-                               company_name = company.name,
-                               phone = company.phone,
-                               email = company.email,
-                               company_id = res.company_id,
-                               event_hotel_id = event_hotel.id,
-                               hotel_name = hotel.name,
-                               hotel_rate = hotel.rate,
-                               reservations_officer_name = res.reservations_officer_name,
-                               reservations_officer_email = res.reservations_officer_email,
-                               reservations_officer_phone = res.reservations_officer_phone,
-                               opener = res.opener,
-                               closer = res.closer,
-                               opener_name = opener.full_name == null ? "No Opener Assigned" : opener.full_name,
-                               closer_name = opener.full_name == null ? "No Closer Assigned" : closer.full_name,
-                               check_in = res.check_in,
-                               check_out = res.check_out,
-                               string_check_in = res.check_in.ToString(),
-                               string_check_out = res.check_out.ToString(),
-                               total_nights = res.total_nights,
-                               total_rooms = res.total_rooms,
-                               profit = res.profit,
-                               shift = res.shift,
-                               created_at_string = res.created_at.ToString(),
-                               event_name = even.title,
-                               event_tax = even.tax,
-                               event_single_price = event_hotel.single_price,
-                               event_double_price = event_hotel.double_price,
-                               event_triple_price = event_hotel.triple_price,
-                               event_quad_price = event_hotel.quad_price,
-                               event_vendor_single_price = event_hotel.vendor_single_price,
-                               event_vendor_double_price = event_hotel.vendor_douple_price,
-                               event_vendor_triple_price = event_hotel.vendor_triple_price,
-                               event_vendor_quad_price = event_hotel.vendor_quad_price,
-                               total_price = db.ReservationDetails.Where(r => r.reservation_id == res.id).Select(p => p.amount).Sum(),
-                               paid_amount = res.paid_amount,
-                               total_amount_after_tax = res.total_amount_after_tax,
-                               total_amount_from_vendor = res.total_amount_from_vendor,
-                               advance_reservation_percentage = res.advance_reservation_percentage,
-                               tax_amount = res.tax_amount,
-                               is_canceled = res.is_canceled,
-                               is_refund = res.is_refund,
-                               created_at = res.created_at,
-                               countPaidToVendorRooms = db.ReservationDetails.Where(r => r.paid_to_vendor == 1 && r.reservation_id == res.id).Count(),
-                               countPaidToVendorNights = db.ReservationDetails.Where(r => r.paid_to_vendor == 1 && r.reservation_id == res.id).Sum(n => n.no_of_days),
-                               reservationCreditCards = db.ReservationCreditCards.Where(resCre => resCre.reservation_id == res.id).Select(resCre => new ReservationCreditCardViewModel
-                               {
-                                   id = resCre.id,
-                                   security_code = resCre.security_code,
-                                   credit_card_number = resCre.credit_card_number,
-                                   card_expiration_date = resCre.card_expiration_date
-                               }).ToList(),
-                               hotel_name_special = res.hotel_name,
-                               transactions = db.Transactions.Where(t => t.reservation_id == res.id).Select(tr => new TransactionViewModel
-                               {
-                                   id = tr.id,
-                                   reservation_id = tr.reservation_id,
-                                   amount = tr.amount,
-                                   transaction_id = tr.transaction_id
-                               }).ToList(),
-                               cancelation_fees = res.cancelation_fees
-                               //profit = calculateProfit(res.id).profit
-                           }).Where(r => r.is_canceled == 1 && r.countPaidToVendorRooms > 0);
-            //var reservation = resData.ToList();
-            //double? collected = 0.0;
-            //double? balance = 0.0;
-            //double? profit = 0.0;
-            //if (reservation != null)
-            //{
-            //    collected = resData.Select(t => t.paid_amount).ToList().Sum();
-            //    balance = resData.Select(t => t.total_amount_after_tax).ToList().Sum() - collected;
-            //    profit = resData.Select(t => t.total_amount_after_tax).ToList().Sum() - resData.Select(t => t.total_amount_from_vendor).ToList().Sum();
+        //public JsonResult ourRooms()
+        //{
+        //    var draw = Request.Form.GetValues("draw").FirstOrDefault();
+        //    var start = Request.Form.GetValues("start").FirstOrDefault();
+        //    var length = Request.Form.GetValues("length").FirstOrDefault();
+        //    var searchValue = Request.Form.GetValues("search[value]").FirstOrDefault();
+        //    var from_date = Request.Form.GetValues("columns[0][search][value]")[0];
+        //    var to_date = Request.Form.GetValues("columns[1][search][value]")[0];
+        //    int pageSize = length != null ? Convert.ToInt32(length) : 0;
+        //    int skip = start != null ? Convert.ToInt32(start) : 0;
+        //    var resData = (from res in db.Reservations
+        //                   join company in db.Companies on res.company_id equals company.id
+        //                   join event_hotel in db.EventHotels on res.event_hotel_id equals event_hotel.id
+        //                   join even in db.Events on event_hotel.event_id equals even.id
+        //                   join hotel in db.Hotels on event_hotel.hotel_id equals hotel.id
+        //                   join oU in db.Users on res.opener equals oU.id into us
+        //                   from opener in us.DefaultIfEmpty()
+        //                   join cU in db.Users on res.closer equals cU.id into use
+        //                   from closer in use.DefaultIfEmpty()
+        //                   select new ReservationViewModel
+        //                   {
+        //                       id = res.id,
+        //                       total_amount = res.total_amount,
+        //                       currency = res.currency,
+        //                       tax = res.tax,
+        //                       financial_advance = res.financial_advance,
+        //                       financial_advance_date = res.financial_advance_date,
+        //                       financial_due = res.financial_due,
+        //                       financial_due_date = res.financial_due_date,
+        //                       status = res.status,
+        //                       is_special = even.is_special,
+        //                       single_price = res.single_price,
+        //                       double_price = res.double_price,
+        //                       triple_price = res.triple_price,
+        //                       quad_price = res.quad_price,
+        //                       vendor_single_price = res.vendor_single_price,
+        //                       vendor_douple_price = res.vendor_douple_price,
+        //                       vendor_triple_price = res.vendor_triple_price,
+        //                       vendor_quad_price = res.vendor_quad_price,
+        //                       vendor_id = res.vendor_id,
+        //                       active = res.active,
+        //                       company_name = company.name,
+        //                       phone = company.phone,
+        //                       email = company.email,
+        //                       company_id = res.company_id,
+        //                       event_hotel_id = event_hotel.id,
+        //                       hotel_name = hotel.name,
+        //                       hotel_rate = hotel.rate,
+        //                       reservations_officer_name = res.reservations_officer_name,
+        //                       reservations_officer_email = res.reservations_officer_email,
+        //                       reservations_officer_phone = res.reservations_officer_phone,
+        //                       opener = res.opener,
+        //                       closer = res.closer,
+        //                       opener_name = opener.full_name == null ? "No Opener Assigned" : opener.full_name,
+        //                       closer_name = opener.full_name == null ? "No Closer Assigned" : closer.full_name,
+        //                       check_in = res.check_in,
+        //                       check_out = res.check_out,
+        //                       string_check_in = res.check_in.ToString(),
+        //                       string_check_out = res.check_out.ToString(),
+        //                       total_nights = res.total_nights,
+        //                       total_rooms = res.total_rooms,
+        //                       profit = res.profit,
+        //                       shift = res.shift,
+        //                       created_at_string = res.created_at.ToString(),
+        //                       event_name = even.title,
+        //                       event_tax = even.tax,
+        //                       event_single_price = event_hotel.single_price,
+        //                       event_double_price = event_hotel.double_price,
+        //                       event_triple_price = event_hotel.triple_price,
+        //                       event_quad_price = event_hotel.quad_price,
+        //                       event_vendor_single_price = event_hotel.vendor_single_price,
+        //                       event_vendor_double_price = event_hotel.vendor_douple_price,
+        //                       event_vendor_triple_price = event_hotel.vendor_triple_price,
+        //                       event_vendor_quad_price = event_hotel.vendor_quad_price,
+        //                       total_price = db.ReservationDetails.Where(r => r.reservation_id == res.id).Select(p => p.amount).Sum(),
+        //                       paid_amount = res.paid_amount,
+        //                       total_amount_after_tax = res.total_amount_after_tax,
+        //                       total_amount_from_vendor = res.total_amount_from_vendor,
+        //                       advance_reservation_percentage = res.advance_reservation_percentage,
+        //                       tax_amount = res.tax_amount,
+        //                       is_canceled = res.is_canceled,
+        //                       is_refund = res.is_refund,
+        //                       created_at = res.created_at,
+        //                       countPaidToVendorRooms = db.ReservationDetails.Where(r => r.paid_to_vendor == 1 && r.reservation_id == res.id).Count(),
+        //                       countPaidToVendorNights = db.ReservationDetails.Where(r => r.paid_to_vendor == 1 && r.reservation_id == res.id).Sum(n => n.no_of_days),
+        //                       reservationCreditCards = db.ReservationCreditCards.Where(resCre => resCre.reservation_id == res.id).Select(resCre => new ReservationCreditCardViewModel
+        //                       {
+        //                           id = resCre.id,
+        //                           security_code = resCre.security_code,
+        //                           credit_card_number = resCre.credit_card_number,
+        //                           card_expiration_date = resCre.card_expiration_date
+        //                       }).ToList(),
+        //                       hotel_name_special = res.hotel_name,
+        //                       transactions = db.Transactions.Where(t => t.reservation_id == res.id).Select(tr => new TransactionViewModel
+        //                       {
+        //                           id = tr.id,
+        //                           reservation_id = tr.reservation_id,
+        //                           amount = tr.amount,
+        //                           transaction_id = tr.transaction_id
+        //                       }).ToList(),
+        //                       cancelation_fees = res.cancelation_fees
+        //                       //profit = calculateProfit(res.id).profit
+        //                   }).Where(r => r.is_canceled == 1 && r.countPaidToVendorRooms > 0);
+        //    //var reservation = resData.ToList();
+        //    //double? collected = 0.0;
+        //    //double? balance = 0.0;
+        //    //double? profit = 0.0;
+        //    //if (reservation != null)
+        //    //{
+        //    //    collected = resData.Select(t => t.paid_amount).ToList().Sum();
+        //    //    balance = resData.Select(t => t.total_amount_after_tax).ToList().Sum() - collected;
+        //    //    profit = resData.Select(t => t.total_amount_after_tax).ToList().Sum() - resData.Select(t => t.total_amount_from_vendor).ToList().Sum();
 
-            //}
+        //    //}
 
-            var displayResult = resData.OrderByDescending(u => u.id).Skip(skip)
-                 .Take(pageSize).ToList();
-            var totalRecords = resData.Count();
+        //    var displayResult = resData.OrderByDescending(u => u.id).Skip(skip)
+        //         .Take(pageSize).ToList();
+        //    var totalRecords = resData.Count();
 
-            return Json(new
-            {
-                draw = draw,
-                recordsTotal = totalRecords,
-                recordsFiltered = totalRecords,
-                data = displayResult,
-            }, JsonRequestBehavior.AllowGet);
-        }
+        //    return Json(new
+        //    {
+        //        draw = draw,
+        //        recordsTotal = totalRecords,
+        //        recordsFiltered = totalRecords,
+        //        data = displayResult,
+        //    }, JsonRequestBehavior.AllowGet);
+        //}
 
         public JsonResult refund()
         {
@@ -1709,15 +1714,8 @@ namespace Agency.Controllers
                     reservation.balance_due_date = DateTime.Now;
                     reservation.active = 1;
                     reservation.created_by = Session["id"].ToString().ToInt();
-                    reservation.total_nights = ((DateTime)reservationViewModel.check_out - (DateTime)reservationViewModel.check_in).Days;
 
                     db.Reservations.Add(reservation);
-                    db.SaveChanges();
-
-                    InitialReservation initialReservation = AutoMapper.Mapper.Map<Reservation, InitialReservation>(reservation);
-                    initialReservation.id = 0;
-                    initialReservation.reservation_id = reservation.id;
-                    db.InitialReservations.Add(initialReservation);
                     db.SaveChanges();
 
                     Company company = new Company();
@@ -1738,12 +1736,12 @@ namespace Agency.Controllers
                         reservationDetail.reservation_id = reservation.id;
                         reservationDetail.reservation_from = (DateTime)reservationViewModel.check_in;
                         reservationDetail.reservation_to = (DateTime)reservationViewModel.check_out;
-                        reservationDetail.no_of_days = reservation.total_nights + 1;
+                        reservationDetail.no_of_days = ((DateTime)reservationViewModel.check_out - (DateTime)reservationViewModel.check_in).Days+1;
                         reservationDetail.room_type = 1;
                         reservationDetail.room_price = reservation.single_price;
-                        reservationDetail.amount = reservation.single_price;
-                        reservationDetail.tax = reservation.single_price * (reservation.tax / 100);
-                        reservationDetail.amount_after_tax = reservationDetail.tax * reservationDetail.room_price;
+                        reservationDetail.amount = reservation.single_price * (reservationDetail.no_of_days-1);
+                        reservationDetail.tax = reservationDetail.amount * (reservation.tax / 100);
+                        reservationDetail.amount_after_tax = reservationDetail.tax + reservationDetail.amount;
                         db.ReservationDetails.Add(reservationDetail);
                         db.SaveChanges();
 
@@ -1751,7 +1749,12 @@ namespace Agency.Controllers
                         db.SaveChanges();
 
                     }
-                    ReservationService.UpdateTotals(reservation.id);
+                    Reservation currentReservation = ReservationService.UpdateTotals(reservation.id);
+                    InitialReservation initialReservation = AutoMapper.Mapper.Map<Reservation, InitialReservation>(currentReservation);
+                    initialReservation.id = 0;
+                    initialReservation.reservation_id = reservation.id;
+                    db.InitialReservations.Add(initialReservation);
+                    db.SaveChanges();
                 }
 
             }
@@ -1883,7 +1886,7 @@ namespace Agency.Controllers
                                                       email = company.email,
                                                       company_id = res.company_id,
                                                       event_hotel_id = event_hotel.id,
-                                                      hotel_name = hotel.name,
+                                                      hotel_name = res.hotel_name,
                                                       hotel_rate = hotel.rate,
                                                       reservations_officer_name = res.reservations_officer_name,
                                                       reservations_officer_email = res.reservations_officer_email,
@@ -1927,7 +1930,13 @@ namespace Agency.Controllers
                                                           credit_card_number = resCre.credit_card_number,
                                                           card_expiration_date = resCre.card_expiration_date
                                                       }).ToList(),
-                                                      
+                                                      transactions = db.Transactions.Where(t => t.reservation_id == res.id).Select(tr => new TransactionViewModel
+                                                      {
+                                                          id = tr.id,
+                                                          reservation_id = tr.reservation_id,
+                                                          amount = tr.amount,
+                                                          transaction_id = tr.transaction_id
+                                                      }).ToList(),
                                                       //profit = calculateProfit(res.id).profit
                                                       //}).Where(r => r.balance_due_date.Year == DateTime.Now.Year && r.balance_due_date.Month == DateTime.Now.Month && r.balance_due_date.Day == DateTime.Now.Day && r.is_canceled == null && r.total_amount_after_tax != 0 && r.paid_amount < r.total_amount_after_tax).ToList();
                                                   }).Where(r => r.balance_due_date <= DateTime.Now && r.is_canceled == null && r.total_amount_after_tax != 0 && r.paid_amount < r.total_amount_after_tax);

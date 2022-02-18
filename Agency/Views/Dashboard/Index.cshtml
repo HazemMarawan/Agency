@@ -485,16 +485,47 @@
             datatype: "json",
             success: function (data) {
                 console.log(data);
-                $("#collectedCard").text(addCommas(data.collected.toFixed(2)));
-                $("#balanceCard").text(addCommas(data.balance.toFixed(2)));
-                $("#profitCard").text(addCommas(data.profit.toFixed(2)));
-                $("#refundCard").text(addCommas(data.refund.toFixed(2)));
-                
+                if (data.collected)
+                    $("#collectedCard").text(addCommas(data.collected.toFixed(2)));
+                else
+                    $("#collectedCard").text(0);
+
+                if (data.balance)
+                    $("#balanceCard").text(addCommas(data.balance.toFixed(2)));
+                else
+                    $("#balanceCard").text(0);
+
+                if (data.profit)
+                    $("#profitCard").text(addCommas(data.profit.toFixed(2)));
+                else
+                    $("#profitCard").text(0);
+
+                if (data.refund)
+                    $("#refundCard").text(addCommas(data.refund.toFixed(2)));
+                else
+                    $("#refundCard").text(0);
+
                 //percentage
-                $("#collectedPercentage").text(addCommas(data.collectedPercentage.toFixed(2))+'%');
-                $("#balancePercentage").text(addCommas(data.balancePercentage.toFixed(2)) + '%');
-                $("#profitPercentage").text(addCommas(data.profitPercentage.toFixed(2)) + '%');
-                $("#refundPercentage").text(addCommas(data.refundPercentage.toFixed(2)) + '%');
+
+                if (data.collectedPercentage)
+                    $("#collectedPercentage").text(addCommas(data.collectedPercentage.toFixed(2)) + '%');
+                else
+                    $("#collectedPercentage").text(0 + '%');
+
+                if (data.balancePercentage)
+                    $("#balancePercentage").text(addCommas(data.balancePercentage.toFixed(2)) + '%');
+                else
+                    $("#balancePercentage").text(0 + '%');
+
+                if (data.profitPercentage)
+                    $("#profitPercentage").text(addCommas(data.profitPercentage.toFixed(2)) + '%');
+                else
+                    $("#profitPercentage").text(0 + '%');
+
+                if (data.refundPercentage)
+                    $("#refundPercentage").text(addCommas(data.refundPercentage.toFixed(2)) + '%');
+                else
+                    $("#refundPercentage").text(0 + '%');
 
                     var options1 = {
                         chart: {
@@ -573,7 +604,7 @@
                             }]
                         },
                         subtitle: {
-                            text: addCommas(data.profit.toFixed(2)),
+                            text: addCommas((data.profit) ? data.profit.toFixed(2):0),
                             align: 'left',
                             margin: 0,
                             offsetX: 95,
@@ -769,13 +800,13 @@
                     }],
                     series: [{
                         name: 'Collected',
-                        data: data.yAxisCollected
+                        data: (data.yAxisCollected) ? data.yAxisCollected:0
                     }, {
                         name: 'Balance',
-                        data: data.yAxisBalance
+                            data: (data.yAxisBalance) ? data.yAxisBalance:0
                     }, {
                         name: 'Profit',
-                        data: data.yAxisProfit
+                            data: (data.yAxisProfit) ? data.yAxisProfit:0
                     }],
                     xaxis: {
                         labels: {
@@ -820,6 +851,10 @@
             }
          });
 
+        //$(document).ready(function () {
+
+        //    console.clear();
+        //});
 
     </script>
 
