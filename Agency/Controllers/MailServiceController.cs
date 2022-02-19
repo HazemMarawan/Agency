@@ -77,7 +77,8 @@ namespace Agency.Controllers
             return View();
         }
         [HttpPost]
-        public JsonResult saveMailServer(MailServerViewModel mailServerViewModel)
+        [ValidateInput(false)]
+        public ActionResult saveMailServer(MailServerViewModel mailServerViewModel)
         {
             MailServer oldMailServer = db.MailServers.Find(mailServerViewModel.id);
 
@@ -94,7 +95,7 @@ namespace Agency.Controllers
 
             db.SaveChanges();
 
-            return Json(new { message = "done" }, JsonRequestBehavior.AllowGet);
+            return RedirectToAction("Index");
 
         }
     }

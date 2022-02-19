@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace Agency.ViewModel
 {
@@ -13,6 +14,7 @@ namespace Agency.ViewModel
         public string outgoing_mail_server { get; set; }
         public string port { get; set; }
         public string title { get; set; }
+        [AllowHtml]
         public string welcome_message { get; set; }
         public string incoming_mail { get; set; }
         public int? type { get; set; }

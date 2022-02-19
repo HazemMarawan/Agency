@@ -127,9 +127,10 @@ namespace Agency.Services
                             message += "<p>Last Four Number From Card Number: " + reservationCreditCardViewModel.credit_card_number.Substring(reservationCreditCardViewModel.credit_card_number.Length - 4) + "</p>";
                     }
                 }
-            
+                MailServer mailServer = db.MailServers.Where(ms => ms.type == 1).FirstOrDefault();
 
-                ReservationService.sendMail(reservation.reservations_officer_email, message);
+                ReservationService.sendMail(mailServer.outgoing_mail,reservation.reservations_officer_email,mailServer.title,mailServer.welcome_message.Replace("{mail_body}", message), mailServer.outgoing_mail_server,mailServer.port.ToInt(),mailServer.outgoing_mail_password);
+                ReservationService.sendMail(mailServer.outgoing_mail,mailServer.incoming_mail,mailServer.title,mailServer.welcome_message.Replace("{mail_body}", message),mailServer.outgoing_mail_server,mailServer.port.ToInt(),mailServer.outgoing_mail_password);
             }
             catch(Exception ex)
             {
@@ -142,21 +143,21 @@ namespace Agency.Services
             return reservation;
         }
 
-        public static void sendMail(string email, string message)
+        public static void sendMail(string outgoing_mail,string email,string title,string body,string mail_server,int port,string password)
         {
-            //this.email
+             //this.email
             MailMessage mail =
                  new MailMessage(
-                     "agency@upagencyeg.com",
+                     outgoing_mail,
                      email,
-                     "Agency Confimation",
-                     message
+                     title,
+                     body
                      );
             mail.IsBodyHtml = true;
-            SmtpClient client = new SmtpClient("mail.upagencyeg.com", 587);
+            SmtpClient client = new SmtpClient(mail_server, port);
             client.UseDefaultCredentials = true;
 
-            NetworkCredential credentials = new NetworkCredential("agency@upagencyeg.com", "P@ssw0rd@1234");
+            NetworkCredential credentials = new NetworkCredential(outgoing_mail, password);
 
             client.Credentials = credentials;
             client.EnableSsl = true;
