@@ -42,6 +42,7 @@ namespace Agency
             Mapper.CreateMap<TaskViewModel, Task>();
             Mapper.CreateMap<Reservation, InitialReservation>();
             Mapper.CreateMap<Reservation, ReservationViewModel>();
+            Mapper.CreateMap<MailServer, MailServerViewModel>();
 
         }
     }

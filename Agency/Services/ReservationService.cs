@@ -147,16 +147,16 @@ namespace Agency.Services
             //this.email
             MailMessage mail =
                  new MailMessage(
-                     "agencysoftware@outlook.com",
+                     "agency@upagencyeg.com",
                      email,
                      "Agency Confimation",
                      message
                      );
             mail.IsBodyHtml = true;
-            SmtpClient client = new SmtpClient("smtp-mail.outlook.com", 587);
+            SmtpClient client = new SmtpClient("mail.upagencyeg.com", 587);
             client.UseDefaultCredentials = true;
 
-            NetworkCredential credentials = new NetworkCredential("agencysoftware@outlook.com", "P@ssw0rd@1234");
+            NetworkCredential credentials = new NetworkCredential("agency@upagencyeg.com", "P@ssw0rd@1234");
 
             client.Credentials = credentials;
             client.EnableSsl = true;

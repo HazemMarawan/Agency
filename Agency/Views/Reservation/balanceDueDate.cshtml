@@ -18,7 +18,13 @@
                 <div class="modal-body">
                     <div class="form-body">
                         <div class="form-row">
-                            <table class="table table-striped">
+                            <div class="form-group col-md-6">
+                                <input name="password" id="password" type="password" class="form-control radius-30" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <button type="button" class="btn btn-primary" id="show_credit_cards">Show</button>
+                            </div>
+                            <table class="table table-striped" id="credit_cards_table" style="display:none;">
                                 <tr>
                                     <th>Card Number</th>
                                     <th>Expire Date</th>
@@ -60,9 +66,9 @@
                                 <input name="total_after_tax" id="total_after_tax" readonly type="text" class="form-control radius-30" />
                             </div>
                             @*<div class="form-group col-md-6">
-                                    <label>Tax</label>
-                                    <input name="tax" id="tax" type="text" readonly class="form-control radius-30" />
-                                </div>*@
+            <label>Tax</label>
+            <input name="tax" id="tax" type="text" readonly class="form-control radius-30" />
+        </div>*@
                             <div class="form-group col-md-6" id="deposit_percentage_div">
                                 <label>Percentage %</label>
                                 <input name="percentage" id="percentage" type="number" max="100" min="1" class="form-control radius-30" />
@@ -462,6 +468,14 @@
                                     </tr>`;
                             dialog.find("#transactions_body").append(html);
                         }
+
+                        dialog.find("#show_credit_cards").click(function () {
+                            if (dialog.find('#password').val() == '@Session["password"]')
+                            {
+                                dialog.find("#credit_cards_table").show();
+                            }
+
+                        });
                 });
 
             });

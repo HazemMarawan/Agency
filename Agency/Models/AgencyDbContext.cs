@@ -58,6 +58,7 @@ namespace Agency.Models
         public virtual DbSet<InitialReservation> InitialReservations { get; set; }
         public virtual DbSet<ReservationCreditCard> ReservationCreditCards { get; set; }
         public virtual DbSet<Transaction> Transactions { get; set; }
+        public virtual DbSet<MailServer> MailServers { get; set; }
         
     }
 }

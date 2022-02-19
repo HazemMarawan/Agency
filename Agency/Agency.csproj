@@ -171,6 +171,7 @@
     <Compile Include="Controllers\HotelController.cs" />
     <Compile Include="Controllers\LocationController.cs" />
     <Compile Include="Controllers\MailController.cs" />
+    <Compile Include="Controllers\MailServiceController.cs" />
     <Compile Include="Controllers\NoteController.cs" />
     <Compile Include="Controllers\PermissionController.cs" />
     <Compile Include="Controllers\RefundController.cs" />
@@ -454,6 +455,14 @@
     <Compile Include="Migrations\202202182141507_updates1.Designer.cs">
       <DependentUpon>202202182141507_updates1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202202191339030_updates2.cs" />
+    <Compile Include="Migrations\202202191339030_updates2.Designer.cs">
+      <DependentUpon>202202191339030_updates2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202202191502463_updates3.cs" />
+    <Compile Include="Migrations\202202191502463_updates3.Designer.cs">
+      <DependentUpon>202202191502463_updates3.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AgencyDbContext.cs" />
     <Compile Include="Models\Chat.cs" />
@@ -471,6 +480,7 @@
     <Compile Include="Models\HotelLocation.cs" />
     <Compile Include="Models\InitialReservation.cs" />
     <Compile Include="Models\Location.cs" />
+    <Compile Include="Models\MailServer.cs" />
     <Compile Include="Models\Note.cs" />
     <Compile Include="Models\Permission.cs" />
     <Compile Include="Models\PermissionGroup.cs" />
@@ -507,6 +517,7 @@
     <Compile Include="ViewModel\HotelFacilitieViewModel.cs" />
     <Compile Include="ViewModel\HotelViewModel.cs" />
     <Compile Include="ViewModel\MailboxViewModel.cs" />
+    <Compile Include="ViewModel\MailServerViewModel.cs" />
     <Compile Include="ViewModel\NoteViewModel.cs" />
     <Compile Include="ViewModel\PermissionGroupViewModel.cs" />
     <Compile Include="ViewModel\PermissionViewModel.cs" />
@@ -4061,6 +4072,7 @@
     <Content Include="Views\Reservation\PayToVendor.cshtml" />
     <Content Include="Views\Credit\Index.cshtml" />
     <Content Include="Views\Refund\Index.cshtml" />
+    <Content Include="Views\MailService\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -4280,6 +4292,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202202182141507_updates1.resx">
       <DependentUpon>202202182141507_updates1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202202191339030_updates2.resx">
+      <DependentUpon>202202191339030_updates2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202202191502463_updates3.resx">
+      <DependentUpon>202202191502463_updates3.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
