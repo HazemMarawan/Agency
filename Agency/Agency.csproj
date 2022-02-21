@@ -3525,7 +3525,9 @@
     <Content Include="Content\Site.css" />
     <Content Include="images\default_hotel_image.jpg" />
     <Content Include="images\userProfile.jpeg" />
+    <Content Include="MailTemplates\balance.html" />
     <Content Include="MailTemplates\confirmation.html" />
+    <Content Include="MailTemplates\credit.html" />
     <Content Include="Rotativa\help-wkhtmltoimage.txt" />
     <Content Include="Rotativa\help-wkhtmltopdf.txt" />
     <Content Include="Rotativa\wkhtmltoimage.exe" />
@@ -4901,6 +4903,7 @@
     <Content Include="Views\Refund\Index.cshtml" />
     <Content Include="Views\MailService\Index.cshtml" />
     <Content Include="Views\Booking\ConfirmationPDF.cshtml" />
+    <Content Include="Views\Booking\BalancePDF.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

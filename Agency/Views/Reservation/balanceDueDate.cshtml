@@ -368,7 +368,8 @@
                         fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
                             var html = "";
                             html += "<a class='pay' href='javascript:void(0);' title='Pay'><i class='fas fa-money-bill-alt'></i></a>&nbsp; | ";
-                            html += "<a class='creditCards' href='javascript:void(0);' title='Credit Cards'><i class='fas fa-credit-card'></i></a>&nbsp;";
+                            html += "<a class='creditCards' href='javascript:void(0);' title='Credit Cards'><i class='fas fa-credit-card'></i></a>&nbsp;| ";
+                            html += "<a class='balanceMail' href='javascript:void(0);' title='Balance Mail'><i class='fa fa-envelope-open'></i></a>&nbsp;";
 
                             $(nTd).html("<span class='action-column'>" + html + "</span>");
                         }
@@ -519,6 +520,30 @@
 
            });
 
+           $(document).on("click", ".balanceMail", function () {
+               var data = datatable.row($(this).closest('tr')).data();
+               warningBox("Are you sure you want to send balance mail?", function () {
+
+                $.ajax({
+                    type: "GET",
+                    url: '@Url.Action("balanceMail", "Reservation")',
+                    contentType: "application/json; charset=utf-8",
+                    data: { "id": data.id },
+                    datatype: "json",
+                    success: function (data) {
+                        Swal.fire(
+                            'Done!',
+                            'Balance mail has been sent.!',
+                            'success'
+                        )
+                    },
+                    error: function () {
+                        alert("Dynamic content load failed.");
+                    }
+                });
+              
+               });
+           });
 
         });
 
