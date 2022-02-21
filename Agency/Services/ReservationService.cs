@@ -1,13 +1,18 @@
 ﻿using Agency.Helpers;
 using Agency.Models;
 using Agency.ViewModel;
+using iTextSharp.text;
+using iTextSharp.text.html.simpleparser;
+using iTextSharp.text.pdf;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using System.Text;
 using System.Web;
- 
+
 namespace Agency.Services
 {
     public class ReservationService
@@ -49,11 +54,11 @@ namespace Agency.Services
                     room_price = reservation.single_price;
                 }
 
-                total_amount += resDetail.amount ;
+                total_amount += resDetail.amount;
                 total_amount_after_tax += resDetail.amount_after_tax;
-                total_amount_from_vendor += (vendor_room_price*(resDetail.no_of_days-1));
+                total_amount_from_vendor += (vendor_room_price * (resDetail.no_of_days - 1));
                 tax_amount += resDetail.tax;
-                total_nights += resDetail.no_of_days-1;
+                total_nights += resDetail.no_of_days - 1;
             }
             ReservationViewModel reservationViewModel = new ReservationViewModel();
             reservationViewModel.total_amount = total_amount;
@@ -65,7 +70,7 @@ namespace Agency.Services
             return reservationViewModel;
         }
 
-        public static Reservation UpdateTotals(int reservation_id,bool fromWebSite=false)
+        public static Reservation UpdateTotals(int reservation_id, bool fromWebSite = false)
         {
             Reservation reservation = db.Reservations.Find(reservation_id);
 
@@ -85,7 +90,7 @@ namespace Agency.Services
             //{
             //reservation.updated_by = HttpContext.Current.Session["id"].ToString().ToInt();
             try
-            { 
+            {
                 string message = "<h1>Hello " + reservation.reservations_officer_name + "</h1>";
                 message += "<h5><u>Reservation Information :</u></h5>";
                 message += "<p>Email: " + reservation.reservations_officer_email + "</p>";
@@ -109,7 +114,7 @@ namespace Agency.Services
                 message += "<p>Total Nights: " + reservation.total_nights + "</p>";
                 message += "<p>Tax: " + Math.Ceiling((decimal)reservation.tax_amount).ToString() + "</p>";
                 message += "<p>Cost: " + Math.Ceiling((decimal)reservation.total_amount).ToString() + "</p>";
-                message += "<p>Cost After Tax: " +  Math.Ceiling((decimal)reservation.total_amount_after_tax).ToString() + "</p>";
+                message += "<p>Cost After Tax: " + Math.Ceiling((decimal)reservation.total_amount_after_tax).ToString() + "</p>";
 
                 ReservationCreditCardViewModel reservationCreditCardViewModel = db.ReservationCreditCards.Where(s => s.reservation_id == reservation.id).Select(s => new ReservationCreditCardViewModel
                 {
@@ -119,33 +124,60 @@ namespace Agency.Services
 
                 }).FirstOrDefault();
 
-                if(reservationCreditCardViewModel != null)
+                if (reservationCreditCardViewModel != null)
                 {
-                    if(!String.IsNullOrWhiteSpace(reservationCreditCardViewModel.credit_card_number))
+                    if (!String.IsNullOrWhiteSpace(reservationCreditCardViewModel.credit_card_number))
                     {
                         if (reservationCreditCardViewModel.credit_card_number.Length >= 4)
                             message += "<p>Last Four Number From Card Number: " + reservationCreditCardViewModel.credit_card_number.Substring(reservationCreditCardViewModel.credit_card_number.Length - 4) + "</p>";
                     }
                 }
                 MailServer mailServer = db.MailServers.Where(ms => ms.type == 1).FirstOrDefault();
+                string confirmationMailPath = Path.Combine(HttpContext.Current.Server.MapPath("~/MailTemplates/confirmation.html"));
+                StreamReader streamReader = new StreamReader(confirmationMailPath);
+                string emailContent = streamReader.ReadToEnd();
 
-                ReservationService.sendMail(mailServer.outgoing_mail,reservation.reservations_officer_email,mailServer.title,mailServer.welcome_message.Replace("{mail_body}", message), mailServer.outgoing_mail_server,mailServer.port.ToInt(),mailServer.outgoing_mail_password);
-                ReservationService.sendMail(mailServer.outgoing_mail,mailServer.incoming_mail,mailServer.title,mailServer.welcome_message.Replace("{mail_body}", message),mailServer.outgoing_mail_server,mailServer.port.ToInt(),mailServer.outgoing_mail_password);
+                string Event = String.Empty;
+                EventHotel eventHotel = db.EventHotels.Find(reservation.event_hotel_id);
+                Event _event = db.Events.Find(eventHotel.event_id);
+                if (_event.is_special == 1)
+                {
+                    Event = "Special";
+                }
+                else
+                {
+                    Event = _event.title;
+                }
+
+                Hotel hotel = db.Hotels.Find(eventHotel.hotel_id);
+                emailContent = emailContent.Replace("_welcome_message", mailServer.welcome_message);
+                emailContent = emailContent.Replace("_Name", reservation.reservations_officer_name);
+                emailContent = emailContent.Replace("_Event", Event);
+                emailContent = emailContent.Replace("_Hotel", hotel.name);
+                emailContent = emailContent.Replace("_nights", reservation.total_nights.ToString());
+                emailContent = emailContent.Replace("_total", reservation.total_amount_after_tax.ToString());
+                emailContent = emailContent.Replace("_check_in", reservation.check_in.ToString().Split(' ')[0]);
+                emailContent = emailContent.Replace("_check_out", reservation.check_out.ToString().Split(' ')[0]);
+                emailContent = emailContent.Replace("_cost", reservation.total_amount.ToString());
+                emailContent = emailContent.Replace("_tax", reservation.tax_amount.ToString());
+                emailContent = emailContent.Replace("_total", reservation.total_amount_after_tax.ToString());
+                emailContent = emailContent.Replace("_download_link", GetBaseUrl()+"/Booking/ConfirmationPDF?reservation_id="+reservation.id.ToString());
+
+                ReservationService.sendMail(mailServer.outgoing_mail, reservation.reservations_officer_email, mailServer.title, emailContent, mailServer.outgoing_mail_server, mailServer.port.ToInt(), mailServer.outgoing_mail_password);
+                ReservationService.sendMail(mailServer.outgoing_mail, mailServer.incoming_mail, mailServer.title, emailContent, mailServer.outgoing_mail_server, mailServer.port.ToInt(), mailServer.outgoing_mail_password);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
+                
 
+                //}
             }
+                return reservation;
             
-
-            //}
-
-            return reservation;
         }
 
-        public static void sendMail(string outgoing_mail,string email,string title,string body,string mail_server,int port,string password)
+        public static void sendMail(string outgoing_mail, string email, string title, string body, string mail_server, int port, string password)
         {
-             //this.email
             MailMessage mail =
                  new MailMessage(
                      outgoing_mail,
@@ -153,6 +185,7 @@ namespace Agency.Services
                      title,
                      body
                      );
+
             mail.IsBodyHtml = true;
             SmtpClient client = new SmtpClient(mail_server, port);
             client.UseDefaultCredentials = true;
@@ -175,10 +208,10 @@ namespace Agency.Services
             {
                 statisticsViewModel.total_amount_after_tax_sum = db.Reservations.Where(t => t.is_canceled != 1).Select(t => t.total_amount_after_tax).Sum();
                 statisticsViewModel.collected = db.Reservations.Where(t => t.is_canceled != 1).Select(t => t.paid_amount).Sum();
-                statisticsViewModel.collected_percentage = (statisticsViewModel.collected / statisticsViewModel.total_amount_after_tax_sum)*100;
+                statisticsViewModel.collected_percentage = (statisticsViewModel.collected / statisticsViewModel.total_amount_after_tax_sum) * 100;
 
                 statisticsViewModel.balance = db.Reservations.Where(t => t.is_canceled != 1).Select(t => t.total_amount_after_tax).Sum() - statisticsViewModel.collected;
-                statisticsViewModel.balance_percentage = (statisticsViewModel.balance / statisticsViewModel.total_amount_after_tax_sum)*100;
+                statisticsViewModel.balance_percentage = (statisticsViewModel.balance / statisticsViewModel.total_amount_after_tax_sum) * 100;
 
                 double? reservation_cancelation_fees = 0.0;
                 List<Reservation> reservations = db.Reservations.Where(c => c.is_canceled == 1 && c.cancelation_fees != null).ToList();
@@ -192,15 +225,29 @@ namespace Agency.Services
                 statisticsViewModel.profit += reservation_cancelation_fees;
 
                 statisticsViewModel.total_amount_after_tax_sum_for_profit = db.Reservations.Where(r => r.paid_amount == r.total_amount_after_tax && r.paid_amount != 0 && r.is_canceled != 1).Where(t => t.is_canceled != 1).Select(t => t.total_amount_after_tax).Sum();
-                statisticsViewModel.profit_percentage = (statisticsViewModel.profit / statisticsViewModel.total_amount_after_tax_sum_for_profit) *100;
+                statisticsViewModel.profit_percentage = (statisticsViewModel.profit / statisticsViewModel.total_amount_after_tax_sum_for_profit) * 100;
 
                 statisticsViewModel.refund = db.Reservations.Where(t => t.is_canceled != 1).Select(t => t.refund).Sum();
                 statisticsViewModel.refund_percentage = (statisticsViewModel.refund / statisticsViewModel.total_amount_after_tax_sum) * 100;
-                
+
                 statisticsViewModel.total_nights = db.Reservations.Where(t => t.is_canceled != 1).Select(n => n.total_nights).Sum();
 
             }
             return statisticsViewModel;
         }
+        public static string GetBaseUrl()
+        {
+            var request = HttpContext.Current.Request;
+            var appUrl = HttpRuntime.AppDomainAppVirtualPath;
+
+            if (appUrl != "/")
+                appUrl = "/" + appUrl;
+
+            var baseUrl = string.Format("{0}://{1}{2}", request.Url.Scheme, request.Url.Authority, appUrl);
+
+            return baseUrl;
+        }
     }
 }
+
+

@@ -188,6 +188,10 @@
                                     html += "<span class='badge badge-primary'>Invoice</span>";
                                 else if (oData.type == 3)
                                     html += "<span class='badge badge-primary'>Itinerary</span>";
+                                else if (oData.type == 4)
+                                    html += "<span class='badge badge-primary'>Balance</span>";
+                                else if (oData.type == 5)
+                                    html += "<span class='badge badge-primary'>Credit</span>";
                                 $(nTd).html("<span class='action-column'>" + html + "</span>");
                             }
                         },

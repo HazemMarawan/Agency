@@ -14,6 +14,7 @@ namespace Agency.ViewModel
     {
         public int id { get; set; }
         public int? reservation_id { get; set; }
+        public string welcome_message { get; set; }
         public string reservations_officer_name { get; set; }
         public string reservations_officer_phone { get; set; }
         public string reservations_officer_email { get; set; }
