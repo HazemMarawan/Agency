@@ -583,7 +583,7 @@ namespace Agency.Controllers
                                                 //profit = calculateProfit(res.id).profit
                                             }).Where(r => r.id == reservation_id).FirstOrDefault();
             resData.welcome_message = mailServer.welcome_message.Replace("_Name", resData.reservations_officer_name);
-            var report = new Rotativa.ViewAsPdf("ConfirmationPDF", resData);
+            var report = new Rotativa.ViewAsPdf("BalancePDF", resData);
             return report;
         }
     }
