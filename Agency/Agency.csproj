@@ -4904,6 +4904,7 @@
     <Content Include="Views\MailService\Index.cshtml" />
     <Content Include="Views\Booking\ConfirmationPDF.cshtml" />
     <Content Include="Views\Booking\BalancePDF.cshtml" />
+    <Content Include="Views\Booking\CreditPDF.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
