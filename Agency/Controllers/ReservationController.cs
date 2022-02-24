@@ -2665,6 +2665,7 @@ namespace Agency.Controllers
 
             emailContent = emailContent.Replace("_Name", resData.reservations_officer_name);
             emailContent = emailContent.Replace("_hotel_name", resData.hotel_name);
+            emailContent = emailContent.Replace("_credit_date", DateTime.Now.ToString().Split(' ')[0]);
             emailContent = emailContent.Replace("_credit", resData.credit.ToString());
             emailContent = emailContent.Replace("_download_link", ReservationService.GetBaseUrl() + "/Booking/CreditPDF?reservation_id=" + id.ToString());
 
