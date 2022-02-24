@@ -2663,14 +2663,9 @@ namespace Agency.Controllers
             StreamReader streamReader = new StreamReader(confirmationMailPath);
             string emailContent = streamReader.ReadToEnd();
 
-            emailContent = emailContent.Replace("_welcome_message", mailServer.welcome_message);
             emailContent = emailContent.Replace("_Name", resData.reservations_officer_name);
-            emailContent = emailContent.Replace("_Event", resData.event_name);
-            emailContent = emailContent.Replace("_Hotel", resData.hotel_name);
-            emailContent = emailContent.Replace("_nights", resData.total_nights.ToString());
+            emailContent = emailContent.Replace("_hotel_name", resData.hotel_name);
             emailContent = emailContent.Replace("_credit", resData.credit.ToString());
-            emailContent = emailContent.Replace("_check_in", resData.check_in.ToString().Split(' ')[0]);
-            emailContent = emailContent.Replace("_check_out", resData.check_out.ToString().Split(' ')[0]);
             emailContent = emailContent.Replace("_download_link", ReservationService.GetBaseUrl() + "/Booking/CreditPDF?reservation_id=" + id.ToString());
 
             ReservationService.sendMail(mailServer.outgoing_mail, resData.reservations_officer_email, mailServer.title, emailContent, mailServer.outgoing_mail_server, mailServer.port.ToInt(), mailServer.outgoing_mail_password);

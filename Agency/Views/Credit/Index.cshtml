@@ -240,7 +240,7 @@
                         "data": "id", "searchable": true,
                         fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
                             var html = "";
-                            //html += "<a class='confMail' href='javascript:void(0)' title='Send Email'><i class='far fa-envelope-open'></i></a><br>";
+                            html += "<a class='creditMail' href='javascript:void(0)' title='Send Email'><i class='far fa-envelope-open'></i></a><br>";
                             html += "<a target='_blank' class='view' href='/Reservation/View/" + oData.id + "' title='View'><i class='far fa-eye'></i></a><br>";
                             //html += "<a class='cancelUnpaid' href='javascript:void(0);' title='Cancel'><i class='far fa-times-circle'></i></a>";
 
@@ -266,6 +266,32 @@
                 $('#search').trigger('click');
 
             });
+
+           $(document).on("click", ".creditMail", function () {
+                var data = datatable.row($(this).closest('tr')).data();
+               warningBox("Are you sure you want to send credit mail?", function () {
+
+                $.ajax({
+                    type: "GET",
+                    url: '@Url.Action("creditMail", "Reservation")',
+                    contentType: "application/json; charset=utf-8",
+                    data: { "id": data.id },
+                    datatype: "json",
+                    success: function (data) {
+                        Swal.fire(
+                            'Done!',
+                            'Credit mail has been sent.!',
+                            'success'
+                        )
+                    },
+                    error: function () {
+                        alert("Dynamic content load failed.");
+                    }
+                });
+
+               });
+           });
+
         });
 
     </script>
