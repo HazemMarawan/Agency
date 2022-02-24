@@ -2395,6 +2395,7 @@ namespace Agency.Controllers
                                                 financial_due = res.financial_due,
                                                 financial_due_date = res.financial_due_date,
                                                 status = res.status,
+                                                balance_due_date = ((DateTime)res.balance_due_date),
                                                 single_price = res.single_price,
                                                 double_price = res.double_price,
                                                 triple_price = res.triple_price,
@@ -2464,25 +2465,94 @@ namespace Agency.Controllers
                                                     transaction_id = tr.transaction_id
                                                 }).ToList(),
                                                 cancelation_fees = res.cancelation_fees
-                                                //profit = calculateProfit(res.id).profit
                                             }).Where(r => r.id == id).FirstOrDefault();
+
             MailServer mailServer = db.MailServers.Where(ms => ms.type == 4).FirstOrDefault();
 
-            resData.welcome_message = mailServer.welcome_message.Replace("_Name", resData.reservations_officer_name);
+            resData.welcome_message = mailServer.welcome_message;
 
-            string confirmationMailPath = Path.Combine(Server.MapPath("~/MailTemplates/balance.html"));
-            StreamReader streamReader = new StreamReader(confirmationMailPath);
+            var resDetailData = (from resDetail in db.ReservationDetails
+                             join reserv in db.Reservations on resDetail.reservation_id equals reserv.id into rs
+                             from res in rs.DefaultIfEmpty()
+                             join cli in db.Clients on resDetail.client_id equals cli.id into cl
+                             from client in cl.DefaultIfEmpty()
+                             select new ReservationDetailViewModel
+                             {
+                                 id = resDetail.id,
+                                 amount = resDetail.amount,
+                                 tax = resDetail.tax,
+                                 room_type = resDetail.room_type,
+                                 reservation_from = db.ReservationDetails.Where(rsd => rsd.parent_id == resDetail.id).Select(rsd => rsd.reservation_from).Min(),
+                                 reservation_to = db.ReservationDetails.Where(rsd => rsd.parent_id == resDetail.id).Select(rsd => rsd.reservation_to).Max(),
+                                 no_of_days = resDetail.no_of_days,
+                                 parent_id = resDetail.parent_id,
+                                 active = resDetail.active,
+                                 client_id = resDetail.client_id,
+                                 client_first_name = client.first_name,
+                                 client_last_name = client.last_name,
+                                 reservation_id = resDetail.reservation_id,
+                                 currency = res.currency,
+                                 string_reservation_from = db.ReservationDetails.Where(rsd => rsd.parent_id == resDetail.id).Select(rsd => rsd.reservation_from).Min().ToString(),
+                                 string_reservation_to = db.ReservationDetails.Where(rsd => rsd.parent_id == resDetail.id).Select(rsd => rsd.reservation_to).Max().ToString(),
+                                 vendor_code = resDetail.vendor_code,
+                                 vendor_cost = db.ReservationDetails.Where(rsd => rsd.parent_id == resDetail.id).Select(rsd => rsd.vendor_cost).Sum(),
+                                 room_price = resDetail.room_price,
+                                 notify = resDetail.notify,
+                                 is_transfered = resDetail.is_transfered,
+                                 is_canceled = resDetail.is_canceled,
+                                 paid_to_vendor = resDetail.paid_to_vendor,
+                                 payment_to_vendor_deadline = (DateTime)resDetail.payment_to_vendor_deadline,
+                                 string_payment_to_vendor_deadline = resDetail.payment_to_vendor_deadline.ToString(),
+                                 string_spayment_to_vendor_notification_date = resDetail.payment_to_vendor_notification_date.ToString(),
+                                 payment_to_vendor_notification_date = resDetail.payment_to_vendor_notification_date,
+                                 paid_to_vendor_date = resDetail.paid_to_vendor_date,
+                                 amount_paid_to_vendor = resDetail.amount_paid_to_vendor,
+                                 cancelation_policy = resDetail.cancelation_policy,
+                                 confirmation_id = resDetail.confirmation_id,
+                                 guestReservations = db.ReservationDetails.Where(r => r.parent_id == resDetail.id && r.id != resDetail.id).Select(guestRes => new AdditionalReservationViewModel
+                                 {
+                                     id = guestRes.id,
+                                     reservation_id = guestRes.reservation_id,
+                                     parent_id = guestRes.parent_id,
+                                     reservation_from = guestRes.reservation_from,
+                                     reservation_to = guestRes.reservation_to,
+                                     vendor_code = guestRes.vendor_code,
+                                     vendor_cost = guestRes.vendor_cost,
+                                     room_price = guestRes.room_price,
+                                     string_reservation_from = guestRes.reservation_from.ToString(),
+                                     string_reservation_to = guestRes.reservation_to.ToString(),
+                                 }).ToList(),
+                             }).Where(d => d.reservation_id == id && d.parent_id == d.id).ToList();
+
+            string balanceMailPath = Path.Combine(Server.MapPath("~/MailTemplates/balance.html"));
+            StreamReader streamReader = new StreamReader(balanceMailPath);
             string emailContent = streamReader.ReadToEnd();
 
             emailContent = emailContent.Replace("_welcome_message", mailServer.welcome_message);
             emailContent = emailContent.Replace("_Name", resData.reservations_officer_name);
-            emailContent = emailContent.Replace("_Event", resData.event_name);
-            emailContent = emailContent.Replace("_Hotel", resData.hotel_name);
+            emailContent = emailContent.Replace("_Due_date", resData.balance_due_date.ToString().Split(' ')[0]);
+            emailContent = emailContent.Replace("_hotel_name", resData.hotel_name);
+            emailContent = emailContent.Replace("_total_rooms", resData.total_rooms.ToString());
             emailContent = emailContent.Replace("_nights", resData.total_nights.ToString());
-            emailContent = emailContent.Replace("_balance", (resData.total_amount_after_tax - resData.paid_amount).ToString());
-            emailContent = emailContent.Replace("_check_in", resData.check_in.ToString().Split(' ')[0]);
-            emailContent = emailContent.Replace("_check_out", resData.check_out.ToString().Split(' ')[0]);
-            emailContent = emailContent.Replace("_download_link", ReservationService.GetBaseUrl() + "/Booking/BalancePDF?reservation_id=" + id.ToString());
+
+            string reservationDetails = String.Empty;
+            int counter = 1;
+            foreach(var client in resDetailData)
+            {
+                reservationDetails += @"<tr>
+                                        <td style = ""padding-bottom:5px;padding-left:25px;padding-right:25px;padding-top:5px;"">
+                                             <div style = ""font-family: sans-serif"" >
+                                                  <div style = ""font-size: 12px; mso-line-height-alt: 18px; color: #ffffff; line-height: 1.5; font-family: Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;"">
+                                                       <p style = ""margin: 0; mso-line-height-alt: 24px;""><strong><span style = ""font-size:16px;""> RM#"+counter.ToString()+@":&nbsp;</span></strong><span style = ""font-size:16px;""> "+client.client_first_name+" "+client.client_last_name+" - In: "+client.reservation_from.ToString().Split(' ')[0] + " - Out: "+ client.reservation_to.ToString().Split(' ')[0] +" - "+ roomType(client.room_type)+ @" </span></p>
+                                                    </div>
+                                                </div>
+                                          </td>
+                                     </tr>";
+                counter++;
+            }
+
+            emailContent = emailContent.Replace("_reservation_details", reservationDetails);
+            emailContent = emailContent.Replace("_download_link", ReservationService.GetBaseUrl() + "Booking/BalancePDF?reservation_id=" + id.ToString());
 
             ReservationService.sendMail(mailServer.outgoing_mail, resData.reservations_officer_email, mailServer.title, emailContent, mailServer.outgoing_mail_server, mailServer.port.ToInt(), mailServer.outgoing_mail_password);
             ReservationService.sendMail(mailServer.outgoing_mail, mailServer.incoming_mail, mailServer.title, emailContent, mailServer.outgoing_mail_server, mailServer.port.ToInt(), mailServer.outgoing_mail_password);
@@ -2607,6 +2677,18 @@ namespace Agency.Controllers
             ReservationService.sendMail(mailServer.outgoing_mail, mailServer.incoming_mail, mailServer.title, emailContent, mailServer.outgoing_mail_server, mailServer.port.ToInt(), mailServer.outgoing_mail_password);
 
             return Json(new { msg = "done" }, JsonRequestBehavior.AllowGet);
+        }
+
+        public string roomType(int? type)
+        {
+            if (type == 1)
+                return "Single";
+            else if (type == 2)
+                return "Double";
+            else if (type == 3)
+                return "Triple";
+            else
+                return "Quad";
         }
     }
 

@@ -1,6 +1,7 @@
 ﻿@model Agency.ViewModel.ReservationViewModel
 @{ 
     Layout = null;
+    int counter = 1;
 }
 <!DOCTYPE html>
 <html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" lang="en">
@@ -14,47 +15,47 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
     <!--<![endif]-->
     <style>
-		* {
-			box-sizing: border-box;
-		}
+        * {
+            box-sizing: border-box;
+        }
 
-		body {
-			margin: 0;
-			padding: 0;
-		}
+        body {
+            margin: 0;
+            padding: 0;
+        }
 
-		a[x-apple-data-detectors] {
-			color: inherit !important;
-			text-decoration: inherit !important;
-		}
+        a[x-apple-data-detectors] {
+            color: inherit !important;
+            text-decoration: inherit !important;
+        }
 
-		#MessageViewBody a {
-			color: inherit;
-			text-decoration: none;
-		}
+        #MessageViewBody a {
+            color: inherit;
+            text-decoration: none;
+        }
 
-		p {
-			line-height: inherit
-		}
+        p {
+            line-height: inherit
+        }
 
-		@@media (max-width:700px) {
-			.row-content {
-				width: 100% !important;
-			}
+        @@media (max-width:700px) {
+            .row-content {
+                width: 100% !important;
+            }
 
-			.image_block img.big {
-				width: auto !important;
-			}
+            .image_block img.big {
+                width: auto !important;
+            }
 
-			.column .border {
-				display: none;
-			}
+            .column .border {
+                display: none;
+            }
 
-			.stack .column {
-				width: 100%;
-				display: block;
-			}
-		}
+            .stack .column {
+                width: 100%;
+                display: block;
+            }
+        }
     </style>
 </head>
 
@@ -103,7 +104,7 @@
                                                             <td style="padding-bottom:60px;padding-left:25px;padding-right:25px;padding-top:40px;">
                                                                 <div style="font-family: sans-serif">
                                                                     <div style="font-size: 12px; mso-line-height-alt: 18px; color: #ffffff; line-height: 1.5; font-family: Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;">
-                                                                        <p style="margin: 0; mso-line-height-alt: 24px;"><span style="font-size:16px;">@Html.Raw(HttpUtility.HtmlDecode(Model.welcome_message))</span></p>
+                                                                        <p style="margin: 0; mso-line-height-alt: 24px;"><span style="font-size:16px;">@Model.welcome_message</span></p>
                                                                     </div>
                                                                 </div>
                                                             </td>
@@ -121,7 +122,7 @@
                         <tbody>
                             <tr>
                                 <td>
-                                    <table class="row-content stack" align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-position: center top; background-repeat: no-repeat; color: #000000; background-color: #000000; background-image: url('https://d1oco4z2z1fhwp.cloudfront.net/templates/default/3296/MCC_confirmation_ticketdetails_bg.png'); width: 680px;" width="680">
+                                    <table class="row-content stack" align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-position: center top; background-repeat: no-repeat; color: #000000; background-color: #000000;   width: 680px;" width="680">
                                         <tbody>
                                             <tr>
                                                 <td class="column column-1" width="100%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;">
@@ -130,7 +131,13 @@
                                                             <td style="padding-bottom:10px;padding-left:25px;padding-right:25px;padding-top:10px;">
                                                                 <div style="font-family: sans-serif">
                                                                     <div style="font-size: 12px; mso-line-height-alt: 14.399999999999999px; color: #ffffff; line-height: 1.2; font-family: Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;">
-                                                                        <p dir="rtl" style="margin: 0; font-size: 14px; text-align: left;"><span style="font-size:30px;"><strong>Reservation</strong></span></p>
+                                                                        <p dir="rtl" style="margin: 0; font-size: 14px; text-align: left;">
+                                                                            <span style="font-size:20px;">
+                                                                                <strong>
+                                                                                    Below you should find your reservation details
+                                                                                </strong>
+                                                                            </span>
+                                                                        </p>
                                                                     </div>
                                                                 </div>
                                                             </td>
@@ -173,128 +180,7 @@
                             </tr>
                         </tbody>
                     </table>
-                    <table class="row row-4" align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <table class="row-content stack" align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #000000; width: 680px;" width="680">
-                                        <tbody>
-                                            <tr>
-                                                <td class="column column-1" width="25%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;">
-                                                    <table class="text_block" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;">
-                                                        <tr>
-                                                            <td style="padding-bottom:10px;padding-left:25px;padding-right:25px;padding-top:10px;">
-                                                                <div style="font-family: sans-serif">
-                                                                    <div style="font-size: 12px; mso-line-height-alt: 18px; color: #ffffff; line-height: 1.5; font-family: Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;">
-                                                                        <p style="margin: 0; font-size: 12px; mso-line-height-alt: 24px;"><span style="font-size:16px;"><strong>Event:</strong> @Model.event_name</span></p>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </td>
-                                                <td class="column column-2" width="25%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;">
-                                                    <table class="text_block" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;">
-                                                        <tr>
-                                                            <td style="padding-bottom:10px;padding-left:25px;padding-right:25px;padding-top:10px;">
-                                                                <div style="font-family: sans-serif">
-                                                                    <div style="font-size: 12px; mso-line-height-alt: 18px; color: #ffffff; line-height: 1.5; font-family: Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;">
-                                                                        <p style="margin: 0; mso-line-height-alt: 24px;"><strong><span style="font-size:16px;">Hotel: </span></strong><span style="font-size:16px;">@Model.hotel_name</span></p>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </td>
-                                                <td class="column column-3" width="25%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;">
-                                                    <table class="text_block" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;">
-                                                        <tr>
-                                                            <td style="padding-bottom:10px;padding-left:25px;padding-right:25px;padding-top:10px;">
-                                                                <div style="font-family: sans-serif">
-                                                                    <div style="font-size: 12px; mso-line-height-alt: 18px; color: #ffffff; line-height: 1.5; font-family: Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;">
-                                                                        <p style="margin: 0; mso-line-height-alt: 24px;"><strong><span style="font-size:16px;">Nights: </span></strong><span style="font-size:16px;">@Model.total_nights</span></p>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </td>
-                                                <td class="column column-4" width="25%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;">
-                                                    <table class="text_block" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;">
-                                                        <tr>
-                                                            <td style="padding-bottom:10px;padding-left:25px;padding-right:25px;padding-top:10px;">
-                                                                <div style="font-family: sans-serif">
-                                                                    <div style="font-size: 12px; mso-line-height-alt: 18px; color: #ffffff; line-height: 1.5; font-family: Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;">
-                                                                        <p style="margin: 0; mso-line-height-alt: 24px;"><span style="font-size:16px;"><strong>Balance</strong>: @(Model.total_amount_after_tax-Model.paid_amount)</span></p>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <table class="row row-5" align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <table class="row-content stack" align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #000000; width: 680px;" width="680">
-                                        <tbody>
-                                            <tr>
-                                                <td class="column column-1" width="100%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;">
-                                                    <table class="divider_block" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
-                                                        <tr>
-                                                            <td style="padding-bottom:10px;padding-top:10px;">
-                                                                <div align="center">
-                                                                    <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
-                                                                        <tr>
-                                                                            <td class="divider_inner" style="font-size: 1px; line-height: 1px; border-top: 1px solid #3DE6E8;"><span>&#8202;</span></td>
-                                                                        </tr>
-                                                                    </table>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <table class="row row-6" align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <table class="row-content stack" align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-position: center top; background-repeat: no-repeat; color: #000000; background-color: #000000; background-image: url('https://d1oco4z2z1fhwp.cloudfront.net/templates/default/3296/MCC_confirmation_orderdetails_bg.png'); width: 680px;" width="680">
-                                        <tbody>
-                                            <tr>
-                                                <td class="column column-1" width="100%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; padding-top: 5px; padding-bottom: 5px; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;">
-                                                    <table class="text_block" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;">
-                                                        <tr>
-                                                            <td style="padding-bottom:10px;padding-left:25px;padding-right:25px;padding-top:10px;">
-                                                                <div style="font-family: sans-serif">
-                                                                    <div style="font-size: 12px; mso-line-height-alt: 14.399999999999999px; color: #ffffff; line-height: 1.2; font-family: Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;">
-                                                                        <p dir="rtl" style="margin: 0; font-size: 14px; text-align: left;"><span style="font-size:30px;"><strong>ORDER DETAILS</strong></span></p>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+
                     <table class="row row-7" align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
                         <tbody>
                             <tr>
@@ -308,7 +194,7 @@
                                                             <td style="padding-bottom:10px;padding-left:25px;padding-right:25px;padding-top:10px;">
                                                                 <div style="font-family: sans-serif">
                                                                     <div style="font-size: 12px; mso-line-height-alt: 18px; color: #ffffff; line-height: 1.5; font-family: Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;">
-                                                                        <p style="margin: 0; mso-line-height-alt: 24px;"><strong><span style="font-size:16px;">Check In: </span></strong><span style="font-size:16px;">@Model.check_in.ToString().Split(' ')[0]</span></p>
+                                                                        <p style="margin: 0; mso-line-height-alt: 24px;"><strong><span style="font-size:16px;">Hotel Name: </span></strong><span style="font-size:16px;">@Model.hotel_name</span></p>
                                                                     </div>
                                                                 </div>
                                                             </td>
@@ -319,7 +205,7 @@
                                                             <td style="padding-bottom:10px;padding-left:25px;padding-right:25px;padding-top:10px;">
                                                                 <div style="font-family: sans-serif">
                                                                     <div style="font-size: 12px; mso-line-height-alt: 18px; color: #ffffff; line-height: 1.5; font-family: Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;">
-                                                                        <p style="margin: 0; mso-line-height-alt: 24px;"><span style="font-size:16px;"><strong>Check Out: _</strong>@Model.check_out.ToString().Split(' ')[0]</span></p>
+                                                                        <p style="margin: 0; mso-line-height-alt: 24px;"><span style="font-size:16px;"><strong>Rooms: </strong>@Model.total_rooms</span></p>
                                                                     </div>
                                                                 </div>
                                                             </td>
@@ -346,7 +232,7 @@
                                                             <td style="padding-bottom:5px;padding-left:25px;padding-right:25px;padding-top:5px;">
                                                                 <div style="font-family: sans-serif">
                                                                     <div style="font-size: 12px; mso-line-height-alt: 18px; color: #ffffff; line-height: 1.5; font-family: Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;">
-                                                                        <p style="margin: 0; mso-line-height-alt: 24px;"><strong><span style="font-size:16px;">Balance:&nbsp;</span></strong><span style="font-size:16px;">@(Model.total_amount_after_tax-Model.paid_amount)</span></p>
+                                                                        <p style="margin: 0; mso-line-height-alt: 24px;"><strong><span style="font-size:16px;">Nights:&nbsp;</span></strong><span style="font-size:16px;">@Model.total_nights</span></p>
                                                                     </div>
                                                                 </div>
                                                             </td>
@@ -373,11 +259,106 @@
                             </tr>
                         </tbody>
                     </table>
+                    <table class="row row-2" align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <table class="row-content stack" align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-position: center top; background-repeat: no-repeat; color: #000000; background-color: #000000;   width: 680px;" width="680">
+                                        <tbody>
+                                            <tr>
+                                                <td class="column column-1" width="100%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;">
+                                                    <table class="text_block" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;">
+                                                        <tr>
+                                                            <td style="padding-bottom:10px;padding-left:25px;padding-right:25px;padding-top:10px;">
+                                                                <div style="font-family: sans-serif">
+                                                                    <div style="font-size: 12px; mso-line-height-alt: 14.399999999999999px; color: #ffffff; line-height: 1.2; font-family: Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;">
+                                                                        <p dir="rtl" style="margin: 0; font-size: 14px; text-align: left;">
+                                                                            <span style="font-size:20px;">
+                                                                                <strong>
+                                                                                    Guest Names & booking dates
+                                                                                </strong>
+                                                                            </span>
+                                                                        </p>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="row row-8" align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <table class="row-content stack" align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #000000; width: 680px;" width="680">
+                                        <tbody>
+                                            <tr>
+                                                <td class="column column-1" width="100%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;">
+                                                    <table class="text_block" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;">
+                                                        @foreach (var client in Model.reservationDetails)
+                                                        {
+                                                            <tr>
+                                                                <td style="padding-bottom:5px;padding-left:25px;padding-right:25px;padding-top:5px;">
+                                                                    <div style="font-family: sans-serif">
+                                                                        <div style="font-size: 12px; mso-line-height-alt: 18px; color: #ffffff; line-height: 1.5; font-family: Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;">
+                                                                            <p style="margin: 0; mso-line-height-alt: 24px;"><strong><span style="font-size:16px;">RM#@counter:&nbsp;</span></strong><span style="font-size:16px;">
+                                                                                @client.client_first_name @client.client_last_name - In:@client.reservation_from.ToString().Split(' ')[0] - Out:@client.reservation_to.ToString().Split(' ')[0] -
+                                                                                @if (client.room_type == 1)
+                                                                                {
+                                                                                    <span>Signle</span>
+                                                                                }
+                                                                                else if (client.room_type == 2)
+                                                                                {
+                                                                                    <span>Double</span>
+                                                                                }
+                                                                                else if (client.room_type == 3)
+                                                                                {
+                                                                                    <span>Triple</span>
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    <span>Quad</span>
+                                                                                }
+                                                                            </span></p>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            counter++;
+                                                        }
+                                                    </table>
+                                                    <table class="divider_block" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+                                                        <tr>
+                                                            <td style="padding-bottom:10px;padding-top:10px;">
+                                                                <div align="center">
+                                                                    <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+                                                                        <tr>
+                                                                            <td class="divider_inner" style="font-size: 1px; line-height: 1px; border-top: 1px solid #3DE6E8;"><span>&#8202;</span></td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                     <table class="row row-9" align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
                         <tbody>
                             <tr>
                                 <td>
-                                    <table class="row-content stack" align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-position: center top; background-repeat: no-repeat; color: #000000; background-color: #000000; background-image: url('https://d1oco4z2z1fhwp.cloudfront.net/templates/default/3296/MCC_confirmation_additionalinformation_bg.png'); width: 680px;" width="680">
+                                    <table class="row-content stack" align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-position: center top; background-repeat: no-repeat; color: #000000; background-color: #000000;width: 680px;" width="680">
                                         <tbody>
                                             <tr>
                                                 <td class="column column-1" width="100%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; padding-top: 5px; padding-bottom: 5px; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;">
@@ -399,6 +380,7 @@
                             </tr>
                         </tbody>
                     </table>
+
                     <table class="row row-10" align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
                         <tbody>
                             <tr>
@@ -407,27 +389,12 @@
                                         <tbody>
                                             <tr>
                                                 <td class="column column-1" width="100%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;">
-                                                    <table class="social_block" width="100%" border="0" cellpadding="10" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
-                                                        <tr>
-                                                            <td>
-                                                                <table class="social-table" width="180px" border="0" cellpadding="0" cellspacing="0" role="presentation" align="center" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
-                                                                    <tr>
-                                                                        <td style="padding:0 2px 0 2px;"><a href="https://www.example.com" target="_blank"><img src="https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/t-only-logo-white/spotify@2x.png" width="32" height="32" alt="Spotify" title="Spotify" style="display: block; height: auto; border: 0;"></a></td>
-                                                                        <td style="padding:0 2px 0 2px;"><a href="https://www.example.com" target="_blank"><img src="https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/t-only-logo-white/soundcloud@2x.png" width="32" height="32" alt="SoundCloud" title="SoundCloud" style="display: block; height: auto; border: 0;"></a></td>
-                                                                        <td style="padding:0 2px 0 2px;"><a href="https://www.example.com" target="_blank"><img src="https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/t-only-logo-white/facebook@2x.png" width="32" height="32" alt="Facebook" title="facebook" style="display: block; height: auto; border: 0;"></a></td>
-                                                                        <td style="padding:0 2px 0 2px;"><a href="https://www.example.com" target="_blank"><img src="https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/t-only-logo-white/twitter@2x.png" width="32" height="32" alt="Twitter" title="twitter" style="display: block; height: auto; border: 0;"></a></td>
-                                                                        <td style="padding:0 2px 0 2px;"><a href="https://www.example.com" target="_blank"><img src="https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/t-only-logo-white/instagram@2x.png" width="32" height="32" alt="Instagram" title="instagram" style="display: block; height: auto; border: 0;"></a></td>
-                                                                    </tr>
-                                                                </table>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
                                                     <table class="text_block" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;">
                                                         <tr>
                                                             <td style="padding-left:30px;padding-right:30px;padding-top:30px;padding-bottom:50px;">
                                                                 <div style="font-family: sans-serif">
                                                                     <div style="font-size: 12px; mso-line-height-alt: 14.399999999999999px; color: #ffffff; line-height: 1.2; font-family: Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;">
-                                                                        <p style="margin: 0; font-size: 14px; text-align: center;"><a href="https://www.example.com" target="_blank" style="text-decoration: none; color: #ffffff;" rel="noopener">Copy Rights Reserved</a></p>
+                                                                        <p style="margin: 0; font-size: 14px; text-align: center;"><a href="#" target="_blank" style="text-decoration: none; color: #ffffff;" rel="noopener">Copy Rights Reserved</a></p>
                                                                     </div>
                                                                 </div>
                                                             </td>
