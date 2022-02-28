@@ -118,7 +118,13 @@
                 <div class="modal-body">
                     <div class="form-body">
                         <div class="form-row">
-                            <table class="table table-striped">
+                            <div class="form-group col-md-6">
+                                <input name="password" id="password_modal" type="password" class="form-control radius-30" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <button type="button" class="btn btn-primary" id="show_credit_cards_modal">Show</button>
+                            </div>
+                            <table class="table table-striped" id="credit_cards_modal_table" style="display:none;">
                                 <tr>
                                     <th>Card Number</th>
                                     <th>Expire Date</th>
@@ -475,7 +481,8 @@
                             {
                                 dialog.find("#credit_cards_table").show();
                             }
-
+                            dialog.find("#show_credit_cards").css('display', 'none')
+                            dialog.find("#password").css('display', 'none')
                         });
                 });
 
@@ -516,6 +523,16 @@
                        dialog.find("#credit_cards_body").append(html);
                    }
 
+                   dialog.find("#show_credit_cards_modal").click(function () {
+                       if (dialog.find('#password_modal').val() == '@Session["password"]')
+                        {
+                           dialog.find("#credit_cards_modal_table").show();
+                       }
+                       dialog.find("#show_credit_cards_modal").css('display','none')
+                       dialog.find("#password_modal").css('display','none')
+
+                    });
+
                });
 
            });
@@ -541,7 +558,7 @@
                         alert("Dynamic content load failed.");
                     }
                 });
-              
+
                });
            });
 
