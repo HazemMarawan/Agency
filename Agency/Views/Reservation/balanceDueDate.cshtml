@@ -480,9 +480,10 @@
                             if (dialog.find('#password').val() == '@Session["password"]')
                             {
                                 dialog.find("#credit_cards_table").show();
+                                dialog.find("#show_credit_cards").css('display', 'none')
+                                dialog.find("#password").css('display', 'none')
                             }
-                            dialog.find("#show_credit_cards").css('display', 'none')
-                            dialog.find("#password").css('display', 'none')
+                         
                         });
                 });
 
@@ -527,9 +528,10 @@
                        if (dialog.find('#password_modal').val() == '@Session["password"]')
                         {
                            dialog.find("#credit_cards_modal_table").show();
+                           dialog.find("#show_credit_cards_modal").css('display', 'none')
+                           dialog.find("#password_modal").css('display', 'none')
                        }
-                       dialog.find("#show_credit_cards_modal").css('display','none')
-                       dialog.find("#password_modal").css('display','none')
+                      
 
                     });
 
