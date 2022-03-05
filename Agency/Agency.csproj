@@ -3528,6 +3528,7 @@
     <Content Include="MailTemplates\balance.html" />
     <Content Include="MailTemplates\confirmation.html" />
     <Content Include="MailTemplates\credit.html" />
+    <Content Include="MailTemplates\itenrary.html" />
     <Content Include="Rotativa\help-wkhtmltoimage.txt" />
     <Content Include="Rotativa\help-wkhtmltopdf.txt" />
     <Content Include="Rotativa\wkhtmltoimage.exe" />
@@ -4905,6 +4906,7 @@
     <Content Include="Views\Booking\ConfirmationPDF.cshtml" />
     <Content Include="Views\Booking\BalancePDF.cshtml" />
     <Content Include="Views\Booking\CreditPDF.cshtml" />
+    <Content Include="Views\Booking\itineraryPDF.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

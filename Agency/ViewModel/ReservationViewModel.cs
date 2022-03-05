@@ -53,6 +53,7 @@ namespace Agency.ViewModel
         public int? vendor_id { get; set; }
         public int? currency { get; set; }
         public string string_currency { get; set; }
+        public string hotel_image { get; set; }
         public double? profit { get; set; }
         public int? is_special { get; set; }
         public int? hotel_id { get; set; }

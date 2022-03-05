@@ -383,7 +383,7 @@ namespace Agency.Controllers
             return RedirectToAction("Event", new { secret_key = currentEvent.secret_key });
         }
 
-        public ActionResult ConfirmationPDF(int reservation_id)
+        public ActionResult itineraryPDF(int reservation_id)
         {
             MailServer mailServer = db.MailServers.Where(ms => ms.type == 1).FirstOrDefault();
 
@@ -425,6 +425,7 @@ namespace Agency.Controllers
                                company_id = res.company_id,
                                event_hotel_id = event_hotel.id,
                                hotel_name = hotel.name,
+                               hotel_image = db.HotelImages.Where(hi=>hi.hotel_id == hotel.id).Select(hi=>hi.path).FirstOrDefault(),
                                hotel_rate = hotel.rate,
                                reservations_officer_name = res.reservations_officer_name,
                                reservations_officer_email = res.reservations_officer_email,
@@ -478,10 +479,65 @@ namespace Agency.Controllers
                                    transaction_id = tr.transaction_id
                                }).ToList(),
                                cancelation_fees = res.cancelation_fees
-                               //profit = calculateProfit(res.id).profit
                            }).Where(r => r.id == reservation_id).FirstOrDefault();
-            resData.welcome_message = mailServer.welcome_message.Replace("_Name",resData.reservations_officer_name);
-            var report = new Rotativa.ViewAsPdf("ConfirmationPDF", resData);
+
+
+            var resDetailData = (from resDetail in db.ReservationDetails
+                                 join reserv in db.Reservations on resDetail.reservation_id equals reserv.id into rs
+                                 from res in rs.DefaultIfEmpty()
+                                 join cli in db.Clients on resDetail.client_id equals cli.id into cl
+                                 from client in cl.DefaultIfEmpty()
+                                 select new ReservationDetailViewModel
+                                 {
+                                     id = resDetail.id,
+                                     amount = resDetail.amount,
+                                     tax = resDetail.tax,
+                                     room_type = resDetail.room_type,
+                                     reservation_from = db.ReservationDetails.Where(rsd => rsd.parent_id == resDetail.id).Select(rsd => rsd.reservation_from).Min(),
+                                     reservation_to = db.ReservationDetails.Where(rsd => rsd.parent_id == resDetail.id).Select(rsd => rsd.reservation_to).Max(),
+                                     no_of_days = resDetail.no_of_days,
+                                     parent_id = resDetail.parent_id,
+                                     active = resDetail.active,
+                                     client_id = resDetail.client_id,
+                                     client_first_name = client.first_name,
+                                     client_last_name = client.last_name,
+                                     reservation_id = resDetail.reservation_id,
+                                     currency = res.currency,
+                                     string_reservation_from = db.ReservationDetails.Where(rsd => rsd.parent_id == resDetail.id).Select(rsd => rsd.reservation_from).Min().ToString(),
+                                     string_reservation_to = db.ReservationDetails.Where(rsd => rsd.parent_id == resDetail.id).Select(rsd => rsd.reservation_to).Max().ToString(),
+                                     vendor_code = resDetail.vendor_code,
+                                     vendor_cost = db.ReservationDetails.Where(rsd => rsd.parent_id == resDetail.id).Select(rsd => rsd.vendor_cost).Sum(),
+                                     room_price = resDetail.room_price,
+                                     notify = resDetail.notify,
+                                     is_transfered = resDetail.is_transfered,
+                                     is_canceled = resDetail.is_canceled,
+                                     paid_to_vendor = resDetail.paid_to_vendor,
+                                     payment_to_vendor_deadline = (DateTime)resDetail.payment_to_vendor_deadline,
+                                     string_payment_to_vendor_deadline = resDetail.payment_to_vendor_deadline.ToString(),
+                                     string_spayment_to_vendor_notification_date = resDetail.payment_to_vendor_notification_date.ToString(),
+                                     payment_to_vendor_notification_date = resDetail.payment_to_vendor_notification_date,
+                                     paid_to_vendor_date = resDetail.paid_to_vendor_date,
+                                     amount_paid_to_vendor = resDetail.amount_paid_to_vendor,
+                                     cancelation_policy = resDetail.cancelation_policy,
+                                     confirmation_id = resDetail.confirmation_id,
+                                     guestReservations = db.ReservationDetails.Where(r => r.parent_id == resDetail.id && r.id != resDetail.id).Select(guestRes => new AdditionalReservationViewModel
+                                     {
+                                         id = guestRes.id,
+                                         reservation_id = guestRes.reservation_id,
+                                         parent_id = guestRes.parent_id,
+                                         reservation_from = guestRes.reservation_from,
+                                         reservation_to = guestRes.reservation_to,
+                                         vendor_code = guestRes.vendor_code,
+                                         vendor_cost = guestRes.vendor_cost,
+                                         room_price = guestRes.room_price,
+                                         string_reservation_from = guestRes.reservation_from.ToString(),
+                                         string_reservation_to = guestRes.reservation_to.ToString(),
+                                     }).ToList(),
+                                 }).Where(d => d.reservation_id == reservation_id && d.parent_id == d.id).ToList();
+
+            resData.reservationDetails = resDetailData;
+
+            var report = new Rotativa.ViewAsPdf("itineraryPDF", resData);
             return report;
         }
 
