@@ -74,7 +74,7 @@ namespace Agency.Services
         {
             Reservation reservation = db.Reservations.Find(reservation_id);
 
-            reservation.total_rooms = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id && reservation.is_canceled != 1).Count();
+            reservation.total_rooms = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id && reservation.is_canceled != 1 && rsd.id == rsd.parent_id).Count();
             reservation.total_amount = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id && reservation.is_canceled != 1).Select(s => s.amount).Sum();
             reservation.total_amount_after_tax = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id && reservation.is_canceled != 1).Select(s => s.amount_after_tax).Sum();
             reservation.tax_amount = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id && reservation.is_canceled != 1).Select(s => s.tax).Sum();
@@ -179,17 +179,31 @@ namespace Agency.Services
                 emailContent = emailContent.Replace("_adult_counter", reservation.total_rooms.ToString());
 
                 string Guests = String.Empty;
-
+                int checkIfDataFound = 0;
                 foreach(var client in resDetailData)
                 {
-                    Guests += @"<p style=""margin: 0;""><span style=""font-size:14px;"">"+ client.client_first_name + " " +client.client_last_name+"</span></p>";
+                    if (!String.IsNullOrEmpty(client.client_first_name) || !String.IsNullOrEmpty(client.client_first_name))
+                    {
+                        Guests += @"<p style=""margin: 0;""><span style=""font-size:14px;"">" + client.client_first_name + " " + client.client_last_name + "</span></p>";
+                        checkIfDataFound++;
+                    }
                 }
 
-                emailContent = emailContent.Replace("_guests", Guests);
+                if(checkIfDataFound != 0)
+                    emailContent = emailContent.Replace("_guests", Guests);
+                else
+                    emailContent = emailContent.Replace("_guests", "Booked From System");
 
                 emailContent = emailContent.Replace("_download_link", GetBaseUrl()+ "/Booking/itineraryPDF?reservation_id=" + reservation.id.ToString());
 
                 ReservationService.sendMail(mailServer.outgoing_mail, reservation.reservations_officer_email, mailServer.title, emailContent, mailServer.outgoing_mail_server, mailServer.port.ToInt(), mailServer.outgoing_mail_password);
+                
+                if(!String.IsNullOrEmpty(reservation.reservations_officer_email_2))
+                    ReservationService.sendMail(mailServer.outgoing_mail, reservation.reservations_officer_email_2, mailServer.title, emailContent, mailServer.outgoing_mail_server, mailServer.port.ToInt(), mailServer.outgoing_mail_password);
+                
+                if (!String.IsNullOrEmpty(reservation.reservations_officer_email_3))
+                    ReservationService.sendMail(mailServer.outgoing_mail, reservation.reservations_officer_email_3, mailServer.title, emailContent, mailServer.outgoing_mail_server, mailServer.port.ToInt(), mailServer.outgoing_mail_password);
+
                 ReservationService.sendMail(mailServer.outgoing_mail, mailServer.incoming_mail, mailServer.title, emailContent, mailServer.outgoing_mail_server, mailServer.port.ToInt(), mailServer.outgoing_mail_password);
             }
             catch (Exception ex)

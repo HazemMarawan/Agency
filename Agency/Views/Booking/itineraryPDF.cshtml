@@ -281,10 +281,17 @@
 																<div style="font-family: sans-serif">
                                                                     <div style="font-size: 12px; mso-line-height-alt: 14.399999999999999px; color: #ffffff; line-height: 1.2; font-family: Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;">
                                                                         <p style="margin: 0;"><strong><span style="font-size:14px;">Guests:</span></strong></p>
-                                                                        @foreach (var client in Model.reservationDetails)
+                                                                        @if (Model.reservationDetails.Count != 0)
                                                                         {
-                                                                            <p style="margin: 0;"><span style="font-size:14px;">@client.client_first_name @client.client_last_name</span></p>
-                                                                        }
+                                                                            foreach (var client in Model.reservationDetails)
+                                                                            {
+																				<p style="margin: 0;"><span style="font-size:14px;">@client.client_first_name @client.client_last_name</span></p> }
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <p style="margin: 0;"><span style="font-size:14px;">Booked From System</span></p>
+                                                                                               
+																			}
                                                                         <p style="margin: 0; mso-line-height-alt: 14.399999999999999px;"></p>
                                                                     </div>
 																</div>

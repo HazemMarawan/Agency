@@ -306,6 +306,10 @@ namespace Agency.Controllers
             initialReservation.reservations_officer_name = currentReservation.reservations_officer_name;
             initialReservation.reservations_officer_phone = currentReservation.reservations_officer_phone;
             initialReservation.reservations_officer_email = currentReservation.reservations_officer_email;
+            initialReservation.reservations_officer_phone_2 = currentReservation.reservations_officer_phone_2;
+            initialReservation.reservations_officer_email_2 = currentReservation.reservations_officer_email_2;
+            initialReservation.reservations_officer_phone_3 = currentReservation.reservations_officer_phone_3;
+            initialReservation.reservations_officer_email_3 = currentReservation.reservations_officer_email_3;
             initialReservation.payment_type = currentReservation.payment_type;
             initialReservation.credit_card_number = currentReservation.credit_card_number;
             initialReservation.security_code = currentReservation.security_code;

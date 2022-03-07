@@ -18,6 +18,10 @@ namespace Agency.ViewModel
         public string reservations_officer_name { get; set; }
         public string reservations_officer_phone { get; set; }
         public string reservations_officer_email { get; set; }
+        public string reservations_officer_phone_2 { get; set; }
+        public string reservations_officer_email_2 { get; set; }
+        public string reservations_officer_phone_3 { get; set; }
+        public string reservations_officer_email_3 { get; set; }
         public string company_fax { get; set; }
         public string company_address { get; set; }
         public string company_state { get; set; }

@@ -17,7 +17,7 @@ namespace Agency.Controllers
         [HttpPost]
         public ActionResult Login(User user)
         {
-            User currentUser = db.Users.Where(s => s.user_name == user.user_name && s.password == user.password).FirstOrDefault();
+            User currentUser = db.Users.Where(s => s.user_name.ToLower() == user.user_name.ToLower() && s.password == user.password).FirstOrDefault();
             if (currentUser != null)
             {
                 Session["user_name"] = currentUser.user_name;

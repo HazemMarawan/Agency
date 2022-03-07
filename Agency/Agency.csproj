@@ -469,6 +469,10 @@
     <Compile Include="Migrations\202202191502463_updates3.Designer.cs">
       <DependentUpon>202202191502463_updates3.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202203071657310_updates4.cs" />
+    <Compile Include="Migrations\202203071657310_updates4.Designer.cs">
+      <DependentUpon>202203071657310_updates4.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AgencyDbContext.cs" />
     <Compile Include="Models\Chat.cs" />
@@ -5132,6 +5136,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202202191502463_updates3.resx">
       <DependentUpon>202202191502463_updates3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202203071657310_updates4.resx">
+      <DependentUpon>202203071657310_updates4.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

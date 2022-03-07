@@ -303,6 +303,22 @@
                                 <input required name="reservations_officer_email" id="reservations_officer_email" type="email" class="form-control radius-30" />
                             </div>
                             <div class="form-group col-md-6">
+                                <label>Phone 2</label>
+                                <input name="reservations_officer_phone_2" id="reservations_officer_phone_2" type="text" class="form-control radius-30" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Email 2</label>
+                                <input name="reservations_officer_email_2" id="reservations_officer_email_2" type="email" class="form-control radius-30" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Phone 3</label>
+                                <input name="reservations_officer_phone_3" id="reservations_officer_phone_3" type="text" class="form-control radius-30" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Email 3</label>
+                                <input name="reservations_officer_email_3" id="reservations_officer_email_3" type="email" class="form-control radius-30" />
+                            </div>
+                            <div class="form-group col-md-6">
                                 <label>Check In</label>
                                 <input required name="check_in" id="check_in" type="date" class="form-control radius-30" />
                             </div>
@@ -341,7 +357,7 @@
                         <div class="form-row">
                             <input type="hidden" name="id" id="id" value="0" />
                             <input type="hidden" name="company_id" id="company_id" value="0" />
-                             <div class="form-group col-md-12">
+                            <div class="form-group col-md-12">
                                 <label>Hotel Name</label>
                                 <input name="hotel_name" id="hotel_name" type="text" class="form-control radius-30" />
                             </div>
@@ -355,16 +371,32 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label>Phone</label>
-                                <input name="reservations_officer_phone" id="reservations_officer_phone" type="text" class="form-control radius-30" />
+                                <input required name="reservations_officer_phone" id="reservations_officer_phone" type="text" class="form-control radius-30" />
                             </div>
                             <div class="form-group col-md-6">
                                 <label>Email</label>
-                                <input name="reservations_officer_email" id="reservations_officer_email" type="email" class="form-control radius-30" />
+                                <input required name="reservations_officer_email" id="reservations_officer_email" type="email" class="form-control radius-30" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Phone 2</label>
+                                <input name="reservations_officer_phone_2" id="reservations_officer_phone_2" type="text" class="form-control radius-30" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Email 2</label>
+                                <input name="reservations_officer_email_2" id="reservations_officer_email_2" type="email" class="form-control radius-30" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Phone 3</label>
+                                <input name="reservations_officer_phone_3" id="reservations_officer_phone_3" type="text" class="form-control radius-30" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Email 3</label>
+                                <input name="reservations_officer_email_3" id="reservations_officer_email_3" type="email" class="form-control radius-30" />
                             </div>
                             @*<div class="form-group col-md-6">
-                                    <label>Vendor</label>
-                                    @Html.DropDownList("vendor_id", new SelectList(ViewBag.Vendors, "id", "NamePlusCode"), "Select Vendor", new { @class = "form-control", @name = "vendor_id", @id = "vendor_id" })
-                                </div>*@
+            <label>Vendor</label>
+            @Html.DropDownList("vendor_id", new SelectList(ViewBag.Vendors, "id", "NamePlusCode"), "Select Vendor", new { @class = "form-control", @name = "vendor_id", @id = "vendor_id" })
+        </div>*@
                             <div class="form-group col-md-6">
                                 <label>Advance Reservation Percentage</label>
                                 <input name="advance_reservation_percentage" id="advance_reservation_percentage" type="number" min="0" step="0.1" class="form-control radius-30" />
@@ -374,33 +406,33 @@
                                 <input name="single_price" id="single_price" type="number" min="0" step="0.1" class="form-control radius-30" />
                             </div>
                             @*<div class="form-group col-md-6">
-                                    <label>Vendor Single Price</label>
-                                    <input name="vendor_single_price" id="vendor_single_price" type="number" min="0" step="0.1" class="form-control radius-30" />
-                                </div>*@
+            <label>Vendor Single Price</label>
+            <input name="vendor_single_price" id="vendor_single_price" type="number" min="0" step="0.1" class="form-control radius-30" />
+        </div>*@
                             <div class="form-group col-md-6">
                                 <label>Double Price</label>
                                 <input name="double_price" id="double_price" type="number" min="0" step="0.1" class="form-control radius-30" />
                             </div>
                             @*<div class="form-group col-md-6">
-                                    <label>Vendor Double Price</label>
-                                    <input name="vendor_douple_price" id="vendor_douple_price" type="number" min="0" step="0.1" class="form-control radius-30" />
-                                </div>*@
+            <label>Vendor Double Price</label>
+            <input name="vendor_douple_price" id="vendor_douple_price" type="number" min="0" step="0.1" class="form-control radius-30" />
+        </div>*@
                             <div class="form-group col-md-6">
                                 <label>Triple Price</label>
                                 <input name="triple_price" id="triple_price" type="number" min="0" step="0.1" class="form-control radius-30" />
                             </div>
                             @*<div class="form-group col-md-6">
-                                    <label>Vendor Triple Price</label>
-                                    <input name="vendor_triple_price" id="vendor_triple_price" type="number" min="0" step="0.1" class="form-control radius-30" />
-                                </div>*@
+            <label>Vendor Triple Price</label>
+            <input name="vendor_triple_price" id="vendor_triple_price" type="number" min="0" step="0.1" class="form-control radius-30" />
+        </div>*@
                             <div class="form-group col-md-6">
                                 <label>Quad Price</label>
                                 <input name="quad_price" id="quad_price" type="number" min="0" step="0.1" class="form-control radius-30" />
                             </div>
                             @*<div class="form-group col-md-6">
-                                    <label>Vendor Quad Price</label>
-                                    <input name="vendor_quad_price" id="vendor_quad_price" type="number" min="0" step="0.1" class="form-control radius-30" />
-                                </div>*@
+            <label>Vendor Quad Price</label>
+            <input name="vendor_quad_price" id="vendor_quad_price" type="number" min="0" step="0.1" class="form-control radius-30" />
+        </div>*@
                             <div class="form-group col-md-6">
                                 <label>Tax</label>
                                 <input name="tax" id="tax" type="number" min="0" step="0.1" class="form-control radius-30" />
@@ -634,6 +666,14 @@
         <label>To Balance Due Date</label>
         <input class="form-control" type="date" id="to_balance_due_date" name="to_balance_due_date">
     </div>
+    <div class="form-group col-2">
+        <label>From Submit Date</label>
+        <input class="form-control" type="date" id="from_created_at" name="from_created_at">
+    </div>
+    <div class="form-group col-2">
+        <label>To Submit Date</label>
+        <input class="form-control" type="date" id="to_created_at" name="to_created_at">
+    </div>
     <div class="form-group col-md-3">
         <label>Opener</label>
         @Html.DropDownList("search_opener", new SelectList(ViewBag.Opener, "id", "full_name"), "Select Opener", new { @class = "selectize", @name = "search_opener", @id = "search_opener" })
@@ -650,8 +690,10 @@
             <option value="2">Un Paid</option>
             <option value="3">Partially Paid</option>
             <option value="4">Paid</option>
+            <option value="6">Any Payment</option>
             <option value="5">Canceled</option>
-        </select>    </div>
+        </select>
+    </div>
     <div class="form-group col-3">
         <label>Text Search</label>
         <input class="form-control" type="text" id="text_search" name="text_search" placeholder="Search">
@@ -1047,180 +1089,6 @@
                 }
             })
 
-           var unPaidReservationTableOLD = $('#unPaidReservationTableOLD')
-               .DataTable({/* we added this from the other system to have same search and same pagination*/
-                   "dom": "<'dt--top-section '<'row'<'col-sm-12 col-md-6 d-flex justify-content-md-start justify-content-center'B><'col-sm-12 col-md-6 d-flex justify-content-md-end justify-content-center mt-md-0 mt-3'f>>>" +
-                       "<'table-responsive  'tr>" +
-                       "<'dt--bottom-section d-sm-flex justify-content-sm-between text-center'<'dt--pages-count  mb-sm-0 mb-3'i><'dt--pagination'p>>",
-                   "buttons": {
-                       buttons: [
-                           { extend: 'copy', className: 'btn btn-sm' },
-                           { extend: 'csv', className: 'btn btn-sm' },
-                           { extend: 'excel', className: 'btn btn-sm' },
-                           { extend: 'print', className: 'btn btn-sm' }
-                       ]
-                   },
-                   "oLanguage": {
-                       "oPaginate": { "sPrevious": 'Perivous', "sNext": 'Next' },
-                       "sInfo": "Showing page _PAGE_ of _PAGES_",
-                       "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
-                       "sSearchPlaceholder": "Search...",
-                       "sLengthMenu": "Results :  _MENU_",
-                   },
-                "processing": true,
-                "serverSide": true,
-                "scrollX": true,
-                "stateSave": false,
-                "lengthChange": false,
-                "dom": 'Bfrtip',
-                "buttons": ['copy', 'excel', 'pdf', 'print'],
-                "pageLength":10,
-                "rowId": 'id',
-                "ajax": {
-                    "url": "@Url.Action("unPaidReservations", "Reservation")",
-                    "type": "POST",
-                    "datatype": "json",
-                    "dataSrc": "data"
-                },
-                "columns": [
-                    {
-                        "data": "id",
-                        "searchable": true
-                    },
-                    {
-                        "data": "company_name", "searchable": true,
-                        fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-                            var html = "";
-                            if (oData.company_name)
-                                html += "<span style='font-weight:bold;' class='fw-bold'>Name:</span>" + oData.company_name + "<br/>";
-                            if (oData.reservations_officer_name)
-                                html += "<span style='font-weight:bold;' class='bold'>Officer Name:</span>" + oData.reservations_officer_name + "<br/>";
-                            if (oData.reservations_officer_email)
-                                html += "<span style='font-weight:bold;' class='bold'>Email:</span>" + oData.reservations_officer_email + "<br/>";
-                            if (oData.reservations_officer_phone)
-                                html += "<span style='font-weight:bold;' class='bold'>Phone:</span>" + oData.reservations_officer_phone + "<br/>";
-                            if (oData.string_check_in) {
-                                html += "- - - - - - - - - - - - - -  - - - - - - - <br>";
-                                html += "<span style='font-weight:bold;' class='bold'>Check in:</span>" + oData.string_check_in + "<br/>";
-                            }
-                            if (oData.string_check_out)
-                                html += "<span style='font-weight:bold;' class='bold'>Check out:</span>" + oData.string_check_out + "<br/>";
-                            if (oData.is_special)
-                                html += "<span style='font-weight:bold;' class='badge badge-success'>Special</span><br/>";
-
-                            $(nTd).html("<span class='action-column'>" + html + "</span>");
-                        }
-                    },
-                    {
-                        "data": "total_amount", "searchable": true,
-                        fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-                            var html = "";
-                            console.log(oData.total_amount);
-                            if (oData.total_amount_after_tax != null)
-                                html += "<span style='font-weight:bold;' class='bold'>Total:</span>" + addCommas(oData.total_amount_after_tax.toFixed(2));
-                            else
-                                html += "<span style='font-weight:bold;' class='bold'>Total:</span>0.0";
-                            if (oData.currency) {
-                                html += "<span style='font-weight:bold;' class='bold'>";
-
-                                if (oData.currency == 1)
-                                    html += " USD";
-                                if (oData.currency == 2)
-                                    html += " GBP";
-                                if (oData.currency == 3)
-                                    html += " EUR";
-                                html += "</span>";
-
-                            }
-                            html += "<br/>";
-                            if (oData.total_amount)
-                                html += "<span style='font-weight:bold;' class='bold'>Total (-tax):</span>" + addCommas((oData.total_amount).toFixed(2)) + "<br/>";
-                            if (oData.tax)
-                                html += "<span style='font-weight:bold;' class='bold'>Tax:</span>" + addCommas(oData.tax.toFixed(2)) + "%<br/>";
-                            if (oData.tax_amount)
-                                html += "<span style='font-weight:bold;' class='bold'>Tax Amount:</span>" + addCommas(oData.tax_amount.toFixed(2)) + "<br/>";
-                            if (oData.total_amount_after_tax && oData.total_amount_from_vendor && oData.paid_amount == 0) {
-                                html += "<span style='font-weight:bold;' class='bold'>Balance:</span>" + addCommas(oData.total_amount_after_tax.toFixed(2) - oData.paid_amount.toFixed(2)) + "<br/>";
-                            }
-
-                            $(nTd).html("<span class='action-column'>" + html + "</span>");
-                        }
-                    },
-                    {
-                        "data": "financial_advance", "searchable": true,
-                        fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-                            var html = "";
-                            if (oData.financial_advance)
-                                html += "<span style='font-weight:bold;' class='bold'>Financial Advance:</span>" + addCommas(oData.financial_advance.toFixed(2)) + "<br/>";
-                            if (oData.financial_due)
-                                html += "<span style='font-weight:bold;' class='bold'>Financial Due:</span>" + addCommas(oData.financial_due.toFixed(2)) + "<br/>";
-                            if (oData.single_price)
-                                html += "<span style='font-weight:bold;' class='bold'>Single Price:</span>" + addCommas(oData.single_price.toFixed(2)) + "<br/>";
-                            if (oData.douple_price)
-                                html += "<span style='font-weight:bold;' class='bold'>Douple Price:</span>" + addCommas(oData.douple_price.toFixed(2)) + "<br/>";
-                            if (oData.quad_price)
-                                html += "<span style='font-weight:bold;' class='bold'>Quad Price:</span>" + addCommas(oData.quad_price.toFixed(2)) + "<br/>";
-                            if (oData.profit)
-                                html += "<span style='font-weight:bold;' class='bold'>Profit:</span>" + addCommas(oData.profit.toFixed(2)) + "<br/>";
-
-                            if (parseInt(oData.paid_amount) == 0)
-                                html += "<span style='font-weight:bold;' class='bold'>Status:</span> Un Paid<br/>";
-                            else if ((parseInt(oData.paid_amount) < parseInt(oData.total_amount_after_tax)))
-                                html += "<span style='font-weight:bold;' class='bold'>Status:</span> Partially Paid<br/>";
-                            else if (parseInt(oData.paid_amount) == parseInt(oData.total_amount_after_tax))
-                                html += "<span style='font-weight:bold;' class='bold'>Status:</span> Paid<br/>";
-
-
-
-                            $(nTd).html("<span class='action-column'>" + html + "</span>");
-                        }
-                    },
-                    {
-                        "data": "hotel_name", "searchable": true,
-                        fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-                            var html = "";
-                            if (oData.hotel_name)
-                                html += "<span style='font-weight:bold;' class='bold'>Name:</span>" + oData.hotel_name + "<br/>";
-
-                            if (oData.hotel_rate) {
-                                html += `<input class="rating" max="5"
-                                    step = "0.5"
-                                    name = "rating"
-                                    style = "--value:` + oData.hotel_rate + `"
-                                    type = "range"
-                                    >`;
-                            }
-
-                            $(nTd).html("<span class='action-column'>" + html + "</span>");
-                        }
-                    },
-                    {
-                        "data": "active", "searchable": true,
-                        fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-                            var html = "";
-                            if (oData.active == 1)
-                                html += "<span class='badge badge-primary'>Yes</span>";
-                            else
-                                html += "<span class='badge badge-danger'>No</span>";
-                            $(nTd).html("<span class='action-column'>" + html + "</span>");
-                        }
-                    },
-                    {
-                        "data": "id", "searchable": true,
-                        fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-                            var html = "";
-                            html += "<a class='editUnPaid' href='javascript:void(0)' title='Edit'><i class='far fa-edit'></i></a>&nbsp;|";
-
-                            html += "<a class='details' href='/ReservationDetail/Index/" + oData.id + "' title='Details'><i class='far fa-eye'></i></a>&nbsp;|";
-                            html += "<a class='confMail' href='javascript:void(0)' title='Send Email'><i class='far fa-envelope-open'></i></a>&nbsp;|";
-                            //html += "<a target='_blank' class='Itinirary' href='/ReservationDetail/Itinirary/" + oData.id + "' title='Itinirary'><i class='far fa-eye'></i></a>&nbsp;|";
-                            html += "<a target='_blank' class='view' href='/Reservation/View/" + oData.id + "' title='View'><i class='far fa-eye'></i></a>";
-                            $(nTd).html("<span class='action-column'>" + html + "</span>");
-                        }
-                    },
-                ]
-            });
-
             var fromWebsiteTable = $('#fromWebsiteTable')
             .DataTable({/* we added this from the other system to have same search and same pagination*/
                 "dom": "<'dt--top-section '<'row'<'col-sm-12 col-md-6 d-flex justify-content-md-start justify-content-center'B><'col-sm-12 col-md-6 d-flex justify-content-md-end justify-content-center mt-md-0 mt-3'f>>>" +
@@ -1278,8 +1146,12 @@
                     {
                         "data": "company_name", "searchable": true,
                         fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                            var html = '';
+                            if (oData.company_name)
+                                html = "<a href='/Reservation/View/" + oData.id + "'>" + oData.company_name + "</a><br>";
+                            else
+                                html = "<a href='/Reservation/View/" + oData.id + "'>Not Assigned</a><br>";
 
-                            var html = "<a href='/Reservation/View/" + oData.id + "'>" + oData.company_name + "</a><br>";
                             if (oData.is_special)
                                 html += "<span class='badge badge-primary'>Special</span>";
                             else
@@ -1384,7 +1256,7 @@
                         "data": "id", "searchable": true,
                         fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
                             var html = "";
-                            html += "<a class='editUnPaid' href='javascript:void(0)' title='Edit'><i class='far fa-edit'></i></a>&nbsp;|";
+                            html += "<a class='editWebSite' href='javascript:void(0)' title='Edit'><i class='far fa-edit'></i></a>&nbsp;|";
 
                             //html += "<a class='details' href='/ReservationDetail/Index/" + oData.id + "' title='Details'><i class='far fa-eye'></i></a>&nbsp;|";
                             //html += "<a class='creditMailWebSite' href='javascript:void(0)' title='Credit Email'><i class='far fa-envelope-open'></i></a>&nbsp;|";
@@ -1393,6 +1265,7 @@
                             html += "<a class='cancelUnpaid' href='javascript:void(0);' title='Cancel'><i class='far fa-times-circle'></i></a>&nbsp;";
                             html += "<a class='payAmountToReservation' href='javascript:void(0);' title='Pay'><i class='fas fa-money-bill-alt'></i></a>&nbsp;";
                             html += "<a class='creditCardsFromWebSite' href='javascript:void(0);' title='Credit Cards'><i class='fas fa-credit-card'></i></a>&nbsp;";
+                            html += "<a class='copyFromWebSiteBooking' href='javascript:void(0);' title='Copy'><i class='fas fa-copy'></i></a>&nbsp;";
 
                             $(nTd).html("<span class='action-column'>" + html + "</span>");
                         }
@@ -1457,8 +1330,13 @@
                     {
                         "data": "company_name", "searchable": true,
                         fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                            var html = '';
 
-                            var html = "<a href='/Reservation/View/" + oData.id + "'>" + oData.company_name + "</a><br>";
+                            if (oData.company_name)
+                                html = "<a href='/Reservation/View/" + oData.id + "'>" + oData.company_name + "</a><br>";
+                            else
+                                html = "<a href='/Reservation/View/" + oData.id + "'>Not Assigned</a><br>";
+
                             if (oData.is_special)
                                 html += "<span class='badge badge-primary'>Special</span>";
                             else
@@ -1573,6 +1451,7 @@
                             html += "<a class='payUnPaidAmountToReservation' href='javascript:void(0);' title='Pay'><i class='fas fa-money-bill-alt'></i></a>&nbsp;|";
                             //html += "<a class='refundPaid' href='javascript:void(0);' title='Refund'><i class='far fa-times-circle'></i></a>&nbsp;";
                             html += "<a class='creditCardsUnPaid' href='javascript:void(0);' title='Credit Cards'><i class='fas fa-credit-card'></i></a>&nbsp;";
+                            html += "<a class='copyUnPaidBooking' href='javascript:void(0);' title='Copy'><i class='fas fa-copy'></i></a>&nbsp;";
 
                             $(nTd).html("<span class='action-column'>" + html + "</span>");
                         }
@@ -1639,7 +1518,12 @@
                             "data": "company_name", "searchable": true,
                             fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
 
-                                var html = "<a href='/Reservation/View/" + oData.id + "'>" + oData.company_name + "</a><br  >";
+                                var html = '';
+                                if (oData.company_name)
+                                    html = "<a href='/Reservation/View/" + oData.id + "'>" + oData.company_name + "</a><br>";
+                                else
+                                    html = "<a href='/Reservation/View/" + oData.id + "'>Not Assigned</a><br>";
+
                                 if (oData.is_special)
                                     html += "<span class='badge badge-primary'>Special</span>";
                                 else
@@ -1744,7 +1628,7 @@
                             "data": "id", "searchable": true,
                             fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
                                 var html = "";
-                                html += "<a class='editUnPaid' href='javascript:void(0)' title='Edit'><i class='far fa-edit'></i></a>&nbsp;|";
+                                html += "<a class='editPartiallyPaid' href='javascript:void(0)' title='Edit'><i class='far fa-edit'></i></a>&nbsp;|";
 
                                 //html += "<a class='details' href='/ReservationDetail/Index/" + oData.id + "' title='Details'><i class='far fa-eye'></i></a>&nbsp;|";
                                 //html += "<a class='creditMailPartiallyPaid' href='javascript:void(0)' title='Credit Email'><i class='far fa-envelope-open'></i></a>&nbsp;|";
@@ -1754,6 +1638,8 @@
                                 html += "<a class='payPartiallPaidAmountToReservation' href='javascript:void(0);' title='Pay'><i class='fas fa-money-bill-alt'></i></a>&nbsp;|";
                                 //html += "<a class='refundPaid' href='javascript:void(0);' title='Refund'><i class='far fa-times-circle'></i></a>&nbsp;";
                                 html += "<a class='creditCardsPartiallyPaid' href='javascript:void(0);' title='Credit Cards'><i class='fas fa-credit-card'></i></a>&nbsp;";
+                                html += "<a class='copyPartiallyPaidBooking' href='javascript:void(0);' title='Copy'><i class='fas fa-copy'></i></a>&nbsp;";
+
                                 $(nTd).html("<span class='action-column'>" + html + "</span>");
                             }
                         },
@@ -1820,7 +1706,12 @@
                             "data": "company_name", "searchable": true,
                             fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
 
-                                var html = "<a href='/Reservation/View/" + oData.id + "'>" + oData.company_name + "</a><br  >";
+                                var html = '';
+                                if (oData.company_name)
+                                    html = "<a href='/Reservation/View/" + oData.id + "'>" + oData.company_name + "</a><br>";
+                                else
+                                    html = "<a href='/Reservation/View/" + oData.id + "'>Not Assigned</a><br>";
+
                                 if (oData.is_special)
                                     html += "<span class='badge badge-primary'>Special</span>";
                                 else
@@ -1925,7 +1816,7 @@
                             "data": "id", "searchable": true,
                             fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
                                 var html = "";
-                                html += "<a class='editUnPaid' href='javascript:void(0)' title='Edit'><i class='far fa-edit'></i></a>&nbsp;|";
+                                html += "<a class='editPaid' href='javascript:void(0)' title='Edit'><i class='far fa-edit'></i></a>&nbsp;|";
 
                                 //html += "<a class='details' href='/ReservationDetail/Index/" + oData.id + "' title='Details'><i class='far fa-eye'></i></a>&nbsp;|";
                                 //html += "<a class='creditMailPaid' href='javascript:void(0)' title='Credit Email'><i class='far fa-envelope-open'></i></a>&nbsp;|";
@@ -1934,6 +1825,7 @@
                                 html += "<a class='cancelPaid' href='javascript:void(0);' title='Cancel'><i class='far fa-times-circle'></i></a>&nbsp;|";
                                 //html += "<a class='refundPaid' href='javascript:void(0);' title='Refund'><i class='far fa-times-circle'></i></a>&nbsp;";
                                 html += "<a class='creditCardsPaid' href='javascript:void(0);' title='Credit Cards'><i class='fas fa-credit-card'></i></a>&nbsp;";
+                                html += "<a class='copyPaidBooking' href='javascript:void(0);' title='Copy'><i class='fas fa-copy'></i></a>&nbsp;";
 
                                 $(nTd).html("<span class='action-column'>" + html + "</span>");
                             }
@@ -2000,7 +1892,12 @@
                             "data": "company_name", "searchable": true,
                             fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
 
-                                var html = "<a href='/Reservation/View/" + oData.id + "'>" + oData.company_name + "</a><br  >";
+                                var html = '';
+                                if (oData.company_name)
+                                    html = "<a href='/Reservation/View/" + oData.id + "'>" + oData.company_name + "</a><br>";
+                                else
+                                    html = "<a href='/Reservation/View/" + oData.id + "'>Not Assigned</a><br>";
+
                                 if (oData.is_special)
                                     html += "<span class='badge badge-primary'>Special</span>";
                                 else
@@ -2105,7 +2002,7 @@
                             "data": "id", "searchable": true,
                             fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
                                 var html = "";
-                                html += "<a class='editUnPaid' href='javascript:void(0)' title='Edit'><i class='far fa-edit'></i></a>&nbsp;|";
+                                html += "<a class='editCancelled' href='javascript:void(0)' title='Edit'><i class='far fa-edit'></i></a>&nbsp;|";
 
                                 //html += "<a class='details' href='/ReservationDetail/Index/" + oData.id + "' title='Details'><i class='far fa-eye'></i></a>&nbsp;|";
                                 //html += "<a class='creditMailCanceled' href='javascript:void(0)' title='Credit Email'><i class='far fa-envelope-open'></i></a>&nbsp;|";
@@ -2115,231 +2012,13 @@
                                 //if (oData.paid_amount > 0)
                                 //    html += "<a class='refundPaid' href='javascript:void(0);' title='Refund'><i class='fas fa-undo-alt'></i></a>&nbsp;";
                                 html += "<a class='creditCardsCanceled' href='javascript:void(0);' title='Credit Cards'><i class='fas fa-credit-card'></i></a>&nbsp;";
+                                html += "<a class='copyCanceledBooking' href='javascript:void(0);' title='Copy'><i class='fas fa-copy'></i></a>&nbsp;";
 
                                 $(nTd).html("<span class='action-column'>" + html + "</span>");
                             }
                         },
                     ]
                });
-
-            var canceledreservationTableOLD = $('#canceledReservationsTableOLD')
-               .DataTable({/* we added this from the other system to have same search and same pagination*/
-                   "dom": "<'dt--top-section'<'row'<'col-sm-12 col-md-6 d-flex justify-content-md-start justify-content-center'B><'col-sm-12 col-md-6 d-flex justify-content-md-end justify-content-center mt-md-0 mt-3'f>>>" +
-                       "<'table-responsive'tr>" +
-                       "<'dt--bottom-section d-sm-flex justify-content-sm-between text-center'<'dt--pages-count  mb-sm-0 mb-3'i><'dt--pagination'p>>",
-                   "buttons": {
-                       buttons: [
-                           { extend: 'copy', className: 'btn btn-sm' },
-                           { extend: 'csv', className: 'btn btn-sm' },
-                           { extend: 'excel', className: 'btn btn-sm' },
-                           { extend: 'print', className: 'btn btn-sm' }
-                       ]
-                   },
-                   "oLanguage": {
-                       "oPaginate": { "sPrevious": 'Perivous', "sNext": 'Next' },
-                       "sInfo": "Showing page _PAGE_ of _PAGES_",
-                       "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
-                       "sSearchPlaceholder": "Search...",
-                       "sLengthMenu": "Results :  _MENU_",
-                   },
-                    "processing": true,
-                    "serverSide": true,
-                    "scrollX": true,
-                    "stateSave": false,
-                    "lengthChange": false,
-                    "dom": 'Bfrtip',
-
-                    "buttons": ['copy', 'excel', 'pdf', 'print'],
-                    "pageLength":10,
-                    "rowId": 'id',
-                    "ajax": {
-                        "url": "@Url.Action("canceledReservations", "Reservation")",
-                        "type": "POST",
-                        "datatype": "json",
-                        "dataSrc": "data"
-                    },
-                    "columns": [
-                        {
-                            "data": "id",
-                            "searchable": true
-                        },
-                        {
-                            "data": "event_name", "searchable": true,
-                            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-
-                                var html = "<span>"+oData.event_name+"</span>";
-                                if (oData.is_special)
-                                    html += "<span class='badge badge-primary'>Special</span>";
-                                else
-                                    html += "<span class='badge badge-success'>Normal</span>";
-                                $(nTd).html("<span class='action-column'>" + html + "</span>");
-                            }
-                        },
-                        {
-                            "data": "hotel_name",
-                            "searchable": true
-                        },
-                        {
-                            "data": "string_reservation_from", "searchable": true,
-                            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-
-                                var html = "";
-                                if (oData.string_reservation_from)
-                                    html += "In: " + oData.string_reservation_from+"<br>";
-                                if (oData.string_reservation_to)
-                                    html += "In: " + oData.string_reservation_to;
-
-                                $(nTd).html("<span class='action-column'>" + html + "</span>");
-                            }
-                        },
-                        {
-                            "data": "price_per_night",
-                            "searchable": true
-                        },
-                        {
-                            "data": "id", "searchable": true,
-                            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-                                var html = "";
-                                html += "<a class='move_reservation_to_another_booking' href='javascript:void(0);' title='Transfer Reservation'><i class='fas fa-people-arrows'></i></a>&nbsp;";
-                                $(nTd).html("<span class='action-column'>" + html + "</span>");
-                            }
-                        },
-                    ]
-                 });
-
-            @*var ourRoomsTable = $('#our_rooms_table')
-               .DataTable({/* we added this from the other system to have same search and same pagination*/
-                   "dom": "<'dt--top-section'<'row'<'col-sm-12 col-md-6 d-flex justify-content-md-start justify-content-center'B><'col-sm-12 col-md-6 d-flex justify-content-md-end justify-content-center mt-md-0 mt-3'f>>>" +
-                       "<'table-responsive'tr>" +
-                       "<'dt--bottom-section d-sm-flex justify-content-sm-between text-center'<'dt--pages-count  mb-sm-0 mb-3'i><'dt--pagination'p>>",
-                   "buttons": {
-                       buttons: [
-                           { extend: 'copy', className: 'btn btn-sm' },
-                           { extend: 'csv', className: 'btn btn-sm' },
-                           { extend: 'excel', className: 'btn btn-sm' },
-                           { extend: 'print', className: 'btn btn-sm' }
-                       ]
-                   },
-                   "oLanguage": {
-                       "oPaginate": { "sPrevious": 'Perivous', "sNext": 'Next' },
-                       "sInfo": "Showing page _PAGE_ of _PAGES_",
-                       "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
-                       "sSearchPlaceholder": "Search...",
-                       "sLengthMenu": "Results :  _MENU_",
-                   },
-                    "processing": true,
-                    "serverSide": true,
-                    "scrollX": true,
-                    "stateSave": false,
-                    "lengthChange": false,
-                    "dom": 'Bfrtip',
-
-                    "buttons": ['copy', 'excel', 'pdf', 'print'],
-                    "pageLength":10,
-                    "rowId": 'id',
-                    "ajax": {
-                        "url": "@Url.Action("ourRooms", "Reservation")",
-                        "type": "POST",
-                        "datatype": "json",
-                        "dataSrc": "data"
-                    },
-                    "columns": [
-                        {
-                            "data": "id", "searchable": true,
-                            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-
-                                var html = "<a href='/Reservation/View/" + oData.id + "'>" + oData.id + "</a>";
-
-                                $(nTd).html("<span class='action-column'>" + html + "</span>");
-                            }
-                        },
-                        {
-                            "data": "event_name", "searchable": true,
-                            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-
-                                var html = "<span>" + oData.event_name+"</span><br>";
-                                if (oData.is_special)
-                                    html += "<span class='badge badge-primary'>Special</span>";
-                                else
-                                    html += "<span class='badge badge-success'>Normal</span>";
-                                $(nTd).html("<span class='action-column'>" + html + "</span>");
-                            }
-                        },
-                        {
-                            "data": "hotel_name",
-                            "searchable": true
-                        },
-                        {
-                            "data": "status", "searchable": true,
-                            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-                                var html = "";
-                                if (oData.status || oData.total_rooms || oData.total_nights) {
-                                    if (oData.status)
-                                        html += "<span style='font-weight:bold;' class='fw-bold'>" + oData.status + "</span><br/>";
-                                    if (oData.countPaidToVendorRooms)
-                                        html += oData.countPaidToVendorRooms + " <span style='font-weight:bold;' class='fw-bold'>Rooms</span><br/>";
-                                    if (oData.countPaidToVendorNights)
-                                        html += oData.countPaidToVendorNights + " <span style='font-weight:bold;' class='fw-bold'>Nights</span><br/>";
-                                } else {
-                                    html += "<span style='font-weight:bold;text-color:red;' class='bold'>Not Assigned</span>";
-                                }
-                                $(nTd).html("<span class='action-column'>" + html + "</span>");
-                            }
-                        },
-                        {
-                            "data": "check_in", "searchable": true,
-                            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-                                var html = "";
-                                if (oData.check_in || oData.check_out) {
-                                    if (oData.check_in) {
-                                        html += "<span style='font-weight:bold;' class='fw-bold'>In: " + fixDate(oData.check_in) + "</span><br/>";
-                                    }
-
-                                    if (oData.check_out) {
-                                        html += "<span style='font-weight:bold;' class='fw-bold'>Out: " + fixDate(oData.check_out) + "</span><br/>";
-                                    }
-
-                                }
-                                else {
-                                    html += "<span style='font-weight:bold;text-color:red;' class='bold'>Not Assigned</span>";
-                                }
-                                $(nTd).html("<span class='action-column'>" + html + "</span>");
-                            }
-                        },
-                        {
-                            "data": "vendor_single_price", "searchable": true,
-                            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-                                var html = "";
-
-                                if (oData.vendor_single_price)
-                                    html += "<span style='font-weight:bold;' class='fw-bold'> Single: " + addCommas((oData.vendor_single_price).toFixed(2)) + "</span><br/>";
-                                if (oData.vendor_douple_price)
-                                    html += "<span style='font-weight:bold;' class='fw-bold'> Double: " + addCommas((oData.vendor_douple_price).toFixed(2)) + "</span><br/>";
-                                if (oData.vendor_triple_price)
-                                    html += "<span style='font-weight:bold;' class='fw-bold'> Triple: " + addCommas((oData.vendor_triple_price).toFixed(2)) + "</span><br/>";
-                                if (oData.vendor_quad_price)
-                                    html += "<span style='font-weight:bold;' class='fw-bold'> Quad: " + addCommas((oData.vendor_quad_price).toFixed(2)) + "</span><br/>";
-
-                                $(nTd).html("<span class='action-column'>" + html + "</span>");
-                            }
-                        },
-                        {
-                            "data": "id", "searchable": true,
-                            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-                                var html = "";
-                                //html += "<a class='editUnPaid' href='javascript:void(0)' title='Edit'><i class='far fa-edit'></i></a>&nbsp;|";
-                                //html += "<a class='details' href='/ReservationDetail/Index/" + oData.id + "' title='Details'><i class='far fa-eye'></i></a>&nbsp;|";
-                                //html += "<a class='confMail' href='javascript:void(0)' title='Send Email'><i class='far fa-envelope-open'></i></a>&nbsp;|";
-                                //html += "<a target='_blank' class='Itinirary' href='/ReservationDetail/Itinirary/" + oData.id + "' title='Itinirary'><i class='far fa-eye'></i></a>&nbsp;|";
-                                html += "<a target='_blank' class='view' href='/Reservation/ViewOurRooms/" + oData.id + "' title='View'><i class='far fa-eye'></i></a>&nbsp; | ";
-                                // html += "<a class='cancelPaid' href='javascript:void(0);' title='Cancel'><i class='far fa-times-circle'></i></a>&nbsp;";
-                                html += "<a class='creditCardsOurRoom' href='javascript:void(0);' title='Credit Cards'><i class='fas fa-credit-card'></i></a>&nbsp;";
-
-                                $(nTd).html("<span class='action-column'>" + html + "</span>");
-                            }
-                        },
-                    ]
-               });*@
 
             var ourRoomsTable = $('#our_rooms_table')
                .DataTable({/* we added this from the other system to have same search and same pagination*/
@@ -2524,7 +2203,12 @@
                             "data": "company_name", "searchable": true,
                             fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
 
-                                var html = "<a href='/Reservation/View/" + oData.id + "'>" + oData.company_name + "</a><br  >";
+                                var html = '';
+                                if (oData.company_name)
+                                    html = "<a href='/Reservation/View/" + oData.id + "'>" + oData.company_name + "</a><br>";
+                                else
+                                    html = "<a href='/Reservation/View/" + oData.id + "'>Not Assigned</a><br>";
+
                                 if (oData.is_special)
                                     html += "<span class='badge badge-primary'>Special</span>";
                                 else
@@ -2638,6 +2322,8 @@
                                 html += "<a class='cancelAll' href='javascript:void(0);' title='Cancel'><i class='far fa-times-circle'></i></a>&nbsp;|";
                                 //html += "<a class='refundPaid' href='javascript:void(0);' title='Refund'><i class='far fa-times-circle'></i></a>&nbsp;";
                                 html += "<a class='creditCardsAll' href='javascript:void(0);' title='Credit Cards'><i class='fas fa-credit-card'></i></a>&nbsp;";
+                                html += "<a class='copyAllBooking' href='javascript:void(0);' title='Copy'><i class='fas fa-copy'></i></a>&nbsp;";
+
 
                                 $(nTd).html("<span class='action-column'>" + html + "</span>");
                             }
@@ -2688,6 +2374,9 @@
                 allTable.columns(9).search($("#search_opener").val());
                 allTable.columns(10).search($("#search_closer").val());
                 allTable.columns(11).search($("#search_status").val());
+                allTable.columns(12).search($("#from_created_at").val());
+                allTable.columns(13).search($("#to_created_at").val());
+
 
                 allTable.draw();
             });
@@ -2976,6 +2665,92 @@
             });
 
 
+            $(document).on("click", ".editWebSite", function () {
+                var data = fromWebsiteTable.row($(this).closest('tr')).data();
+                console.log(data);
+                var modal = $('#edit_reservation_modal').clone();
+                var action = '@Url.Action("saveReservation", "Reservation")';
+                modal.find('form').attr('action', action);
+                modal.find('#modal_title').text('Edit Reservation (' + data.event_name + ' => ' + data.hotel_name_special+')');
+                modal.execModal({
+                    progressBar: 'progress_bar',
+                    progressText: 'progress_text',
+                }, function (response) {
+                        unPaidReservationTable.draw();
+                        allTable.draw();
+
+                }, function (response) {
+
+                }, function (dialog) {
+
+                        dialog.find('#id').val(data.id);
+                        dialog.find('#hotel_name').val(data.hotel_name_special);
+                        dialog.find('#company_id').val(data.company_id);
+                        dialog.find('#company_name').val(data.company_name);
+                        dialog.find('#reservations_officer_name').val(data.reservations_officer_name);
+                        dialog.find('#reservations_officer_email').val(data.reservations_officer_email);
+                        dialog.find('#reservations_officer_phone').val(data.reservations_officer_phone);
+                        dialog.find('#reservations_officer_email_2').val(data.reservations_officer_email_2);
+                        dialog.find('#reservations_officer_phone_2').val(data.reservations_officer_phone_2);
+                        dialog.find('#reservations_officer_email_3').val(data.reservations_officer_email_3);
+                        dialog.find('#reservations_officer_phone_3').val(data.reservations_officer_phone_3);
+                        if(data.single_price > 0)
+                            dialog.find('#single_price').val(data.single_price);
+                        else
+                            dialog.find('#single_price').val(data.event_single_price);
+                        //---------------------------------------
+                        if(data.double_price > 0)
+                            dialog.find('#double_price').val(data.double_price);
+                        else
+                            dialog.find('#double_price').val(data.event_double_price);
+                        //---------------------------------------
+                        if(data.triple_price > 0)
+                            dialog.find('#triple_price').val(data.triple_price);
+                        else
+                            dialog.find('#triple_price').val(data.event_triple_price);
+                        //---------------------------------------
+                        if(data.quad_price > 0)
+                            dialog.find('#quad_price').val(data.quad_price);
+                        else
+                            dialog.find('#quad_price').val(data.event_quad_price);
+                        //---------------------------------------
+                        if(data.vendor_single_price > 0)
+                            dialog.find('#vendor_single_price').val(data.vendor_single_price);
+                        else
+                            dialog.find('#vendor_single_price').val(data.event_vendor_single_price);
+                        //---------------------------------------
+                         if(data.vendor_douple_price > 0)
+                             dialog.find('#vendor_douple_price').val(data.vendor_douple_price);
+                        else
+                            dialog.find('#vendor_douple_price').val(data.event_vendor_double_price);
+                        //---------------------------------------
+                         if(data.vendor_triple_price > 0)
+                            dialog.find('#vendor_triple_price').val(data.vendor_triple_price);
+                        else
+                            dialog.find('#vendor_triple_price').val(data.event_vendor_triple_price);
+                        //---------------------------------------
+                         if(data.vendor_quad_price > 0)
+                            dialog.find('#vendor_quad_price').val(data.vendor_quad_price);
+                        else
+                            dialog.find('#vendor_quad_price').val(data.event_vendor_quad_price);
+                        //---------------------------------------
+                       if(data.tax > 0)
+                            dialog.find('#tax').val(data.tax);
+                        else
+                            dialog.find('#tax').val(data.event_tax);
+
+                        dialog.find("#advance_reservation_percentage").val(data.advance_reservation_percentage);
+                        dialog.find("#currency").val(data.currency);
+                        dialog.find('#opener option[value=' + data.opener + ']').attr('selected', 'selected');
+                        dialog.find('#closer option[value=' + data.closer + ']').attr('selected', 'selected');
+                        dialog.find('#shift option[value=' + data.shift + ']').attr('selected', 'selected');
+                        dialog.find('#vendor_id option[value=' + data.vendor_id + ']').attr('selected', 'selected');
+
+
+                });
+
+            });
+
             $(document).on("click", ".editUnPaid", function () {
                 var data = unPaidReservationTable.row($(this).closest('tr')).data();
                 console.log(data);
@@ -3001,7 +2776,10 @@
                         dialog.find('#reservations_officer_name').val(data.reservations_officer_name);
                         dialog.find('#reservations_officer_email').val(data.reservations_officer_email);
                         dialog.find('#reservations_officer_phone').val(data.reservations_officer_phone);
-
+                        dialog.find('#reservations_officer_email_2').val(data.reservations_officer_email_2);
+                        dialog.find('#reservations_officer_phone_2').val(data.reservations_officer_phone_2);
+                        dialog.find('#reservations_officer_email_3').val(data.reservations_officer_email_3);
+                        dialog.find('#reservations_officer_phone_3').val(data.reservations_officer_phone_3);
                         if(data.single_price > 0)
                             dialog.find('#single_price').val(data.single_price);
                         else
@@ -3084,6 +2862,10 @@
                         dialog.find('#reservations_officer_name').val(data.reservations_officer_name);
                         dialog.find('#reservations_officer_email').val(data.reservations_officer_email);
                         dialog.find('#reservations_officer_phone').val(data.reservations_officer_phone);
+                        dialog.find('#reservations_officer_email_2').val(data.reservations_officer_email_2);
+                        dialog.find('#reservations_officer_phone_2').val(data.reservations_officer_phone_2);
+                        dialog.find('#reservations_officer_email_3').val(data.reservations_officer_email_3);
+                        dialog.find('#reservations_officer_phone_3').val(data.reservations_officer_phone_3);
 
                         if(data.single_price > 0)
                             dialog.find('#single_price').val(data.single_price);
@@ -3167,6 +2949,10 @@
                         dialog.find('#reservations_officer_name').val(data.reservations_officer_name);
                         dialog.find('#reservations_officer_email').val(data.reservations_officer_email);
                         dialog.find('#reservations_officer_phone').val(data.reservations_officer_phone);
+                        dialog.find('#reservations_officer_email_2').val(data.reservations_officer_email_2);
+                        dialog.find('#reservations_officer_phone_2').val(data.reservations_officer_phone_2);
+                        dialog.find('#reservations_officer_email_3').val(data.reservations_officer_email_3);
+                        dialog.find('#reservations_officer_phone_3').val(data.reservations_officer_phone_3);
 
                         if(data.single_price > 0)
                             dialog.find('#single_price').val(data.single_price);
@@ -3249,6 +3035,10 @@
                         dialog.find('#reservations_officer_name').val(data.reservations_officer_name);
                         dialog.find('#reservations_officer_email').val(data.reservations_officer_email);
                         dialog.find('#reservations_officer_phone').val(data.reservations_officer_phone);
+                        dialog.find('#reservations_officer_email_2').val(data.reservations_officer_email_2);
+                        dialog.find('#reservations_officer_phone_2').val(data.reservations_officer_phone_2);
+                        dialog.find('#reservations_officer_email_3').val(data.reservations_officer_email_3);
+                        dialog.find('#reservations_officer_phone_3').val(data.reservations_officer_phone_3);
 
                         if(data.single_price > 0)
                             dialog.find('#single_price').val(data.single_price);
@@ -3307,6 +3097,91 @@
 
            });
 
+            $(document).on("click", ".editCancelled", function () {
+               var data = allTable.row($(this).closest('tr')).data();
+                console.log(data);
+                var modal = $('#edit_reservation_modal').clone();
+                var action = '@Url.Action("saveReservation", "Reservation")';
+                modal.find('form').attr('action', action);
+                modal.find('#modal_title').text('Edit Reservation (' + data.event_name + ' => ' + data.hotel_name_special+')');
+                modal.execModal({
+                    progressBar: 'progress_bar',
+                    progressText: 'progress_text',
+                }, function (response) {
+                        allTable.draw();
+
+                }, function (response) {
+
+                }, function (dialog) {
+
+                        dialog.find('#id').val(data.id);
+                        dialog.find('#company_id').val(data.company_id);
+                        dialog.find('#hotel_name').val(data.hotel_name_special);
+                        dialog.find('#company_name').val(data.company_name);
+                        dialog.find('#reservations_officer_name').val(data.reservations_officer_name);
+                        dialog.find('#reservations_officer_email').val(data.reservations_officer_email);
+                        dialog.find('#reservations_officer_phone').val(data.reservations_officer_phone);
+                        dialog.find('#reservations_officer_email_2').val(data.reservations_officer_email_2);
+                        dialog.find('#reservations_officer_phone_2').val(data.reservations_officer_phone_2);
+                        dialog.find('#reservations_officer_email_3').val(data.reservations_officer_email_3);
+                        dialog.find('#reservations_officer_phone_3').val(data.reservations_officer_phone_3);
+
+                        if(data.single_price > 0)
+                            dialog.find('#single_price').val(data.single_price);
+                        else
+                            dialog.find('#single_price').val(data.event_single_price);
+                        //---------------------------------------
+                        if(data.double_price > 0)
+                            dialog.find('#double_price').val(data.double_price);
+                        else
+                            dialog.find('#double_price').val(data.event_double_price);
+                        //---------------------------------------
+                        if(data.triple_price > 0)
+                            dialog.find('#triple_price').val(data.triple_price);
+                        else
+                            dialog.find('#triple_price').val(data.event_triple_price);
+                        //---------------------------------------
+                        if(data.quad_price > 0)
+                            dialog.find('#quad_price').val(data.quad_price);
+                        else
+                            dialog.find('#quad_price').val(data.event_quad_price);
+                        //---------------------------------------
+                        if(data.vendor_single_price > 0)
+                            dialog.find('#vendor_single_price').val(data.vendor_single_price);
+                        else
+                            dialog.find('#vendor_single_price').val(data.event_vendor_single_price);
+                        //---------------------------------------
+                         if(data.vendor_douple_price > 0)
+                             dialog.find('#vendor_douple_price').val(data.vendor_douple_price);
+                        else
+                            dialog.find('#vendor_douple_price').val(data.event_vendor_double_price);
+                        //---------------------------------------
+                         if(data.vendor_triple_price > 0)
+                            dialog.find('#vendor_triple_price').val(data.vendor_triple_price);
+                        else
+                            dialog.find('#vendor_triple_price').val(data.event_vendor_triple_price);
+                        //---------------------------------------
+                         if(data.vendor_quad_price > 0)
+                            dialog.find('#vendor_quad_price').val(data.vendor_quad_price);
+                        else
+                            dialog.find('#vendor_quad_price').val(data.event_vendor_quad_price);
+                        //---------------------------------------
+                       if(data.tax > 0)
+                            dialog.find('#tax').val(data.tax);
+                        else
+                            dialog.find('#tax').val(data.event_tax);
+
+                        dialog.find("#advance_reservation_percentage").val(data.advance_reservation_percentage);
+                        dialog.find("#currency").val(data.currency);
+                        dialog.find('#opener option[value=' + data.opener + ']').attr('selected', 'selected');
+                        dialog.find('#closer option[value=' + data.closer + ']').attr('selected', 'selected');
+                        dialog.find('#shift option[value=' + data.shift + ']').attr('selected', 'selected');
+                        dialog.find('#vendor_id option[value=' + data.vendor_id + ']').attr('selected', 'selected');
+
+
+                });
+
+           });
 
            $(document).on("click", ".confMail", function () {
                var data = partiallyReservationTable.row($(this).closest('tr')).data();
@@ -3993,25 +3868,162 @@
 
                 });
 
-                @*warningBox("Are you sure you want to cancel this reservation (<b>" + data.id +"</b>) ?", function () {
+
+            });
+            $(document).on("click", ".copyFromWebSiteBooking", function () {
+                var data = fromWebsiteTable.row($(this).closest('tr')).data();
+                 warningBox("Are you sure you want to copy this reservation (<b>" + data.id + "</b>) ?", function () {
                     $.ajax({
                         type: "GET",
-                        url: '@Url.Action("cancelReservation", "Reservation")',
+                        url: '@Url.Action("copyReservation", "Reservation")',
                         contentType: "application/json; charset=utf-8",
                         data: { "id": data.id },
                         datatype: "json",
                         success: function (data) {
                             unPaidReservationTable.draw();
+                            partiallyReservationTable.draw();
+                            paidreservationTable.draw();
+                            allTable.draw();
+                            fromWebsiteTable.draw();
                             canceledreservationTable.draw();
                             ourRoomsTable.draw();
-                            logstable.draw();
 
                         },
                         error: function () {
                             alert("Dynamic content load failed.");
                         }
                     });
-                });*@
+                });
+            });
+
+            $(document).on("click", ".copyUnPaidBooking", function () {
+                var data = unPaidReservationTable.row($(this).closest('tr')).data();
+                 warningBox("Are you sure you want to copy this reservation (<b>" + data.id + "</b>) ?", function () {
+                    $.ajax({
+                        type: "GET",
+                        url: '@Url.Action("copyReservation", "Reservation")',
+                        contentType: "application/json; charset=utf-8",
+                        data: { "id": data.id },
+                        datatype: "json",
+                        success: function (data) {
+                            unPaidReservationTable.draw();
+                            partiallyReservationTable.draw();
+                            paidreservationTable.draw();
+                            allTable.draw();
+                            fromWebsiteTable.draw();
+                            canceledreservationTable.draw();
+                            ourRoomsTable.draw();
+
+                        },
+                        error: function () {
+                            alert("Dynamic content load failed.");
+                        }
+                    });
+                });
+            });
+
+            $(document).on("click", ".copyPartiallyPaidBooking", function () {
+                var data = partiallyReservationTable.row($(this).closest('tr')).data();
+                 warningBox("Are you sure you want to copy this reservation (<b>" + data.id + "</b>) ?", function () {
+                    $.ajax({
+                        type: "GET",
+                        url: '@Url.Action("copyReservation", "Reservation")',
+                        contentType: "application/json; charset=utf-8",
+                        data: { "id": data.id },
+                        datatype: "json",
+                        success: function (data) {
+                            unPaidReservationTable.draw();
+                            partiallyReservationTable.draw();
+                            paidreservationTable.draw();
+                            allTable.draw();
+                            fromWebsiteTable.draw();
+                            canceledreservationTable.draw();
+                            ourRoomsTable.draw();
+
+                        },
+                        error: function () {
+                            alert("Dynamic content load failed.");
+                        }
+                    });
+                });
+            });
+
+            $(document).on("click", ".copyPaidBooking", function () {
+                var data = paidreservationTable.row($(this).closest('tr')).data();
+                 warningBox("Are you sure you want to copy this reservation (<b>" + data.id + "</b>) ?", function () {
+                    $.ajax({
+                        type: "GET",
+                        url: '@Url.Action("copyReservation", "Reservation")',
+                        contentType: "application/json; charset=utf-8",
+                        data: { "id": data.id },
+                        datatype: "json",
+                        success: function (data) {
+                            unPaidReservationTable.draw();
+                            partiallyReservationTable.draw();
+                            paidreservationTable.draw();
+                            allTable.draw();
+                            fromWebsiteTable.draw();
+                            canceledreservationTable.draw();
+                            ourRoomsTable.draw();
+
+                        },
+                        error: function () {
+                            alert("Dynamic content load failed.");
+                        }
+                    });
+                });
+            });
+
+            $(document).on("click", ".copyCanceledBooking", function () {
+                var data = canceledreservationTable.row($(this).closest('tr')).data();
+                 warningBox("Are you sure you want to copy this reservation (<b>" + data.id + "</b>) ?", function () {
+                    $.ajax({
+                        type: "GET",
+                        url: '@Url.Action("copyReservation", "Reservation")',
+                        contentType: "application/json; charset=utf-8",
+                        data: { "id": data.id },
+                        datatype: "json",
+                        success: function (data) {
+                            unPaidReservationTable.draw();
+                            partiallyReservationTable.draw();
+                            paidreservationTable.draw();
+                            allTable.draw();
+                            fromWebsiteTable.draw();
+                            canceledreservationTable.draw();
+                            ourRoomsTable.draw();
+
+                        },
+                        error: function () {
+                            alert("Dynamic content load failed.");
+                        }
+                    });
+                });
+            });
+
+            $(document).on("click", ".copyAllBooking", function () {
+                var data = allTable.row($(this).closest('tr')).data();
+                 warningBox("Are you sure you want to copy this reservation (<b>" + data.id + "</b>) ?", function () {
+                    $.ajax({
+                        type: "GET",
+                        url: '@Url.Action("copyReservation", "Reservation")',
+                        contentType: "application/json; charset=utf-8",
+                        data: { "id": data.id },
+                        datatype: "json",
+                        success: function (data) {
+                            unPaidReservationTable.draw();
+                            partiallyReservationTable.draw();
+                            paidreservationTable.draw();
+                            allTable.draw();
+                            fromWebsiteTable.draw();
+                            canceledreservationTable.draw();
+                            ourRoomsTable.draw();
+
+                        },
+                        error: function () {
+                            alert("Dynamic content load failed.");
+                        }
+                    });
+                });
             });
 
             $(document).on("click", ".cancelPartiallyPaid", function () {
