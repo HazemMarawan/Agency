@@ -2298,6 +2298,8 @@ namespace Agency.Controllers
                                                 hotel_rate = hotel.rate,
                                                 reservations_officer_name = res.reservations_officer_name,
                                                 reservations_officer_email = res.reservations_officer_email,
+                                                reservations_officer_email_2 = res.reservations_officer_email_2,
+                                                reservations_officer_email_3 = res.reservations_officer_email_3,
                                                 reservations_officer_phone = res.reservations_officer_phone,
                                                 created_by = res.created_by,
                                                 opener = res.opener,
@@ -2438,6 +2440,11 @@ namespace Agency.Controllers
             emailContent = emailContent.Replace("_download_link", ReservationService.GetBaseUrl() + "Booking/BalancePDF?reservation_id=" + id.ToString());
 
             ReservationService.sendMail(mailServer.outgoing_mail, resData.reservations_officer_email, mailServer.title, emailContent, mailServer.outgoing_mail_server, mailServer.port.ToInt(), mailServer.outgoing_mail_password);
+            if (resData.reservations_officer_email_2 != null)
+                ReservationService.sendMail(mailServer.outgoing_mail, resData.reservations_officer_email_2, mailServer.title, emailContent, mailServer.outgoing_mail_server, mailServer.port.ToInt(), mailServer.outgoing_mail_password);
+            if (resData.reservations_officer_email_3 != null)
+                ReservationService.sendMail(mailServer.outgoing_mail, resData.reservations_officer_email_3, mailServer.title, emailContent, mailServer.outgoing_mail_server, mailServer.port.ToInt(), mailServer.outgoing_mail_password);
+
             ReservationService.sendMail(mailServer.outgoing_mail, mailServer.incoming_mail, mailServer.title, emailContent, mailServer.outgoing_mail_server, mailServer.port.ToInt(), mailServer.outgoing_mail_password);
 
             return Json(new { msg = "done" }, JsonRequestBehavior.AllowGet);
@@ -2486,6 +2493,8 @@ namespace Agency.Controllers
                                                 hotel_rate = hotel.rate,
                                                 reservations_officer_name = res.reservations_officer_name,
                                                 reservations_officer_email = res.reservations_officer_email,
+                                                reservations_officer_email_2 = res.reservations_officer_email_2,
+                                                reservations_officer_email_3 = res.reservations_officer_email_3,
                                                 reservations_officer_phone = res.reservations_officer_phone,
                                                 created_by = res.created_by,
                                                 opener = res.opener,
@@ -2553,6 +2562,10 @@ namespace Agency.Controllers
             emailContent = emailContent.Replace("_download_link", ReservationService.GetBaseUrl() + "/Booking/CreditPDF?reservation_id=" + id.ToString());
 
             ReservationService.sendMail(mailServer.outgoing_mail, resData.reservations_officer_email, mailServer.title, emailContent, mailServer.outgoing_mail_server, mailServer.port.ToInt(), mailServer.outgoing_mail_password);
+            if(resData.reservations_officer_email_2 != null)
+                ReservationService.sendMail(mailServer.outgoing_mail, resData.reservations_officer_email_2, mailServer.title, emailContent, mailServer.outgoing_mail_server, mailServer.port.ToInt(), mailServer.outgoing_mail_password);
+            if(resData.reservations_officer_email_3 != null)
+                ReservationService.sendMail(mailServer.outgoing_mail, resData.reservations_officer_email_3, mailServer.title, emailContent, mailServer.outgoing_mail_server, mailServer.port.ToInt(), mailServer.outgoing_mail_password);
             ReservationService.sendMail(mailServer.outgoing_mail, mailServer.incoming_mail, mailServer.title, emailContent, mailServer.outgoing_mail_server, mailServer.port.ToInt(), mailServer.outgoing_mail_password);
 
             return Json(new { msg = "done" }, JsonRequestBehavior.AllowGet);
