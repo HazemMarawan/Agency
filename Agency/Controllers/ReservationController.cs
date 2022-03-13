@@ -364,7 +364,8 @@ namespace Agency.Controllers
             int pageSize = length != null ? Convert.ToInt32(length) : 0;
             int skip = start != null ? Convert.ToInt32(start) : 0;
             var resData = (from res in db.Reservations
-                           join company in db.Companies on res.company_id equals company.id
+                           join c in db.Companies on res.company_id equals c.id into co
+                           from company in co.DefaultIfEmpty()
                            join event_hotel in db.EventHotels on res.event_hotel_id equals event_hotel.id
                            join even in db.Events on event_hotel.event_id equals even.id
                            join hotel in db.Hotels on event_hotel.hotel_id equals hotel.id
@@ -628,7 +629,8 @@ namespace Agency.Controllers
             int pageSize = length != null ? Convert.ToInt32(length) : 0;
             int skip = start != null ? Convert.ToInt32(start) : 0;
             var resData = (from res in db.Reservations
-                           join company in db.Companies on res.company_id equals company.id
+                           join c in db.Companies on res.company_id equals c.id into co
+                           from company in co.DefaultIfEmpty()
                            join event_hotel in db.EventHotels on res.event_hotel_id equals event_hotel.id
                            join even in db.Events on event_hotel.event_id equals even.id
                            join hotel in db.Hotels on event_hotel.hotel_id equals hotel.id
@@ -759,7 +761,8 @@ namespace Agency.Controllers
             int pageSize = length != null ? Convert.ToInt32(length) : 0;
             int skip = start != null ? Convert.ToInt32(start) : 0;
             var resData = (from res in db.Reservations
-                           join company in db.Companies on res.company_id equals company.id
+                           join c in db.Companies on res.company_id equals c.id into co
+                           from company in co.DefaultIfEmpty()
                            join event_hotel in db.EventHotels on res.event_hotel_id equals event_hotel.id
                            join even in db.Events on event_hotel.event_id equals even.id
                            join hotel in db.Hotels on event_hotel.hotel_id equals hotel.id
@@ -886,7 +889,8 @@ namespace Agency.Controllers
             int pageSize = length != null ? Convert.ToInt32(length) : 0;
             int skip = start != null ? Convert.ToInt32(start) : 0;
             var resData = (from res in db.Reservations
-                           join company in db.Companies on res.company_id equals company.id
+                           join c in db.Companies on res.company_id equals c.id into co
+                           from company in co.DefaultIfEmpty()
                            join event_hotel in db.EventHotels on res.event_hotel_id equals event_hotel.id
                            join even in db.Events on event_hotel.event_id equals even.id
                            join hotel in db.Hotels on event_hotel.hotel_id equals hotel.id
@@ -1023,7 +1027,8 @@ namespace Agency.Controllers
             var resData = (from resDet in db.ReservationDetails
                            join client in db.Clients on resDet.client_id equals client.id
                            join res in db.Reservations on resDet.reservation_id equals res.id
-                           join company in db.Companies on res.company_id equals company.id
+                           join c in db.Companies on res.company_id equals c.id into co
+                           from company in co.DefaultIfEmpty()
                            join event_hotel in db.EventHotels on res.event_hotel_id equals event_hotel.id
                            join even in db.Events on event_hotel.event_id equals even.id
                            join hotel in db.Hotels on event_hotel.hotel_id equals hotel.id
@@ -1087,7 +1092,8 @@ namespace Agency.Controllers
             int skip = start != null ? Convert.ToInt32(start) : 0;
 
             var resData = (from res in db.Reservations
-                           join company in db.Companies on res.company_id equals company.id
+                           join c in db.Companies on res.company_id equals c.id into co
+                           from company in co.DefaultIfEmpty()
                            join event_hotel in db.EventHotels on res.event_hotel_id equals event_hotel.id
                            join even in db.Events on event_hotel.event_id equals even.id
                            join hotel in db.Hotels on event_hotel.hotel_id equals hotel.id
