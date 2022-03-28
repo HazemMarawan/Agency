@@ -23,8 +23,8 @@ namespace Agency.Models
         public int? confirmation_id { get; set; }
         public string vendor_code { get; set; }
         public string cancelation_policy { get; set; }
-        public string show_name { get; set; }
-        public string hotel_name { get; set; }
+        public string additional_show_name { get; set; }
+        public string additional_hotel_name { get; set; }
         public double? vendor_cost { get; set; }
         public DateTime? payment_to_vendor_deadline { get; set; }
         public DateTime? paid_to_vendor_date { get; set; }
