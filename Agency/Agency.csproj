@@ -473,6 +473,10 @@
     <Compile Include="Migrations\202203071657310_updates4.Designer.cs">
       <DependentUpon>202203071657310_updates4.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202203281854342_updates5.cs" />
+    <Compile Include="Migrations\202203281854342_updates5.Designer.cs">
+      <DependentUpon>202203281854342_updates5.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AgencyDbContext.cs" />
     <Compile Include="Models\Chat.cs" />
@@ -5139,6 +5143,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202203071657310_updates4.resx">
       <DependentUpon>202203071657310_updates4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202203281854342_updates5.resx">
+      <DependentUpon>202203281854342_updates5.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

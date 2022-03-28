@@ -31,6 +31,8 @@ namespace Agency.ViewModel
         public int? is_reservation_canceled { get; set; }
         public double? price_per_night { get; set; }
         public string cancelation_policy { get; set; }
+        public string additional_show_name { get; set; }
+        public string additional_hotel_name { get; set; }
         public int? no_of_days { get; set; }
         public int? active { get; set; }
         public int? is_transfered { get; set; }
