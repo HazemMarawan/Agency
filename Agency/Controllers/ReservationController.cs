@@ -98,7 +98,7 @@ namespace Agency.Controllers
                                refund = res.refund,
                                company_id = res.company_id,
                                event_hotel_id = event_hotel.id,
-                               hotel_name = hotel.name,
+                               hotel_name = res.hotel_name,
                                hotel_rate = hotel.rate,
                                reservations_officer_name = res.reservations_officer_name,
                                reservations_officer_email = res.reservations_officer_email,
@@ -1026,12 +1026,15 @@ namespace Agency.Controllers
             int skip = start != null ? Convert.ToInt32(start) : 0;
             var resData = (from resDet in db.ReservationDetails
                            join client in db.Clients on resDet.client_id equals client.id
-                           join res in db.Reservations on resDet.reservation_id equals res.id
+                           join re in db.Reservations on resDet.reservation_id equals re.id into ress
+                           from res in ress.DefaultIfEmpty()
                            join c in db.Companies on res.company_id equals c.id into co
                            from company in co.DefaultIfEmpty()
                            join event_hotel in db.EventHotels on res.event_hotel_id equals event_hotel.id
-                           join even in db.Events on event_hotel.event_id equals even.id
-                           join hotel in db.Hotels on event_hotel.hotel_id equals hotel.id
+                           join ev in db.Events on event_hotel.event_id equals ev.id into eve
+                           from even in eve.DefaultIfEmpty()
+                           join hot in db.Hotels on event_hotel.hotel_id equals hot.id into hotl
+                           from hotel in hotl.DefaultIfEmpty()
                            select new ReservationDetailViewModel
                            {
                                id = resDet.id,
@@ -1051,9 +1054,10 @@ namespace Agency.Controllers
                                vendor_code = resDet.vendor_code,
                                vendor_cost= resDet.vendor_cost,
                                no_of_days = resDet.no_of_days,
-                               is_canceled = res.is_canceled
+                               is_canceled = res.is_canceled,
+                               payment_to_vendor_deadline = resDet.payment_to_vendor_deadline
 
-                           }).Where(r => r.is_canceled == 1);
+                           }).Where(r => r.is_canceled == 1 || r.reservation_id == null);
 
             var displayResult = resData.OrderByDescending(u => u.id).Skip(skip)
                  .Take(pageSize).ToList();

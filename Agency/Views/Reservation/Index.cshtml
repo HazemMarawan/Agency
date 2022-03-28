@@ -997,13 +997,14 @@
                             </thead>*@
                                     <thead>
                                         <tr class="text-center">
-                                            <th>#</th>
-                                            <th>Guest Name</th>
-                                            <th>Check In/Out</th>
+                                            <th>Booking ID</th>
+                                            <th>Show Name</th>
+                                            <th>Hotel Name</th>
                                             <th>Room Type</th>
+                                            <th>Vendor Cost</th>
                                             <th>Vendor Code</th>
-                                            <th>Cost</th>
-                                            <th>Paid To Vendor</th>
+                                            <th>Vendor Deadline</th>
+                                            <th>Check-in/out</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -1153,9 +1154,9 @@
                                 html = "<a href='/Reservation/View/" + oData.id + "'>Not Assigned</a><br>";
 
                             if (oData.is_special)
-                                html += "<span class='badge badge-primary'>Special</span>";
+                                html += "<span class='badge badge-primary'>Normal</span>";
                             else
-                                html += "<span class='badge badge-success'>Normal</span>";
+                                html += "<span class='badge badge-success'>Campaign</span>";
                             $(nTd).html("<span class='action-column'>" + html + "</span>");
                         }
                     },
@@ -1338,9 +1339,9 @@
                                 html = "<a href='/Reservation/View/" + oData.id + "'>Not Assigned</a><br>";
 
                             if (oData.is_special)
-                                html += "<span class='badge badge-primary'>Special</span>";
+                                html += "<span class='badge badge-primary'>Normal</span>";
                             else
-                                html += "<span class='badge badge-success'>Normal</span>";
+                                html += "<span class='badge badge-success'>Campaign</span>";
                             $(nTd).html("<span class='action-column'>" + html + "</span>");
                         }
                     },
@@ -1525,9 +1526,9 @@
                                     html = "<a href='/Reservation/View/" + oData.id + "'>Not Assigned</a><br>";
 
                                 if (oData.is_special)
-                                    html += "<span class='badge badge-primary'>Special</span>";
+                                    html += "<span class='badge badge-primary'>Normal</span>";
                                 else
-                                    html += "<span class='badge badge-success'>Normal</span>";
+                                    html += "<span class='badge badge-success'>Campaign</span>";
                                 $(nTd).html("<span class='action-column'>" + html + "</span>");
                             }
                         },
@@ -1713,9 +1714,9 @@
                                     html = "<a href='/Reservation/View/" + oData.id + "'>Not Assigned</a><br>";
 
                                 if (oData.is_special)
-                                    html += "<span class='badge badge-primary'>Special</span>";
+                                    html += "<span class='badge badge-primary'>Normal</span>";
                                 else
-                                    html += "<span class='badge badge-success'>Normal</span>";
+                                    html += "<span class='badge badge-success'>Campaign</span>";
                                 $(nTd).html("<span class='action-column'>" + html + "</span>");
                             }
                         },
@@ -1899,9 +1900,9 @@
                                     html = "<a href='/Reservation/View/" + oData.id + "'>Not Assigned</a><br>";
 
                                 if (oData.is_special)
-                                    html += "<span class='badge badge-primary'>Special</span>";
+                                    html += "<span class='badge badge-primary'>Normal</span>";
                                 else
-                                    html += "<span class='badge badge-success'>Normal</span>";
+                                    html += "<span class='badge badge-success'>Campaign</span>";
                                 $(nTd).html("<span class='action-column'>" + html + "</span>");
                             }
                         },
@@ -2062,32 +2063,12 @@
                             "searchable": true
                         },
                         {
-                            "data": "client_id", "searchable": true,
-                            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-                                var html = "";
-                                if (oData.client_first_name || oData.client_last_name) {
-                                    if (oData.client_first_name)
-                                        html += oData.client_first_name;
-                                    if (oData.client_last_name)
-                                        html += " " + oData.client_last_name;
-                                }
-                                else
-                                    html += "<span style='color:red;font-weight:bold;'>Not Assigned</span>";
-
-                                $(nTd).html("<span class='action-column'>" + html + "</span>");
-                            }
+                            "data": "event_name",
+                            "searchable": true
                         },
                         {
-                            "data": "reservation_from", "searchable": true,
-                            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-                                var html = "";
-                                if (oData.reservation_from)
-                                    html += "In: " + fixDate(oData.reservation_from) + "</br>";
-                                if (oData.reservation_to)
-                                    html += "Out: " + fixDate(oData.reservation_to) + "</br>";
-
-                                $(nTd).html("<span class='action-column'>" + html + "</span>");
-                            }
+                            "data": "hotel_name",
+                            "searchable": true
                         },
                         {
                             "data": "room_type", "searchable": true,
@@ -2106,10 +2087,6 @@
                             }
                         },
                         {
-                            "data": "vendor_code",
-                            "searchable": true
-                        },
-                        {
                             "data": "vendor_cost", "searchable": true,
                             fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
                                 var html = "";
@@ -2120,16 +2097,32 @@
 
                         },
                         {
-                            "data": "paid_to_vendor", "searchable": true,
+                            "data": "vendor_code",
+                            "searchable": true
+                        },
+                        {
+                            "data": "payment_to_vendor_deadline", "searchable": true,
                             fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
                                 var html = "";
-                                if (oData.paid_to_vendor == 1)
-                                    html += "<span class='badge badge-primary'>Yes</span>";
+                                if (oData.payment_to_vendor_deadline)
+                                    html += fixDate(oData.reservation_from);
                                 else
-                                    html += "<span class='badge badge-danger'>No</span>";
-                                $(nTd).html("<span class='action-column'>" + html + "</span>");
-                            },
+                                    html += "-";
 
+                                $(nTd).html("<span class='action-column'>" + html + "</span>");
+                            }
+                        },
+                        {
+                            "data": "reservation_from", "searchable": true,
+                            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                                var html = "";
+                                if (oData.reservation_from)
+                                    html += "In: " + fixDate(oData.reservation_from) + "</br>";
+                                if (oData.reservation_to)
+                                    html += "Out: " + fixDate(oData.reservation_to) + "</br>";
+
+                                $(nTd).html("<span class='action-column'>" + html + "</span>");
+                            }
                         },
                         {
                             "data": "id", "searchable": true,
@@ -2208,11 +2201,10 @@
                                     html = "<a href='/Reservation/View/" + oData.id + "'>" + oData.company_name + "</a><br>";
                                 else
                                     html = "<a href='/Reservation/View/" + oData.id + "'>Not Assigned</a><br>";
-
                                 if (oData.is_special)
-                                    html += "<span class='badge badge-primary'>Special</span>";
+                                    html += "<span class='badge badge-primary'>Normal</span>";
                                 else
-                                    html += "<span class='badge badge-success'>Normal</span>";
+                                    html += "<span class='badge badge-success'>Campaign</span>";
                                 $(nTd).html("<span class='action-column'>" + html + "</span>");
                             }
                         },
