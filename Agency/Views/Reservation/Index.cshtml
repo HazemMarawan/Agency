@@ -2382,6 +2382,8 @@
                                 //html += "<a class='refundPaid' href='javascript:void(0);' title='Refund'><i class='far fa-times-circle'></i></a>&nbsp;";
                                 html += "<a class='creditCardsAll' href='javascript:void(0);' title='Credit Cards'><i class='fas fa-credit-card'></i></a>&nbsp;";
                                 html += "<a class='copyAllBooking' href='javascript:void(0);' title='Copy'><i class='fas fa-copy'></i></a>&nbsp;";
+                                if (oData.paid_amount < oData.total_amount_after_tax)
+                                    html += "<a class='payAllTables' href='javascript:void(0);' title='Pay'><i class='fas fa-money-bill-alt'></i></a>&nbsp;|";
 
 
                                 $(nTd).html("<span class='action-column'>" + html + "</span>");
@@ -3901,6 +3903,100 @@
 
             });
 
+            $(document).on("click", ".payAllTables", function () {
+
+                var data = allTable.row($(this).closest('tr')).data();
+
+                var modal = $('#pay_amount_to_reservation_modal').clone();
+                var action = '@Url.Action("payAmountToReservation", "Reservation")';
+                modal.find('form').attr('action', action);
+                modal.find('#modal_title').text('Pay');
+                modal.execModal({
+                    progressBar: 'progress_bar',
+                    progressText: 'progress_text',
+                }, function (response) {
+                        unPaidReservationTable.draw();
+                        fromWebsiteTable.draw();
+                        partiallyReservationTable.draw();
+                        canceledreservationTable.draw();
+                        paidreservationTable.draw();
+                        allTable.draw();
+
+                }, function (response) {
+
+                }, function (dialog) {
+
+                        dialog.find('#id').val(data.id);
+                        dialog.find('#hotel_name').val(data.hotel_name_special);
+                        dialog.find('#reservations_officer_email').val(data.reservations_officer_email);
+                        dialog.find('#transaction_id').val(data.transaction_id);
+                        dialog.find('#total_after_tax').val(addCommas(data.total_amount_after_tax.toFixed(2)) +" "+ data.string_currency);
+                        //dialog.find('#tax').val(data.tax + "%");
+
+                        //var deposit = (data.advance_reservation_percentage / 100) * data.total_amount_after_tax;
+                        //dialog.find('#deposit').val(addCommas(deposit.toFixed(2)) + " " + data.string_currency);
+                        //dialog.find('#percentage').val(data.advance_reservation_percentage);
+                        var remainAmount = data.total_amount_after_tax - data.paid_amount;
+                        dialog.find('#paid_amount').attr('max', remainAmount)
+                        dialog.find('#paid_amount').attr('min', 1)
+
+                        dialog.find('#paid').val(addCommas(data.paid_amount.toFixed(2)) + " " + data.string_currency);
+
+                        var balance = data.total_amount_after_tax - data.paid_amount;
+                        dialog.find('#balance_pay_modal').val(addCommas(balance.toFixed(2)) + " " + data.string_currency);
+
+                        //dialog.find('#percentage').keyup(function () {
+                        //    var deposit = (dialog.find('#percentage').val() / 100) * data.total_amount_after_tax;
+                        //    dialog.find('#deposit').val(addCommas(deposit.toFixed(2)) + " " + data.string_currency);
+                        //});
+                        dialog.find("#deposit_percentage_div").hide();
+                        dialog.find("#deposit_div").hide();
+
+                        if (data.reservationCreditCards.length != 0) {
+                            var html = "";
+                            data.reservationCreditCards.forEach(function (value) {
+                                html += `<tr>
+                                                 <td>${value.credit_card_number}</td>
+                                                 <td>${value.card_expiration_date}</td>
+                                                 <td>${value.security_code}</td>
+                                                </tr>`;
+                            });
+                            dialog.find("#credit_cards_body").append(html);
+                        }
+                        else {
+                            html += `<tr>
+                                                 <td colspan='3'>No Credit Cards</td>
+                                                </tr>`;
+                            dialog.find("#credit_cards_body").append(html);
+                        }
+                        html = "";
+                        if (data.transactions.length != 0) {
+                            data.transactions.forEach(function (value) {
+                                html += `<tr>
+                                                <td>${value.transaction_id}</td>
+                                                <td>${addCommas(value.amount.toFixed(2))}</td>
+                                            </tr>`;
+                            });
+                            dialog.find("#transactions_body").append(html);
+                        }
+                        else {
+                            html += `<tr>
+                                            <td colspan='2'>No Transaction</td>
+                                        </tr>`;
+                            dialog.find("#transactions_body").append(html);
+                        }
+                        dialog.find("#show_credit_cards").click(function () {
+                            if (dialog.find('#password').val() == '@Session["password"]')
+                            {
+                                dialog.find("#credit_cards_table").show();
+                            }
+
+                        });
+                });
+
+            });
+
+
             $(document).on("click", ".cancelUnpaid", function () {
                 var data = unPaidReservationTable.row($(this).closest('tr')).data();
 
@@ -4246,7 +4342,7 @@
                 }, function (response) {
 
                 }, function (dialog) {
-    
+
                         dialog.find('#id').val(data.id);
                         dialog.find('#additional_show_name').val(data.additional_show_name);
                         dialog.find('#additional_hotel_name').val(data.additional_hotel_name);
