@@ -516,7 +516,7 @@ namespace Agency.Controllers
                 }
 
                 ReservationService.UpdateTotals(reservation.id);
-
+                //here log
                 Logs.ReservationActionLog(Session["id"].ToString().ToInt(), detail.reservation_id, "Edit", editHtml);
 
             }

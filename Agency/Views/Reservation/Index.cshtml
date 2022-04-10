@@ -138,7 +138,7 @@
 
 <div class="modal fade" id="cancel_reservation_modal" tabindex="-1" role="dialog" aria-hidden="true">
     <form action="" method="post" enctype='multipart/form-data'>
-        <div class="modal-dialog modal-sm">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="modal_title"></h5>
@@ -150,7 +150,14 @@
                     <div class="form-body">
                         <div class="form-row">
                             <input type="hidden" name="id" id="id" />
-
+                            <div class="form-group col-md-6">
+                                <label>Total After Tax</label>
+                                <input name="total_after_tax" id="total_after_tax" readonly type="text" class="form-control radius-30" />
+                            </div>
+                            <div class="form-group col-md-6" id="deposit_percentage_div">
+                                <label>Percentage %</label>
+                                <input name="percentage" id="percentage" type="number" max="100" min="1" class="form-control radius-30" />
+                            </div>
                             <div class="form-group col-md-12">
                                 <label>Cancelation Fees</label>
                                 <input required name="cancelation_fees" id="cancelation_fees" type="number" step="0.1" class="form-control radius-30" />
@@ -460,9 +467,9 @@
                                 <input name="reservations_officer_email_3" id="reservations_officer_email_3" type="email" class="form-control radius-30" />
                             </div>
                             @*<div class="form-group col-md-6">
-            <label>Vendor</label>
-            @Html.DropDownList("vendor_id", new SelectList(ViewBag.Vendors, "id", "NamePlusCode"), "Select Vendor", new { @class = "form-control", @name = "vendor_id", @id = "vendor_id" })
-        </div>*@
+                                    <label>Vendor</label>
+                                    @Html.DropDownList("vendor_id", new SelectList(ViewBag.Vendors, "id", "NamePlusCode"), "Select Vendor", new { @class = "form-control", @name = "vendor_id", @id = "vendor_id" })
+                                </div>*@
                             <div class="form-group col-md-6">
                                 <label>Advance Reservation Percentage</label>
                                 <input name="advance_reservation_percentage" id="advance_reservation_percentage" type="number" min="0" step="0.1" class="form-control radius-30" />
@@ -472,33 +479,33 @@
                                 <input name="single_price" id="single_price" type="number" min="0" step="0.1" class="form-control radius-30" />
                             </div>
                             @*<div class="form-group col-md-6">
-            <label>Vendor Single Price</label>
-            <input name="vendor_single_price" id="vendor_single_price" type="number" min="0" step="0.1" class="form-control radius-30" />
-        </div>*@
+                                    <label>Vendor Single Price</label>
+                                    <input name="vendor_single_price" id="vendor_single_price" type="number" min="0" step="0.1" class="form-control radius-30" />
+                                </div>*@
                             <div class="form-group col-md-6">
                                 <label>Double Price</label>
                                 <input name="double_price" id="double_price" type="number" min="0" step="0.1" class="form-control radius-30" />
                             </div>
                             @*<div class="form-group col-md-6">
-            <label>Vendor Double Price</label>
-            <input name="vendor_douple_price" id="vendor_douple_price" type="number" min="0" step="0.1" class="form-control radius-30" />
-        </div>*@
+                                    <label>Vendor Double Price</label>
+                                    <input name="vendor_douple_price" id="vendor_douple_price" type="number" min="0" step="0.1" class="form-control radius-30" />
+                                </div>*@
                             <div class="form-group col-md-6">
                                 <label>Triple Price</label>
                                 <input name="triple_price" id="triple_price" type="number" min="0" step="0.1" class="form-control radius-30" />
                             </div>
                             @*<div class="form-group col-md-6">
-            <label>Vendor Triple Price</label>
-            <input name="vendor_triple_price" id="vendor_triple_price" type="number" min="0" step="0.1" class="form-control radius-30" />
-        </div>*@
+                                    <label>Vendor Triple Price</label>
+                                    <input name="vendor_triple_price" id="vendor_triple_price" type="number" min="0" step="0.1" class="form-control radius-30" />
+                                </div>*@
                             <div class="form-group col-md-6">
                                 <label>Quad Price</label>
                                 <input name="quad_price" id="quad_price" type="number" min="0" step="0.1" class="form-control radius-30" />
                             </div>
                             @*<div class="form-group col-md-6">
-            <label>Vendor Quad Price</label>
-            <input name="vendor_quad_price" id="vendor_quad_price" type="number" min="0" step="0.1" class="form-control radius-30" />
-        </div>*@
+                                    <label>Vendor Quad Price</label>
+                                    <input name="vendor_quad_price" id="vendor_quad_price" type="number" min="0" step="0.1" class="form-control radius-30" />
+                                </div>*@
                             <div class="form-group col-md-6">
                                 <label>Tax</label>
                                 <input name="tax" id="tax" type="number" min="0" step="0.1" class="form-control radius-30" />
@@ -592,9 +599,9 @@
                                 <input name="total_after_tax" id="total_after_tax" readonly type="text" class="form-control radius-30" />
                             </div>
                             @*<div class="form-group col-md-6">
-            <label>Tax</label>
-            <input name="tax" id="tax" type="text" readonly class="form-control radius-30" />
-        </div>*@
+                                    <label>Tax</label>
+                                    <input name="tax" id="tax" type="text" readonly class="form-control radius-30" />
+                                </div>*@
                             <div class="form-group col-md-6" id="deposit_percentage_div">
                                 <label>Percentage %</label>
                                 <input name="percentage" id="percentage" type="number" max="100" min="1" class="form-control radius-30" />
@@ -773,6 +780,27 @@
         <button id="reset" type="button" class="btn btn-danger px-3 radius-30">Reset</button>
     </div>
 </div>
+
+<div class="row" id="checkoutSearchDiv" style="display:none;">
+    <div class="form-group col-2">
+        <label>From Date Check Out</label>
+        <input class="form-control" type="date" id="from_check_out" name="from_check_out">
+    </div>
+    <div class="form-group col-2">
+        <label>To Date Check Out</label>
+        <input class="form-control" type="date" id="to_check_out" name="to_check_out">
+    </div>
+    <div class="form-group col-2">
+        <label> </label>
+        <button id="searhCheckout" type="button" class="btn btn-primary px-3 radius-30">Search</button>
+    </div>
+    <div class="form-group col-2">
+        <label> </label>
+        <button id="resetCheckout" type="button" class="btn btn-danger px-3 radius-30">Reset</button>
+    </div>
+</div>
+
+
 <div class="col-lg-12 col-12 resrvation-edit">
     <!--  layout-spacing resrvation-edit-->
     <div class="statbox widget box box-shadow">
@@ -889,11 +917,11 @@
                     <a class="nav-link" data-search-id="0" id="icon-our-rooms-reservations-tab" data-toggle="pill" href="#icon-our-rooms-reservations" role="tab" aria-controls="icon-our-rooms-reservations" aria-selected="false"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fas fa-bed"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg> Our Rooms</a><a href="javascript:void(0)" id="add_empty_room_to_our_room"><i class="fa fa-plus"></i></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-search-id="0" id="icon-checkout-reservations-tab" data-toggle="pill" href="#icon-checkout-reservations" role="tab" aria-controls="icon-checkout-reservations" aria-selected="false"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fas fa-bed"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg> Check Out</a>
+                    <a class="nav-link" data-search-id="2" id="icon-checkout-reservations-tab" data-toggle="pill" href="#icon-checkout-reservations" role="tab" aria-controls="icon-checkout-reservations" aria-selected="false"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fas fa-bed"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg> Check Out</a>
                 </li>
                 @*<li class="nav-item">
-            <a class="nav-link" id="icon-refund-tab" data-toggle="pill" href="#icon-refund" role="tab" aria-controls="icon-refund" aria-selected="false"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg> Refund</a>
-        </li>*@
+                        <a class="nav-link" id="icon-refund-tab" data-toggle="pill" href="#icon-refund" role="tab" aria-controls="icon-refund" aria-selected="false"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg> Refund</a>
+                    </li>*@
             </ul>
             <div class="tab-content" id="icon-pills-tabContent">
                 <div class="tab-pane fade" id="icon-from-website" role="tabpanel" aria-labelledby="icon-from-website">
@@ -1031,13 +1059,13 @@
                                             <th width="9%"></th>
                                         </tr>
                                         @*<tr class="text-center">
-                                    <th>#</th>
-                                    <th>Event</th>
-                                    <th>Hotel</th>
-                                    <th>Check in/out</th>
-                                    <th>Price/Night</th>
-                                    <th></th>
-                                </tr>*@
+                                                <th>#</th>
+                                                <th>Event</th>
+                                                <th>Hotel</th>
+                                                <th>Check in/out</th>
+                                                <th>Price/Night</th>
+                                                <th></th>
+                                            </tr>*@
                                     </thead>
                                 </table>
                             </div>
@@ -1067,13 +1095,13 @@
                                             <th width="9%"></th>
                                         </tr>
                                         @*<tr class="text-center">
-                                    <th>#</th>
-                                    <th>Event</th>
-                                    <th>Hotel</th>
-                                    <th>Check in/out</th>
-                                    <th>Price/Night</th>
-                                    <th></th>
-                                </tr>*@
+                                                <th>#</th>
+                                                <th>Event</th>
+                                                <th>Hotel</th>
+                                                <th>Check in/out</th>
+                                                <th>Price/Night</th>
+                                                <th></th>
+                                            </tr>*@
                                     </thead>
                                 </table>
                             </div>
@@ -1089,16 +1117,16 @@
                                 <!--  widget-content-area-edit added class manually -->
                                 <table id="our_rooms_table" class="table table-striped table-bordered" style="width:100%">
                                     @*<thead style="width: 100%!important">
-                                <tr class="text-center">
-                                    <th width="10%">Booking ID</th>
-                                    <th width="15%">Event Name</th>
-                                    <th width="15%">Hotel Name</th>
-                                    <th width="15%">Total Rooms/Nights</th>
-                                    <th width="15%">Check-in/out</th>
-                                    <th width="25%">Price Per Night</th>
-                                    <th width="5%"></th>
-                                </tr>
-                            </thead>*@
+                                            <tr class="text-center">
+                                                <th width="10%">Booking ID</th>
+                                                <th width="15%">Event Name</th>
+                                                <th width="15%">Hotel Name</th>
+                                                <th width="15%">Total Rooms/Nights</th>
+                                                <th width="15%">Check-in/out</th>
+                                                <th width="25%">Price Per Night</th>
+                                                <th width="5%"></th>
+                                            </tr>
+                                        </thead>*@
                                     <thead>
                                         <tr class="text-center">
                                             <th>Booking ID</th>
@@ -1147,32 +1175,32 @@
                 </div>
 
                 <!--<div class="tab-pane fade" id="icon-refund" role="tabpanel" aria-labelledby="icon-refund">
-    <div class="row " id="cancel-row">-->
+                <div class="row " id="cancel-row">-->
                 <!--layout-top-spacing got deleted-->
                 <!--<div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
-    <div class="widget-content widget-content-area widget-content-area-edit br-6">-->
+                <div class="widget-content widget-content-area widget-content-area-edit br-6">-->
                 <!--  widget-content-area-edit added class manually -->
                 <!--<table id="refund_table" class="table table-striped table-bordered" style="width:100%">
-                        <thead style="width: 100%!important">
-                            <tr class="text-center">
-                                <th width="8%">Booking ID</th>
-                                <th width="10%">Date Submitted</th>
-                                <th width="14%">Company Name</th>
-                                <th width="10%">Status</th>
-                                <th width="10%">Check-in/out</th>
-                                <th width="10%">Opener/Closer</th>
-                                <th width="12%">Balance Due Date</th>
-                                <th width="6%">Collected</th>
-                                <th width="6%">Balance</th>
-                                <th width="6%">Profit</th>
-                                <th width="9%"></th>
-                            </tr>
-                        </thead>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>-->
+                                    <thead style="width: 100%!important">
+                                        <tr class="text-center">
+                                            <th width="8%">Booking ID</th>
+                                            <th width="10%">Date Submitted</th>
+                                            <th width="14%">Company Name</th>
+                                            <th width="10%">Status</th>
+                                            <th width="10%">Check-in/out</th>
+                                            <th width="10%">Opener/Closer</th>
+                                            <th width="12%">Balance Due Date</th>
+                                            <th width="6%">Collected</th>
+                                            <th width="6%">Balance</th>
+                                            <th width="6%">Profit</th>
+                                            <th width="9%"></th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>-->
             </div>
         </div>
     </div>
@@ -1187,10 +1215,17 @@
             $(document).on("click", ".nav-link", function () {
                 var val = $(this).attr("data-search-id");
 
-                if (val != 0) {
+                if (val == 1) {
                     $("#searchDiv").show();
+                    allTable.draw();
                 } else {
                     $("#searchDiv").hide();
+                }
+                if (val == 2) {
+                    $("#checkoutSearchDiv").show();
+                    checkoutReservationsTable.draw();
+                } else {
+                    $("#checkoutSearchDiv").hide();
                 }
             })
 
@@ -1370,6 +1405,7 @@
                             html += "<a class='cancelUnpaid' href='javascript:void(0);' title='Cancel'><i class='far fa-times-circle'></i></a>&nbsp;";
                             html += "<a class='payAmountToReservation' href='javascript:void(0);' title='Pay'><i class='fas fa-money-bill-alt'></i></a>&nbsp;";
                             html += "<a class='creditCardsFromWebSite' href='javascript:void(0);' title='Credit Cards'><i class='fas fa-credit-card'></i></a>&nbsp;";
+                            html += "<a class='itiniraryMailFromWebSite' href='javascript:void(0)' title='Itinirary Email'><i class='far fa-envelope-open'></i></a>&nbsp;|";
                             html += "<a class='copyFromWebSiteBooking' href='javascript:void(0);' title='Copy'><i class='fas fa-copy'></i></a>&nbsp;";
 
                             $(nTd).html("<span class='action-column'>" + html + "</span>");
@@ -1556,6 +1592,7 @@
                             html += "<a class='payUnPaidAmountToReservation' href='javascript:void(0);' title='Pay'><i class='fas fa-money-bill-alt'></i></a>&nbsp;|";
                             //html += "<a class='refundPaid' href='javascript:void(0);' title='Refund'><i class='far fa-times-circle'></i></a>&nbsp;";
                             html += "<a class='creditCardsUnPaid' href='javascript:void(0);' title='Credit Cards'><i class='fas fa-credit-card'></i></a>&nbsp;";
+                            html += "<a class='itiniraryMailUnPaid' href='javascript:void(0)' title='Itinirary Email'><i class='far fa-envelope-open'></i></a>&nbsp;|";
                             html += "<a class='copyUnPaidBooking' href='javascript:void(0);' title='Copy'><i class='fas fa-copy'></i></a>&nbsp;";
 
                             $(nTd).html("<span class='action-column'>" + html + "</span>");
@@ -1743,6 +1780,7 @@
                                 html += "<a class='payPartiallPaidAmountToReservation' href='javascript:void(0);' title='Pay'><i class='fas fa-money-bill-alt'></i></a>&nbsp;|";
                                 //html += "<a class='refundPaid' href='javascript:void(0);' title='Refund'><i class='far fa-times-circle'></i></a>&nbsp;";
                                 html += "<a class='creditCardsPartiallyPaid' href='javascript:void(0);' title='Credit Cards'><i class='fas fa-credit-card'></i></a>&nbsp;";
+                                html += "<a class='itiniraryMailPartiallyPaid' href='javascript:void(0)' title='Itinirary Email'><i class='far fa-envelope-open'></i></a>&nbsp;|";
                                 html += "<a class='copyPartiallyPaidBooking' href='javascript:void(0);' title='Copy'><i class='fas fa-copy'></i></a>&nbsp;";
 
                                 $(nTd).html("<span class='action-column'>" + html + "</span>");
@@ -1930,6 +1968,7 @@
                                 html += "<a class='cancelPaid' href='javascript:void(0);' title='Cancel'><i class='far fa-times-circle'></i></a>&nbsp;|";
                                 //html += "<a class='refundPaid' href='javascript:void(0);' title='Refund'><i class='far fa-times-circle'></i></a>&nbsp;";
                                 html += "<a class='creditCardsPaid' href='javascript:void(0);' title='Credit Cards'><i class='fas fa-credit-card'></i></a>&nbsp;";
+                                html += "<a class='itiniraryMailPaid' href='javascript:void(0)' title='Itinirary Email'><i class='far fa-envelope-open'></i></a>&nbsp;|";
                                 html += "<a class='copyPaidBooking' href='javascript:void(0);' title='Copy'><i class='fas fa-copy'></i></a>&nbsp;";
 
                                 $(nTd).html("<span class='action-column'>" + html + "</span>");
@@ -2430,208 +2469,209 @@
                });
 
 
-              var allTable = $('#allTable')
-               .DataTable({/* we added this from the other system to have same search and same pagination*/
-                   "dom": "<'dt--top-section'<'row'<'col-sm-12 col-md-6 d-flex justify-content-md-start justify-content-center'B><'col-sm-12 col-md-6 d-flex justify-content-md-end justify-content-center mt-md-0 mt-3'f>>>" +
-                       "<'table-responsive'tr>" +
-                       "<'dt--bottom-section d-sm-flex justify-content-sm-between text-center'<'dt--pages-count  mb-sm-0 mb-3'i><'dt--pagination'p>>",
-                   "buttons": {
-                       buttons: [
-                           { extend: 'copy', className: 'btn btn-sm' },
-                           { extend: 'csv', className: 'btn btn-sm' },
-                           { extend: 'excel', className: 'btn btn-sm' },
-                           { extend: 'print', className: 'btn btn-sm' }
-                       ]
-                   },
-                   "oLanguage": {
-                       "oPaginate": { "sPrevious": 'Perivous', "sNext": 'Next' },
-                       "sInfo": "Showing page _PAGE_ of _PAGES_",
-                       "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
-                       "sSearchPlaceholder": "Search...",
-                       "sLengthMenu": "Results :  _MENU_",
-                   },
-                    "processing": true,
-                    "serverSide": true,
-                    "scrollX": true,
-                    "stateSave": false,
-                    "lengthChange": false,
-                    "dom": 'Bfrtip',
-
-                    "buttons": ['copy', 'excel', 'pdf', 'print'],
-                    "pageLength":10,
-                    "rowId": 'id',
-                    "ajax": {
-                        "url": "@Url.Action("all", "Reservation")",
-                        "type": "POST",
-                        "datatype": "json",
-                        "dataSrc": "data"
-                    },
-                    "columns": [
-                        {
-                            "data": "id", "searchable": true,
-                            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-
-                                var html = "<a href='/Reservation/View/" + oData.id + "'>" + oData.id + "</a>";
-
-                                $(nTd).html("<span class='action-column'>" + html + "</span>");
-                            }
-                        },
-                        {
-                            "data": "created_at", "searchable": true,
-                            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-
-                                var html = fixDate(oData.created_at);
-
-                                $(nTd).html("<span class='action-column'>" + html + "</span>");
-                            }
-                        },
-                        {
-                            "data": "company_name", "searchable": true,
-                            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-
-                                var html = '';
-                                if (oData.company_name)
-                                    html = "<a href='/Reservation/View/" + oData.id + "'>" + oData.company_name + "</a><br>";
-                                else
-                                    html = "<a href='/Reservation/View/" + oData.id + "'>Not Assigned</a><br>";
-                                if (oData.is_special)
-                                    html += "<span class='badge badge-primary'>Normal</span>";
-                                else
-                                    html += "<span class='badge badge-success'>Campaign</span>";
-                                $(nTd).html("<span class='action-column'>" + html + "</span>");
-                            }
-                        },
-                        {
-                            "data": "status", "searchable": true,
-                            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-                                var html = "";
-                                if (oData.status || oData.total_rooms || oData.total_nights) {
-                                    if (oData.status)
-                                        html += "<span style='font-weight:bold;' class='fw-bold'>" + oData.status + "</span><br/>";
-                                    if (oData.total_rooms)
-                                        html += oData.total_rooms + " <span style='font-weight:bold;' class='fw-bold'>Rooms</span><br/>";
-                                    if (oData.total_nights)
-                                        html += oData.total_nights + " <span style='font-weight:bold;' class='fw-bold'>Nights</span><br/>";
-                                } else {
-                                    html += "<span style='font-weight:bold;text-color:red;' class='bold'>Not Assigned</span>";
-                                }
-                                $(nTd).html("<span class='action-column'>" + html + "</span>");
-                            }
-                        },
-                        {
-                            "data": "check_in", "searchable": true,
-                            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-                                var html = "";
-                                if (oData.check_in || oData.check_out) {
-                                    if (oData.check_in) {
-                                        html += "<span style='font-weight:bold;' class='fw-bold'>In: " + fixDate(oData.check_in) + "</span><br/>";
-                                    }
-
-                                    if (oData.check_out) {
-                                        html += "<span style='font-weight:bold;' class='fw-bold'>Out: " + fixDate(oData.check_out) + "</span><br/>";
-                                    }
-
-                                }
-                                else {
-                                    html += "<span style='font-weight:bold;text-color:red;' class='bold'>Not Assigned</span>";
-                                }
-                                $(nTd).html("<span class='action-column'>" + html + "</span>");
-                            }
-                        },
-                        {
-                            "data": "opener", "searchable": true,
-                            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-                                var html = "";
-                                if (oData.opener || oData.closer) {
-                                    if (oData.opener_name)
-                                        html += "<span style='font-weight:bold;' class='fw-bold'>" + oData.opener_name + "</span><br/>";
-                                    if (oData.closer_name)
-                                        html += "<span style='font-weight:bold;' class='fw-bold'" + oData.closer_name + "</span><br/>";
-
-                                } else {
-                                    html += "<span style='font-weight:bold;text-color:red;' class='bold'>Not Assigned</span>";
-                                }
-                                $(nTd).html("<span class='action-column'>" + html + "</span>");
-                            }
-                        },
-                        {
-                            "data": "financial_due_date",
-                            "searchable": true
-                        },
-                        {
-                            "data": "paid_amount", "searchable": true,
-                            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-                                var html = "";
-                                if (oData.paid_amount)
-                                    html += "<span style='font-weight:bold;' class='fw-bold'>" + addCommas(oData.paid_amount.toFixed(2)) + "</span><br/>";
-                                else
-                                    html += "<span style='font-weight:bold;text-color:red;' class='bold'>-</span>";
-
-                                $(nTd).html("<span class='action-column'>" + html + "</span>");
-                            }
-                        },
-                        {
-                            "data": "total_amount_after_tax", "searchable": true,
-                            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-                                var html = "";
-                                if (oData.total_amount_after_tax)
-                                    html += "<span style='font-weight:bold;' class='fw-bold'>" + addCommas((oData.total_amount_after_tax - oData.paid_amount).toFixed(2)) + "</span><br/>";
-                                else
-                                    html += "<span style='font-weight:bold;text-color:red;' class='bold'>-</span>";
-
-                                $(nTd).html("<span class='action-column'>" + html + "</span>");
-                            }
-                        },
-                        {
-                            "data": "total_amount_after_tax", "searchable": true,
-                            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-                                var html = "";
-                                if (oData.total_amount_after_tax)
-                                    html += "<span style='font-weight:bold;' class='fw-bold'>" + addCommas((oData.total_amount_after_tax - oData.total_amount_from_vendor).toFixed(2)) + "</span><br/>";
-                                else
-                                    html += "<span style='font-weight:bold;text-color:red;' class='bold'>-</span>";
-
-                                $(nTd).html("<span class='action-column'>" + html + "</span>");
-                            }
-                        },
-                        {
-                            "data": "id", "searchable": true,
-                            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-                                var html = "";
-                                html += "<a class='editAll' href='javascript:void(0)' title='Edit'><i class='far fa-edit'></i></a>&nbsp;|";
-
-                                //html += "<a class='details' href='/ReservationDetail/Index/" + oData.id + "' title='Details'><i class='far fa-eye'></i></a>&nbsp;|";
-                                //html += "<a class='creditMailAll' href='javascript:void(0)' title='Credit Email'><i class='far fa-envelope-open'></i></a>&nbsp;|";
-                                //html += "<a target='_blank' class='Itinirary' href='/ReservationDetail/Itinirary/" + oData.id + "' title='Itinirary'><i class='far fa-eye'></i></a>&nbsp;|";
-                                html += "<a target='_blank' class='view' href='/Reservation/View/" + oData.id + "' title='View'><i class='far fa-eye'></i></a>";
-                                html += "<a class='cancelAll' href='javascript:void(0);' title='Cancel'><i class='far fa-times-circle'></i></a>&nbsp;|";
-                                //html += "<a class='refundPaid' href='javascript:void(0);' title='Refund'><i class='far fa-times-circle'></i></a>&nbsp;";
-                                html += "<a class='creditCardsAll' href='javascript:void(0);' title='Credit Cards'><i class='fas fa-credit-card'></i></a>&nbsp;";
-                                html += "<a class='copyAllBooking' href='javascript:void(0);' title='Copy'><i class='fas fa-copy'></i></a>&nbsp;";
-                                if (oData.paid_amount < oData.total_amount_after_tax)
-                                    html += "<a class='payAllTables' href='javascript:void(0);' title='Pay'><i class='fas fa-money-bill-alt'></i></a>&nbsp;|";
-
-
-                                $(nTd).html("<span class='action-column'>" + html + "</span>");
-                            }
-                        },
-                        {
-                            "data": "id", visible: false, "searchable": true
-                        },{
-                            "data": "id", visible: false, "searchable": true
-                        },{
-                            "data": "id", visible: false, "searchable": true
-                        },{
-                            "data": "id", visible: false, "searchable": true
-                        },{
-                            "data": "id", visible: false, "searchable": true
-                        },{
-                            "data": "id", visible: false, "searchable": true
-                        },{
-                            "data": "id", visible: false, "searchable": true
-                        },
+            var allTable = $('#allTable')
+            .DataTable({/* we added this from the other system to have same search and same pagination*/
+                "dom": "<'dt--top-section'<'row'<'col-sm-12 col-md-6 d-flex justify-content-md-start justify-content-center'B><'col-sm-12 col-md-6 d-flex justify-content-md-end justify-content-center mt-md-0 mt-3'f>>>" +
+                    "<'table-responsive'tr>" +
+                    "<'dt--bottom-section d-sm-flex justify-content-sm-between text-center'<'dt--pages-count  mb-sm-0 mb-3'i><'dt--pagination'p>>",
+                "buttons": {
+                    buttons: [
+                        { extend: 'copy', className: 'btn btn-sm' },
+                        { extend: 'csv', className: 'btn btn-sm' },
+                        { extend: 'excel', className: 'btn btn-sm' },
+                        { extend: 'print', className: 'btn btn-sm' }
                     ]
-               });
+                },
+                "oLanguage": {
+                    "oPaginate": { "sPrevious": 'Perivous', "sNext": 'Next' },
+                    "sInfo": "Showing page _PAGE_ of _PAGES_",
+                    "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                    "sSearchPlaceholder": "Search...",
+                    "sLengthMenu": "Results :  _MENU_",
+                },
+                "processing": true,
+                "serverSide": true,
+                "scrollX": true,
+                "stateSave": false,
+                "lengthChange": false,
+                "dom": 'Bfrtip',
+
+                "buttons": ['copy', 'excel', 'pdf', 'print'],
+                "pageLength":10,
+                "rowId": 'id',
+                "ajax": {
+                    "url": "@Url.Action("all", "Reservation")",
+                    "type": "POST",
+                    "datatype": "json",
+                    "dataSrc": "data"
+                },
+                "columns": [
+                    {
+                        "data": "id", "searchable": true,
+                        fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+
+                            var html = "<a href='/Reservation/View/" + oData.id + "'>" + oData.id + "</a>";
+
+                            $(nTd).html("<span class='action-column'>" + html + "</span>");
+                        }
+                    },
+                    {
+                        "data": "created_at", "searchable": true,
+                        fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+
+                            var html = fixDate(oData.created_at);
+
+                            $(nTd).html("<span class='action-column'>" + html + "</span>");
+                        }
+                    },
+                    {
+                        "data": "company_name", "searchable": true,
+                        fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+
+                            var html = '';
+                            if (oData.company_name)
+                                html = "<a href='/Reservation/View/" + oData.id + "'>" + oData.company_name + "</a><br>";
+                            else
+                                html = "<a href='/Reservation/View/" + oData.id + "'>Not Assigned</a><br>";
+                            if (oData.is_special)
+                                html += "<span class='badge badge-primary'>Normal</span>";
+                            else
+                                html += "<span class='badge badge-success'>Campaign</span>";
+                            $(nTd).html("<span class='action-column'>" + html + "</span>");
+                        }
+                    },
+                    {
+                        "data": "status", "searchable": true,
+                        fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                            var html = "";
+                            if (oData.status || oData.total_rooms || oData.total_nights) {
+                                if (oData.status)
+                                    html += "<span style='font-weight:bold;' class='fw-bold'>" + oData.status + "</span><br/>";
+                                if (oData.total_rooms)
+                                    html += oData.total_rooms + " <span style='font-weight:bold;' class='fw-bold'>Rooms</span><br/>";
+                                if (oData.total_nights)
+                                    html += oData.total_nights + " <span style='font-weight:bold;' class='fw-bold'>Nights</span><br/>";
+                            } else {
+                                html += "<span style='font-weight:bold;text-color:red;' class='bold'>Not Assigned</span>";
+                            }
+                            $(nTd).html("<span class='action-column'>" + html + "</span>");
+                        }
+                    },
+                    {
+                        "data": "check_in", "searchable": true,
+                        fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                            var html = "";
+                            if (oData.check_in || oData.check_out) {
+                                if (oData.check_in) {
+                                    html += "<span style='font-weight:bold;' class='fw-bold'>In: " + fixDate(oData.check_in) + "</span><br/>";
+                                }
+
+                                if (oData.check_out) {
+                                    html += "<span style='font-weight:bold;' class='fw-bold'>Out: " + fixDate(oData.check_out) + "</span><br/>";
+                                }
+
+                            }
+                            else {
+                                html += "<span style='font-weight:bold;text-color:red;' class='bold'>Not Assigned</span>";
+                            }
+                            $(nTd).html("<span class='action-column'>" + html + "</span>");
+                        }
+                    },
+                    {
+                        "data": "opener", "searchable": true,
+                        fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                            var html = "";
+                            if (oData.opener || oData.closer) {
+                                if (oData.opener_name)
+                                    html += "<span style='font-weight:bold;' class='fw-bold'>" + oData.opener_name + "</span><br/>";
+                                if (oData.closer_name)
+                                    html += "<span style='font-weight:bold;' class='fw-bold'" + oData.closer_name + "</span><br/>";
+
+                            } else {
+                                html += "<span style='font-weight:bold;text-color:red;' class='bold'>Not Assigned</span>";
+                            }
+                            $(nTd).html("<span class='action-column'>" + html + "</span>");
+                        }
+                    },
+                    {
+                        "data": "financial_due_date",
+                        "searchable": true
+                    },
+                    {
+                        "data": "paid_amount", "searchable": true,
+                        fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                            var html = "";
+                            if (oData.paid_amount)
+                                html += "<span style='font-weight:bold;' class='fw-bold'>" + addCommas(oData.paid_amount.toFixed(2)) + "</span><br/>";
+                            else
+                                html += "<span style='font-weight:bold;text-color:red;' class='bold'>-</span>";
+
+                            $(nTd).html("<span class='action-column'>" + html + "</span>");
+                        }
+                    },
+                    {
+                        "data": "total_amount_after_tax", "searchable": true,
+                        fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                            var html = "";
+                            if (oData.total_amount_after_tax)
+                                html += "<span style='font-weight:bold;' class='fw-bold'>" + addCommas((oData.total_amount_after_tax - oData.paid_amount).toFixed(2)) + "</span><br/>";
+                            else
+                                html += "<span style='font-weight:bold;text-color:red;' class='bold'>-</span>";
+
+                            $(nTd).html("<span class='action-column'>" + html + "</span>");
+                        }
+                    },
+                    {
+                        "data": "total_amount_after_tax", "searchable": true,
+                        fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                            var html = "";
+                            if (oData.total_amount_after_tax)
+                                html += "<span style='font-weight:bold;' class='fw-bold'>" + addCommas((oData.total_amount_after_tax - oData.total_amount_from_vendor).toFixed(2)) + "</span><br/>";
+                            else
+                                html += "<span style='font-weight:bold;text-color:red;' class='bold'>-</span>";
+
+                            $(nTd).html("<span class='action-column'>" + html + "</span>");
+                        }
+                    },
+                    {
+                        "data": "id", "searchable": true,
+                        fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                            var html = "";
+                            html += "<a class='editAll' href='javascript:void(0)' title='Edit'><i class='far fa-edit'></i></a>&nbsp;|";
+
+                            //html += "<a class='details' href='/ReservationDetail/Index/" + oData.id + "' title='Details'><i class='far fa-eye'></i></a>&nbsp;|";
+                            //html += "<a class='creditMailAll' href='javascript:void(0)' title='Credit Email'><i class='far fa-envelope-open'></i></a>&nbsp;|";
+                            //html += "<a target='_blank' class='Itinirary' href='/ReservationDetail/Itinirary/" + oData.id + "' title='Itinirary'><i class='far fa-eye'></i></a>&nbsp;|";
+                            html += "<a class='itiniraryMailAll' href='javascript:void(0)' title='Itinirary Email'><i class='far fa-envelope-open'></i></a>&nbsp;|";
+                            html += "<a target='_blank' class='view' href='/Reservation/View/" + oData.id + "' title='View'><i class='far fa-eye'></i></a>";
+                            html += "<a class='cancelAll' href='javascript:void(0);' title='Cancel'><i class='far fa-times-circle'></i></a>&nbsp;|";
+                            //html += "<a class='refundPaid' href='javascript:void(0);' title='Refund'><i class='far fa-times-circle'></i></a>&nbsp;";
+                            html += "<a class='creditCardsAll' href='javascript:void(0);' title='Credit Cards'><i class='fas fa-credit-card'></i></a>&nbsp;";
+                            html += "<a class='copyAllBooking' href='javascript:void(0);' title='Copy'><i class='fas fa-copy'></i></a>&nbsp;";
+                            if (oData.paid_amount < oData.total_amount_after_tax)
+                                html += "<a class='payAllTables' href='javascript:void(0);' title='Pay'><i class='fas fa-money-bill-alt'></i></a>&nbsp;|";
+
+
+                            $(nTd).html("<span class='action-column'>" + html + "</span>");
+                        }
+                    },
+                    {
+                        "data": "id", visible: false, "searchable": true
+                    },{
+                        "data": "id", visible: false, "searchable": true
+                    },{
+                        "data": "id", visible: false, "searchable": true
+                    },{
+                        "data": "id", visible: false, "searchable": true
+                    },{
+                        "data": "id", visible: false, "searchable": true
+                    },{
+                        "data": "id", visible: false, "searchable": true
+                    },{
+                        "data": "id", visible: false, "searchable": true
+                    },
+                ]
+            });
 
             $('#search_hotel_id').selectize({
                 plugins: ['remove_button'],
@@ -2696,6 +2736,24 @@
                 $("#search_status").val("");
 
                 $('#search').trigger('click');
+
+            });
+
+            $('#searhCheckout').on('click', function () {
+                //checkoutReservationsTable.search($("#text_search").val());
+
+                checkoutReservationsTable.columns(0).search($("#from_check_out").val());
+                checkoutReservationsTable.columns(1).search($("#to_check_out").val());
+
+                checkoutReservationsTable.draw();
+            });
+
+            $('#resetCheckout').on('click', function () {
+
+                $("#from_check_out").val("");
+                $("#to_check_out").val("");
+
+                $('#searhCheckout').trigger('click');
 
             });
 
@@ -2870,18 +2928,84 @@
             paidreservationTable.on('xhr.dt', function (e, settings, json, xhr) {
                 if (json.profit)
                     $('#profit').text(addCommas(json.profit.toFixed(2)));
+                else
+                    $('#profit').text(0);
 
                 if (json.balance)
                     $('#balance').text(addCommas(json.balance.toFixed(2)));
+                else
+                    $('#balance').text(0);
 
                 if (json.collected)
                     $('#collected').text(addCommas(json.collected.toFixed(2)));
+                else
+                    $('#collected').text(0);
 
                 if (json.refund)
                     $('#refunded').text(addCommas(json.refund.toFixed(2)));
+                else
+                    $('#refunded').text(0);
 
                 if (json.total_nights)
                     $('#total_nights').text(addCommas(json.total_nights));
+                else
+                    $('#total_nights').text(0);
+
+            });
+
+            allTable.on('xhr.dt', function (e, settings, json, xhr) {
+                if (json.profit)
+                    $('#profit').text(addCommas(json.profit.toFixed(2)));
+                else
+                    $('#profit').text(0);
+
+                if (json.balance)
+                    $('#balance').text(addCommas(json.balance.toFixed(2)));
+                else
+                    $('#balance').text(0);
+
+                if (json.collected)
+                    $('#collected').text(addCommas(json.collected.toFixed(2)));
+                else
+                    $('#collected').text(0);
+
+                if (json.refund)
+                    $('#refunded').text(addCommas(json.refund.toFixed(2)));
+                else
+                    $('#refunded').text(0);
+
+                if (json.total_nights)
+                    $('#total_nights').text(addCommas(json.total_nights));
+                else
+                    $('#total_nights').text(0);
+
+            });
+
+            checkoutReservationsTable.on('xhr.dt', function (e, settings, json, xhr) {
+                if (json.profit)
+                    $('#profit').text(addCommas(json.profit.toFixed(2)));
+                else
+                    $('#profit').text(0);
+
+                if (json.balance)
+                    $('#balance').text(addCommas(json.balance.toFixed(2)));
+                else
+                    $('#balance').text(0);
+
+                if (json.collected)
+                    $('#collected').text(addCommas(json.collected.toFixed(2)));
+                else
+                    $('#collected').text(0);
+
+                if (json.refund)
+                    $('#refunded').text(addCommas(json.refund.toFixed(2)));
+                else
+                    $('#refunded').text(0);
+
+                if (json.total_nights)
+                    $('#total_nights').text(addCommas(json.total_nights));
+                else
+                    $('#total_nights').text(0);
 
             });
 
@@ -4244,9 +4368,14 @@
                 }, function (response) {
 
                 }, function (dialog) {
-
+                    console.log(data.total_amount_after_tax)
                         dialog.find('#id').val(data.id);
+                        dialog.find('#total_after_tax').val(data.total_amount_after_tax);
 
+                        dialog.find('#percentage').keyup(function () {
+                            var cancelation_fees = (dialog.find('#percentage').val() / 100) * data.total_amount_after_tax;
+                            dialog.find('#cancelation_fees').val(cancelation_fees);
+                        });
                 });
 
 
@@ -4430,7 +4559,12 @@
                 }, function (dialog) {
 
                         dialog.find('#id').val(data.id);
+                        dialog.find('#total_after_tax').val(data.total_amount_after_tax);
 
+                        dialog.find('#percentage').keyup(function () {
+                            var cancelation_fees = (dialog.find('#percentage').val() / 100) * data.total_amount_after_tax;
+                            dialog.find('#cancelation_fees').val(cancelation_fees);
+                        });
                 });
 
                 @*warningBox("Are you sure you want to cancel this reservation (<b>" + data.id +"</b>) ?", function () {
@@ -4500,7 +4634,12 @@
                 }, function (dialog) {
 
                         dialog.find('#id').val(data.id);
+                        dialog.find('#total_after_tax').val(data.total_amount_after_tax);
 
+                        dialog.find('#percentage').keyup(function () {
+                            var cancelation_fees = (dialog.find('#percentage').val() / 100) * data.total_amount_after_tax;
+                            dialog.find('#cancelation_fees').val(cancelation_fees);
+                        });
                 });
 
             });
@@ -4524,9 +4663,14 @@
                 }, function (response) {
 
                 }, function (dialog) {
-
+                        console.log(data)
                         dialog.find('#id').val(data.id);
+                        dialog.find('#total_after_tax').val(data.total_amount_after_tax);
 
+                        dialog.find('#percentage').keyup(function () {
+                            var cancelation_fees = (dialog.find('#percentage').val() / 100) * data.total_amount_after_tax;
+                            dialog.find('#cancelation_fees').val(cancelation_fees);
+                        });
                 });
 
             });
@@ -4711,26 +4855,151 @@
                 var data = allTable.row($(this).closest('tr')).data();
                warningBox("Are you sure you want to send credit mail?", function () {
 
-                $.ajax({
-                    type: "GET",
-                    url: '@Url.Action("creditMail", "Reservation")',
-                    contentType: "application/json; charset=utf-8",
-                    data: { "id": data.id },
-                    datatype: "json",
-                    success: function (data) {
-                        Swal.fire(
-                            'Done!',
-                            'Credit mail has been sent.!',
-                            'success'
-                        )
-                    },
-                    error: function () {
-                        alert("Dynamic content load failed.");
-                    }
-                });
+                    $.ajax({
+                        type: "GET",
+                        url: '@Url.Action("creditMail", "Reservation")',
+                        contentType: "application/json; charset=utf-8",
+                        data: { "id": data.id },
+                        datatype: "json",
+                        success: function (data) {
+                            Swal.fire(
+                                'Done!',
+                                'Credit mail has been sent.!',
+                                'success'
+                            )
+                        },
+                        error: function () {
+                            alert("Dynamic content load failed.");
+                        }
+                    });
 
                });
-           });
+            });
+
+            $(document).on("click", ".itiniraryMailAll", function () {
+                var data = allTable.row($(this).closest('tr')).data();
+                warningBox("Are you sure you want to send itinirary mail?", function () {
+
+                    $.ajax({
+                        type: "GET",
+                        url: '@Url.Action("itiniraryMail", "Reservation")',
+                        contentType: "application/json; charset=utf-8",
+                        data: { "id": data.id },
+                        datatype: "json",
+                        success: function (data) {
+                            Swal.fire(
+                                'Done!',
+                                'Itinirary mail has been sent.!',
+                                'success'
+                            )
+                        },
+                        error: function () {
+                            alert("Dynamic content load failed.");
+                        }
+                    });
+
+                });
+            });
+
+            $(document).on("click", ".itiniraryMailUnPaid", function () {
+                var data = allTable.row($(this).closest('tr')).data();
+                warningBox("Are you sure you want to send itinirary mail?", function () {
+
+                    $.ajax({
+                        type: "GET",
+                        url: '@Url.Action("itiniraryMail", "Reservation")',
+                        contentType: "application/json; charset=utf-8",
+                        data: { "id": data.id },
+                        datatype: "json",
+                        success: function (data) {
+                            Swal.fire(
+                                'Done!',
+                                'Itinirary mail has been sent.!',
+                                'success'
+                            )
+                        },
+                        error: function () {
+                            alert("Dynamic content load failed.");
+                        }
+                    });
+
+                });
+            });
+
+            $(document).on("click", ".itiniraryMailFromWebSite", function () {
+                var data = allTable.row($(this).closest('tr')).data();
+                warningBox("Are you sure you want to send itinirary mail?", function () {
+
+                    $.ajax({
+                        type: "GET",
+                        url: '@Url.Action("itiniraryMail", "Reservation")',
+                        contentType: "application/json; charset=utf-8",
+                        data: { "id": data.id },
+                        datatype: "json",
+                        success: function (data) {
+                            Swal.fire(
+                                'Done!',
+                                'Itinirary mail has been sent.!',
+                                'success'
+                            )
+                        },
+                        error: function () {
+                            alert("Dynamic content load failed.");
+                        }
+                    });
+
+                });
+            });
+
+            $(document).on("click", ".itiniraryMailPartiallyPaid", function () {
+                var data = allTable.row($(this).closest('tr')).data();
+                warningBox("Are you sure you want to send itinirary mail?", function () {
+
+                    $.ajax({
+                        type: "GET",
+                        url: '@Url.Action("itiniraryMail", "Reservation")',
+                        contentType: "application/json; charset=utf-8",
+                        data: { "id": data.id },
+                        datatype: "json",
+                        success: function (data) {
+                            Swal.fire(
+                                'Done!',
+                                'Itinirary mail has been sent.!',
+                                'success'
+                            )
+                        },
+                        error: function () {
+                            alert("Dynamic content load failed.");
+                        }
+                    });
+
+                });
+            });
+
+            $(document).on("click", ".itiniraryMailPaid", function () {
+                var data = allTable.row($(this).closest('tr')).data();
+                warningBox("Are you sure you want to send itinirary mail?", function () {
+
+                    $.ajax({
+                        type: "GET",
+                        url: '@Url.Action("itiniraryMail", "Reservation")',
+                        contentType: "application/json; charset=utf-8",
+                        data: { "id": data.id },
+                        datatype: "json",
+                        success: function (data) {
+                            Swal.fire(
+                                'Done!',
+                                'Itinirary mail has been sent.!',
+                                'success'
+                            )
+                        },
+                        error: function () {
+                            alert("Dynamic content load failed.");
+                        }
+                    });
+
+                });
+            });
 
         });
         /* this one to help fixing the problem when u click on other tab and table need to refreshed*/

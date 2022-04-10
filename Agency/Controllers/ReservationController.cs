@@ -702,6 +702,7 @@ namespace Agency.Controllers
                                event_vendor_quad_price = event_hotel.vendor_quad_price,
                                total_price = db.ReservationDetails.Where(r => r.reservation_id == res.id).Select(p => p.amount).Sum(),
                                paid_amount = res.paid_amount,
+                               refund = res.refund,
                                total_amount_after_tax = res.total_amount_after_tax,
                                total_amount_from_vendor = res.total_amount_from_vendor,
                                advance_reservation_percentage = res.advance_reservation_percentage,
@@ -709,6 +710,7 @@ namespace Agency.Controllers
                                is_canceled = res.is_canceled,
                                is_refund = res.is_refund,
                                created_at = res.created_at,
+                               transaction_fees = db.Transactions.Where(r => r.reservation_id == res.id).Select(s=>s.amount).Sum(),
                                reservationCreditCards = db.ReservationCreditCards.Where(resCre => resCre.reservation_id == res.id).Select(resCre => new ReservationCreditCardViewModel
                                {
                                    id = resCre.id,
@@ -726,18 +728,77 @@ namespace Agency.Controllers
                                }).ToList(),
                                cancelation_fees = res.cancelation_fees
                                //profit = calculateProfit(res.id).profit
-                           }).Where(r => r.check_out >= DateTime.Now && r.is_canceled == null);
-            //var reservation = resData.ToList();
-            //double? collected = 0.0;
-            //double? balance = 0.0;
-            //double? profit = 0.0;
-            //if (reservation != null)
-            //{
-            //    collected = resData.Select(t => t.paid_amount).ToList().Sum();
-            //    balance = resData.Select(t => t.total_amount_after_tax).ToList().Sum() - collected;
-            //    profit = resData.Select(t => t.total_amount_after_tax).ToList().Sum() - resData.Select(t => t.total_amount_from_vendor).ToList().Sum();
+                           }).Where(r => r.check_out <= DateTime.Now && r.is_canceled == null);
 
-            //}
+            if (!string.IsNullOrEmpty(from_date))
+            {
+                if (Convert.ToDateTime(from_date) != DateTime.MinValue)
+                {
+                    DateTime from = Convert.ToDateTime(from_date);
+                    resData = resData.Where(s => s.check_out >= from);
+                }
+            }
+
+            if (!string.IsNullOrEmpty(to_date))
+            {
+                if (Convert.ToDateTime(to_date) != DateTime.MinValue)
+                {
+                    DateTime to = Convert.ToDateTime(to_date);
+                    resData = resData.Where(s => s.check_out <= to);
+                }
+            }
+
+            //start Statistics
+
+            StatisticsViewModel statisticsViewModel = new StatisticsViewModel();
+            var reservation = resData;
+            List<ReservationViewModel> reservationList = resData.ToList();
+            if (reservationList.Count() > 0)
+            {
+
+                statisticsViewModel.total_amount_after_tax_sum = reservation.Where(t => t.is_canceled != 1).Select(t => t.total_amount_after_tax).Sum();
+                statisticsViewModel.collected = reservation.Where(t => t.is_canceled != 1).Select(t => t.paid_amount).Sum();
+                statisticsViewModel.collected_percentage = (statisticsViewModel.collected / statisticsViewModel.total_amount_after_tax_sum) * 100;
+
+                statisticsViewModel.balance = reservation.Where(t => t.is_canceled != 1).Select(t => t.total_amount_after_tax).Sum() - statisticsViewModel.collected;
+                statisticsViewModel.balance_percentage = (statisticsViewModel.balance / statisticsViewModel.total_amount_after_tax_sum) * 100;
+
+                double? reservation_cancelation_fees = 0.0;
+                List<ReservationViewModel> reservations = reservation.Where(c => c.is_canceled == 1 && c.cancelation_fees != null).ToList();
+
+                if (reservations.Count() > 0)
+                {
+                    reservation_cancelation_fees = reservation.Where(c => c.is_canceled == 1 && c.cancelation_fees != null).Select(c => c.cancelation_fees).Sum();
+                }
+
+                statisticsViewModel.transaction_fees = reservation.Select(tf => tf.transaction_fees).Sum();
+
+                statisticsViewModel.profit = reservation.Where(r => r.paid_amount == r.total_amount_after_tax && r.paid_amount != 0 && r.is_canceled != 1).Select(t => t.total_amount_after_tax).Sum() - db.Reservations.Where(r => r.paid_amount == r.total_amount_after_tax && r.paid_amount != 0 && r.is_canceled != 1).Where(t => t.is_canceled != 1).Select(t => t.total_amount_from_vendor).Sum();
+                statisticsViewModel.profit += reservation_cancelation_fees;
+                statisticsViewModel.profit -= statisticsViewModel.transaction_fees;
+
+                statisticsViewModel.total_amount_after_tax_sum_for_profit = reservation.Where(r => r.paid_amount == r.total_amount_after_tax && r.paid_amount != 0 && r.is_canceled != 1).Where(t => t.is_canceled != 1).Select(t => t.total_amount_after_tax).Sum();
+                statisticsViewModel.profit_percentage = (statisticsViewModel.profit / statisticsViewModel.total_amount_after_tax_sum_for_profit) * 100;
+                
+                statisticsViewModel.refund = 0;
+                List<Double?> reservationsRefund = reservation.Where(t => t.is_canceled != 1).Select(t => t.refund).ToList();
+                if (reservationsRefund.Count() > 0)
+                {
+                    statisticsViewModel.refund = reservation.Where(t => t.is_canceled != 1).Select(t => t.refund).Sum();
+                }
+                statisticsViewModel.refund_percentage = (statisticsViewModel.refund / statisticsViewModel.total_amount_after_tax_sum) * 100;
+
+                statisticsViewModel.total_nights = reservation.Where(t => t.is_canceled != 1).Select(n => n.total_nights).Sum();
+            } else
+            {
+                statisticsViewModel.collected = 0;
+                statisticsViewModel.balance = 0;
+                statisticsViewModel.profit = 0;
+                statisticsViewModel.total_nights = 0;
+                statisticsViewModel.refund = 0;
+            }
+
+            //end Statistics
 
             var displayResult = resData.OrderByDescending(u => u.id).Skip(skip)
                  .Take(pageSize).ToList();
@@ -749,6 +810,11 @@ namespace Agency.Controllers
                 recordsTotal = totalRecords,
                 recordsFiltered = totalRecords,
                 data = displayResult,
+                collected = statisticsViewModel.collected,
+                balance = statisticsViewModel.balance,
+                profit = statisticsViewModel.profit,
+                total_nights = statisticsViewModel.total_nights,
+                refund = statisticsViewModel.refund
             }, JsonRequestBehavior.AllowGet);
         }
 
@@ -1314,6 +1380,7 @@ namespace Agency.Controllers
                                tax_amount = res.tax_amount,
                                is_canceled = res.is_canceled,
                                is_refund = res.is_refund,
+                               refund = res.refund,
                                created_at = res.created_at,
                                reservationCreditCards = db.ReservationCreditCards.Where(resCre => resCre.reservation_id == res.id).Select(resCre => new ReservationCreditCardViewModel
                                {
@@ -1481,7 +1548,55 @@ namespace Agency.Controllers
                 }
             }
 
-            StatisticsViewModel statisticsViewModel = ReservationService.calculateStatistics();
+
+            //start Statistics
+            StatisticsViewModel statisticsViewModel = new StatisticsViewModel();
+            var reservation = resData;
+            List<ReservationViewModel> reservationList = resData.ToList();
+            if (reservationList.Count() > 0)
+            {
+                //statisticsViewModel.transaction_fees = reservation.Where(t => t.is_canceled != 1).Select(tf => tf.transactions).Sum();
+
+                statisticsViewModel.total_amount_after_tax_sum = reservation.Where(t => t.is_canceled != 1).Select(t => t.total_amount_after_tax).Sum();
+                statisticsViewModel.collected = reservation.Where(t => t.is_canceled != 1).Select(t => t.paid_amount).Sum();
+                statisticsViewModel.collected_percentage = (statisticsViewModel.collected / statisticsViewModel.total_amount_after_tax_sum) * 100;
+
+                statisticsViewModel.balance = reservation.Where(t => t.is_canceled != 1).Select(t => t.total_amount_after_tax).Sum() - statisticsViewModel.collected;
+                statisticsViewModel.balance_percentage = (statisticsViewModel.balance / statisticsViewModel.total_amount_after_tax_sum) * 100;
+
+                double? reservation_cancelation_fees = 0.0;
+                List<ReservationViewModel> reservations = reservation.Where(c => c.is_canceled == 1 && c.cancelation_fees != null).ToList();
+
+                if (reservations.Count() > 0)
+                {
+                    reservation_cancelation_fees = reservation.Where(c => c.is_canceled == 1 && c.cancelation_fees != null).Select(c => c.cancelation_fees).Sum();
+                }
+
+                statisticsViewModel.profit = reservation.Where(r => r.paid_amount == r.total_amount_after_tax && r.paid_amount != 0 && r.is_canceled != 1).Select(t => t.total_amount_after_tax).Sum() - db.Reservations.Where(r => r.paid_amount == r.total_amount_after_tax && r.paid_amount != 0 && r.is_canceled != 1).Where(t => t.is_canceled != 1).Select(t => t.total_amount_from_vendor).Sum();
+                statisticsViewModel.profit += reservation_cancelation_fees;
+
+                statisticsViewModel.total_amount_after_tax_sum_for_profit = reservation.Where(r => r.paid_amount == r.total_amount_after_tax && r.paid_amount != 0 && r.is_canceled != 1).Where(t => t.is_canceled != 1).Select(t => t.total_amount_after_tax).Sum();
+                statisticsViewModel.profit_percentage = (statisticsViewModel.profit / statisticsViewModel.total_amount_after_tax_sum_for_profit) * 100;
+
+                statisticsViewModel.refund = 0;
+                List<Double?> reservationsRefund = reservation.Where(t => t.is_canceled != 1).Select(t => t.refund).ToList();
+                if (reservationsRefund.Count() > 0)
+                {
+                    statisticsViewModel.refund = reservation.Where(t => t.is_canceled != 1).Select(t => t.refund).Sum();
+                }
+                statisticsViewModel.refund_percentage = (statisticsViewModel.refund / statisticsViewModel.total_amount_after_tax_sum) * 100;
+
+                statisticsViewModel.total_nights = reservation.Where(t => t.is_canceled != 1).Select(n => n.total_nights).Sum();
+            }
+            else
+            {
+                statisticsViewModel.collected = 0;
+                statisticsViewModel.balance = 0;
+                statisticsViewModel.profit = 0;
+                statisticsViewModel.total_nights = 0;
+                statisticsViewModel.refund = 0;
+            }
+
             var displayResult = resData.OrderByDescending(u => u.id).Skip(skip)
                  .Take(pageSize).ToList();
             var totalRecords = resData.Count();
@@ -2041,37 +2156,108 @@ namespace Agency.Controllers
             {
                 Reservation reservation = db.Reservations.Find(reservationViewModel.id);
 
+                string editHtml = "";
+                if (reservation.hotel_name != reservationViewModel.hotel_name)
+                    editHtml += "Hotel Name: "+ reservation.hotel_name + @" | <span style = ""color:red;"">" + reservationViewModel.hotel_name + "</span><br>";
                 reservation.hotel_name = reservationViewModel.hotel_name;
+
+                if (reservation.reservations_officer_name != reservationViewModel.reservations_officer_name)
+                    editHtml += "Officer Name: " + reservation.reservations_officer_name + @" | <span style = ""color:red;"">" + reservationViewModel.reservations_officer_name + "</span><br>";
                 reservation.reservations_officer_name = reservationViewModel.reservations_officer_name;
+
+                if (reservation.reservations_officer_email != reservationViewModel.reservations_officer_email)
+                    editHtml += "Officer Email: " + reservation.reservations_officer_email + @" | <span style = ""color:red;"">" + reservationViewModel.reservations_officer_email + "</span><br>";
                 reservation.reservations_officer_email = reservationViewModel.reservations_officer_email;
+
+                if (reservation.reservations_officer_phone != reservationViewModel.reservations_officer_phone)
+                    editHtml += "Officer Phone: " + reservation.reservations_officer_phone + @" | <span style = ""color:red;"">" + reservationViewModel.reservations_officer_phone + "</span><br>";
                 reservation.reservations_officer_phone = reservationViewModel.reservations_officer_phone;
+
+                if (reservation.reservations_officer_email_2 != reservationViewModel.reservations_officer_email_2)
+                    editHtml += "Officer Email2: " + reservation.reservations_officer_email_2 + @" | <span style = ""color:red;"">" + reservationViewModel.reservations_officer_email_2 + "</span><br>";
                 reservation.reservations_officer_email_2 = reservationViewModel.reservations_officer_email_2;
+
+                if (reservation.reservations_officer_phone_2 != reservationViewModel.reservations_officer_phone_2)
+                    editHtml += "Officer Phone2: " + reservation.reservations_officer_phone_2 + @" | <span style = ""color:red;"">" + reservationViewModel.reservations_officer_phone_2 + "</span><br>";
                 reservation.reservations_officer_phone_2 = reservationViewModel.reservations_officer_phone_2;
+
+                if (reservation.reservations_officer_email_3 != reservationViewModel.reservations_officer_email_3)
+                    editHtml += "Officer Email3: " + reservation.reservations_officer_email_3 + @" | <span style = ""color:red;"">" + reservationViewModel.reservations_officer_email_3 + "</span><br>";
                 reservation.reservations_officer_email_3 = reservationViewModel.reservations_officer_email_3;
+
+                if (reservation.reservations_officer_phone_3 != reservationViewModel.reservations_officer_phone_3)
+                    editHtml += "Officer Phone3: " + reservation.reservations_officer_phone_3 + @" | <span style = ""color:red;"">" + reservationViewModel.reservations_officer_phone_3 + "</span><br>";
                 reservation.reservations_officer_phone_3 = reservationViewModel.reservations_officer_phone_3;
+
+                if (reservation.shift != reservationViewModel.shift)
+                    editHtml += "Shift: " + ((Shift)reservation.shift).ToString() + @" | <span style = ""color:red;"">" + ((Shift)reservationViewModel.shift).ToString() + "</span><br>";
                 reservation.shift = reservationViewModel.shift;
+
+                if (reservation.opener != reservationViewModel.opener)
+                    editHtml += "Opener: " + reservation.opener + @" | <span style = ""color:red;"">" + reservationViewModel.opener + "</span><br>";
                 reservation.opener = reservationViewModel.opener;
+
+                if (reservation.closer != reservationViewModel.closer)
+                    editHtml += "Closer: " + reservation.closer + @" | <span style = ""color:red;"">" + reservationViewModel.closer + "</span><br>";
                 reservation.closer = reservationViewModel.closer;
+
+                if (reservation.single_price != reservationViewModel.single_price)
+                    editHtml += "Single Price: " + reservation.single_price + @" | <span style = ""color:red;"">" + reservationViewModel.single_price + "</span><br>";
                 reservation.single_price = reservationViewModel.single_price;
+
+                if (reservation.vendor_single_price != reservationViewModel.vendor_single_price)
+                    editHtml += "Vendor Single Price: " + reservation.vendor_single_price + @" | <span style = ""color:red;"">" + reservationViewModel.vendor_single_price + "</span><br>";
                 reservation.vendor_single_price = reservationViewModel.vendor_single_price;
+
+                if (reservation.double_price != reservationViewModel.double_price)
+                    editHtml += "Double Price: " + reservation.double_price + @" | <span style = ""color:red;"">" + reservationViewModel.double_price + "</span><br>";
                 reservation.double_price = reservationViewModel.double_price;
+
+                if (reservation.vendor_douple_price != reservationViewModel.vendor_douple_price)
+                    editHtml += "Vendor Douple Price: " + reservation.vendor_douple_price + @" | <span style = ""color:red;"">" + reservationViewModel.vendor_douple_price + "</span><br>";
                 reservation.vendor_douple_price = reservationViewModel.vendor_douple_price;
+
+                if (reservation.triple_price != reservationViewModel.triple_price)
+                    editHtml += "Triple Price: " + reservation.triple_price + @" | <span style = ""color:red;"">" + reservationViewModel.triple_price + "</span><br>";
                 reservation.triple_price = reservationViewModel.triple_price;
+
+                if (reservation.vendor_triple_price != reservationViewModel.vendor_triple_price)
+                    editHtml += "Vendor Triple Price: " + reservation.vendor_triple_price + @" | <span style = ""color:red;"">" + reservationViewModel.vendor_triple_price + "</span><br>";
                 reservation.vendor_triple_price = reservationViewModel.vendor_triple_price;
+
+                if (reservation.quad_price != reservationViewModel.quad_price)
+                    editHtml += "Quad Price: " + reservation.quad_price + @" | <span style = ""color:red;"">" + reservationViewModel.quad_price + "</span><br>";
                 reservation.quad_price = reservationViewModel.quad_price;
+
+                if (reservation.vendor_quad_price != reservationViewModel.vendor_quad_price)
+                    editHtml += "Vendor Quad Price: " + reservation.vendor_quad_price + @" | <span style = ""color:red;"">" + reservationViewModel.vendor_quad_price + "</span><br>";
                 reservation.vendor_quad_price = reservationViewModel.vendor_quad_price;
+
                 reservation.vendor_id = reservationViewModel.vendor_id;
+
+                if (reservation.tax != reservationViewModel.tax)
+                    editHtml += "Tax: " + reservation.tax + @" | <span style = ""color:red;"">" + reservationViewModel.tax + "</span><br>";
                 reservation.tax = reservationViewModel.tax;
+
+                if (reservation.currency != reservationViewModel.currency)
+                    editHtml += "Currency: " + reservation.currency + @" | <span style = ""color:red;"">" + reservationViewModel.currency + "</span><br>";
                 reservation.currency = reservationViewModel.currency;
+
+                if (reservation.advance_reservation_percentage != reservationViewModel.advance_reservation_percentage)
+                    editHtml += "Reservation Percentage: " + reservation.advance_reservation_percentage + @" | <span style = ""color:red;"">" + reservationViewModel.advance_reservation_percentage + "</span><br>";
                 reservation.advance_reservation_percentage = reservationViewModel.advance_reservation_percentage;
+
                 reservation.active = 1;
+
+                editHtml += "Updated: " + reservation.updated_at.ToString().Split(' ')[0] + @" | <span style = ""color:red;"">" + DateTime.Now.ToString().Split(' ')[0] + "</span><br>";
                 reservation.updated_at = DateTime.Now;
+
                 reservation.updated_by = Session["id"].ToString().ToInt();
 
                 List<ReservationDetail> reservationDetails = db.ReservationDetails.Where(r => r.reservation_id == reservation.id).ToList();
                 if (reservationDetails.Count() != 0)
                 {
-                    //Hazem
+                    
                     DateTime minDate = reservationDetails.Select(s => s.reservation_from).Min();
                     DateTime maxDate = reservationDetails.Select(s => s.reservation_to).Max();
 
@@ -2099,8 +2285,9 @@ namespace Agency.Controllers
                     reservation.company_id = company.id;
                     db.SaveChanges();
                 }
-                Logs.ReservationActionLog(Session["id"].ToString().ToInt(), reservation.id, "Edit", "Edit Booking #" + reservation.id);
 
+                //here log
+                Logs.ReservationActionLog(Session["id"].ToString().ToInt(), reservation.id, "Edit", "Edit Booking #" + reservation.id + "<br/> " + editHtml);
 
             }
             return Json(new { message = "done" }, JsonRequestBehavior.AllowGet);
@@ -2716,6 +2903,14 @@ namespace Agency.Controllers
             if (resData.reservations_officer_email_3 != null)
                 ReservationService.sendMail(mailServer.outgoing_mail, resData.reservations_officer_email_3, mailServer.title, emailContent, mailServer.outgoing_mail_server, mailServer.port.ToInt(), mailServer.outgoing_mail_password);
             ReservationService.sendMail(mailServer.outgoing_mail, mailServer.incoming_mail, mailServer.title, emailContent, mailServer.outgoing_mail_server, mailServer.port.ToInt(), mailServer.outgoing_mail_password);
+
+            return Json(new { msg = "done" }, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult itiniraryMail(int id)
+        {
+            ReservationService.itiniraryMail(id);
+
 
             return Json(new { msg = "done" }, JsonRequestBehavior.AllowGet);
         }

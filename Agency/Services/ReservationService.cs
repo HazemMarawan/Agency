@@ -195,14 +195,18 @@ namespace Agency.Services
                     emailContent = emailContent.Replace("_guests", "Booked From System");
 
                 emailContent = emailContent.Replace("_download_link", GetBaseUrl()+ "/Booking/itineraryPDF?reservation_id=" + reservation.id.ToString());
+                if(reservation.created_by == null)
+                {
+                    if (!String.IsNullOrEmpty(reservation.reservations_officer_email))
+                        ReservationService.sendMail(mailServer.outgoing_mail, reservation.reservations_officer_email, mailServer.title, emailContent, mailServer.outgoing_mail_server, mailServer.port.ToInt(), mailServer.outgoing_mail_password);
 
-                ReservationService.sendMail(mailServer.outgoing_mail, reservation.reservations_officer_email, mailServer.title, emailContent, mailServer.outgoing_mail_server, mailServer.port.ToInt(), mailServer.outgoing_mail_password);
-                
-                if(!String.IsNullOrEmpty(reservation.reservations_officer_email_2))
-                    ReservationService.sendMail(mailServer.outgoing_mail, reservation.reservations_officer_email_2, mailServer.title, emailContent, mailServer.outgoing_mail_server, mailServer.port.ToInt(), mailServer.outgoing_mail_password);
-                
-                if (!String.IsNullOrEmpty(reservation.reservations_officer_email_3))
-                    ReservationService.sendMail(mailServer.outgoing_mail, reservation.reservations_officer_email_3, mailServer.title, emailContent, mailServer.outgoing_mail_server, mailServer.port.ToInt(), mailServer.outgoing_mail_password);
+                    if (!String.IsNullOrEmpty(reservation.reservations_officer_email_2))
+                        ReservationService.sendMail(mailServer.outgoing_mail, reservation.reservations_officer_email_2, mailServer.title, emailContent, mailServer.outgoing_mail_server, mailServer.port.ToInt(), mailServer.outgoing_mail_password);
+
+                    if (!String.IsNullOrEmpty(reservation.reservations_officer_email_3))
+                        ReservationService.sendMail(mailServer.outgoing_mail, reservation.reservations_officer_email_3, mailServer.title, emailContent, mailServer.outgoing_mail_server, mailServer.port.ToInt(), mailServer.outgoing_mail_password);
+
+                }
 
                 ReservationService.sendMail(mailServer.outgoing_mail, mailServer.incoming_mail, mailServer.title, emailContent, mailServer.outgoing_mail_server, mailServer.port.ToInt(), mailServer.outgoing_mail_password);
             }
@@ -215,6 +219,154 @@ namespace Agency.Services
                 return reservation;
             
         }
+
+        public static Reservation itiniraryMail(int reservation_id)
+        {
+            Reservation reservation = db.Reservations.Find(reservation_id);
+
+            reservation.total_rooms = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id && reservation.is_canceled != 1 && rsd.id == rsd.parent_id).Count();
+            reservation.total_amount = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id && reservation.is_canceled != 1).Select(s => s.amount).Sum();
+            reservation.total_amount_after_tax = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id && reservation.is_canceled != 1).Select(s => s.amount_after_tax).Sum();
+            reservation.tax_amount = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id && reservation.is_canceled != 1).Select(s => s.tax).Sum();
+            reservation.total_nights = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id && reservation.is_canceled != 1).Select(s => s.no_of_days - 1).Sum();
+            reservation.reservation_avg_price_before_tax = db.ReservationDetails.Where(resDet => resDet.reservation_id == reservation.id && reservation.is_canceled != 1).Select(resDet => resDet.amount).Sum() / reservation.total_nights;
+            reservation.reservation_avg_price = db.ReservationDetails.Where(resDet => resDet.reservation_id == reservation.id && reservation.is_canceled != 1).Select(resDet => resDet.amount_after_tax).Sum() / reservation.total_nights;
+            reservation.vendor_avg_price = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id && reservation.is_canceled != 1).Select(s => s.vendor_cost).Sum() / reservation.total_nights;
+            reservation.total_amount_from_vendor = db.ReservationDetails.Where(rsd => rsd.reservation_id == reservation.id && reservation.is_canceled != 1).Select(s => s.vendor_cost).Sum();
+
+            //if (fromWebSite)
+            //{
+            //reservation.updated_by = HttpContext.Current.Session["id"].ToString().ToInt();
+            try
+            {
+                MailServer mailServer = db.MailServers.Where(ms => ms.type == 1).FirstOrDefault();
+                string confirmationMailPath = Path.Combine(HttpContext.Current.Server.MapPath("~/MailTemplates/itenrary.html"));
+                StreamReader streamReader = new StreamReader(confirmationMailPath);
+                string emailContent = streamReader.ReadToEnd();
+
+                string Event = String.Empty;
+                EventHotel eventHotel = db.EventHotels.Find(reservation.event_hotel_id);
+                Event _event = db.Events.Find(eventHotel.event_id);
+                if (_event.is_special == 1)
+                {
+                    Event = "Special";
+                }
+                else
+                {
+                    Event = _event.title;
+                }
+
+                Hotel hotel = db.Hotels.Find(eventHotel.hotel_id);
+                HotelImage hotelImage = db.HotelImages.Where(hi => hi.hotel_id == hotel.id).FirstOrDefault();
+
+
+                var resDetailData = (from resDetail in db.ReservationDetails
+                                     join reserv in db.Reservations on resDetail.reservation_id equals reserv.id into rs
+                                     from res in rs.DefaultIfEmpty()
+                                     join cli in db.Clients on resDetail.client_id equals cli.id into cl
+                                     from client in cl.DefaultIfEmpty()
+                                     select new ReservationDetailViewModel
+                                     {
+                                         id = resDetail.id,
+                                         amount = resDetail.amount,
+                                         tax = resDetail.tax,
+                                         room_type = resDetail.room_type,
+                                         reservation_from = db.ReservationDetails.Where(rsd => rsd.parent_id == resDetail.id).Select(rsd => rsd.reservation_from).Min(),
+                                         reservation_to = db.ReservationDetails.Where(rsd => rsd.parent_id == resDetail.id).Select(rsd => rsd.reservation_to).Max(),
+                                         no_of_days = resDetail.no_of_days,
+                                         parent_id = resDetail.parent_id,
+                                         active = resDetail.active,
+                                         client_id = resDetail.client_id,
+                                         client_first_name = client.first_name,
+                                         client_last_name = client.last_name,
+                                         reservation_id = resDetail.reservation_id,
+                                         currency = res.currency,
+                                         string_reservation_from = db.ReservationDetails.Where(rsd => rsd.parent_id == resDetail.id).Select(rsd => rsd.reservation_from).Min().ToString(),
+                                         string_reservation_to = db.ReservationDetails.Where(rsd => rsd.parent_id == resDetail.id).Select(rsd => rsd.reservation_to).Max().ToString(),
+                                         vendor_code = resDetail.vendor_code,
+                                         vendor_cost = db.ReservationDetails.Where(rsd => rsd.parent_id == resDetail.id).Select(rsd => rsd.vendor_cost).Sum(),
+                                         room_price = resDetail.room_price,
+                                         notify = resDetail.notify,
+                                         is_transfered = resDetail.is_transfered,
+                                         is_canceled = resDetail.is_canceled,
+                                         paid_to_vendor = resDetail.paid_to_vendor,
+                                         payment_to_vendor_deadline = (DateTime)resDetail.payment_to_vendor_deadline,
+                                         string_payment_to_vendor_deadline = resDetail.payment_to_vendor_deadline.ToString(),
+                                         string_spayment_to_vendor_notification_date = resDetail.payment_to_vendor_notification_date.ToString(),
+                                         payment_to_vendor_notification_date = resDetail.payment_to_vendor_notification_date,
+                                         paid_to_vendor_date = resDetail.paid_to_vendor_date,
+                                         amount_paid_to_vendor = resDetail.amount_paid_to_vendor,
+                                         cancelation_policy = resDetail.cancelation_policy,
+                                         confirmation_id = resDetail.confirmation_id,
+                                         guestReservations = db.ReservationDetails.Where(r => r.parent_id == resDetail.id && r.id != resDetail.id).Select(guestRes => new AdditionalReservationViewModel
+                                         {
+                                             id = guestRes.id,
+                                             reservation_id = guestRes.reservation_id,
+                                             parent_id = guestRes.parent_id,
+                                             reservation_from = guestRes.reservation_from,
+                                             reservation_to = guestRes.reservation_to,
+                                             vendor_code = guestRes.vendor_code,
+                                             vendor_cost = guestRes.vendor_cost,
+                                             room_price = guestRes.room_price,
+                                             string_reservation_from = guestRes.reservation_from.ToString(),
+                                             string_reservation_to = guestRes.reservation_to.ToString(),
+                                         }).ToList(),
+                                     }).Where(d => d.reservation_id == reservation.id && d.parent_id == d.id).ToList();
+
+
+                emailContent = emailContent.Replace("_reservation_id", reservation.id.ToString());
+                emailContent = emailContent.Replace("_reservation_date", reservation.created_at.ToString().Split(' ')[0]);
+                if (hotelImage != null)
+                    emailContent = emailContent.Replace("_hotel_image", GetBaseUrl() + hotelImage.path);
+                else
+                    emailContent = emailContent.Replace("_hotel_image", "https://d15k2d11r6t6rl.cloudfront.net/public/users/Integrators/BeeProAgency/763737_747232/hotel-room-new-product-door-1330850.jpg");
+
+                emailContent = emailContent.Replace("_hotel_name", hotel.name);
+                emailContent = emailContent.Replace("_check_in", reservation.check_in.ToString().Split(' ')[0]);
+                emailContent = emailContent.Replace("_check_out", reservation.check_out.ToString().Split(' ')[0]);
+                emailContent = emailContent.Replace("_adult_counter", reservation.total_rooms.ToString());
+
+                string Guests = String.Empty;
+                int checkIfDataFound = 0;
+                foreach (var client in resDetailData)
+                {
+                    if (!String.IsNullOrEmpty(client.client_first_name) || !String.IsNullOrEmpty(client.client_first_name))
+                    {
+                        Guests += @"<p style=""margin: 0;""><span style=""font-size:14px;"">" + client.client_first_name + " " + client.client_last_name + "</span></p>";
+                        checkIfDataFound++;
+                    }
+                }
+
+                if (checkIfDataFound != 0)
+                    emailContent = emailContent.Replace("_guests", Guests);
+                else
+                    emailContent = emailContent.Replace("_guests", "Booked From System");
+
+                emailContent = emailContent.Replace("_download_link", GetBaseUrl() + "/Booking/itineraryPDF?reservation_id=" + reservation.id.ToString());
+              
+                    if (!String.IsNullOrEmpty(reservation.reservations_officer_email))
+                        ReservationService.sendMail(mailServer.outgoing_mail, reservation.reservations_officer_email, mailServer.title, emailContent, mailServer.outgoing_mail_server, mailServer.port.ToInt(), mailServer.outgoing_mail_password);
+
+                    if (!String.IsNullOrEmpty(reservation.reservations_officer_email_2))
+                        ReservationService.sendMail(mailServer.outgoing_mail, reservation.reservations_officer_email_2, mailServer.title, emailContent, mailServer.outgoing_mail_server, mailServer.port.ToInt(), mailServer.outgoing_mail_password);
+
+                    if (!String.IsNullOrEmpty(reservation.reservations_officer_email_3))
+                        ReservationService.sendMail(mailServer.outgoing_mail, reservation.reservations_officer_email_3, mailServer.title, emailContent, mailServer.outgoing_mail_server, mailServer.port.ToInt(), mailServer.outgoing_mail_password);
+
+                
+
+                ReservationService.sendMail(mailServer.outgoing_mail, mailServer.incoming_mail, mailServer.title, emailContent, mailServer.outgoing_mail_server, mailServer.port.ToInt(), mailServer.outgoing_mail_password);
+            }
+            catch (Exception ex)
+            {
+
+
+                //}
+            }
+            return reservation;
+
+        }
+
 
         public static void sendMail(string outgoing_mail, string email, string title, string body, string mail_server, int port, string password)
         {

@@ -193,7 +193,6 @@ namespace Agency.Controllers
             db.Reservations.Add(reservation);
             db.SaveChanges();
 
-
             ReservationCreditCard reservationCreditCard = new ReservationCreditCard();
             reservationCreditCard.reservation_id = reservation.id;
             reservationCreditCard.credit_card_number = reservationViewModel.credit_card_number;
@@ -202,8 +201,6 @@ namespace Agency.Controllers
             reservationCreditCard.created_at = DateTime.Now;
             db.ReservationCreditCards.Add(reservationCreditCard);
             db.SaveChanges();
-
-
 
             Company company = new Company();
             company.name = reservationViewModel.company_name;

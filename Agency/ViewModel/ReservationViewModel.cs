@@ -139,6 +139,7 @@ namespace Agency.ViewModel
         public string transaction_id { get; set; }
         public string hotel_name_special { get; set; }
         public double? cancelation_fees { get; set; }
+        public double? transaction_fees { get; set; }
         public List<ReservationDetailViewModel> reservationDetails { get; set; }
         public List<ReservationCreditCardViewModel> reservationCreditCards { get; set; }
         public List<TransactionViewModel> transactions { get; set; }

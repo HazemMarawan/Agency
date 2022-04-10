@@ -17,6 +17,7 @@ namespace Agency.ViewModel
         public double? refund_percentage { get; set; }
         public double? total_amount_after_tax_sum { get; set; }
         public double? total_amount_after_tax_sum_for_profit { get; set; }
+        public double? transaction_fees { get; set; }
         public int? total_nights { get; set; }
     }
 }
