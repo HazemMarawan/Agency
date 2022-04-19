@@ -92,7 +92,14 @@
                             <input type="hidden" name="id" id="id" value="0" />
                             <input type="hidden" name="reservation_id" id="reservation_id" value="0" />
                             <input type="hidden" name="parent_id" id="parent_id" />
-
+                            <div class="form-group col-md-6">
+                                <label>Check In</label>
+                                <input required name="show_check_in" id="show_check_in" type="text" readonly class="form-control radius-30" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Check Out</label>
+                                <input required name="show_check_out" id="show_check_out" type="text" readonly class="form-control radius-30" />
+                            </div>
                             <div class="form-group col-md-6">
                                 <label>Date From</label>
                                 <input required name="reservation_from" id="reservation_from" type="date" class="form-control radius-30" />
@@ -1528,6 +1535,17 @@
                                     html += "In: " + fixDate(oData.reservation_from) + "</br>";
                                 if (oData.reservation_to)
                                     html += "Out: " + fixDate(oData.reservation_to) + "</br>";
+                                if (oData.guestReservations.length > 0) {
+                                    html += "<hr/><u>Additional Reservations</u><ul>"
+                                    oData.guestReservations.forEach(function (value) {
+                                        html += "<li>"
+                                        html += fixDate(value.reservation_from) + ' - ' + fixDate(value.reservation_to)
+                                        html += "<a data-id='" + value.id + "' class='deleteNight' href='javascript:void(0);' title='Delete'><i class='fa fa-trash'></i></a><br>";
+                                        html += "</li>"
+
+                                    });
+                                    html += "</ul>"
+                                }
 
                                 $(nTd).html("<span class='action-column'>" + html + "</span>");
                             }
@@ -1602,6 +1620,7 @@
                             },
 
                         },
+
                         {
                             "data": "id", "searchable": true,
                             fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
@@ -1886,7 +1905,7 @@
                 }, function (response) {
 
                 }, function (dialog) {
-                      
+
                     })
 
             });
@@ -1906,7 +1925,7 @@
                 }, function (response) {
 
                 }, function (dialog) {
-                        
+
                     })
 
             });
@@ -2095,7 +2114,8 @@
                         dialog.find('#parent_id').val(data.id);
                         dialog.find('#reservation_id').val(data.reservation_id);
                         dialog.find('#room_price').val(data.room_price);
-
+                        dialog.find('#show_check_in').val(fixDate(data.reservation_from));
+                        dialog.find('#show_check_out').val(fixDate(data.reservation_to));
 
                 });
 
@@ -2257,11 +2277,11 @@
                         dialog.find('#room_type option[value=' + data.room_type + ']').attr('selected', 'selected');
                         dialog.find('#notify option[value=' + data.notify + ']').attr('selected', 'selected');
                         dialog.find('#is_canceled option[value=' + data.is_canceled + ']').attr('selected', 'selected');
-                       
+
                         var html = "";
-                    
+
                         if (data.guestReservations.length > 0) {
-                            
+
                             data.guestReservations.forEach(function(value){
                                 //console.log(value)
                                 if (value.reservation_from) {
@@ -2275,7 +2295,7 @@
                                         "-" +
                                         ("0" + date.getDate()).slice(-2)
                                         ;
-                                  
+
                                 }
                                 if (value.reservation_to) {
                                     date = new Date
@@ -2288,7 +2308,7 @@
                                         "-" +
                                         ("0" + date.getDate()).slice(-2)
                                         ;
-                                    
+
                                 }
 
                                 html += "<hr/> <br/>";
@@ -2319,7 +2339,7 @@
                             })
                             dialog.find('#additionalReservations').append(html)
                         }
-                        
+
 
                 });
 
@@ -2333,6 +2353,28 @@
                         url: '@Url.Action("deleteReservation", "ReservationDetail")',
                         contentType: "application/json; charset=utf-8",
                         data: { "id": data.id },
+                        datatype: "json",
+                        success: function (data) {
+                            datatable.draw();
+                            logstable.draw();
+
+                        },
+                        error: function () {
+                            alert("Dynamic content load failed.");
+                        }
+                    });
+                });
+            });
+
+            $(document).on("click", ".deleteNight", function () {
+                //var data = datatable.row($(this).closest('tr')).data();
+                var id = $(this).data('id')
+                warningBox("Are you sure you want to delete this Night  ?", function () {
+                    $.ajax({
+                        type: "GET",
+                        url: '@Url.Action("deleteReservation", "ReservationDetail")',
+                        contentType: "application/json; charset=utf-8",
+                        data: { "id": id },
                         datatype: "json",
                         success: function (data) {
                             datatable.draw();
